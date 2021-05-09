@@ -9,9 +9,13 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
-
 Vue.config.productionTip = false
 
+// setup fake backend
+import fakeBackend from '../src/_helpers/fake-backend';
+import initFacebookSdk from '../src/_helpers/init-facebook-sdk';
+fakeBackend();
+initFacebookSdk();
 new Vue({
   render: h => h(App),
   router,
