@@ -1,7 +1,7 @@
 <template>
     <div id="content">
         <router-link :to="{name: 'mainPage'}">
-            <p id="navig">← К списку кампаний</p>
+            <p id="navigation-text">← К списку кампаний</p>
         </router-link>
         <h1 id="h1">Создание компании</h1>
         <h2 id="h2">Доступ к кабинету Facebook</h2>
@@ -19,15 +19,13 @@ export default {
 }
 </script>
 <style>
-#navig {
+#navigation-text {
     font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 24px;
     max-width: 190px;
-    /* identical to box height, or 150% */
-
     color: #767676;
 }
 </style>
