@@ -27,13 +27,8 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&display=swap');
 @import url('http://fonts.cdnfonts.com/css/monument-extended');
 
-.main {
-  margin: 0px 50px 0px 50px !important; 
-  background-color: whitesmoke !important;
-  border-radius: 25px !important;
-}
 #app {
-  /* -webkit-font-smoothing: antialiased !important;
+   /* -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important; */
   /* text-align: center; */
   color: aquamarine !important;
@@ -51,7 +46,6 @@ html {
     background-color: #6C1BD2;
     border-radius: 8px;
     padding: 12px 28px;
-    margin-top: 10px;
     border:none;
     font-family: Montserrat;
     font-style: normal;
@@ -59,7 +53,22 @@ html {
 }
 
 #content {
-    padding: 40px;
+  padding: 40px;
+  margin: 0px 50px 0px 50px !important; 
+  background-color: whitesmoke !important;
+  border-radius: 25px !important;
+}
+
+#navigation-text {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    margin: 10px;
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 190px;
+    margin:0 auto !important;
+    color: #767676;
 }
 
 #h1 {
@@ -84,7 +93,7 @@ html {
 }
 
 #h2 {
-    margin-top: 50px;
+  margin-top: 50px;
   font-family: Montserrat;
   font-style: normal;
   font-weight: 900;

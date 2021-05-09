@@ -19,13 +19,4 @@ export default {
 }
 </script>
 <style>
-#navigation-text {
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
-    max-width: 190px;
-    color: #767676;
-}
 </style>
