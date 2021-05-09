@@ -51,6 +51,7 @@ html {
     background-color: #6C1BD2;
     border-radius: 8px;
     padding: 12px 28px;
+    margin-top: 10px;
     border:none;
     font-family: Montserrat;
     font-style: normal;

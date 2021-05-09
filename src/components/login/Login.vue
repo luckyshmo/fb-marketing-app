@@ -1,14 +1,65 @@
 <template>
     <div id="content">
         <h1 id="h1">Вход</h1>
-        <b-button variant="primary" id="main-button">Войти</b-button>
+
+        <b-form @submit="onSubmit" style="">
+        <b-form-group
+            id="input-group"
+        >
+            <b-form-input
+            id="form-input"
+            v-model="form.email"
+            type="email"
+            placeholder="Enter email"
+            required
+            ></b-form-input>
+        </b-form-group>
+
+        <b-form-group 
+            id="input-group"
+        >
+            <b-form-input
+            id="form-input"
+            v-model="form.password"
+            placeholder="Enter password"
+            required
+            ></b-form-input>
+        </b-form-group>
+
+        <b-button type="submit" id="main-button">Войти</b-button>
+        </b-form>
+            <b-card style="color:black" class="mt-3" header="Form Data Result">
+            <pre class="m-0">{{ form }}</pre>
+        </b-card>
     </div>
 </template>
 <script>
-export default {
-    
-}
+  export default {
+    data() {
+      return {
+        form: {
+          email: '',
+          password: '',
+        },
+      }
+    },
+    methods: {
+      onSubmit(event) {
+        event.preventDefault()
+        alert(JSON.stringify(this.form))
+      },
+    }
+  }
 </script>
 <style>
-    
+#input-group{
+    margin-top: 10px;
+    max-width: 500px;
+}
+#form-input{
+    border-radius: 8px;
+    border: none;
+    background-color: #e4e4e4;
+    color: #767676
+}
 </style>
