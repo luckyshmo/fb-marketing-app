@@ -2,21 +2,21 @@
     <div id="app">
       <Header/>
       <div class="main">
-        <Main/>
+        <keep-alive>
+            <router-view></router-view>
+        </keep-alive>
       </div>
       <Footer/>
     </div>
 </template>
 
 <script>
-import Main from './components/Main.vue'
 import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
 
 export default {
   name: 'App',
   components: {
-    Main,
     Footer,
     Header
   }
