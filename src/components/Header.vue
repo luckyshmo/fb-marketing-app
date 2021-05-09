@@ -36,15 +36,14 @@
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
-    line-height: 24px;
     text-align: center;
 
-    color: #FFFFFF;
+    color:whitesmoke;
 
     width: 25%;
 }
 
-#container {height: 100%; width:100%; text-align: center;}
+#container {height: 100%; width:100%; text-align: center; margin: 40px 0px 25px 0px;}
 #left, #middle, #right {display: inline-block; *display: inline; zoom: 1; vertical-align: center;}
 #left {width: 25%;}
 #middle {width: 50%;}
