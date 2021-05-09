@@ -58,6 +58,14 @@ html {
   background-color: whitesmoke !important;
   border-radius: 25px !important;
 }
+#content-login {
+  padding: 40px;
+  margin: 0px 50px 0px 50px !important; 
+  background-color: whitesmoke !important;
+  border-radius: 25px !important;
+  width:600px;
+  margin:0 auto !important;
+}
 
 #navigation-text {
     font-family: Montserrat;
@@ -81,6 +89,16 @@ html {
 
   color: #000000;
 }
+#h1-centered {
+  margin-top: 0px;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 66px;
+  line-height: 100%;
+  text-align: center;
+  color: #000000;
+}
 #p1 {
   font-family: Montserrat;
   font-style: normal;
@@ -101,6 +119,19 @@ html {
   line-height: 44px;
 
   color: #000000;
+}
+
+#form-centred{
+    text-align: center !important;
+}
+#input-group{
+    margin: 35px 20px 35px 20px;
+}
+#form-input{
+    border-radius: 8px;
+    border: none;
+    background-color: #e4e4e4;
+    color: #767676;
 }
 
 </style>

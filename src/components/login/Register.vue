@@ -1,6 +1,6 @@
 <template>
-    <div id="content">
-        <h1 id="h1">Регистрация</h1>
+    <div id="content-login">
+        <h1 id="h1-centered">Регистрация</h1>
 
         <b-form id="form-centred" @submit="onSubmit">
           <b-form-group 
@@ -59,6 +59,8 @@
     </div>
 </template>
 <script>
+  import router from '../../../router/router'
+  import store from '../../../store/store'
   export default {
     data() {
       return {
@@ -74,28 +76,12 @@
       onSubmit(event) {
         event.preventDefault()
         alert(JSON.stringify(this.form))
+        store.dispatch('setAuth', false);
+        router.push({ name: 'login', params: { email: this.form.email } }) //TODO
+        // router.push('login')
       },
     }
   }
 </script>
 <style>
-#form-centred{
-    text-align: center !important;
-}
-#content {
-    width:600px;
-    margin:0 auto !important;
-}
-#h1 {
-    text-align: center;
-}
-#input-group{
-    margin: 35px 20px 35px 20px;
-}
-#form-input{
-    border-radius: 8px;
-    border: none;
-    background-color: #e4e4e4;
-    color: #767676;
-}
 </style>

@@ -1,6 +1,6 @@
 <template>
-    <div id="content">
-        <h1 id="h1">Вход</h1>
+    <div id="content-login">
+        <h1 id="h1-centered">Вход</h1>
 
         <b-form id="form-centred" @submit="onSubmit">
             <b-form-group
@@ -10,7 +10,7 @@
                 id="form-input"
                 v-model="form.email"
                 type="email"
-                placeholder="Enter email"
+                placeholder="Электронная почта"
                 required
                 ></b-form-input>
             </b-form-group>
@@ -21,7 +21,7 @@
                 <b-form-input
                 id="form-input"
                 v-model="form.password"
-                placeholder="Enter password"
+                placeholder="Пароль"
                 required
                 ></b-form-input>
             </b-form-group>
@@ -37,6 +37,8 @@
     </div>
 </template>
 <script>
+import router from '../../../router/router'
+import store from '../../../store/store'
   export default {
     data() {
       return {
@@ -49,29 +51,13 @@
     methods: {
       onSubmit(event) {
         event.preventDefault()
-        alert(JSON.stringify(this.form))
+        store.dispatch('setAuth', true);
+        console.log(store.getters.IS_AUTH)
+        router.push('main')
+        // alert(JSON.stringify(this.form))
       },
     }
   }
 </script>
 <style>
-#form-centred{
-    text-align: center !important;
-}
-#content {
-    width:600px;
-    margin:0 auto !important;
-}
-#h1 {
-    text-align: center;
-}
-#input-group{
-    margin: 35px 20px 35px 20px;
-}
-#form-input{
-    border-radius: 8px;
-    border: none;
-    background-color: #e4e4e4;
-    color: #767676;
-}
 </style>
