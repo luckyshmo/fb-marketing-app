@@ -59,14 +59,14 @@
     text-align: center !important;
 }
 #content {
-    width:800px;
+    width:600px;
     margin:0 auto !important;
 }
 #h1 {
     text-align: center;
 }
 #input-group{
-    margin: 35px 100px 35px 100px;
+    margin: 35px 20px 35px 20px;
 }
 #form-input{
     border-radius: 8px;
