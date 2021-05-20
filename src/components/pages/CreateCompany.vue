@@ -1,7 +1,7 @@
 <template>
     <div id="content">
         <router-link :to="{name: 'mainPage'}">
-            <p id="navigation-text">← К списку кампаний</p>
+            <p id="navigation-text" style="margin:0;">← К списку кампаний</p>
         </router-link>
         <h1 id="h1">Создание компании</h1>
         <h2 id="h2">Доступ к кабинету Facebook</h2>

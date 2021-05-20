@@ -99,7 +99,7 @@ html {
     font-size: 16px;
     line-height: 24px;
     max-width: 190px;
-    margin:0 auto !important;
+    margin:0 auto;
     color: #767676;
 }
 
