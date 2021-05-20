@@ -86,9 +86,6 @@ let store = new Vuex.Store({
         }
     },
     getters: {
-        IS_AUTH(state) {
-            return state.authenticated;
-        },
         GET_FB_TOKEN(state) {
             return state.FBtoken;
         },
