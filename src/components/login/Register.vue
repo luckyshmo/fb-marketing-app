@@ -2,7 +2,7 @@
     <div id="content-login">
         <h1 id="h1-centered">Регистрация</h1>
 
-        <b-form id="form-centred" @submit="onSubmit">
+        <b-form id="form-centred" @submit="register">
           <b-form-group 
             id="input-group"
           >
@@ -73,12 +73,16 @@
       }
     },
     methods: {
-      onSubmit(event) {
-        event.preventDefault()
-        alert(JSON.stringify(this.form))
-        store.dispatch('setAuth', false);
-        router.push({ name: 'login', params: { email: this.form.email } }) //TODO
-        // router.push('login')
+      register: function () {
+        let data = {
+            name: this.form.name,
+            email: this.form.email,
+            password: this.form.password,
+            phoneNumber: this.form.phoneNumber
+        }
+        store.dispatch('register', data)
+        .then(() => router.push('main'))
+        .catch(err => console.log(err))
       },
     }
   }

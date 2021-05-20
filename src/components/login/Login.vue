@@ -2,7 +2,7 @@
     <div id="content-login">
         <h1 id="h1-centered">Вход</h1>
 
-        <b-form id="form-centred" @submit="onSubmit">
+        <b-form id="form-centred" @submit.prevent="login">
             <b-form-group
                 id="input-group"
             >
@@ -39,6 +39,7 @@
 <script>
 import router from '../../../router/router'
 import store from '../../../store/store'
+// import axios from 'axios'
   export default {
     data() {
       return {
@@ -49,12 +50,13 @@ import store from '../../../store/store'
       }
     },
     methods: {
-      onSubmit(event) {
-        event.preventDefault()
-        store.dispatch('setAuth', true);
-        console.log(store.getters.IS_AUTH)
-        router.push('main')
-        // alert(JSON.stringify(this.form))
+      login: function () {
+        let email = this.form.email 
+        let password = this.form.password
+        console.log({ email, password })
+        store.dispatch('login', { email, password })
+        .then(() => router.push('main'))
+        .catch(err => console.log(err))
       },
     }
   }

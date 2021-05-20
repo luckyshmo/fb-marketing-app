@@ -13,19 +13,43 @@
 <script>
 import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
-
+import store from '../store/store'
+import router from '../router/router'
 export default {
   name: 'App',
   components: {
     Footer,
     Header
-  }
+  },
+  methods: {
+    logout: function () {
+      store.dispatch('logout')
+      .then(() => {
+        router.push('/login')
+      })
+    }
+  },
+  created: function () {
+      this.$http.interceptors.response.use(undefined, function (err) {
+        return new Promise(function () {
+          if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+            store.dispatch('logout')
+          }
+          throw err;
+        });
+      });
+    }
 }
 </script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&display=swap');
-@import url('http://fonts.cdnfonts.com/css/monument-extended');
+/* @import url('') format("opentype"); */
+@font-face {
+    font-family: Monument Extended;
+    font-weight: bold;
+    src: url("./assets/MonumentExtended-Regular.otf") format("opentype");
+}
 
 #app {
    /* -webkit-font-smoothing: antialiased !important;

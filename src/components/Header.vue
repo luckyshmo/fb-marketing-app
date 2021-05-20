@@ -7,11 +7,25 @@
             <p>Targetted</p>
         </div>
         <div class="nav" id="right">
-            <p>Пользователь</p>
+            <p @click="logout" v-if="isLoggedIn">Пользователь</p>
         </div>
     </div>
 </template>
 <script>
+import store from '../../store/store'
+  export default {
+    computed : {
+      isLoggedIn : function(){ return store.getters.isLoggedIn}
+    },
+    methods: {
+      logout: function () {
+        store.dispatch('logout')
+        .then(() => {
+          this.$router.push('/login')
+        })
+      }
+    },
+  }
 </script>
 <style>
 .logo {
