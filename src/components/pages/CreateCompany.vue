@@ -20,9 +20,45 @@
         >
             Разлогин
         </b-button>
-        <!-- <div v-if="store.getters.GET_FB_TOKEN.len"> -->
-            <p>{{store.getters.GET_FB_ACCOUNT}}</p>
-        <!-- </div> -->
+        <b-button 
+            variant="primary"
+            id="main-button"
+            @click="up"
+        >
+            Обнов
+        </b-button>
+        <div v-if=true>
+            <!-- <div v-if="store.getters.GET_FB_TOKEN.len"> -->
+                <p>{{store.getters.GET_FB_ACCOUNT}}</p>
+            <!-- </div> -->
+            <div id="list">
+                <b-form-group
+                label="Select account"
+                v-slot="{ ariaDescribedby }"
+                >
+                <b-form-checkbox
+                    v-for="option in options"
+                    v-model="selected"
+                    :key="option.id"
+                    :value="option.id"
+                    :aria-describedby="ariaDescribedby"
+                    name="flavour-3a"
+                >
+                <div id="list-item">
+                    {{ option.name }}
+                </div>
+                    
+                </b-form-checkbox>
+                </b-form-group>
+            </div>
+            <b-button 
+                variant="primary"
+                id="main-button"
+                @click="submitSelected"
+            >
+                Submit
+            </b-button>
+        </div>
         <h2 id="h2">Основное</h2>
         
         <h2 id="h2">Креативы</h2>
@@ -87,12 +123,29 @@ export default {
         return{
             store,
             images: [],
-            imagesSmall: []
+            imagesSmall: [],
+            selected: [], // Must be an array reference!
+            options: []
         }
     },
     methods: {
         loginFB() {
             accountService.login()
+        },
+        up(){
+            this.options = store.getters.GET_FB_ACCOUNT.pages
+            console.log(this.options)
+        },
+        submitSelected(){
+            console.log(this.selected)
+            let appToken = 'EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD'
+            let companyId = 856950044859235
+            let files = {
+                'page_id': this.selected[0],
+                'permitted_tasks': '[\'MANAGE\', \'CREATE_CONTENT\', \'MODERATE\', \'ADVERTISE\', \'ANALYZE\']',
+                'access_token': appToken,
+            }
+            axios.post(`https://graph.facebook.com/v10.0/${companyId}/client_pages`, files)
         },
         logout(){
             accountService.logout()
@@ -192,5 +245,22 @@ export default {
     bottom: 0;
     text-align: center;
     color: #767676;
+}
+#list {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 32px;
+
+  color: #000000;
+
+}
+#list-item {
+    border-radius: 8px;
+    border: none;
+    background-color: #e4e4e4;
+    margin: 5px;
+
 }
 </style>
