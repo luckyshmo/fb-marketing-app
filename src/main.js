@@ -30,9 +30,9 @@ if (token) {
 Vue.config.productionTip = false
 
 // setup fake backend
-import fakeBackend from '../src/_helpers/fake-backend';
+// import fakeBackend from '../src/_helpers/fake-backend';
 import initFacebookSdk from '../src/_helpers/init-facebook-sdk';
-fakeBackend();
+// fakeBackend();
 initFacebookSdk();
 new Vue({
   render: h => h(App),

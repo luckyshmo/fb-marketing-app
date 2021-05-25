@@ -21,7 +21,7 @@
             Разлогин
         </b-button>
         <!-- <div v-if="store.getters.GET_FB_TOKEN.len"> -->
-            <p>{{store.getters.GET_FB_TOKEN}}</p>
+            <p>{{store.getters.GET_FB_ACCOUNT}}</p>
         <!-- </div> -->
         <h2 id="h2">Основное</h2>
         

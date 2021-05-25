@@ -1,111 +1,33 @@
-import { BehaviorSubject } from 'rxjs';
-import axios from 'axios';
+// import { BehaviorSubject } from 'rxjs';
 
 import store from '../../store/store'
 
-const baseUrl = `${process.env.VUE_APP_API_URL}/accounts`;
-const accountSubject = new BehaviorSubject(null);
+// const accountSubject = new BehaviorSubject(null);
 
 export const accountService = {
     login,
-    apiAuthenticate,
     logout,
-    getAll,
-    getById,
-    getInfo,
-    update,
-    delete: _delete,
-    account: accountSubject.asObservable(),
-    get accountValue () { return accountSubject.value; }
 };
 
 async function login() {
-    // login with facebook then authenticate with the API to get a JWT auth token
-    const { authResponse } = await new Promise(FB.login);
-    if (!authResponse) return;
-    let ans = await apiAuthenticate(authResponse.accessToken);
+    console.log("startLoginFB")
+    FB.login(function(authResponse) {
+        if (!authResponse) return;
+        console.log(authResponse.authResponse.accessToken)
+        console.log(authResponse)
+        store.dispatch('setAccount', authResponse.authResponse.accessToken);
 
-    console.log(ans)
-
-    store.dispatch('setFBToken', authResponse.accessToken);
-}
-
-async function apiAuthenticate(accessToken) {
-    // authenticate with the api using a facebook access token,
-    // on success the api returns an account object with a JWT auth token
-    const response = await axios.post(`${baseUrl}/authenticate`, { accessToken });
-    const account = response.data;
-    accountSubject.next(account);
-    startAuthenticateTimer();
-    return account;
+        console.log("AccountSet")
+    }, {
+        scope: 'email, ads_management, instagram_basic, business_management, pages_show_list',
+        return_scopes: true
+    });
 }
 
 function logout() {
     // revoke app permissions to logout completely because FB.logout() doesn't remove FB cookie
-    store.dispatch('setFBToken', '');
+    store.dispatch('setAccount', '');
     FB.api('/me/permissions', 'delete', null, () => FB.logout());
-    stopAuthenticateTimer();
-    accountSubject.next(null);
-
-}
-
-function getAll() {
-    return axios.get(baseUrl)
-        .then(response => response.data);
-}
-
-function getById(id) {
-    return axios.get(`${baseUrl}/${id}`)
-        .then(response => response.data);
-}
-
-async function getInfo(id){
-    let token = "asd"
-    const response = await axios.get(`${baseUrl}/${id}`, token)
-    let d = response.data
-    return d;
-// EAAMZCeZAgh8l4BAB0qg5185qdTbxyvi4UCmeBc2qlcjfQrg2L7sPaH9lI0SzJZCmZA9ixmuvkJ15j14nlgTOaknfnDp2ChEzEAO2epfeBTu69kWUVy0ZCfZARMaCTXZBhx2YiAfgy26baJZC8X4CLjFcS14YlZBRvvh2AfT5ckZCX8BzA2Ss0mKBm8HL8iINTfe9THxxKcKpUrcaPigZCD7hrIX
-    // curl "https://graph.facebook.com/v10.0/me/businesses?access_token="
-}
-
-async function update(id, params) {
-    const response = await axios.put(`${baseUrl}/${id}`, params);
-    let account = response.data;
-    // update the current account if it was updated
-    if (account.id === accountSubject.value?.id) {
-        // publish updated account to subscribers
-        account = { ...accountSubject.value, ...account };
-        accountSubject.next(account);
-    }
-    return account;
-}
-
-async function _delete(id) {
-    await axios.delete(`${baseUrl}/${id}`);
-    if (id === accountSubject.value?.id) {
-        // auto logout if the logged in account was deleted
-        logout();
-    }
-}
-
-// helper methods
-
-let authenticateTimeout;
-
-function startAuthenticateTimer() {
-    // parse json object from base64 encoded jwt token
-    const jwtToken = JSON.parse(atob(accountSubject.value.token.split('.')[1]));
-
-    // set a timeout to re-authenticate with the api one minute before the token expires
-    const expires = new Date(jwtToken.exp * 1000);
-    const timeout = expires.getTime() - Date.now() - (60 * 1000);
-    const { accessToken } = FB.getAuthResponse();
-    authenticateTimeout = setTimeout(() => apiAuthenticate(accessToken), timeout);
-}
-
-function stopAuthenticateTimer() {
-    // cancel timer for re-authenticating with the api
-    clearTimeout(authenticateTimeout);
 }
 
 export default accountService;

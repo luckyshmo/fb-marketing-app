@@ -1,5 +1,3 @@
-import { accountService } from '../_services/account.service';
-
 const facebookAppId = process.env.VUE_APP_FACEBOOK_APP_ID;
 
 export function initFacebookSdk() {
@@ -12,17 +10,7 @@ export function initFacebookSdk() {
                 xfbml: true,
                 version: 'v10.0'
             });
-
-            // auto authenticate with the api if already logged in with facebook
-            FB.getLoginStatus(({ authResponse }) => {
-                if (authResponse) {
-                    let kek = authResponse.accessToken
-                    console.log(kek)
-                    accountService.apiAuthenticate(authResponse.accessToken).then(resolve);
-                } else {
-                    resolve();
-                }
-            });
+            resolve();
         };
 
         // load facebook sdk script
