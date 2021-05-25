@@ -55,7 +55,7 @@ export default {
    /* -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important; */
   /* text-align: center; */
-  color: aquamarine !important;
+  color: aquamarine;
   background-color: black !important;
 }
 html { 
