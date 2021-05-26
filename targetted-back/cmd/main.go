@@ -41,8 +41,8 @@ func main() {
 //main func
 func run() error {
 	// config
+	time.Sleep(time.Second)
 	cfg := config.Get() //? errors before logrus init
-
 	// logger configuration
 	lvl, err := logrus.ParseLevel(cfg.LogLevel)
 	if err != nil {

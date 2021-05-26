@@ -20,17 +20,9 @@ if (token) {
   //добавляем токен во все запросы
   Vue.prototype.$http.defaults.headers.common['Authorization'] = token
 }
-// delete Axios.defaults.headers.common["Authorization"];
-
-// Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
-// Axios.defaults.headers.common['Access-Control-Allow-Credentials'] = 'true'
-// Axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With'
-// Axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'POST, OPTIONS, GET, PUT, DELETE'
 
 Vue.config.productionTip = false
 
-// setup fake backend
-// import fakeBackend from '../src/_helpers/fake-backend';
 import initFacebookSdk from '../src/_helpers/init-facebook-sdk';
 // fakeBackend();
 initFacebookSdk();

@@ -1,21 +1,21 @@
 version: "3.8"
 services:
-  reverse-proxy:
-    # The official v2 Traefik docker image
-    image: traefik:v2.2
-    # Enables the web UI and tells Traefik to listen to docker
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker"
-      - "--providers.docker.exposedByDefault=false"
-    ports:
-      # The HTTP port
-      - "80:80"
-      # The Web UI (enabled by --api.insecure=true)
-      - "9090:9090"
-    volumes:
-      # So that Traefik can listen to the Docker events
-      - /var/run/docker.sock:/var/run/docker.sock
+  # reverse-proxy:
+  #   # The official v2 Traefik docker image
+  #   image: traefik:v2.2
+  #   # Enables the web UI and tells Traefik to listen to docker
+  #   command:
+  #     - "--api.insecure=true"
+  #     - "--providers.docker"
+  #     - "--providers.docker.exposedByDefault=false"
+  #   ports:
+  #     # The HTTP port
+  #     - "80:80"
+  #     # The Web UI (enabled by --api.insecure=true)
+  #     - "9090:9090"
+  #   volumes:
+  #     # So that Traefik can listen to the Docker events
+  #     - /var/run/docker.sock:/var/run/docker.sock
   postgres-targetted:
     image: "postgres:alpine"
     environment:
@@ -26,53 +26,36 @@ services:
     #   May configure initial db for future demo
     volumes:
       - "pgdata_targetted:/var/lib/postgresql/data"
-      # - ./init:/docker-entrypoint-initdb.d/
     command: ["postgres", "-c", "log_statement=all"]
   targetted-back:
     build: ./targetted-back/
     command: ./targetted-back
     image: targetted-back
-    # env_file: ./targetted-back/.env.dev
-    expose:
-      - "8081"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.targetted.rule=Host(`malcorp.test`) && PathPrefix(`/api/targetted`)"
+    env_file: ./targetted-back/.env.dev
+    ports:
+      - "8080:8080"
     environment:
-    #   - ENV=dev
-      - DB_PASSWORD=example
-      - APP_PORT=8081
-      - PG_HOST=db
-      - PG_PORT=5432
-      - LOG_LEVEL=debug
-      - PG_MIGRATIONS_PATH=file://./migrations
-      - PG_PAS=example
-      - PG_SSLMODE=disable
-      - PG_USERNAME=postgres
-      - PG_DBNAME=postgres
-      - ENV=production
-    volumes:
-      - ./targetted-back:/go/src/app
-    # have to use $$ (double-dollar) so docker doesn't try to substitute a variable
+      - ENV=dev
     depends_on:
       - postgres-targetted
-      - reverse-proxy
-    # command: reflex -r "\.go$$" -s -- sh -c "go run ./"
   targetted-client:
     build:
       context: ./targetted-client
     image: targetted-client # if we don't give image name, traefik won't create router 🤷‍♂️
-    expose:
-      - "8080"
+    # expose:
+    #   - "3000"
     ports:
-      - "8080:8080"
+      - "3000:8080"
+    environment:
+      - VUE_APP_API_URL=0.0.0.0:8080
+      - VUE_APP_FACEBOOK_APP_ID=914216406086238
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.targetted-client.rule=Host(`malcorp.test`) && PathPrefix(`/targetted`)"
     volumes:
       - ./targetted-client:/app
       - /app/node_modules #avoid overwriting node_modules
-    depends_on: 
-      - reverse-proxy    
+    # depends_on: 
+    #   - reverse-proxy    
 volumes:
   pgdata_targetted:

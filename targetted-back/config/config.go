@@ -20,7 +20,7 @@ type Config struct {
 	PgUserName       string `envconfig:"PG_USERNAME"`
 	PgDBName         string `envconfig:"PG_DBNAME"`
 
-	Environment string `envconfig:"ENV"`
+	Environment string `envconfig:"ENVI"`
 
 	AppPort  string `envconfig:"APP_PORT"`
 	LogLevel string `envconfig:"LOG_LEVEL"`
@@ -49,7 +49,7 @@ func validate(cfg Config) { //TODO? logging isn't configure at this moment... pr
 
 	for i := 0; i < refConf.NumField(); i++ {
 		if fmt.Sprint(refConf.Field(i).Interface()) == "" {
-			logrus.Warn(fmt.Sprintf("Config: %s value is empty!", typeOfRefConf.Field(i).Name))
+			logrus.Error(fmt.Sprintf("Config: %s value is empty!", typeOfRefConf.Field(i).Name))
 		}
 	}
 }

@@ -36,7 +36,7 @@ let store = new Vuex.Store({
                 commit('auth_request')
                 console.log(user)                
                 // const baseUrl = `${process.env.VUE_APP_API_URL}/accounts`;
-                axios({url: 'http://localhost:3000/auth/sign-in', data: user, method: 'POST' })
+                axios({url: `https://0.0.0.0:8080/auth/sign-in`, data: user, method: 'POST' })
                 .then(resp => {
                     console.log(resp.data)
                     const token = resp.data.token
@@ -57,7 +57,7 @@ let store = new Vuex.Store({
         register({commit}, user){
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                axios({url: 'http://localhost:3000/auth/sign-up', data: user, method: 'POST', headers: {
+                axios({url: `https://0.0.0.0:8080/auth/sign-up`, data: user, method: 'POST', headers: {
                     // remove headers
                   } })
                 .then(resp => {
