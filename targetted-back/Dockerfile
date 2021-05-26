@@ -10,21 +10,15 @@ COPY ./ ./
 # RUN go test -v go/pkg/...
 
 # build go app
-RUN go build -o api-example ./cmd/main.go
+RUN go build -o targetted-back ./cmd/main.go
 
 #Build destination container
 FROM alpine:latest
 
 ENV GOPATH=/go
 
-# install psql
-RUN apk --update add postgresql-client
-
-# copy bin and pg-wait script
-COPY --from=builder $GOPATH/api-example $GOPATH/wait-for-postgres.sh ./
-
-# make wait-for-postgres.sh executable
-RUN chmod +x wait-for-postgres.sh
+# copy bin
+COPY --from=builder $GOPATH/targetted-back ./
 
 # copy PG migrations
 COPY --from=builder $GOPATH/pkg/repository/pg/migrations/*.sql ./migrations/
