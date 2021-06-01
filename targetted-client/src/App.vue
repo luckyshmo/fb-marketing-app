@@ -96,7 +96,7 @@ html {
     font-style: normal;
     font-weight: normal;
     margin: 10px;
-    font-size: 16px;
+    font-size: 1em;
     line-height: 24px;
     max-width: 190px;
     margin:0 auto;
@@ -108,8 +108,7 @@ html {
   font-family: Montserrat;
   font-style: normal;
   font-weight: 900;
-  font-size: 66px;
-  line-height: 100%;
+  font-size: 3.5em;
 
   color: #000000;
 }
@@ -118,7 +117,7 @@ html {
   font-family: Montserrat;
   font-style: normal;
   font-weight: 900;
-  font-size: 66px;
+  font-size: 3.5em;
   line-height: 100%;
   text-align: center;
   color: #000000;
@@ -127,8 +126,7 @@ html {
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
-  font-size: 20px;
-  line-height: 32px;
+  font-size: 1.3em;
 
   color: #000000;
 
@@ -139,8 +137,7 @@ html {
   font-family: Montserrat;
   font-style: normal;
   font-weight: 900;
-  font-size: 36px;
-  line-height: 44px;
+  font-size: 2.3em;
 
   color: #000000;
 }
@@ -159,8 +156,7 @@ html {
   font-style: normal;
   font-weight: normal;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1em;
 }
 #form-input{
     border-radius: 8px;
