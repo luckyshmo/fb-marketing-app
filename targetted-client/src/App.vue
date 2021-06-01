@@ -149,7 +149,18 @@ html {
     text-align: center !important;
 }
 #input-group{
-    margin: 35px 20px 35px 20px;
+  margin: 35px 20px 35px 20px;
+}
+#input-group1{
+  margin-top: 10px;
+  color: black;
+  display: flex;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
 }
 #form-input{
     border-radius: 8px;

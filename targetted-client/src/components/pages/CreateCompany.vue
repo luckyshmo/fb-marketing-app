@@ -60,56 +60,144 @@
             </b-button>
         </div>
         <h2 id="h2">Основное</h2>
-        
-        <h2 id="h2">Креативы</h2>
+        <div>
+            <b-form @submit.prevent="login">
+                <b-form-group
+                    label="Название компании"
+                    label-cols=3
+                    content-cols=7
+                    id="input-group1"
+                    label-for="input-horizontal"
+                >
+                    <b-form-input
+                    id="form-input"
+                    v-model="form.companyName"
+                    placeholder="Введите название"
+                    required
+                    ></b-form-input>
+                </b-form-group>
 
-        <div id="block">
-            <!-- v-if="imagesData.length > 0" -->
-            <div 
-            v-for="(image, key) in images" 
-            :key="key">
-                <div id="image-preview">
-                    <img id="preview" :ref="'image'" />
+                <b-form-group
+                    label="Цель кампании"
+                    label-cols=3
+                    content-cols=7
+                    id="input-group1"
+                    label-for="input-horizontal"
+                >
+                    <b-form-radio-group
+                        v-model="form.compnayPurpose"
+                        :options="[
+                            'Сообщения в директ',
+                            'Лиды через лидформу',
+                            'Конверсия на сайте'
+                        ]"
+                    ></b-form-radio-group>
+                </b-form-group>
+
+                <b-form-group
+                    label="Сфера деятельности"
+                    label-cols=3
+                    content-cols=7
+                    id="input-group1"
+                    label-for="input-horizontal"
+                >
+                    <b-form-input
+                    id="form-input"
+                    v-model="form.companyField"
+                    placeholder="Введите сферу"
+                    required
+                    ></b-form-input>
+                </b-form-group>
+
+                <b-form-group
+                    label="Адрес бизнеса"
+                    label-cols=3
+                    content-cols=7
+                    id="input-group1"
+                    label-for="input-horizontal"
+                    description="Нужен только для офлайн бизнеса"
+                >
+                    <b-form-input
+                    id="form-input"
+                    v-model="form.businessAdress"
+                    placeholder="Точный адрес"
+                    required
+                    ></b-form-input>
+                </b-form-group>
+                
+            </b-form>
+            <b-card style="color:black" class="mt-3" header="Form Data Result">
+                <pre class="m-0">{{ form }}</pre>
+            </b-card>
+            <h2 id="h2">Креативы</h2>
+
+            <b-form-group
+                    label="Креативы для Сториз"
+                    label-cols=3
+                    id="input-group1"
+                    label-for="input-horizontal"
+                    description="До 5 слайдов в сториз"
+            >
+                <div id="block">
+                    <div 
+                    v-for="(image, key) in form.images" 
+                    :key="key">
+                        <div id="image-preview">
+                            <img id="preview" :ref="'image'" />
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <input 
+                        style="display: none"
+                        type="file" 
+                        multiple
+                        accept="image/gif, image/jpeg, image/png, image/jpg" 
+                        @change="onFileSelected"
+                        ref="fileInput">
+                        <div 
+                        @click="$refs.fileInput.click()"
+                        id="load-frame">
+                            <p id="load-file">Загрузить<br>файл</p>
+                            <p id="file-size" style="margin: 140px auto;">Размер<br>1920х1080рх</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div>
+            </b-form-group>
+
+            <b-form-group
+                    label="Креативы для поста в ленте"
+                    label-cols=3
+                    id="input-group1"
+                    label-for="input-horizontal"
+                    description="До 5 слайдов в посте"
+            >
+
+            <div id="block">
+                <div 
+                v-for="(image, key) in form.imagesSmall" 
+                :key="key">
+                    <div id="image-preview">
+                        <img id="preview-small" :ref="'imageSmall'" />
+                    </div>
+                </div>
+
                 <input 
                 style="display: none"
                 type="file" 
                 multiple
-                @change="onFileSelected"
-                ref="fileInput">
+                accept="image/gif, image/jpeg, image/png, image/jpg" 
+                @change="onSmallFileSelected"
+                ref="smallFileInput">
                 <div 
-                @click="$refs.fileInput.click()"
-                id="load-frame">
+                @click="$refs.smallFileInput.click()"
+                id="load-frame-small">
                     <p id="load-file">Загрузить<br>файл</p>
-                    <p id="file-size" style="margin: 140px auto;">Размер<br>1920х1080рх</p>
+                    <p id="file-size">Размер<br>1080х1080рх</p>
                 </div>
             </div>
-        </div>
-        
-        <div id="block">
-            <div 
-            v-for="(image, key) in imagesSmall" 
-            :key="key">
-                <div id="image-preview">
-                    <img id="preview-small" :ref="'imageSmall'" />
-                </div>
-            </div>
-
-            <input 
-            style="display: none"
-            type="file" 
-            accept="image/gif, image/jpeg, image/png, image/jpg" 
-            @change="onSmallFileSelected"
-            ref="smallFileInput">
-            <div 
-            @click="$refs.smallFileInput.click()"
-            id="load-frame-small">
-                <p id="load-file">Загрузить<br>файл</p>
-                <p id="file-size">Размер<br>1080х1080рх</p>
-            </div>
+                
+            </b-form-group>
         </div>
     </div>
 </template>
@@ -122,10 +210,16 @@ export default {
     data() {
         return{
             store,
-            images: [],
-            imagesSmall: [],
             selected: [], // Must be an array reference!
-            options: []
+            options: [],
+            form: {
+                companyName: '',
+                compnayPurpose: '',
+                companyField: '',
+                businessAdress: '',
+                images: [],
+                imagesSmall: [],
+            },
         }
     },
     methods: {
@@ -153,31 +247,31 @@ export default {
         onFileSelected(e) {
             let selectedFiles = e.target.files;
             for (let i = 0; i < selectedFiles.length; i++) {
-                this.images.push(selectedFiles[i]);
+                this.form.images.push(selectedFiles[i]);
             }
 
-            for (let i = 0; i < this.images.length; i++) {
+            for (let i = 0; i < this.form.images.length; i++) {
                 let reader = new FileReader();
                 reader.onload = () => {
                     this.$refs.image[i].src = reader.result;
                 };
 
-                reader.readAsDataURL(this.images[i]);
+                reader.readAsDataURL(this.form.images[i]);
             }
         },
         onSmallFileSelected(e) {
             let selectedFiles = e.target.files;
             for (let i = 0; i < selectedFiles.length; i++) {
-                this.imagesSmall.push(selectedFiles[i]);
+                this.form.imagesSmall.push(selectedFiles[i]);
             }
 
-            for (let i = 0; i < this.imagesSmall.length; i++) {
+            for (let i = 0; i < this.form.imagesSmall.length; i++) {
                 let reader = new FileReader();
                 reader.onload = () => {
                     this.$refs.imageSmall[i].src = reader.result;
                 };
 
-                reader.readAsDataURL(this.imagesSmall[i]);
+                reader.readAsDataURL(this.form.imagesSmall[i]);
             }
         },
         onUpload() {
