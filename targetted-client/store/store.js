@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 
 Vue.use(Vuex);
 
@@ -36,7 +37,7 @@ let store = new Vuex.Store({
                 commit('auth_request')
                 console.log(user)                
                 // const baseUrl = `${process.env.VUE_APP_API_URL}/accounts`;
-                axios({url: `https://0.0.0.0:8080/auth/sign-in`, data: user, method: 'POST' })
+                axios({url: `${VUE_APP_API_URL}/auth/sign-in`, data: user, method: 'POST' })
                 .then(resp => {
                     console.log(resp.data)
                     const token = resp.data.token
@@ -57,9 +58,7 @@ let store = new Vuex.Store({
         register({commit}, user){
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                axios({url: `https://0.0.0.0:8080/auth/sign-up`, data: user, method: 'POST', headers: {
-                    // remove headers
-                  } })
+                axios({url: `${VUE_APP_API_URL}/auth/sign-up`, data: user, method: 'POST'})
                 .then(resp => {
                     console.log(resp.data)
                     const token = resp.data.token

@@ -24,17 +24,7 @@ func NewHandler(services *service.Service) *Handler {
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 
-	// router.Use(CreateOptionsMiddleware().Response)
 	router.Use(CORS())
-	// router.Use(cors.New(cors.Config{
-	// 	AllowMethods:     []string{"GET", "POST", "OPTIONS", "PUT"},
-	// 	AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "User-Agent", "Referrer", "Host", "Token"},
-	// 	ExposeHeaders:    []string{"Content-Length"},
-	// 	AllowCredentials: true,
-	// 	AllowAllOrigins:  false,
-	// 	AllowOriginFunc:  func(origin string) bool { return true },
-	// 	MaxAge:           86400,
-	// }))
 
 	//Open-Api endpoints documentation using GIN swagger
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -77,10 +67,8 @@ func (middleware *optionsMiddleware) Response(context *gin.Context) {
 func CORS() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "https://localhost:8080")
-		// c.Writer.Header().Set()
-		// c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "https://localhost:3000")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
-		// c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
 
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)
