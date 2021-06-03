@@ -46,6 +46,7 @@ import store from '../../store/store'
     width: 50%;
 }
 .nav {
+    cursor: pointer;
     font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
