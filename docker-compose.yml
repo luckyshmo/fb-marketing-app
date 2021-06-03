@@ -2,11 +2,8 @@ version: "3.8"
 services:
   nginx:
     image: nginx
-    # command:
-    #   - -g daemon off
     volumes:
       - ./ssl:/etc/ssl
-      # - ./nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/conf.d/:/etc/nginx/
     ports:
      - "80:80"
