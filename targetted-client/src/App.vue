@@ -55,6 +55,7 @@ export default {
    /* -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important; */
   /* text-align: center; */
+  overflow: hidden;
   color: aquamarine;
   background-color: black !important;
 }
@@ -78,7 +79,8 @@ html {
 
 #content {
   padding: 40px;
-  margin: 0px 50px 0px 50px !important; 
+  max-width: 1200px;
+  margin: 0% auto 0% auto !important; 
   background-color: whitesmoke !important;
   border-radius: 25px !important;
 }

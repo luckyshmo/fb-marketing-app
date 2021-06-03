@@ -7,7 +7,7 @@
             <p>Targetted</p>
         </div>
         <div class="nav" id="right">
-            <p @click="logout" v-if="isLoggedIn">Пользователь</p>
+            <p @click="logout" v-if="isLoggedIn">Выход</p>
         </div>
     </div>
 </template>
@@ -32,7 +32,7 @@ import store from '../../store/store'
     font-family: Monument Extended;
     font-style: normal;
     font-weight: normal;
-    font-size: 28px;
+    font-size: 1.3em;
     line-height: 100%;
 
     letter-spacing: 0.8em;
@@ -49,7 +49,7 @@ import store from '../../store/store'
     font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
-    font-size: 16px;
+    font-size: 1em;
     text-align: center;
 
     color:whitesmoke;

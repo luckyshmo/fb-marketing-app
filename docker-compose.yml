@@ -1,21 +1,23 @@
 version: "3.8"
 services:
-  # reverse-proxy:
-  #   # The official v2 Traefik docker image
-  #   image: traefik:v2.2
-  #   # Enables the web UI and tells Traefik to listen to docker
-  #   command:
-  #     - "--api.insecure=true"
-  #     - "--providers.docker"
-  #     - "--providers.docker.exposedByDefault=false"
-  #   ports:
-  #     # The HTTP port
-  #     - "80:80"
-  #     # The Web UI (enabled by --api.insecure=true)
-  #     - "9090:9090"
-  #   volumes:
-  #     # So that Traefik can listen to the Docker events
-  #     - /var/run/docker.sock:/var/run/docker.sock
+  nginx:
+    image: nginx
+    # command:
+    #   - -g daemon off
+    volumes:
+      - ./ssl:/etc/ssl
+      # - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d/:/etc/nginx/
+    ports:
+     - "80:80"
+     - "443:443"
+    environment:
+     - NGINX_HOST=targetted.online
+     - NGINX_PORT=80
+    networks:
+     - app-network
+
+
   postgres-targetted:
     image: "postgres:alpine"
     environment:
@@ -27,6 +29,9 @@ services:
     volumes:
       - "pgdata_targetted:/var/lib/postgresql/data"
     command: ["postgres", "-c", "log_statement=all"]
+    networks:
+      - app-network
+
   targetted-back:
     build: ./targetted-back/
     command: ./targetted-back
@@ -38,6 +43,9 @@ services:
       - ENV=dev
     depends_on:
       - postgres-targetted
+    networks:
+      - app-network
+
   targetted-client:
     build:
       context: ./targetted-client
@@ -45,9 +53,9 @@ services:
     # expose:
     #   - "3000"
     ports:
-      - "3000:8080"
+      - "3000:3000"
     environment:
-      - VUE_APP_API_URL=0.0.0.0:8080
+      # - VUE_APP_API_URL=0.0.0.0:8080
       - VUE_APP_FACEBOOK_APP_ID=914216406086238
     labels:
       - "traefik.enable=true"
@@ -55,7 +63,13 @@ services:
     volumes:
       - ./targetted-client:/app
       - /app/node_modules #avoid overwriting node_modules
+    networks:
+      - app-network
     # depends_on: 
     #   - reverse-proxy    
 volumes:
   pgdata_targetted:
+
+networks:
+  app-network:
+    driver: bridge

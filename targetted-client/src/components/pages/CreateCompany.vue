@@ -27,7 +27,7 @@
         >
             Обнов
         </b-button>
-        <div v-if=true>
+        <div>
             <!-- <div v-if="store.getters.GET_FB_TOKEN.len"> -->
                 <p>{{store.getters.GET_FB_ACCOUNT}}</p>
             <!-- </div> -->
@@ -61,11 +61,11 @@
         </div>
         <h2 id="h2">Основное</h2>
         <div>
-            <b-form @submit.prevent="login">
+            <b-form @submit.prevent="createCompany">
                 <b-form-group
                     label="Название компании"
-                    label-cols=3
-                    content-cols=7
+                    :label-cols="label_cols"
+                    :content-cols="content_cols"
                     id="input-group1"
                     label-for="input-horizontal"
                 >
@@ -79,12 +79,13 @@
 
                 <b-form-group
                     label="Цель кампании"
-                    label-cols=3
-                    content-cols=7
+                    :label-cols="label_cols"
+                    :content-cols="content_cols"
                     id="input-group1"
                     label-for="input-horizontal"
                 >
                     <b-form-radio-group
+                        id="radio-group"
                         v-model="form.compnayPurpose"
                         :options="[
                             'Сообщения в директ',
@@ -96,8 +97,8 @@
 
                 <b-form-group
                     label="Сфера деятельности"
-                    label-cols=3
-                    content-cols=7
+                    :label-cols="label_cols"
+                    :content-cols="content_cols"
                     id="input-group1"
                     label-for="input-horizontal"
                 >
@@ -111,8 +112,8 @@
 
                 <b-form-group
                     label="Адрес бизнеса"
-                    label-cols=3
-                    content-cols=7
+                    :label-cols="label_cols"
+                    :content-cols="content_cols"
                     id="input-group1"
                     label-for="input-horizontal"
                     description="Нужен только для офлайн бизнеса"
@@ -121,19 +122,31 @@
                     id="form-input"
                     v-model="form.businessAdress"
                     placeholder="Точный адрес"
-                    required
                     ></b-form-input>
                 </b-form-group>
-                
-            </b-form>
-            <b-card style="color:black" class="mt-3" header="Form Data Result">
-                <pre class="m-0">{{ form }}</pre>
+                <b-card style="color:black" class="mt-3" header="Form Data Result">
+                <pre class="m-0">{{ this.form }}</pre>
             </b-card>
             <h2 id="h2">Креативы</h2>
-
             <b-form-group
-                    label="Креативы для Сториз"
-                    label-cols=3
+                    label="Наличие креативов"
+                    :label-cols="label_cols"
+                    :content-cols="content_cols"
+                    id="input-group1"
+                    label-for="input-horizontal"
+            >
+                <b-form-radio-group
+                    id="radio-group1"
+                    v-model="form.creativeStatus"
+                    :options="[
+                        'Есть рекламные креативы',
+                        'Создать рекламные креативы'
+                    ]"
+                ></b-form-radio-group>
+            </b-form-group>
+            <b-form-group
+                    :label="getStoriesLabel()"
+                    :label-cols="label_cols"
                     id="input-group1"
                     label-for="input-horizontal"
                     description="До 5 слайдов в сториз"
@@ -143,11 +156,23 @@
                     v-for="(image, key) in form.images" 
                     :key="key">
                         <div id="image-preview">
+                            <div 
+                            style="position: absolute;
+                            margin-left: 140px;
+                            margin-top: -15px;">
+                                <b-icon
+                                @click="removeImage(image)"
+                                style="height: 35px;
+                                        width: 35px;
+                                        background: #e4e4e4;
+                                        border-radius: 17.5px;"
+                                icon="x"></b-icon>
+                            </div>
                             <img id="preview" :ref="'image'" />
                         </div>
                     </div>
                     
-                    <div>
+                    <div v-if="this.form.images.length < 5">
                         <input 
                         style="display: none"
                         type="file" 
@@ -164,40 +189,106 @@
                     </div>
                 </div>
             </b-form-group>
-
+            <div v-if="isCreative()">
+                <div 
+                v-for="(image, index) in form.images" 
+                :key="image.name">
+                    <b-form-group
+                        :label="textOnSlide(index)"
+                        :label-cols="label_cols"
+                        :content-cols="content_cols"
+                        id="input-group1"
+                        label-for="input-horizontal"
+                    >
+                        <b-form-input
+                        id="form-input"
+                        v-model="form.imagesDescription[index]"
+                        placeholder="Введите текст"
+                        ></b-form-input>
+                    </b-form-group>
+                </div>
+            </div>
             <b-form-group
-                    label="Креативы для поста в ленте"
-                    label-cols=3
+                    :label="getPostLabel()"
+                    :label-cols="label_cols"
                     id="input-group1"
                     label-for="input-horizontal"
                     description="До 5 слайдов в посте"
             >
 
-            <div id="block">
+                <div id="block">
                 <div 
                 v-for="(image, key) in form.imagesSmall" 
                 :key="key">
                     <div id="image-preview">
+                        <div 
+                        style="position: absolute;
+                        margin-left: 140px;
+                        margin-top: -15px;">
+                            <b-icon
+                            @click="removeImageSmall(image)"
+                            style="height: 35px;
+                                    width: 35px;
+                                    background: #e4e4e4;
+                                    border-radius: 17.5px;"
+                            icon="x"></b-icon>
+                        </div>
                         <img id="preview-small" :ref="'imageSmall'" />
                     </div>
                 </div>
-
-                <input 
-                style="display: none"
-                type="file" 
-                multiple
-                accept="image/gif, image/jpeg, image/png, image/jpg" 
-                @change="onSmallFileSelected"
-                ref="smallFileInput">
-                <div 
-                @click="$refs.smallFileInput.click()"
-                id="load-frame-small">
-                    <p id="load-file">Загрузить<br>файл</p>
-                    <p id="file-size">Размер<br>1080х1080рх</p>
+                <div v-if="this.form.imagesSmall.length < 5">
+                    <input 
+                    style="display: none"
+                    type="file" 
+                    multiple
+                    accept="image/gif, image/jpeg, image/png, image/jpg" 
+                    @change="onSmallFileSelected"
+                    ref="smallFileInput">
+                    <div 
+                    @click="$refs.smallFileInput.click()"
+                    id="load-frame-small">
+                        <p id="load-file">Загрузить<br>файл</p>
+                        <p id="file-size">Размер<br>1080х1080рх</p>
+                    </div>
                 </div>
             </div>
                 
             </b-form-group>
+            <div v-if="isCreative()">
+                <div 
+                v-for="(image, index) in form.imagesSmall" 
+                :key="image.name">
+                    <b-form-group
+                        :label="textOnImage(index)"
+                        :label-cols="label_cols"
+                        :content-cols="content_cols"
+                        id="input-group1"
+                        label-for="input-horizontal"
+                    >
+                        <b-form-input
+                        id="form-input"
+                        v-model="form.imagesSmallDescription[index]"
+                        placeholder="Введите текст"
+                        ></b-form-input>
+                    </b-form-group>
+                </div>
+            </div>
+            <b-form-group
+            v-if="isCreative()"
+                    label="Описание под постом в ленте"
+                    :label-cols="label_cols"
+                    :content-cols="content_cols"
+                    id="input-group1"
+                    label-for="input-horizontal"
+                >
+                    <b-form-textarea
+                    id="form-input"
+                    style="height: 100px"
+                    v-model="form.postDescription"
+                    placeholder="Введите текст"
+                    ></b-form-textarea>
+                </b-form-group>
+            </b-form>
         </div>
     </div>
 </template>
@@ -212,19 +303,78 @@ export default {
             store,
             selected: [], // Must be an array reference!
             options: [],
+            label_cols: 3,
+            content_cols: 9,
             form: {
                 companyName: '',
                 compnayPurpose: '',
                 companyField: '',
                 businessAdress: '',
                 images: [],
+                imagesDescription: [],
                 imagesSmall: [],
+                imagesSmallDescription: [],
+                creativeStatus: '',
+                postDescription: '',
             },
         }
     },
     methods: {
+        removeImageSmall(image){
+            this.remove(this.form.imagesSmall, image);
+            for (let i = 0; i < this.form.imagesSmall.length; i++) {
+                let reader = new FileReader();
+                reader.onload = () => {
+                    this.$refs.imageSmall[i].src = reader.result;
+                };
+
+                reader.readAsDataURL(this.form.imagesSmall[i]);
+            }
+        },
+        removeImage(image){
+            this.remove(this.form.images, image)
+            for (let i = 0; i < this.form.images.length; i++) {
+                let reader = new FileReader();
+                reader.onload = () => {
+                    this.$refs.image[i].src = reader.result;
+                };
+
+                reader.readAsDataURL(this.form.images[i]);
+            }
+        },
+        remove(arr, img) {
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].name === img.name){
+                    arr.splice(i, 1)
+                }
+            }
+        },
+        getStoriesLabel(){
+            if (!this.isCreative()) {
+                return "Креативы для Сториз"
+            }
+            return "Картинки для Сториз"
+        },
+        getPostLabel(){
+            if (!this.isCreative()) {
+                return "Креативы для поста в ленте"
+            }
+            return "Картинки для поста в ленте"
+        },
+        isCreative(){
+            return this.form.creativeStatus === 'Создать рекламные креативы'
+        },
+        textOnSlide(index){
+            return `Текст на слайде ${index+1}`
+        },
+        textOnImage(index){
+            return `Текст на картинке ${index+1}`
+        },
         loginFB() {
             accountService.login()
+        },
+        createCompany(){
+            console.log("formSubmitted")
         },
         up(){
             this.options = store.getters.GET_FB_ACCOUNT.pages
@@ -246,7 +396,8 @@ export default {
         },
         onFileSelected(e) {
             let selectedFiles = e.target.files;
-            for (let i = 0; i < selectedFiles.length; i++) {
+            let len = Math.min(selectedFiles.length, 5)
+            for (let i = 0; i < len; i++) {
                 this.form.images.push(selectedFiles[i]);
             }
 
@@ -261,7 +412,8 @@ export default {
         },
         onSmallFileSelected(e) {
             let selectedFiles = e.target.files;
-            for (let i = 0; i < selectedFiles.length; i++) {
+            let len = Math.min(selectedFiles.length, 5)
+            for (let i = 0; i < len; i++) {
                 this.form.imagesSmall.push(selectedFiles[i]);
             }
 
@@ -290,6 +442,12 @@ export default {
 }
 </script>
 <style>
+.custom-radio{
+    margin: 10px;
+}
+.custom-control-input{
+    margin-right: 3px;
+}
 #preview{
     width: 160px;
     height: 280px;
@@ -303,7 +461,7 @@ export default {
 #block {
     margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill,minmax(200px, 1fr));
     justify-content: space-between;
     align-items: center;
     grid-gap: 30px;
