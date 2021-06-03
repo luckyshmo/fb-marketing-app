@@ -78,8 +78,10 @@ html {
 }
 
 #submit-button{
+    position: absolute;
+    margin-top: 75px; /* //TODO dependce on content-wrapper */
     color:whitesmoke;
-    margin-top: 15px;
+    /* margin-top: 15px; */
     background-color: #FF62B7;
     border-radius: 8px;
     padding: 12px 28px;
@@ -95,6 +97,13 @@ html {
   margin: 0% auto 0% auto !important; 
   background-color: whitesmoke !important;
   border-radius: 25px !important;
+}
+#content-wrapper {
+  max-width: 1200px;
+  margin: 0% auto 0% auto !important; 
+  background-color: #6C1BD2 !important;
+  border-radius: 25px !important;
+  padding-bottom: 120px;
 }
 #content-login {
   padding: 40px;
