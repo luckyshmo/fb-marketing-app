@@ -127,6 +127,21 @@ let store = new Vuex.Store({
         GET_FB_ACCOUNT(state){
             return state.account
         },
+        GET_FB_PAGES(state){
+            if (typeof state.account.pages === 'undefined'){
+                return []
+            }
+            let pages = []
+            for (let i = 0; i < state.account.pages.length; i++){
+                pages[i] = {
+                    page: state.account.pages[i],
+                    name: state.account.pages[i].name,
+                    value: state.account.pages[i].id,
+                    text: state.account.pages[i].name
+                }
+            }
+            return pages
+        },
         isLoggedIn: state => !!state.token,
         authStatus: state => state.status,
     },

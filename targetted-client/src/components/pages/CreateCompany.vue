@@ -7,6 +7,7 @@
         <h2 id="h2">Доступ к кабинету Facebook</h2>
         <p id="p1">Привяжите свой аккаунт Facebook к targetted, чтобы натсроить и запустить рекламунюу компанию </p>
         <b-button 
+            v-if="!(store.getters.GET_FB_PAGES.length > 0)"
             variant="primary"
             id="main-button"
             @click="loginFB"
@@ -14,54 +15,33 @@
             Настроить доступ
         </b-button>
         <b-button 
+            v-if="store.getters.GET_FB_PAGES.length > 0"
             variant="primary"
             id="main-button"
             @click="logout"
         >
             Разлогин
         </b-button>
-        <b-button 
-            variant="primary"
-            id="main-button"
-            @click="up"
-        >
-            Обнов
-        </b-button>
         <div>
-            <!-- <div v-if="store.getters.GET_FB_TOKEN.len"> -->
-                <p>{{store.getters.GET_FB_ACCOUNT}}</p>
-            <!-- </div> -->
-            <div id="list">
-                <b-form-group
-                label="Select account"
-                v-slot="{ ariaDescribedby }"
-                >
-                <b-form-checkbox
-                    v-for="option in options"
-                    v-model="selected"
-                    :key="option.id"
-                    :value="option.id"
-                    :aria-describedby="ariaDescribedby"
-                    name="flavour-3a"
-                >
-                <div id="list-item">
-                    {{ option.name }}
+            <b-form @submit.prevent="createCompany()">
+                <div v-if="store.getters.GET_FB_PAGES.length > 0">
+                    <h2 id="h2">Выбор страницы</h2>
+                    <b-form-group
+                    label="Выберите страницу"
+                    :label-cols="label_cols"
+                    :content-cols="content_cols"
+                    id="input-group1"
+                    label-for="input-horizontal"
+                    >
+                        <b-form-radio-group
+                            v-model="form.fbPageId"
+                            :options="store.getters.GET_FB_PAGES"
+                        ></b-form-radio-group>
+                    </b-form-group>
                 </div>
-                    
-                </b-form-checkbox>
-                </b-form-group>
-            </div>
-            <b-button 
-                variant="primary"
-                id="main-button"
-                @click="submitSelected"
-            >
-                Submit
-            </b-button>
-        </div>
-        <h2 id="h2">Основное</h2>
-        <div>
-            <b-form @submit.prevent="createCompany">
+
+                <h2 id="h2">Основное</h2>
+
                 <b-form-group
                     label="Название компании"
                     :label-cols="label_cols"
@@ -85,7 +65,6 @@
                     label-for="input-horizontal"
                 >
                     <b-form-radio-group
-                        id="radio-group"
                         v-model="form.compnayPurpose"
                         :options="[
                             'Сообщения в директ',
@@ -136,7 +115,6 @@
                     label-for="input-horizontal"
             >
                 <b-form-radio-group
-                    id="radio-group1"
                     v-model="form.creativeStatus"
                     :options="[
                         'Есть рекламные креативы',
@@ -288,6 +266,12 @@
                     placeholder="Введите текст"
                     ></b-form-textarea>
                 </b-form-group>
+                <b-button
+                    id="submit-button"
+                    type="submit"
+                >
+                    Создать компанию
+                </b-button>
             </b-form>
         </div>
     </div>
@@ -301,11 +285,10 @@ export default {
     data() {
         return{
             store,
-            selected: [], // Must be an array reference!
-            options: [],
             label_cols: 3,
             content_cols: 9,
             form: {
+                fbPageId: '',
                 companyName: '',
                 compnayPurpose: '',
                 companyField: '',
@@ -375,10 +358,6 @@ export default {
         },
         createCompany(){
             console.log("formSubmitted")
-        },
-        up(){
-            this.options = store.getters.GET_FB_ACCOUNT.pages
-            console.log(this.options)
         },
         submitSelected(){
             console.log(this.selected)

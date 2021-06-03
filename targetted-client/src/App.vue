@@ -77,6 +77,18 @@ html {
     font-weight: 600;
 }
 
+#submit-button{
+    color:whitesmoke;
+    margin-top: 15px;
+    background-color: #FF62B7;
+    border-radius: 8px;
+    padding: 12px 28px;
+    border:none;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+}
+
 #content {
   padding: 40px;
   max-width: 1200px;
