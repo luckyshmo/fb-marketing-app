@@ -5,6 +5,7 @@ services:
     volumes:
       - ./ssl:/etc/ssl
       - ./nginx/conf.d/:/etc/nginx/
+      - ./targetted-client/dist:/front
     ports:
      - "80:80"
      - "443:443"
