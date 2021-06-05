@@ -3,7 +3,6 @@ package handler
 import (
 	"errors"
 	"net/http"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -30,16 +29,7 @@ func parseHeader(header string, parse func(string) (uuid.UUID, error)) (uuid.UUI
 		return uuid.Nil, errors.New("empty auth header")
 	}
 
-	headerParts := strings.Split(header, " ")
-	if len(headerParts) != 2 || headerParts[0] != "Bearer" { //Bearer authentication (google it)
-		return uuid.Nil, errors.New("invalid auth header")
-	}
-
-	if len(headerParts[1]) == 0 {
-		return uuid.Nil, errors.New("token is empty")
-	}
-
-	return parse(headerParts[1])
+	return parse(header)
 }
 
 //return userID from context

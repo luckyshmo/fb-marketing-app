@@ -40,6 +40,11 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	api := router.Group("/api", h.userIdentity) //JWT Auth
 	{
+		adCompany := api.Group("/company")
+		{
+			adCompany.POST("/", h.newCompany)
+			adCompany.GET("/", h.GetCompanyList)
+		}
 		users := api.Group("/user")
 		{
 			users.GET("/", h.getUserList)
@@ -66,8 +71,8 @@ func (middleware *optionsMiddleware) Response(context *gin.Context) {
 
 func CORS() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000") //TODO separate production and dev
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "https://localhost:3000") //TODO separate production and dev
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With, Access-Control-Allow-Origin, access-control-allow-origin")
 
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)

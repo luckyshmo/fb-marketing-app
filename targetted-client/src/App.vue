@@ -56,10 +56,11 @@ export default {
   -moz-osx-font-smoothing: grayscale !important; */
   /* text-align: center; */
   overflow: hidden;
-  color: aquamarine;
+  color: red;
   background-color: black !important;
 }
 html { 
+  overflow-y: auto;
   height: 100% !important;
   width: 100% !important;
   background-color: black !important;
@@ -186,6 +187,25 @@ html {
     border: none;
     background-color: #e4e4e4;
     color: #767676;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #6C1BD2;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #FF62B7;
 }
 
 </style>

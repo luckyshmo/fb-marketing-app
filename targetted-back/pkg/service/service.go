@@ -17,14 +17,21 @@ type User interface {
 	GetAll() ([]models.User, error)
 }
 
+type AdCompany interface {
+	CreateCompany(ac models.AdCompany) (uuid.UUID, error)
+	GetCompanyList(userId uuid.UUID) ([]models.AdCompany, error)
+}
+
 type Service struct {
 	Authorization
 	User
+	AdCompany
 }
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
 		User:          NewUserService(repos.User),
+		AdCompany:     NewAdCompanyService(repos.AdCompany),
 	}
 }

@@ -15,9 +15,11 @@ Vue.config.productionTip = false
 //this.$http для использования axios
 Vue.prototype.$http = Axios;
 
-const token = localStorage.getItem('user-token')
+const token = localStorage.getItem('token')
 if (token) {
   //добавляем токен во все запросы
+  Axios.defaults.headers.common['Authorization'] = token
+  Axios.defaults.headers.post['Authorization'] = token
   Vue.prototype.$http.defaults.headers.common['Authorization'] = token
 }
 

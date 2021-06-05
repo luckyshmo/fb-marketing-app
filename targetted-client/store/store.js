@@ -8,8 +8,10 @@ Vue.use(Vuex);
 let store = new Vuex.Store({
     state: {
         token: localStorage.getItem('token') || '',
+        adCompanyList: localStorage.getItem('user_company') || [],
         user : {},  
-        account : {},
+        account : localStorage.getItem('account') || {},
+        status: '',
     },
     mutations: {
         auth_request(state){
@@ -19,6 +21,12 @@ let store = new Vuex.Store({
             state.status = 'success'
             state.token = token
             state.user = user
+        },
+        set_user_company(state, companies){
+            state.adCompanyList = companies
+        },
+        save_request(state){
+            state.status = 'loading'
         },
         set_account(state, account){
             state.account = account
@@ -32,6 +40,48 @@ let store = new Vuex.Store({
         },
     },
     actions: {
+        saveCompany({commit}, companyData) {
+            return new Promise((resolve, reject) => {
+                commit('save_request')
+                axios({url: `${VUE_APP_API_URL}/api/company/`, data: companyData, method: 'POST' })
+                .then(resp => {
+                    console.log(resp)
+                    axios({url: `${VUE_APP_API_URL}/api/company/`, method: 'GET' })
+                    .then(resp => {
+                        console.log(resp)
+                        localStorage.setItem('user_company', resp.data)
+                        commit('set_user_company', resp.data)
+                        resolve(resp)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        reject(err)
+                    })
+                    // localStorage.setItem('user_company', resp.data) //?
+                    // commit('set_user_company', resp.data) //?
+                    resolve(resp)
+                })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
+            })
+        },
+        getCompanyList({commit}){
+            return new Promise((resolve, reject) => {
+                axios({url: `${VUE_APP_API_URL}/api/company/`, method: 'GET' })
+                .then(resp => {
+                    console.log(resp)
+                    localStorage.setItem('user_company', resp.data)
+                    commit('set_user_company', resp.data)
+                    resolve(resp)
+                })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
+            })
+        },
         login({commit}, user){
             return new Promise((resolve, reject) => {
                 commit('auth_request')
@@ -39,12 +89,13 @@ let store = new Vuex.Store({
                 // const baseUrl = `${process.env.VUE_APP_API_URL}/accounts`;
                 axios({url: `${VUE_APP_API_URL}/auth/sign-in`, data: user, method: 'POST' })
                 .then(resp => {
-                    console.log(resp.data)
                     const token = resp.data.token
                     const user = resp.data.user
+                    console.log("Token to AUTH:", token)
                     localStorage.setItem('token', token)
                     // Add the following line:
                     axios.defaults.headers.common['Authorization'] = token
+                    axios.defaults.headers.post['Authorization'] = token
                     commit('auth_success', token, user)
                     resolve(resp)
                 })
@@ -65,6 +116,7 @@ let store = new Vuex.Store({
                     const user = resp.data.user
                     localStorage.setItem('token', token)
                     // Add the following line:
+                    axios.defaults.headers.post['Authorization'] = token
                     axios.defaults.headers.common['Authorization'] = token
                     commit('auth_success', token, user)
                     resolve(resp)
@@ -85,6 +137,22 @@ let store = new Vuex.Store({
                 resolve()
             })
         },
+        // setAdCompanyList({commit}){
+            // let appToken = 'EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD'
+            // let companyId = 856950044859235
+            // let files = {
+            //     'page_id': this.form.fbPageId,
+            //     'permitted_tasks': '[\'MANAGE\', \'CREATE_CONTENT\', \'MODERATE\', \'ADVERTISE\', \'ANALYZE\']',
+            //     'access_token': appToken,
+            // }
+            // axios.get(`https://graph.facebook.com/v10.0/${companyId}/client_pages`, files)
+            // .then(resp) {
+
+            // }
+    //         	curl -G \
+	// -d "access_token=EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD" \
+	// "https://graph.facebook.com/v10.0/856950044859235/client_pages"
+        // },
         setAccount({commit}, token){
             if (token === '') {
                 localStorage.setItem('account', {})
@@ -141,6 +209,15 @@ let store = new Vuex.Store({
                 }
             }
             return pages
+        },
+        GET_COMPANY_LIST(state){
+            return state.adCompanyList
+        },
+        GET_USER(state){
+            return state.user
+        },
+        GET_TOKEN(state){
+            return state.token
         },
         isLoggedIn: state => !!state.token,
         authStatus: state => state.status,

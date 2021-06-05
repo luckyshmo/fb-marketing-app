@@ -17,14 +17,21 @@ type User interface {
 	GetAll() ([]models.User, error)
 }
 
+type AdCompany interface {
+	CreateCompany(ac models.AdCompany) (uuid.UUID, error)
+	GetCompanyList(userId uuid.UUID) ([]models.AdCompany, error)
+}
+
 type Repository struct {
 	Authorization
 	User
+	AdCompany
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: pg.NewAuthPostgres(db),
 		User:          pg.NewUserPG(db),
+		AdCompany:     pg.NewAdCompanyPg(db),
 	}
 }

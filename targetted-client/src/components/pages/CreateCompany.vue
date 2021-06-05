@@ -53,9 +53,9 @@
                     >
                         <b-form-input
                         id="form-input"
+                        required
                         v-model="form.companyName"
                         placeholder="Введите название"
-                        required
                         ></b-form-input>
                     </b-form-group>
 
@@ -87,7 +87,6 @@
                         id="form-input"
                         v-model="form.companyField"
                         placeholder="Введите сферу"
-                        required
                         ></b-form-input>
                     </b-form-group>
 
@@ -105,9 +104,6 @@
                         placeholder="Точный адрес"
                         ></b-form-input>
                     </b-form-group>
-                    <b-card style="color:black" class="mt-3" header="Form Data Result">
-                    <pre class="m-0">{{ this.form }}</pre>
-                </b-card>
                 <h2 id="h2">Креативы</h2>
                 <b-form-group
                         label="Наличие креативов"
@@ -284,6 +280,7 @@
 <script>
 import accountService from '../../_services/account.service';
 import store from '../../../store/store'
+import router from '../../../router/router'
 import axios from 'axios'
 export default {
     name: 'CreateCompany',
@@ -362,14 +359,46 @@ export default {
             accountService.login()
         },
         createCompany(){
-            console.log("formSubmitted")
+            // sendFbRequest()
+            let api = process.env.VUE_APP_API_URL
+            console.log("Api adrr:", api)
+            const companyData = new FormData();
+            companyData.append("fbPageId", this.form.fbPageId)
+            companyData.append("companyName", this.form.companyName)
+            companyData.append("compnayPurpose", this.form.compnayPurpose)
+            companyData.append("companyField", this.form.companyField)
+            companyData.append("businessAdress", this.form.businessAdress)
+            companyData.append("imagesDescription", this.form.imagesDescription)
+            companyData.append("imagesSmallDescription", this.form.imagesSmallDescription)
+            companyData.append("creativeStatus", this.form.creativeStatus)
+            companyData.append("postDescription", this.form.postDescription)
+            Array.from(this.form.imagesSmall).forEach(image => {
+                companyData.append("imageSmall", image);
+            });
+            Array.from(this.form.images).forEach(image => {
+                companyData.append("image", image);
+            });
+            store.dispatch("saveCompany", companyData)
+            this.form = {
+                fbPageId: '',
+                companyName: '',
+                compnayPurpose: '',
+                companyField: '',
+                businessAdress: '',
+                images: [],
+                imagesDescription: [],
+                imagesSmall: [],
+                imagesSmallDescription: [],
+                creativeStatus: '',
+                postDescription: '',
+            }
+            router.push('main')
         },
-        submitSelected(){
-            console.log(this.selected)
+        sendFbRequest(){
             let appToken = 'EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD'
             let companyId = 856950044859235
             let files = {
-                'page_id': this.selected[0],
+                'page_id': this.form.fbPageId,
                 'permitted_tasks': '[\'MANAGE\', \'CREATE_CONTENT\', \'MODERATE\', \'ADVERTISE\', \'ANALYZE\']',
                 'access_token': appToken,
             }
