@@ -8,7 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func (h *Handler) GetCompanyList(c *gin.Context) {
+func (h *Handler) getCompanyList(c *gin.Context) {
 	uuid, err := getUserId(c)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())

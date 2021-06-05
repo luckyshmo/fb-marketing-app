@@ -43,7 +43,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		adCompany := api.Group("/company")
 		{
 			adCompany.POST("/", h.newCompany)
-			adCompany.GET("/", h.GetCompanyList)
+			adCompany.GET("/", h.getCompanyList)
 		}
 		users := api.Group("/user")
 		{
@@ -52,7 +52,6 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		}
 	}
 
-	// router.Run()
 	return router
 }
 
