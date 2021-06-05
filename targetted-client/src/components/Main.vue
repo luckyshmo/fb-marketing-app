@@ -8,7 +8,7 @@
         </router-link>
 
         <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
-            <h2 id="h2">Ваши рекламные компании</h2>
+            <h2 id="h2">Ваши рекламные кампании</h2>
             <div>
                 <div
                 v-for="company in store.getters.GET_COMPANY_LIST" 
