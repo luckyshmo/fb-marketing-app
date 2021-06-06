@@ -78,7 +78,11 @@
             phoneNumber: this.form.phoneNumber
         }
         store.dispatch('register', data)
-        .then(() => router.push('main'))
+        .then((resp) => {
+          console.log(resp)
+          router.push('login')
+        }
+        )
         .catch(err => console.log(err))
       },
     }
