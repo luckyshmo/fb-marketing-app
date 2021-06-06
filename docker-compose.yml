@@ -12,9 +12,8 @@ services:
     environment:
      - NGINX_HOST=targetted.online
      - NGINX_PORT=80
-    networks:
-     - app-network
-
+    links:
+     - "targetted-back:back"
 
   postgres-targetted:
     image: "postgres:alpine"
@@ -27,8 +26,6 @@ services:
     volumes:
       - "pgdata_targetted:/var/lib/postgresql/data"
     command: ["postgres", "-c", "log_statement=all"]
-    networks:
-      - app-network
 
   targetted-back:
     build: ./targetted-back/
@@ -41,33 +38,5 @@ services:
       - ENV=dev
     depends_on:
       - postgres-targetted
-    networks:
-      - app-network
-
-  targetted-client:
-    build:
-      context: ./targetted-client
-    image: targetted-client # if we don't give image name, traefik won't create router 🤷‍♂️
-    # expose:
-    #   - "3000"
-    ports:
-      - "3000:3000"
-    environment:
-      # - VUE_APP_API_URL=0.0.0.0:8080
-      - VUE_APP_FACEBOOK_APP_ID=914216406086238
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.targetted-client.rule=Host(`malcorp.test`) && PathPrefix(`/targetted`)"
-    volumes:
-      - ./targetted-client:/app
-      - /app/node_modules #avoid overwriting node_modules
-    networks:
-      - app-network
-    # depends_on: 
-    #   - reverse-proxy    
 volumes:
   pgdata_targetted:
-
-networks:
-  app-network:
-    driver: bridge

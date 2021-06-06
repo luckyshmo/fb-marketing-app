@@ -1,5 +1,6 @@
 build:
 	docker-compose build
+	npm run build --prefix targetted-client/
 run:
 	docker-compose up -d
 stop:

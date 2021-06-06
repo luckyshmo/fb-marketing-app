@@ -70,7 +70,7 @@ func (middleware *optionsMiddleware) Response(context *gin.Context) {
 
 func CORS() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "https://targetted.online") //TODO separate production and dev
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "https://client.targetted.online") //TODO separate production and dev
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With, Access-Control-Allow-Origin, access-control-allow-origin")
 
 		if c.Request.Method == "OPTIONS" {
