@@ -250,7 +250,7 @@
                     </div>
                 </div>
                 <b-form-group
-                v-if="isCreative()"
+                v-if="form.imagesSmall.length > 0"
                         label="Описание под постом в ленте"
                         :label-cols="label_cols"
                         :content-cols="content_cols"

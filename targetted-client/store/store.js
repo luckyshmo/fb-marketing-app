@@ -211,6 +211,9 @@ let store = new Vuex.Store({
             return pages
         },
         GET_COMPANY_LIST(state){
+            if (state.adCompanyList == null){
+                return []
+            }
             return state.adCompanyList
         },
         GET_USER(state){

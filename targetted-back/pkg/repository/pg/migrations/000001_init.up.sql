@@ -15,7 +15,7 @@ CREATE TABLE ad_company
     fb_page_id                  varchar(255), --not null unique,
     business_address            varchar(255),
     field                       varchar(255),
-    name                        varchar(255),
+    name                        varchar(255) not null unique,
     purpose                     varchar(255),
     creative_status             varchar(255),
     images_description          varchar(255),
