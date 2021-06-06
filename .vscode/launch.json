@@ -30,6 +30,9 @@
                 "PG_DBNAME": "postgres",
                 "LOG_LEVEL": "debug",
                 "APP_PORT": "8080",
+
+                "CORS_HEADER": "https://localhost:3000",
+
                 "ENVI": "debug"
             }
         }

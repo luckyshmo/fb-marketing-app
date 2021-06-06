@@ -20,6 +20,8 @@ type Config struct {
 	PgUserName       string `envconfig:"PG_USERNAME"`
 	PgDBName         string `envconfig:"PG_DBNAME"`
 
+	CorsHeader string `envconfig:"CORS_HEADER"`
+
 	Environment string `envconfig:"ENVI"`
 
 	AppPort  string `envconfig:"APP_PORT"`
