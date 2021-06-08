@@ -19,7 +19,8 @@ type User interface {
 
 type AdCompany interface {
 	CreateCompany(ac models.AdCompany) (uuid.UUID, error)
-	GetCompanyList(userId uuid.UUID) ([]models.AdCompany, error)
+	GetCompanyList(userID uuid.UUID) ([]models.AdCompany, error)
+	GetCompanyByID(companyID string) (models.AdCompany, error)
 }
 
 type Repository struct {

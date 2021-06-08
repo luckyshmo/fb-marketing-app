@@ -18,6 +18,11 @@ func (s *AdCompanyService) CreateCompany(ac models.AdCompany) (uuid.UUID, error)
 	return s.repo.CreateCompany(ac)
 }
 
-func (s *AdCompanyService) GetCompanyList(userId uuid.UUID) ([]models.AdCompany, error) {
-	return s.repo.GetCompanyList(userId)
+func (s *AdCompanyService) GetCompanyList(userID uuid.UUID) ([]models.AdCompany, error) {
+	return s.repo.GetCompanyList(userID)
+}
+
+//TODO call image REPOS SERVICE
+func (s *AdCompanyService) GetCompanyByID(userID uuid.UUID, companyID string) (models.AdCompany, error) {
+	return s.repo.GetCompanyByID(companyID)
 }

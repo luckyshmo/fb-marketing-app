@@ -18,7 +18,7 @@ FROM alpine:latest
 ENV GOPATH=/go
 
 # copy bin
-COPY --from=builder $GOPATH/targetted-back $GOPATH/server/server.crt $GOPATH/server/server.key ./
+COPY --from=builder $GOPATH/targetted-back ./
 
 # copy PG migrations
 COPY --from=builder $GOPATH/pkg/repository/pg/migrations/*.sql ./migrations/

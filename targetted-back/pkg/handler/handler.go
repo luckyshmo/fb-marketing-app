@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/service"
@@ -43,8 +41,15 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	{
 		adCompany := api.Group("/company")
 		{
-			adCompany.POST("/", h.newCompany)
+			adCompany.POST("/", h.createAdCompany)
 			adCompany.GET("/", h.getCompanyList)
+			adCompany.GET("/:id", h.getCompanyByID)
+
+			images := adCompany.Group(":id/images")
+			{
+				images.GET("/", h.getCompanyImages)
+			}
+			// adCompany.DELETE("/:id")
 		}
 		users := api.Group("/user")
 		{
@@ -56,23 +61,10 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	return router
 }
 
-type optionsMiddleware struct {
-}
-
-func CreateOptionsMiddleware() *optionsMiddleware {
-	return &optionsMiddleware{}
-}
-
-func (middleware *optionsMiddleware) Response(context *gin.Context) {
-	if context.Request.Method == "OPTIONS" {
-		context.AbortWithStatus(http.StatusNoContent)
-	}
-}
-
 func CORS() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", config.Get().CorsHeader) //TODO separate production and dev
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With, Access-Control-Allow-Origin, access-control-allow-origin")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "*")
 
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)

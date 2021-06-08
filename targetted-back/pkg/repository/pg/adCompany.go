@@ -59,15 +59,18 @@ func (r *AdCompanyPg) GetCompanyList(userId uuid.UUID) ([]models.AdCompany, erro
 	var companyList []models.AdCompany
 	var companyListS []adCompanyScan
 
+	idString := userId.String()
+
 	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
 	field, name, purpose, creative_status,
-	images_description, images_small_description, post_description FROM %s`, adCompanyTable)
+	images_description, images_small_description, post_description FROM %s WHERE user_id = '%s'`, adCompanyTable, idString)
 	err := r.db.Select(&companyListS, query)
 
 	for _, c := range companyListS {
 		companyList = append(companyList, models.AdCompany{
 			Id:                     c.Id,
 			UserId:                 c.UserId,
+			FbPageId:               c.FbPageId,
 			BusinessAddress:        c.BusinessAddress,
 			CompanyField:           c.CompanyField,
 			CompanyName:            c.CompanyName,
@@ -80,4 +83,32 @@ func (r *AdCompanyPg) GetCompanyList(userId uuid.UUID) ([]models.AdCompany, erro
 	}
 
 	return companyList, err
+}
+
+func (r *AdCompanyPg) GetCompanyByID(companyID string) (models.AdCompany, error) {
+	var company models.AdCompany
+	var scanCompany adCompanyScan
+
+	idString := companyID
+
+	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
+	field, name, purpose, creative_status,
+	images_description, images_small_description, post_description FROM %s WHERE id = '%s'`, adCompanyTable, idString)
+	err := r.db.Get(&scanCompany, query)
+
+	company = models.AdCompany{
+		Id:                     scanCompany.Id,
+		UserId:                 scanCompany.UserId,
+		FbPageId:               scanCompany.FbPageId,
+		BusinessAddress:        scanCompany.BusinessAddress,
+		CompanyField:           scanCompany.CompanyField,
+		CompanyName:            scanCompany.CompanyName,
+		CompnayPurpose:         scanCompany.CompnayPurpose,
+		CreativeStatus:         scanCompany.CreativeStatus,
+		ImagesDescription:      strings.Split(scanCompany.ImagesDescription, ","),
+		ImagesSmallDescription: strings.Split(scanCompany.ImagesSmallDescription, ","),
+		PostDescription:        scanCompany.PostDescription,
+	}
+
+	return company, err
 }

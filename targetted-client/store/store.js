@@ -12,8 +12,16 @@ let store = new Vuex.Store({
         user : {},  
         account : localStorage.getItem('account') || {},
         status: '',
+        adCompany: {},
+        adCompanyImages: [],
     },
     mutations: {
+        set_adCompany(state, adCompany) {
+            state.adCompany = adCompany
+        },
+        set_adCompanyImages(state, images){
+            state.adCompanyImages = images
+        },
         auth_request(state){
             state.status = 'loading'
         },
@@ -42,13 +50,11 @@ let store = new Vuex.Store({
     actions: {
         saveCompany({commit}, companyData) {
             return new Promise((resolve, reject) => {
-                commit('save_request')
+                commit('save_request') //TOdo
                 axios({url: `${VUE_APP_API_URL}/api/company/`, data: companyData, method: 'POST' })
                 .then(resp => {
-                    console.log(resp)
                     axios({url: `${VUE_APP_API_URL}/api/company/`, method: 'GET' })
                     .then(resp => {
-                        console.log(resp)
                         localStorage.setItem('user_company', resp.data)
                         commit('set_user_company', resp.data)
                         resolve(resp)
@@ -71,7 +77,6 @@ let store = new Vuex.Store({
             return new Promise((resolve, reject) => {
                 axios({url: `${VUE_APP_API_URL}/api/company/`, method: 'GET' })
                 .then(resp => {
-                    console.log(resp)
                     localStorage.setItem('user_company', resp.data)
                     commit('set_user_company', resp.data)
                     resolve(resp)
@@ -82,18 +87,43 @@ let store = new Vuex.Store({
                 })
             })
         },
+        getCompanyByID({commit}, id){
+            function getCompany(id) {
+                return axios({url: `${VUE_APP_API_URL}/api/company/${id}`, method: 'GET' })
+                .then(resp => {
+                    return resp.data
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            }
+            function getCompanyImages(id) {
+                return axios({url: `${VUE_APP_API_URL}/api/company/${id}/images/`, method: 'GET' })
+                .then(resp => {
+                    return resp.data
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            }
+            Promise.all([getCompany(id), getCompanyImages(id)])
+            .then(function (results) {
+                const companyData = results[0]
+                const imagesNames = results[1]
+                console.log(companyData)
+                console.log("im", imagesNames)
+                commit('set_adCompany', companyData)
+                commit('set_adCompanyImages', imagesNames) //TODO
+            });
+        },
         login({commit}, user){
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                console.log(user)                
-                // const baseUrl = `${process.env.VUE_APP_API_URL}/accounts`;
                 axios({url: `${VUE_APP_API_URL}/auth/sign-in`, data: user, method: 'POST' })
                 .then(resp => {
                     const token = resp.data.token
                     const user = resp.data.user
-                    console.log("Token to AUTH:", token)
                     localStorage.setItem('token', token)
-                    // Add the following line:
                     axios.defaults.headers.common['Authorization'] = token
                     axios.defaults.headers.post['Authorization'] = token
                     commit('auth_success', token, user)
@@ -115,7 +145,6 @@ let store = new Vuex.Store({
                     const token = resp.data.token
                     const user = resp.data.user
                     localStorage.setItem('token', token)
-                    // Add the following line:
                     axios.defaults.headers.post['Authorization'] = token
                     axios.defaults.headers.common['Authorization'] = token
                     commit('auth_success', token, user)
@@ -188,10 +217,17 @@ let store = new Vuex.Store({
                 commit("set_account", account)
                 
 
-              });
+            });
         }
     },
     getters: {
+        GET_COMPANY_DATA(state){            
+            let data = {
+                c: state.adCompany,
+                i: state.adCompanyImages,
+            }
+            return data
+        },
         GET_FB_ACCOUNT(state){
             return state.account
         },
@@ -211,10 +247,10 @@ let store = new Vuex.Store({
             return pages
         },
         GET_COMPANY_LIST(state){
-            if (state.adCompanyList == null){
-                return []
+            if (Array.isArray(state.adCompanyList)){
+                return state.adCompanyList
             }
-            return state.adCompanyList
+            return []
         },
         GET_USER(state){
             return state.user

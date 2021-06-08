@@ -45,6 +45,14 @@ let router = new Router({
         requiresAuth: true
       }
     },
+    {
+      path: '/createCompany/*',
+      name: 'editCompany',
+      component: createCompany,
+      meta: {
+        requiresAuth: true
+      }
+    },
   ]
 })
 

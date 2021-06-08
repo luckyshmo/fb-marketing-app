@@ -6,6 +6,7 @@ services:
       - ./ssl:/etc/ssl
       - ./nginx/conf.d/:/etc/nginx/
       - ./targetted-client/dist:/front
+      - ./images:/front/images
     ports:
      - "80:80"
      - "443:443"
@@ -32,6 +33,8 @@ services:
     command: ./targetted-back
     image: targetted-back
     env_file: ./targetted-back/.env.dev
+    volumes:
+      - ./images:/images
     ports:
       - "8080:8080"
     environment:

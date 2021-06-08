@@ -5,7 +5,7 @@
             <router-link :to="{name: 'mainPage'}">
                 <p id="navigation-text" style="margin:0;">← К списку кампаний</p>
             </router-link>
-            <h1 id="h1">Создание кампании</h1>
+            <h1 id="h1">{{ editing ? 'Изменение' : 'Создание' }} кампании</h1>
             <h2 id="h2">Доступ к кабинету Facebook</h2>
             <p id="p1">Привяжите свой аккаунт Facebook к targetted, чтобы натсроить и запустить рекламунюу компанию </p>
             <b-button 
@@ -287,6 +287,7 @@ export default {
     data() {
         return{
             store,
+            editing: false,
             label_cols: 3,
             content_cols: 9,
             form: {
@@ -302,6 +303,16 @@ export default {
                 creativeStatus: '',
                 postDescription: '',
             },
+        }
+    },
+    created() {
+        console.log("router params", this.$route.params)
+        if ("pathMatch" in this.$route.params) {
+            this.editing = true;
+            console.log("id");
+        } else {
+            console.log("ups");
+            // this
         }
     },
     methods: {
@@ -359,9 +370,8 @@ export default {
             accountService.login()
         },
         createCompany(){
-            // sendFbRequest()
-            let api = process.env.VUE_APP_API_URL
-            console.log("Api adrr:", api)
+            // sendFbRequest() //TODO
+            console.log("Page ID", this.form.fbPageId)
             const companyData = new FormData();
             companyData.append("fbPageId", this.form.fbPageId)
             companyData.append("companyName", this.form.companyName)
@@ -373,26 +383,32 @@ export default {
             companyData.append("creativeStatus", this.form.creativeStatus)
             companyData.append("postDescription", this.form.postDescription)
             Array.from(this.form.imagesSmall).forEach(image => {
-                companyData.append("imageSmall", image);
+                companyData.append("imageSmall", image); //TODO не прилетают.
             });
             Array.from(this.form.images).forEach(image => {
                 companyData.append("image", image);
             });
             store.dispatch("saveCompany", companyData)
-            this.form = {
-                fbPageId: '',
-                companyName: '',
-                compnayPurpose: '',
-                companyField: '',
-                businessAdress: '',
-                images: [],
-                imagesDescription: [],
-                imagesSmall: [],
-                imagesSmallDescription: [],
-                creativeStatus: '',
-                postDescription: '',
-            }
-            router.push('main')
+            .then((resp)=>{
+                console.log(resp.data) //TODO log company id
+                this.form = {
+                    fbPageId: '',
+                    companyName: '',
+                    compnayPurpose: '',
+                    companyField: '',
+                    businessAdress: '',
+                    images: [],
+                    imagesDescription: [],
+                    imagesSmall: [],
+                    imagesSmallDescription: [],
+                    creativeStatus: '',
+                    postDescription: '',
+                }
+                router.push('main')
+            })
+            .catch(err => {
+                console.log(err) //TODO popup
+            })
         },
         sendFbRequest(){
             let appToken = 'EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD'
