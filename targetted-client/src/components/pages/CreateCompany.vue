@@ -476,6 +476,8 @@ export default {
                     creativeStatus: '',
                     postDescription: '',
                 }
+                this.isInfoPopupVisible = false
+                this.isRequestSent = false
                 router.push('main')
             })
             .catch(err => {
