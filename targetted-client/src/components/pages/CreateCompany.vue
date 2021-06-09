@@ -288,8 +288,8 @@ export default {
         return{
             store,
             isEdit: store.getters.GET_COMPANY_IS_EDIT,
-            label_cols: 3,
-            content_cols: 9,
+            label_cols: this.getWidth().label,
+            content_cols: this.getWidth().content,
             form: {
                 fbPageId: '',
                 companyName: '',
@@ -316,6 +316,26 @@ export default {
         }
     },
     methods: {
+        getWidth() {
+        let width = Math.max(
+            document.body.scrollWidth,
+            document.documentElement.scrollWidth,
+            document.body.offsetWidth,
+            document.documentElement.offsetWidth,
+            document.documentElement.clientWidth
+        );
+        console.log("Page width", width)
+        if (width < 570){
+            return {
+                label:12,
+                content:12
+            };
+        }
+        return {
+                label:3,
+                content:9
+        };
+        },
         removeImageSmall(image){
             this.remove(this.form.imagesSmall, image);
             for (let i = 0; i < this.form.imagesSmall.length; i++) {

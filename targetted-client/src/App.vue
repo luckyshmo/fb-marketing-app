@@ -184,6 +184,17 @@ html {
   font-weight: 400;
   font-size: 1em;
 }
+@media (max-width: 570px) {
+    #input-group1{
+        margin-top: 10px;
+        color: black;
+        display:grid;
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: normal;
+        font-weight: 400;
+    }
+}
 .form-input{
     height: 48px;
     border-radius: 8px !important;
