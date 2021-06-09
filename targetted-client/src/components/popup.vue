@@ -7,11 +7,7 @@
       margin-top: -5px;">
           <b-icon
           @click="closePopup"
-          style="height: 35px;
-                  width: 35px;
-                  background: #e4e4e4;
-                  border-radius: 17.5px;
-                  cursor: pointer;"
+          class="x-button"
           icon="x"></b-icon>
       </div>
       <div class="popup-header">
@@ -21,10 +17,6 @@
       </div>
       <div class="popup-content">
         <slot></slot>
-      </div>
-      <div class="popup-footer">
-        <p>Whatsup</p>
-        <p>Telegram</p>
       </div>
     </div>
   </div>
@@ -88,7 +80,7 @@
     top:50%;
     left:50%;
     width:640px;
-    height:470px;
+    min-height:470px;
     margin-left:-320px;   /* negative half of width above */
     margin-top:-235px;   /* negative half of height above */
     background-color: white;
@@ -111,4 +103,15 @@
   .popup-content {
     padding: 40px;
   }
+  @media (max-width: 600px) {
+    .popup{
+      width:320px;
+      margin-left:-160px;   /* negative half of width above */
+      padding: 15px;
+    }
+    .popup-footer {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+}
 </style>
