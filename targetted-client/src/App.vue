@@ -113,7 +113,7 @@ html {
   margin: 0px 50px 0px 50px !important; 
   background-color: white !important;
   border-radius: 25px !important;
-  width:600px;
+  max-width:600px;
   margin:0 auto !important;
 }
 
@@ -135,7 +135,6 @@ html {
   font-style: normal;
   font-weight: 900;
   font-size: 3.5em;
-
   color: #000000;
 }
 #h1-centered {
@@ -184,15 +183,23 @@ html {
   font-weight: 400;
   font-size: 1em;
 }
-@media (max-width: 570px) {
+.x-button{
+  height: 35px;
+  width: 35px;
+  color: black;
+  background: #e4e4e4;
+  border-radius: 17.5px;
+  cursor: pointer;
+}
+@media (max-width: 600px) {
     #input-group1{
-        margin-top: 10px;
-        color: black;
         display:grid;
-        font-family: Montserrat;
-        font-style: normal;
-        font-weight: normal;
-        font-weight: 400;
+    }
+    #h1-centered {
+      font-size: 2.5em;
+    }
+    #h1 {
+      font-size: 2.5em;
     }
 }
 .form-input{
@@ -205,21 +212,6 @@ html {
 
 ::-webkit-scrollbar {
   width: 0px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #6C1BD2;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #FF62B7;
 }
 
 </style>

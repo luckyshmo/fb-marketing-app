@@ -3,12 +3,15 @@
         <div class="nav" id="left">
           <popup
               v-if="isInfoPopupVisible"
-              rightBtnTitle="Add to cart"
               popupTitle="Напишите нам"
               @closePopup="closeInfoPopup"
           >
             <div>
               <p id="p1">Свяжитесь с нами, если у вас возникли вопросы или предложения :)</p>
+              <div class="popup-footer">
+                <p>Whatsup</p>
+                <p>Telegram</p>
+              </div>
             </div>
           </popup>
         <p v-if="isLoggedIn" @click="showPopupInfo">Написать нам</p>
@@ -58,7 +61,7 @@ import store from '../../store/store'
     font-style: normal;
     font-weight: normal;
     font-size: 1.3em;
-    line-height: 100%;
+    line-height: 50px;
 
     letter-spacing: 0.8em;
     text-transform: uppercase;
@@ -69,6 +72,30 @@ import store from '../../store/store'
     -webkit-text-fill-color: transparent;
 
     width: 50%;
+}
+@media (max-width: 600px) {
+    .logo{
+      font-size: 1.2em;
+      letter-spacing: 0.7em;
+    }
+}
+@media (max-width: 510px) {
+    .logo{
+      font-size: 1.1em;
+      letter-spacing: 0.6em;
+    }
+}
+@media (max-width: 464px) {
+  .logo{
+    font-size: 1em;
+    letter-spacing: 0.5em;
+  }
+}
+@media (max-width: 450px) {
+    .logo{
+      font-size: 1em;
+      letter-spacing: 0.4em;
+    }
 }
 .nav {
     cursor: pointer;

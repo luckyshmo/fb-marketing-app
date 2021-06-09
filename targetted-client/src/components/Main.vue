@@ -9,26 +9,35 @@
 
         <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
             <h2 id="h2">Ваши рекламные кампании</h2>
-            <p>{{store.getters.GET_COMPANY_DATA.c}}</p>
-            <div 
-            v-for="(image, key) in store.getters.GET_COMPANY_DATA.i" 
-            :key="key">
-                <div class="image-preview">
-                    <div 
-                    style="position: absolute;
-                    margin-right: 140px;
-                    margin-top: -15px;">
-                    </div>
-                    <img v-bind:src="getImageByName(image)" />
-                </div>
-            </div>
             <div>
                 <div
                 v-for="company in store.getters.GET_COMPANY_LIST" 
                 :key="company.Id">
+                    <popup
+                        v-if="isInfoPopupVisible"
+                        rightBtnTitle="Add to cart"
+                        :popupTitle="company.CompanyName"
+                        @closePopup="closeInfoPopup"
+                    >
+                        <div>
+                            <pre class="m-0" style="text-align: left">{{ store.getters.GET_COMPANY_DATA.c }}</pre>
+                            <div 
+                            v-for="(image, key) in store.getters.GET_COMPANY_DATA.i" 
+                            :key="key">
+                                <div class="image-preview">
+                                    <div 
+                                    style="position: absolute;
+                                    margin-right: 140px;
+                                    margin-top: -15px;">
+                                    </div>
+                                    <img v-bind:src="getImageByName(image)" />
+                                </div>
+                            </div>
+                        </div>
+                    </popup>
                     <div 
                     class="c-div"
-                    @click="editCompany(company)"
+                    @click="showPopupInfo(company.Id)"
                     >
                         <div class='l'>
                             <p class="c-name">
@@ -50,16 +59,27 @@
 </template>
 <script>
 import router from '../../router/router'
-// import axios from 'axios'
+import popup from './popup.vue'
 import store from '../../store/store'
 export default {
+    components: {
+      popup
+    },
     name: 'CreateCompany',
     data() {
         return{
             store,
+            isInfoPopupVisible: false,
         }
     },
     methods: {
+        closeInfoPopup() {
+            this.isInfoPopupVisible = false;
+        },
+        showPopupInfo(id) {
+            this.printComData(id)
+            this.isInfoPopupVisible = true;
+        },
         editCompany(company){
             console.log("company to edit", company)
             store.dispatch("setAdCompanyIsEdit", true)
