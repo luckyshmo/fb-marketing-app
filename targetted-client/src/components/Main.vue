@@ -26,30 +26,30 @@
                 <div
                 v-for="company in store.getters.GET_COMPANY_LIST" 
                 :key="company.Id">
-                    <router-link :to="{path: `/createCompany/${company.Id}`, params: { company: company}, query: { type: 'edit' }}">
-                        <div 
-                        class="c-div"
-                        >
-                            <div class='l'>
-                                <p class="c-name">
-                                    {{company.CompanyName}}
-                                </p>
-                            </div>
-                            <div class='r'>
-                                <div class="c-status">
-                                    <div class="elipse" id="red" v-if="!isFb(company)"></div>
-                                    <div class="elipse" id="green" v-if="isFb(company)"></div>
-                                    <p class="c-status-text">{{getStatus(company)}}</p>
-                                </div>
+                    <div 
+                    class="c-div"
+                    @click="editCompany(company)"
+                    >
+                        <div class='l'>
+                            <p class="c-name">
+                                {{company.CompanyName}}
+                            </p>
+                        </div>
+                        <div class='r'>
+                            <div class="c-status">
+                                <div class="elipse" id="red" v-if="!isFb(company)"></div>
+                                <div class="elipse" id="green" v-if="isFb(company)"></div>
+                                <p class="c-status-text">{{getStatus(company)}}</p>
                             </div>
                         </div>
-                    </router-link>
+                    </div>
                 </div>                
             </div>
         </div>
     </div>
 </template>
 <script>
+import router from '../../router/router'
 // import axios from 'axios'
 import store from '../../store/store'
 export default {
@@ -60,6 +60,11 @@ export default {
         }
     },
     methods: {
+        editCompany(company){
+            console.log("company to edit", company)
+            store.dispatch("setAdCompanyIsEdit", true)
+            router.push('/createCompany')
+        },
         isFb(company){
             return company.FbPageId.length > 0
         },

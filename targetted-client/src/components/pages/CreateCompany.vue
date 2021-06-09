@@ -5,7 +5,7 @@
             <router-link :to="{name: 'mainPage'}">
                 <p id="navigation-text" style="margin:0;">← К списку кампаний</p>
             </router-link>
-            <h1 id="h1">{{ editing ? 'Изменение' : 'Создание' }} кампании</h1>
+            <h1 id="h1">{{ isEdit ? 'Изменение' : 'Создание' }} кампании</h1>
             <h2 id="h2">Доступ к кабинету Facebook</h2>
             <p id="p1">Привяжите свой аккаунт Facebook к targetted, чтобы натсроить и запустить рекламунюу компанию </p>
             <b-button 
@@ -52,7 +52,7 @@
                         label-for="input-horizontal"
                     >
                         <b-form-input
-                        id="form-input"
+                        class="form-input"
                         required
                         v-model="form.companyName"
                         placeholder="Введите название"
@@ -84,7 +84,7 @@
                         label-for="input-horizontal"
                     >
                         <b-form-input
-                        id="form-input"
+                        class="form-input"
                         v-model="form.companyField"
                         placeholder="Введите сферу"
                         ></b-form-input>
@@ -99,7 +99,7 @@
                         description="Нужен только для офлайн бизнеса"
                     >
                         <b-form-input
-                        id="form-input"
+                        class="form-input"
                         v-model="form.businessAdress"
                         placeholder="Точный адрес"
                         ></b-form-input>
@@ -177,7 +177,7 @@
                             label-for="input-horizontal"
                         >
                             <b-form-input
-                            id="form-input"
+                            class="form-input"
                             v-model="form.imagesDescription[index]"
                             placeholder="Введите текст"
                             ></b-form-input>
@@ -242,7 +242,7 @@
                             label-for="input-horizontal"
                         >
                             <b-form-input
-                            id="form-input"
+                            class="form-input"
                             v-model="form.imagesSmallDescription[index]"
                             placeholder="Введите текст"
                             ></b-form-input>
@@ -258,7 +258,7 @@
                         label-for="input-horizontal"
                     >
                         <b-form-textarea
-                        id="form-input"
+                        class="form-input"
                         style="height: 100px"
                         v-model="form.postDescription"
                         placeholder="Введите текст"
@@ -287,7 +287,7 @@ export default {
     data() {
         return{
             store,
-            editing: false,
+            isEdit: store.getters.GET_COMPANY_IS_EDIT,
             label_cols: 3,
             content_cols: 9,
             form: {

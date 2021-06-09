@@ -63,7 +63,13 @@ func (h *Handler) getCompanyImages(c *gin.Context) {
 
 	path := "./images/" + userID.String() + "/" + companyIDstring
 
-	files, err := ioutil.ReadDir(path)
+	files, err := ioutil.ReadDir(path + storiesFolder)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	filesSmall, err := ioutil.ReadDir(path + postsFolder)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -71,7 +77,10 @@ func (h *Handler) getCompanyImages(c *gin.Context) {
 
 	var names []string
 	for _, f := range files {
-		names = append(names, f.Name())
+		names = append(names, storiesFolder+f.Name())
+	}
+	for _, f := range filesSmall {
+		names = append(names, postsFolder+f.Name())
 	}
 
 	sendStatusResponse(c, http.StatusOK, names)
@@ -98,6 +107,11 @@ func (h *Handler) getCompanyByID(c *gin.Context) {
 
 	sendStatusResponse(c, http.StatusOK, company)
 }
+
+const (
+	storiesFolder = "/stories"
+	postsFolder   = "/posts"
+)
 
 func (h *Handler) createAdCompany(c *gin.Context) {
 
@@ -136,7 +150,12 @@ func (h *Handler) createAdCompany(c *gin.Context) {
 
 	path := "images/" + userID.String() + "/" + companyID.String()
 
-	err = os.MkdirAll(path, os.ModePerm)
+	err = os.MkdirAll(path+storiesFolder, os.ModePerm)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, "Fail creating folder struct for images")
+		return
+	}
+	err = os.MkdirAll(path+postsFolder, os.ModePerm)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, "Fail creating folder struct for images")
 		return
@@ -145,7 +164,15 @@ func (h *Handler) createAdCompany(c *gin.Context) {
 	imagesMap := c.Request.MultipartForm.File
 	imagesArr := imagesMap["image"]
 	for _, multipartImage := range imagesArr {
-		err = writeMultiPartImage(multipartImage, path)
+		err = writeMultiPartImage(multipartImage, path+storiesFolder)
+		if err != nil {
+			sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+			return
+		}
+	}
+	imagesSmallArr := imagesMap["imageSmall"]
+	for _, multipartImage := range imagesSmallArr {
+		err = writeMultiPartImage(multipartImage, path+postsFolder)
 		if err != nil {
 			sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 			return
