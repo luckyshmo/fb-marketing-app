@@ -68,7 +68,8 @@ html {
 
 /* Global styles */
 #main-button {
-    color:whitesmoke;
+    color:white;
+     outline: none !important;
     background-color: #6C1BD2;
     border-radius: 8px;
     padding: 12px 28px;
@@ -79,9 +80,10 @@ html {
 }
 
 #submit-button{
+   outline: none !important;
     position: absolute;
     margin-top: 75px; /* //TODO dependce on content-wrapper */
-    color:whitesmoke;
+    color:white;
     /* margin-top: 15px; */
     background-color: #FF62B7;
     border-radius: 8px;
@@ -94,13 +96,13 @@ html {
 
 #content {
   padding: 40px;
-  max-width: 1200px;
+  max-width: 1220px;
   margin: 0% auto 0% auto !important; 
-  background-color: whitesmoke !important;
+  background-color: white !important;
   border-radius: 25px !important;
 }
 #content-wrapper {
-  max-width: 1200px;
+  max-width: 1220px;
   margin: 0% auto 0% auto !important; 
   background-color: #6C1BD2 !important;
   border-radius: 25px !important;
@@ -109,7 +111,7 @@ html {
 #content-login {
   padding: 40px;
   margin: 0px 50px 0px 50px !important; 
-  background-color: whitesmoke !important;
+  background-color: white !important;
   border-radius: 25px !important;
   width:600px;
   margin:0 auto !important;
@@ -182,11 +184,12 @@ html {
   font-weight: 400;
   font-size: 1em;
 }
-#form-input{
-    border-radius: 8px;
-    border: none;
-    background-color: #e4e4e4;
-    color: #767676;
+.form-input{
+    height: 48px;
+    border-radius: 8px !important;
+    border: none !important;
+    background-color: #F3F3F3 !important;
+    color: #767676 !important;
 }
 
 ::-webkit-scrollbar {

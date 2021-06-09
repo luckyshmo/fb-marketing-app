@@ -7,7 +7,7 @@
                 id="input-group"
             >
                 <b-form-input
-                id="form-input"
+                class="form-input"
                 v-model="form.email"
                 type="email"
                 placeholder="Электронная почта"
@@ -19,7 +19,7 @@
                 id="input-group"
             >
                 <b-form-input
-                id="form-input"
+                class="form-input"
                 v-model="form.password"
                 placeholder="Пароль"
                 required

@@ -1,7 +1,17 @@
 <template>
     <div id="container">
         <div class="nav" id="left">
-            <p>Написать нам</p>
+          <popup
+              v-if="isInfoPopupVisible"
+              rightBtnTitle="Add to cart"
+              popupTitle="Напишите нам"
+              @closePopup="closeInfoPopup"
+          >
+            <div>
+              <p id="p1">Свяжитесь с нами, если у вас возникли вопросы или предложения :)</p>
+            </div>
+          </popup>
+        <p v-if="isLoggedIn" @click="showPopupInfo">Написать нам</p>
         </div>
         <div class="logo" id="middle">
             <p>Targetted</p>
@@ -12,12 +22,27 @@
     </div>
 </template>
 <script>
+import popup from './popup.vue'
 import store from '../../store/store'
   export default {
+    components: {
+      popup
+    },
+    data() {
+      return {
+        isInfoPopupVisible: false
+      }
+    },
     computed : {
       isLoggedIn : function(){ return store.getters.isLoggedIn}
     },
     methods: {
+      closeInfoPopup() {
+        this.isInfoPopupVisible = false;
+      },
+      showPopupInfo() {
+        this.isInfoPopupVisible = true;
+      },
       logout: function () {
         store.dispatch('logout')
         .then(() => {
