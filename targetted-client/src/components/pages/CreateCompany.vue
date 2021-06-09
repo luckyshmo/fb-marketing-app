@@ -6,42 +6,99 @@
                 <p id="navigation-text" style="margin:0;">← К списку кампаний</p>
             </router-link>
             <h1 id="h1">{{ isEdit ? 'Изменение' : 'Создание' }} кампании</h1>
-            <h2 id="h2">Доступ к кабинету Facebook</h2>
-            <p id="p1">Привяжите свой аккаунт Facebook к targetted, чтобы натсроить и запустить рекламунюу компанию </p>
-            <b-button 
-                v-if="!(store.getters.GET_FB_PAGES.length > 0)"
-                variant="primary"
-                id="main-button"
-                @click="loginFB"
-            >
-                Настроить доступ
-            </b-button>
-            <b-button 
-                v-if="store.getters.GET_FB_PAGES.length > 0"
-                variant="primary"
-                id="main-button"
-                @click="logout"
-            >
-                Разлогин
-            </b-button>
             <div>
                 <b-form @submit.prevent="createCompany()">
-                    <div v-if="store.getters.GET_FB_PAGES.length > 0">
-                        <h2 id="h2">Выбор страницы</h2>
-                        <b-form-group
-                        label="Выберите страницу"
-                        :label-cols="label_cols"
-                        :content-cols="content_cols"
-                        id="input-group1"
-                        label-for="input-horizontal"
+                    <h2 id="h2">Доступ к кабинету Facebook</h2>
+                    <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
+                        <p id="p1">Привяжите свой аккаунт Facebook к targetted, чтобы натсроить и запустить рекламунюу компанию </p>
+                        <b-button 
+                            v-if="!(store.getters.GET_FB_PAGES.length > 0)"
+                            variant="primary"
+                            id="main-button"
+                            @click="loginFB"
                         >
-                            <b-form-radio-group
-                                v-model="form.fbPageId"
-                                :options="store.getters.GET_FB_PAGES"
-                            ></b-form-radio-group>
-                        </b-form-group>
+                            У меня есть бизнес-аккаунт
+                        </b-button>
+                        <popup
+                        v-if="isInfoPopupVisible"
+                        popupTitle="Инструкция по созданию бизнесс-аккаунта"
+                        @closePopup="closeInfoPopup"
+                        >
+                            <div>
+                            <p id="p1">Тип инструкция все дела</p>
+                            </div>
+                        </popup>
+                        <b-button 
+                            v-if="!(store.getters.GET_FB_PAGES.length > 0)"
+                            variant="primary"
+                            id="main-button"
+                            style="margin-left: 15px;"
+                            @click="showPopupInfo"
+                        >
+                            Нет бизнесс-аккаунта
+                        </b-button>
                     </div>
-
+                    <div v-if="store.getters.GET_FB_PAGES.length > 0 && !isRequestSent && !pageSubmitted">
+                        <div>
+                            <p id="p1">Выберите страницу которую хотите привязать</p>
+                            <b-form-group
+                            label="Выберите страницу"
+                            :label-cols="label_cols"
+                            :content-cols="content_cols"
+                            id="input-group1"
+                            label-for="input-horizontal"
+                            >
+                                <b-form-radio-group
+                                    v-model="form.fbPageId"
+                                    :options="store.getters.GET_FB_PAGES"
+                                ></b-form-radio-group>
+                            </b-form-group>
+                        </div>
+                        <b-button 
+                            variant="primary"
+                            id="main-button"
+                            @click="sendFbRequest()"
+                        >
+                            Привязать
+                        </b-button>
+                    </div>
+                    <div v-if="isRequestSent && !pageSubmitted">
+                        <p id="p1">Зайди в аккаунт на Facebook и подтверди привязку страницы в сообщениях</p>
+                        <b-button 
+                            variant="primary"
+                            id="main-button"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://facebook.com"
+                        >
+                        Перейти в facebook
+                        </b-button>
+                        <b-button 
+                            variant="primary"
+                            id="main-button"
+                            style="margin-left: 15px"
+                            @click="checkPageSubmitted()"
+                        >
+                            Я подтвердил в сообщениях
+                        </b-button>
+                    </div>
+                    <div v-if="pageSubmitted">
+                        <div class="c-status" style="margin-top: 30px;">
+                            <div class="elipse" id="green"></div>
+                            <p class="c-status-text" style="text-align: left;" 
+                            >Страница {{form.fbPageId}} привязана к targetted</p>
+                        </div>
+                    </div>
+                    <b-button 
+                        v-if="store.getters.GET_FB_PAGES.length > 0"
+                        variant="primary"
+                        id="main-button"
+                        style="margin-top: 30px; background: #F3F3F3; color: black"
+                        @click="logout"
+                    >
+                        Привзять другой аккаунт
+                    </b-button>
+                    
                     <h2 id="h2">Основное</h2>
 
                     <b-form-group
@@ -138,10 +195,7 @@
                                 margin-top: -15px;">
                                     <b-icon
                                     @click="removeImage(image)"
-                                    style="height: 35px;
-                                            width: 35px;
-                                            background: #e4e4e4;
-                                            border-radius: 17.5px;"
+                                    class="x-button"
                                     icon="x"></b-icon>
                                 </div>
                                 <img id="preview" :ref="'image'" />
@@ -203,10 +257,7 @@
                             margin-top: -15px;">
                                 <b-icon
                                 @click="removeImageSmall(image)"
-                                style="height: 35px;
-                                        width: 35px;
-                                        background: #e4e4e4;
-                                        border-radius: 17.5px;"
+                                class="x-button"
                                 icon="x"></b-icon>
                             </div>
                             <img id="preview-small" :ref="'imageSmall'" />
@@ -281,15 +332,22 @@
 import accountService from '../../_services/account.service';
 import store from '../../../store/store'
 import router from '../../../router/router'
-import axios from 'axios'
+// import axios from 'axios'
+import popup from '../popup.vue'
 export default {
     name: 'CreateCompany',
+    components: {
+      popup
+    },
     data() {
         return{
             store,
-            isEdit: store.getters.GET_COMPANY_IS_EDIT,
+            isInfoPopupVisible: false,
+            // isEdit: store.getters.GET_COMPANY_IS_EDIT,
             label_cols: this.getWidth().label,
             content_cols: this.getWidth().content,
+            isRequestSent: false,
+            pageSubmitted: false,
             form: {
                 fbPageId: '',
                 companyName: '',
@@ -317,24 +375,30 @@ export default {
     },
     methods: {
         getWidth() {
-        let width = Math.max(
-            document.body.scrollWidth,
-            document.documentElement.scrollWidth,
-            document.body.offsetWidth,
-            document.documentElement.offsetWidth,
-            document.documentElement.clientWidth
-        );
-        console.log("Page width", width)
-        if (width < 570){
+            let width = Math.max(
+                document.body.scrollWidth,
+                document.documentElement.scrollWidth,
+                document.body.offsetWidth,
+                document.documentElement.offsetWidth,
+                document.documentElement.clientWidth
+            );
+            console.log("Page width", width)
+            if (width < 570){
+                return {
+                    label:12,
+                    content:12
+                };
+            }
             return {
-                label:12,
-                content:12
+                    label:3,
+                    content:9
             };
-        }
-        return {
-                label:3,
-                content:9
-        };
+        },
+        closeInfoPopup() {
+            this.isInfoPopupVisible = false;
+        },
+        showPopupInfo() {
+            this.isInfoPopupVisible = true;
         },
         removeImageSmall(image){
             this.remove(this.form.imagesSmall, image);
@@ -431,16 +495,32 @@ export default {
             })
         },
         sendFbRequest(){
-            let appToken = 'EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD'
-            let companyId = 856950044859235
-            let files = {
-                'page_id': this.form.fbPageId,
-                'permitted_tasks': '[\'MANAGE\', \'CREATE_CONTENT\', \'MODERATE\', \'ADVERTISE\', \'ANALYZE\']',
-                'access_token': appToken,
-            }
-            axios.post(`https://graph.facebook.com/v10.0/${companyId}/client_pages`, files)
+            // let appToken = 'EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD'
+            // let companyId = 856950044859235
+            // let files = {
+            //     'page_id': this.form.fbPageId,
+            //     'permitted_tasks': '[\'MANAGE\', \'CREATE_CONTENT\', \'MODERATE\', \'ADVERTISE\', \'ANALYZE\']',
+            //     'access_token': appToken,
+            // }
+            // axios.post(`https://graph.facebook.com/v10.0/${companyId}/client_pages`, files)
+            // .then(
+            //     this.isRequestSent = true
+            // )
+            // .catch(err => {
+            //     console.log(err) //TODO popup
+            // })
+
+            this.isRequestSent = true
+        },
+        checkPageSubmitted(){
+             //         	curl -G \
+	// -d "access_token=EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD" \
+	// "https://graph.facebook.com/v10.0/856950044859235/client_pages"
+            this.pageSubmitted = true
         },
         logout(){
+            this.pageSubmitted = false
+            this.isRequestSent = false
             accountService.logout()
         },
         onFileSelected(e) {
@@ -475,18 +555,6 @@ export default {
                 reader.readAsDataURL(this.form.imagesSmall[i]);
             }
         },
-        onUpload() {
-            const fd = new FormData();
-            fd.append('image', this.selectedFiles[0], this.selectedFiles[0].name)
-            axios.post('http://localhost:3000/api/file', fd, {
-                onUploadProgress: uploadEvent => {
-                    console.log("Upload Progress: " + Math.round(uploadEvent.loaded / uploadEvent.total * 100) + "%")
-                }
-            })
-            .then(res => {
-                console.log(res)
-            })
-        }
     }
 }
 </script>
