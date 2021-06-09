@@ -5,7 +5,7 @@
             <router-link :to="{name: 'mainPage'}">
                 <p id="navigation-text" style="margin:0;">← К списку кампаний</p>
             </router-link>
-            <h1 id="h1">{{ isEdit ? 'Изменение' : 'Создание' }} кампании</h1>
+            <h1 id="h1">Создание кампании</h1>
             <div>
                 <b-form @submit.prevent="createCompany()">
                     <h2 id="h2">Доступ к кабинету Facebook</h2>
@@ -343,7 +343,6 @@ export default {
         return{
             store,
             isInfoPopupVisible: false,
-            // isEdit: store.getters.GET_COMPANY_IS_EDIT,
             label_cols: this.getWidth().label,
             content_cols: this.getWidth().content,
             isRequestSent: false,
@@ -363,16 +362,6 @@ export default {
             },
         }
     },
-    created() {
-        console.log("router params", this.$route.params)
-        if ("pathMatch" in this.$route.params) {
-            this.editing = true;
-            console.log("id");
-        } else {
-            console.log("ups");
-            // this
-        }
-    },
     methods: {
         getWidth() {
             let width = Math.max(
@@ -382,7 +371,6 @@ export default {
                 document.documentElement.offsetWidth,
                 document.documentElement.clientWidth
             );
-            console.log("Page width", width)
             if (width < 570){
                 return {
                     label:12,

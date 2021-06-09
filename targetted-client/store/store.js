@@ -14,12 +14,8 @@ let store = new Vuex.Store({
         status: '',
         adCompany: {},
         adCompanyImages: [],
-        companyIsEdit: false,
     },
     mutations: {
-        set_companyIsEdit(state, isEdit){
-            state.companyIsEdit = isEdit
-        },
         set_adCompany(state, adCompany) {
             state.adCompany = adCompany
         },
@@ -52,9 +48,6 @@ let store = new Vuex.Store({
         },
     },
     actions: {
-        setAdCompanyIsEdit({commit}, isEdit){
-            commit('set_companyIsEdit', isEdit)
-        },
         saveCompany({commit}, companyData) {
             return new Promise((resolve, reject) => {
                 commit('save_request') //TOdo
@@ -228,9 +221,6 @@ let store = new Vuex.Store({
         }
     },
     getters: {
-        GET_COMPANY_IS_EDIT(state){
-            return state.companyIsEdit
-        },
         GET_COMPANY_DATA(state){            
             let data = {
                 c: state.adCompany,
