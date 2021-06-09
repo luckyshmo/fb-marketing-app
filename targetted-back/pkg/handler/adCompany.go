@@ -109,8 +109,8 @@ func (h *Handler) getCompanyByID(c *gin.Context) {
 }
 
 const (
-	storiesFolder = "/stories"
-	postsFolder   = "/posts"
+	storiesFolder = "/stories/"
+	postsFolder   = "/posts/"
 )
 
 func (h *Handler) createAdCompany(c *gin.Context) {
