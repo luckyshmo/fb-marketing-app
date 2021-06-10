@@ -126,15 +126,15 @@ func (h *Handler) createAdCompany(c *gin.Context) {
 	v := c.Request.MultipartForm.Value
 	company := models.AdCompany{
 		UserId:                 userID,
-		FbPageId:               v["fbPageId"][0],
-		BusinessAddress:        v["businessAdress"][0],
-		CompanyField:           v["companyField"][0],
-		CompanyName:            v["companyName"][0],
-		CompnayPurpose:         v["compnayPurpose"][0],
-		CreativeStatus:         v["creativeStatus"][0],
-		ImagesDescription:      v["imagesDescription"],
-		ImagesSmallDescription: v["imagesSmallDescription"],
-		PostDescription:        v["postDescription"][0],
+		FbPageId:               v["FbPageId"][0],
+		BusinessAddress:        v["BusinessAdress"][0],
+		CompanyField:           v["CompanyField"][0],
+		CompanyName:            v["CompanyName"][0],
+		CompnayPurpose:         v["CompnayPurpose"][0],
+		CreativeStatus:         v["CreativeStatus"][0],
+		ImagesDescription:      v["ImagesDescription"],
+		ImagesSmallDescription: v["ImagesSmallDescription"],
+		PostDescription:        v["PostDescription"][0],
 	}
 	logrus.Print(company)
 
@@ -162,7 +162,7 @@ func (h *Handler) createAdCompany(c *gin.Context) {
 	}
 
 	imagesMap := c.Request.MultipartForm.File
-	imagesArr := imagesMap["image"]
+	imagesArr := imagesMap["Image"]
 	for _, multipartImage := range imagesArr {
 		err = writeMultiPartImage(multipartImage, path+storiesFolder)
 		if err != nil {
@@ -170,7 +170,7 @@ func (h *Handler) createAdCompany(c *gin.Context) {
 			return
 		}
 	}
-	imagesSmallArr := imagesMap["imageSmall"]
+	imagesSmallArr := imagesMap["ImageSmall"]
 	for _, multipartImage := range imagesSmallArr {
 		err = writeMultiPartImage(multipartImage, path+postsFolder)
 		if err != nil {

@@ -12,6 +12,9 @@
                 <div
                 v-for="company in store.getters.GET_COMPANY_LIST" 
                 :key="company.Id">
+                <router-link :to="{path: '/company-balance/'+ company.Id}">
+                    <b-button variant="primary" id="main-button">Экран оплаты</b-button>
+                </router-link>
                 <edit-company
                     :form="company"
                 >
@@ -61,7 +64,6 @@
     </div>
 </template>
 <script>
-import router from '../../router/router'
 import popup from './popup.vue'
 import store from '../../store/store'
 import editCompany from './pages/EditCompany.vue'
@@ -84,11 +86,6 @@ export default {
         showPopupInfo(id) {
             this.printComData(id)
             this.isInfoPopupVisible = true;
-        },
-        editCompany(company){
-            console.log("company to edit", company)
-            store.dispatch("setAdCompanyIsEdit", true)
-            router.push('/createCompany')
         },
         isFb(company){
             return company.FbPageId.length > 0
