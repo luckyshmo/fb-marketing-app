@@ -6,13 +6,16 @@
         <router-link :to="{path: '/createCompany'}">
             <b-button variant="primary" id="main-button">Создать компанию</b-button>
         </router-link>
-
         <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
             <h2 id="h2">Ваши рекламные кампании</h2>
             <div>
                 <div
                 v-for="company in store.getters.GET_COMPANY_LIST" 
                 :key="company.Id">
+                <edit-company
+                    :form="company"
+                >
+                </edit-company>
                     <popup
                         v-if="isInfoPopupVisible"
                         rightBtnTitle="Add to cart"
@@ -61,9 +64,11 @@
 import router from '../../router/router'
 import popup from './popup.vue'
 import store from '../../store/store'
+import editCompany from './pages/EditCompany.vue'
 export default {
     components: {
-      popup
+      popup,
+      editCompany
     },
     name: 'CreateCompany',
     data() {

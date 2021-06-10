@@ -24,7 +24,7 @@
 
 <script>
   export default {
-    name: "v-popup",
+    name: "popup",
     props: {
       popupTitle: {
         type: String,
