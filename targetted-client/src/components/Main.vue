@@ -11,40 +11,10 @@
             <div>
                 <div
                 v-for="company in store.getters.GET_COMPANY_LIST" 
-                :key="company.Id">
-                <router-link :to="{path: '/company-balance/'+ company.Id}">
-                    <b-button variant="primary" id="main-button">Экран оплаты</b-button>
-                </router-link>
-                <edit-company
-                    :form="company"
+                :key="company.Id"
                 >
-                </edit-company>
-                    <popup
-                        v-if="isInfoPopupVisible"
-                        rightBtnTitle="Add to cart"
-                        :popupTitle="company.CompanyName"
-                        @closePopup="closeInfoPopup"
-                    >
-                        <div>
-                            <pre class="m-0" style="text-align: left">{{ store.getters.GET_COMPANY_DATA.c }}</pre>
-                            <div 
-                            v-for="(image, key) in store.getters.GET_COMPANY_DATA.i" 
-                            :key="key">
-                                <div class="image-preview">
-                                    <div 
-                                    style="position: absolute;
-                                    margin-right: 140px;
-                                    margin-top: -15px;">
-                                    </div>
-                                    <img v-bind:src="getImageByName(image)" />
-                                </div>
-                            </div>
-                        </div>
-                    </popup>
-                    <div 
-                    class="c-div"
-                    @click="showPopupInfo(company.Id)"
-                    >
+                    <router-link :to="{path: '/company-balance/'+ company.Id}">
+                    <div class="c-div">
                         <div class='l'>
                             <p class="c-name">
                                 {{company.CompanyName}}
@@ -58,35 +28,24 @@
                             </div>
                         </div>
                     </div>
+                    </router-link>
                 </div>                
             </div>
         </div>
     </div>
 </template>
 <script>
-import popup from './popup.vue'
 import store from '../../store/store'
-import editCompany from './pages/EditCompany.vue'
 export default {
     components: {
-      popup,
-      editCompany
     },
     name: 'CreateCompany',
     data() {
         return{
             store,
-            isInfoPopupVisible: false,
         }
     },
     methods: {
-        closeInfoPopup() {
-            this.isInfoPopupVisible = false;
-        },
-        showPopupInfo(id) {
-            this.printComData(id)
-            this.isInfoPopupVisible = true;
-        },
         isFb(company){
             return company.FbPageId.length > 0
         },

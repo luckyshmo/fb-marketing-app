@@ -28,6 +28,8 @@
                 Привязать другой аккаунт
             </b-button>
 
+            <p>{{company}}</p>
+
             <b-form @submit.prevent="startCompany()">
                 <h2 id="h2">Рекламный бюджет</h2>
                 <b-form-group
@@ -79,6 +81,8 @@
 </template>
 <script>
 import store from '../../../store/store'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
+import axios from 'axios'
 export default {
     data(){
         return {
@@ -86,17 +90,17 @@ export default {
             label_cols: this.getWidth().label,
             content_cols: this.getWidth().content,
             company: {
-                fbPageId: '',
-                companyName: '',
-                compnayPurpose: '',
-                companyField: '',
-                businessAdress: '',
-                images: [],
-                imagesDescription: [],
-                imagesSmall: [],
-                imagesSmallDescription: [],
-                creativeStatus: '',
-                postDescription: '',
+                FbPageId: 'dEFAULT',
+                CompanyName: '',
+                CompnayPurpose: '',
+                CompanyField: '',
+                BusinessAdress: '',
+                Images: [],
+                ImagesDescription: [],
+                ImagesSmall: [],
+                ImagesSmallDescription: [],
+                CreativeStatus: '',
+                PostDescription: '',
             },
             balanceForm: {
                 currentAmount: 4500,
@@ -106,9 +110,16 @@ export default {
         }
     },
     watch: {
-        $route(to) {
-            console.log(to.params.id)
-            store.dispatch("getCompanyByID", to.params.id)
+        $route(to, from) {
+            console.log("from", from)
+            if (typeof to.params.id !== undefined){
+                axios({url: `${VUE_APP_API_URL}/api/company/${to.params.id}`, method: 'GET' })
+                    .then(resp => {
+                        console.log("setAdd company", resp.data)
+                        this.company = resp.data
+                    })
+            }
+            
         }
     },
     methods: {
@@ -116,14 +127,14 @@ export default {
             console.log(this.balanceForm)
         },
         getStatus(company){
-            if (company.fbPageId.length === 0) {
+            if (company.FbPageId.length === 0) {
                 return "FB не подключен"
             }
             return "Запущена"
         },
         isFb(company){
-            console.log(company)
-            return company.fbPageId.length > 0
+            console.log("try status", company.CompanyName)
+            return company.FbPageId.length > 0
         },
         getWidth() {
             let width = Math.max(
