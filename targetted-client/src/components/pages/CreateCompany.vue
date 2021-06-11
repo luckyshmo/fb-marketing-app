@@ -5,7 +5,7 @@
             <router-link :to="{name: 'mainPage'}">
                 <p id="navigation-text" style="margin:0;">← К списку кампаний</p>
             </router-link>
-            <h1 id="h1">Создание кампании</h1>
+            <h1 id="h1">{{isEdit ? "Редактирование":"Создание"}} кампании</h1>
             <div>
                 <b-form @submit.prevent="createCompany()">
                     <h2 id="h2">Доступ к кабинету Facebook</h2>
@@ -49,7 +49,7 @@
                             label-for="input-horizontal"
                             >
                                 <b-form-radio-group
-                                    v-model="form.FbPageId"
+                                    v-model="company.FbPageId"
                                     :options="store.getters.GET_FB_PAGES"
                                 ></b-form-radio-group>
                             </b-form-group>
@@ -86,11 +86,11 @@
                         <div class="c-status" style="margin-top: 30px;">
                             <div class="elipse" id="green"></div>
                             <p class="c-status-text" style="text-align: left;" 
-                            >Страница {{form.FbPageId}} привязана к targetted</p>
+                            >Страница {{company.FbPageId}} привязана к targetted</p>
                         </div>
                     </div>
                     <b-button 
-                        v-if="store.getters.GET_FB_PAGES.length > 0"
+                        v-if="store.getters.GET_FB_PAGES.length > 0 || isRequestSent && pageSubmitted"
                         variant="primary"
                         id="main-button"
                         style="margin-top: 30px; background: #F3F3F3; color: black"
@@ -111,7 +111,7 @@
                         <b-form-input
                         class="form-input"
                         required
-                        v-model="form.CompanyName"
+                        v-model="company.CompanyName"
                         placeholder="Введите название"
                         ></b-form-input>
                     </b-form-group>
@@ -124,7 +124,7 @@
                         label-for="input-horizontal"
                     >
                         <b-form-radio-group
-                            v-model="form.CompnayPurpose"
+                            v-model="company.CompnayPurpose"
                             :options="[
                                 'Сообщения в директ',
                                 'Лиды через лидформу',
@@ -142,7 +142,7 @@
                     >
                         <b-form-input
                         class="form-input"
-                        v-model="form.CompanyField"
+                        v-model="company.CompanyField"
                         placeholder="Введите сферу"
                         ></b-form-input>
                     </b-form-group>
@@ -157,7 +157,7 @@
                     >
                         <b-form-input
                         class="form-input"
-                        v-model="form.BusinessAdress"
+                        v-model="company.BusinessAdress"
                         placeholder="Точный адрес"
                         ></b-form-input>
                     </b-form-group>
@@ -170,7 +170,7 @@
                         label-for="input-horizontal"
                 >
                     <b-form-radio-group
-                        v-model="form.CreativeStatus"
+                        v-model="company.CreativeStatus"
                         :options="[
                             'Есть рекламные креативы',
                             'Создать рекламные креативы'
@@ -186,7 +186,7 @@
                 >
                     <div id="block">
                         <div 
-                        v-for="(Image, key) in form.Images" 
+                        v-for="(Image, key) in company.Images" 
                         :key="key">
                             <div id="Image-preview">
                                 <div 
@@ -202,7 +202,7 @@
                             </div>
                         </div>
                         
-                        <div v-if="this.form.Images.length < 5">
+                        <div v-if="ImagesSmall.length < 5">
                             <input 
                             style="display: none"
                             type="file" 
@@ -221,7 +221,7 @@
                 </b-form-group>
                 <div v-if="isCreative()">
                     <div 
-                    v-for="(Image, index) in form.Images" 
+                    v-for="(Image, index) in company.Images" 
                     :key="Image.name">
                         <b-form-group
                             :label="textOnSlide(index)"
@@ -232,7 +232,7 @@
                         >
                             <b-form-input
                             class="form-input"
-                            v-model="form.ImagesDescription[index]"
+                            v-model="company.ImagesDescription[index]"
                             placeholder="Введите текст"
                             ></b-form-input>
                         </b-form-group>
@@ -248,7 +248,7 @@
 
                     <div id="block">
                     <div 
-                    v-for="(Image, key) in form.ImagesSmall" 
+                    v-for="(Image, key) in company.ImagesSmall" 
                     :key="key">
                         <div id="Image-preview">
                             <div 
@@ -263,7 +263,7 @@
                             <img id="preview-small" :ref="'ImageSmall'" />
                         </div>
                     </div>
-                    <div v-if="this.form.ImagesSmall.length < 5">
+                    <div v-if="ImagesSmall.length < 5">
                         <input 
                         style="display: none"
                         type="file" 
@@ -283,7 +283,7 @@
                 </b-form-group>
                 <div v-if="isCreative()">
                     <div 
-                    v-for="(Image, index) in form.ImagesSmall" 
+                    v-for="(Image, index) in company.ImagesSmall" 
                     :key="Image.name">
                         <b-form-group
                             :label="textOnImage(index)"
@@ -294,14 +294,14 @@
                         >
                             <b-form-input
                             class="form-input"
-                            v-model="form.ImagesSmallDescription[index]"
+                            v-model="company.ImagesSmallDescription[index]"
                             placeholder="Введите текст"
                             ></b-form-input>
                         </b-form-group>
                     </div>
                 </div>
                 <b-form-group
-                v-if="form.ImagesSmall.length > 0"
+                v-if="ImagesSmall.length > 0"
                         label="Описание под постом в ленте"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
@@ -311,7 +311,7 @@
                         <b-form-textarea
                         class="form-input"
                         style="height: 100px"
-                        v-model="form.PostDescription"
+                        v-model="company.PostDescription"
                         placeholder="Введите текст"
                         ></b-form-textarea>
                     </b-form-group>
@@ -332,7 +332,8 @@
 import accountService from '../../_services/account.service';
 import store from '../../../store/store'
 import router from '../../../router/router'
-// import axios from 'axios'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
+import axios from 'axios'
 import popup from '../popup.vue'
 export default {
     name: 'CreateCompany',
@@ -347,19 +348,56 @@ export default {
             content_cols: this.getWidth().content,
             isRequestSent: false,
             pageSubmitted: false,
-            form: {
+            ImagesSmall: [],
+            Images: [],
+            company: {
                 FbPageId: '',
                 CompanyName: '',
                 CompnayPurpose: '',
                 CompanyField: '',
                 BusinessAdress: '',
-                Images: [],
                 ImagesDescription: [],
-                ImagesSmall: [],
                 ImagesSmallDescription: [],
                 CreativeStatus: '',
                 PostDescription: '',
+                CurrentAmount: 0,
+                DailyAmount: 0,
+                Days: 0,
             },
+        }
+    },
+    watch: {
+        $route(to) {
+            console.log("id", to.params.id, to)
+            if (!(typeof to.params.id === 'undefined')){
+                axios({url: `${VUE_APP_API_URL}/api/company/${to.params.id}`, method: 'GET' })
+                .then(resp => {
+                    console.log("cSet", resp.data)
+                    this.company = resp.data
+                    if (this.company.FbPageId != ""){
+                        this.isRequestSent = true
+                        this.pageSubmitted = true
+                    }
+                })
+            }
+        }
+    },
+    computed: {
+        isEdit() {
+            return this.$route.query.isEdit
+        }
+    },
+    beforeMount(){
+        if (!(typeof this.$router.history.current.params.id === 'undefined')){
+            axios({url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`, method: 'GET' })
+            .then(resp => {
+                console.log(resp.data)
+                this.company = resp.data
+                if (this.company.FbPageId != ""){
+                    this.isRequestSent = true
+                    this.pageSubmitted = true
+                }
+            }) 
         }
     },
     methods: {
@@ -389,25 +427,25 @@ export default {
             this.isInfoPopupVisible = true;
         },
         removeImageSmall(Image){
-            this.remove(this.form.ImagesSmall, Image);
-            for (let i = 0; i < this.form.ImagesSmall.length; i++) {
+            this.remove(this.company.ImagesSmall, Image);
+            for (let i = 0; i < this.ImagesSmall.length; i++) {
                 let reader = new FileReader();
                 reader.onload = () => {
                     this.$refs.ImageSmall[i].src = reader.result;
                 };
 
-                reader.readAsDataURL(this.form.ImagesSmall[i]);
+                reader.readAsDataURL(this.ImagesSmall[i]);
             }
         },
         removeImage(Image){
-            this.remove(this.form.Images, Image)
-            for (let i = 0; i < this.form.Images.length; i++) {
+            this.remove(this.company.Images, Image)
+            for (let i = 0; i < this.ImagesSmall.length; i++) {
                 let reader = new FileReader();
                 reader.onload = () => {
                     this.$refs.Image[i].src = reader.result;
                 };
 
-                reader.readAsDataURL(this.form.Images[i]);
+                reader.readAsDataURL(this.ImagesSmall[i]);
             }
         },
         remove(arr, img) {
@@ -430,7 +468,7 @@ export default {
             return "Картинки для поста в ленте"
         },
         isCreative(){
-            return this.form.CreativeStatus === 'Создать рекламные креативы'
+            return this.company.CreativeStatus === 'Создать рекламные креативы'
         },
         textOnSlide(index){
             return `Текст на слайде ${index+1}`
@@ -443,21 +481,21 @@ export default {
         },
         createCompany(){
             // sendFbRequest() //TODO
-            console.log("Page ID", this.form.FbPageId)
+            console.log("Page ID", this.company.FbPageId)
             const companyData = new FormData();
-            companyData.append("FbPageId", this.form.FbPageId)
-            companyData.append("CompanyName", this.form.CompanyName)
-            companyData.append("CompnayPurpose", this.form.CompnayPurpose)
-            companyData.append("CompanyField", this.form.CompanyField)
-            companyData.append("BusinessAdress", this.form.BusinessAdress)
-            companyData.append("ImagesDescription", this.form.ImagesDescription)
-            companyData.append("ImagesSmallDescription", this.form.ImagesSmallDescription)
-            companyData.append("CreativeStatus", this.form.CreativeStatus)
-            companyData.append("PostDescription", this.form.PostDescription)
-            Array.from(this.form.ImagesSmall).forEach(Image => {
+            companyData.append("FbPageId", this.company.FbPageId)
+            companyData.append("CompanyName", this.company.CompanyName)
+            companyData.append("CompnayPurpose", this.company.CompnayPurpose)
+            companyData.append("CompanyField", this.company.CompanyField)
+            companyData.append("BusinessAdress", this.company.BusinessAdress)
+            companyData.append("ImagesDescription", this.company.ImagesDescription)
+            companyData.append("ImagesSmallDescription", this.company.ImagesSmallDescription)
+            companyData.append("CreativeStatus", this.company.CreativeStatus)
+            companyData.append("PostDescription", this.company.PostDescription)
+            Array.from(this.company.ImagesSmall).forEach(Image => {
                 companyData.append("ImageSmall", Image); //TODO не прилетают.
             });
-            Array.from(this.form.Images).forEach(Image => {
+            Array.from(this.company.Images).forEach(Image => {
                 companyData.append("Image", Image);
             });
             store.dispatch("saveCompany", companyData)
@@ -488,7 +526,7 @@ export default {
             // let appToken = 'EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD'
             // let companyId = 856950044859235
             // let files = {
-            //     'page_id': this.form.FbPageId,
+            //     'page_id': this.company.FbPageId,
             //     'permitted_tasks': '[\'MANAGE\', \'CREATE_CONTENT\', \'MODERATE\', \'ADVERTISE\', \'ANALYZE\']',
             //     'access_token': appToken,
             // }
@@ -517,32 +555,32 @@ export default {
             let selectedFiles = e.target.files;
             let len = Math.min(selectedFiles.length, 5)
             for (let i = 0; i < len; i++) {
-                this.form.Images.push(selectedFiles[i]);
+                this.ImagesSmall.push(selectedFiles[i]);
             }
 
-            for (let i = 0; i < this.form.Images.length; i++) {
+            for (let i = 0; i < this.ImagesSmall.length; i++) {
                 let reader = new FileReader();
                 reader.onload = () => {
                     this.$refs.Image[i].src = reader.result;
                 };
 
-                reader.readAsDataURL(this.form.Images[i]);
+                reader.readAsDataURL(this.ImagesSmall[i]);
             }
         },
         onSmallFileSelected(e) {
             let selectedFiles = e.target.files;
             let len = Math.min(selectedFiles.length, 5)
             for (let i = 0; i < len; i++) {
-                this.form.ImagesSmall.push(selectedFiles[i]);
+                this.ImagesSmall.push(selectedFiles[i]);
             }
 
-            for (let i = 0; i < this.form.ImagesSmall.length; i++) {
+            for (let i = 0; i < this.ImagesSmall.length; i++) {
                 let reader = new FileReader();
                 reader.onload = () => {
                     this.$refs.ImageSmall[i].src = reader.result;
                 };
 
-                reader.readAsDataURL(this.form.ImagesSmall[i]);
+                reader.readAsDataURL(this.ImagesSmall[i]);
             }
         },
     }

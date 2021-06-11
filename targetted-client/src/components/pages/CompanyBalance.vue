@@ -6,7 +6,7 @@
             </router-link>
             <div class="company-status">
                 <div class='left'>
-                    <h1 id="h1">Название кампании</h1>
+                    <h1 id="h1">{{company.CompanyName}}</h1>
                 </div>
                 <div class='right'>
                     <div class="c-status">
@@ -19,16 +19,12 @@
     
             <h2 id="h2">Общий баланс</h2>
             <b-button 
-                v-if="store.getters.GET_FB_PAGES.length > 0"
                 variant="primary"
                 id="main-button"
-                style="margin-top: 30px; background: #F3F3F3; color: black"
-                @click="logout"
+                style="background: #F3F3F3; color: black"
             >
-                Привязать другой аккаунт
+                Пополнить баланс
             </b-button>
-
-            <p>{{company}}</p>
 
             <b-form @submit.prevent="startCompany()">
                 <h2 id="h2">Рекламный бюджет</h2>
@@ -42,7 +38,7 @@
                 >
                     <b-form-input
                     class="form-input"
-                    v-model="balanceForm.dailyAmount"
+                    v-model="company.dailyAmount"
                     placeholder="Введите сумму"
                     ></b-form-input>
                 </b-form-group>
@@ -55,26 +51,28 @@
                 >
                     <b-form-input
                     class="form-input"
-                    v-model="balanceForm.days"
+                    v-model="company.days"
                     placeholder="Введите кодчиество дней"
                     ></b-form-input>
                 </b-form-group>
             </b-form>
-            <h2 id="h2">Настройки кампании</h2>
-            <b-button 
-                        v-if="store.getters.GET_FB_PAGES.length > 0"
-                        variant="primary"
-                        id="main-button"
-                        style="margin-top: 30px; background: #F3F3F3; color: black"
-                        @click="logout"
-            >
-                Привязать другой аккаунт
-            </b-button>
+            <div>
+                <h2 id="h2">Настройки кампании</h2>
+                <router-link :to="{path: '/company/'+ company.Id, query: { isEdit: true }}">
+                <b-button 
+                    variant="primary"
+                    id="main-button"
+                    style="margin-top: 20px; background: #F3F3F3; color: black"
+                >
+                    Настройки компании
+                </b-button>
+                </router-link>
+            </div>
             <b-button
                 id="submit-button"
                 type="submit"
             >
-                Запустить кампанию
+                {{isEdit ? "Обновить":"Запустить"}} кампанию
             </b-button>
         </div>
     </div>
@@ -90,7 +88,7 @@ export default {
             label_cols: this.getWidth().label,
             content_cols: this.getWidth().content,
             company: {
-                FbPageId: 'dEFAULT',
+                FbPageId: '',
                 CompanyName: '',
                 CompnayPurpose: '',
                 CompanyField: '',
@@ -101,26 +99,32 @@ export default {
                 ImagesSmallDescription: [],
                 CreativeStatus: '',
                 PostDescription: '',
+                CurrentAmount: 0,
+                DailyAmount: 0,
+                Days: 0,
             },
-            balanceForm: {
-                currentAmount: 4500,
-                dailyAmount: 1000,
-                days: 3,
-            }
         }
     },
     watch: {
-        $route(to, from) {
-            console.log("from", from)
-            if (typeof to.params.id !== undefined){
+        $route(to) {
+            if (!(typeof to.params.id === 'undefined')){
                 axios({url: `${VUE_APP_API_URL}/api/company/${to.params.id}`, method: 'GET' })
-                    .then(resp => {
-                        console.log("setAdd company", resp.data)
-                        this.company = resp.data
-                    })
+                .then(resp => {
+                    this.company = resp.data
+                })
             }
-            
         }
+    },
+    computed: {
+        isEdit() {
+            return this.$route.query.isEdit
+        }
+    },
+    beforeMount(){
+        axios({url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`, method: 'GET' })
+        .then(resp => {
+            this.company = resp.data
+        }) 
     },
     methods: {
         startCompany(){
@@ -133,7 +137,6 @@ export default {
             return "Запущена"
         },
         isFb(company){
-            console.log("try status", company.CompanyName)
             return company.FbPageId.length > 0
         },
         getWidth() {

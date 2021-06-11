@@ -16,11 +16,6 @@ let router = new Router({
       redirect: "/main" //TODO NOT FOUND?
     },
     {
-      path: "/company-balance/:id",
-      name: "company-balance",
-      component: CompanyBalance
-    },
-    {
       path: '/',
       name: 'default',
       redirect: "/main"
@@ -44,20 +39,25 @@ let router = new Router({
       }
     },
     {
-      path: '/createCompany',
-      name: 'createCompany',
+      path: '/company',
+      name: 'create-company',
       component: createCompany,
       meta: {
         requiresAuth: true
       }
     },
     {
-      path: '/createCompany/*',
-      name: 'editCompany',
+      path: '/company/:id',
+      name: 'edit-company',
       component: createCompany,
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: "/company-balance/:id",
+      name: "company-balance",
+      component: CompanyBalance
     },
   ]
 })

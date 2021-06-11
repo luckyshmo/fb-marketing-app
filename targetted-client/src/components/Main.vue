@@ -3,7 +3,7 @@
         <h1 id="h1">Главная</h1>
         <h2 id="h2">Ваши рекламные кампании</h2>
         <p id="p1">Создайте рекламную кампанию, чтобы приводить новых клиентов в ваш бизнес</p>
-        <router-link :to="{path: '/createCompany'}">
+        <router-link :to="{path: '/company'}">
             <b-button variant="primary" id="main-button">Создать компанию</b-button>
         </router-link>
         <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
@@ -13,21 +13,21 @@
                 v-for="company in store.getters.GET_COMPANY_LIST" 
                 :key="company.Id"
                 >
-                    <router-link :to="{path: '/company-balance/'+ company.Id}">
-                    <div class="c-div">
-                        <div class='l'>
-                            <p class="c-name">
-                                {{company.CompanyName}}
-                            </p>
-                        </div>
-                        <div class='r'>
-                            <div class="c-status">
-                                <div class="elipse" id="red" v-if="!isFb(company)"></div>
-                                <div class="elipse" id="green" v-if="isFb(company)"></div>
-                                <p class="c-status-text">{{getStatus(company)}}</p>
+                    <router-link :to="{path: '/company-balance/'+ company.Id, query: { isEdit: true }}">
+                        <div class="c-div">
+                            <div class='l'>
+                                <p class="c-name">
+                                    {{company.CompanyName}}
+                                </p>
+                            </div>
+                            <div class='r'>
+                                <div class="c-status">
+                                    <div class="elipse" id="red" v-if="!isFb(company)"></div>
+                                    <div class="elipse" id="green" v-if="isFb(company)"></div>
+                                    <p class="c-status-text">{{getStatus(company)}}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </router-link>
                 </div>                
             </div>
@@ -37,9 +37,7 @@
 <script>
 import store from '../../store/store'
 export default {
-    components: {
-    },
-    name: 'CreateCompany',
+    name: "main",
     data() {
         return{
             store,
@@ -83,7 +81,7 @@ export default {
     height: 100px;
     width:100%;
     overflow: hidden;
-  position: relative;
+    position: relative;
 }
 .l {
   position: absolute;
