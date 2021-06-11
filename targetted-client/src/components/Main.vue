@@ -43,6 +43,11 @@ export default {
             store,
         }
     },
+    watch: {
+        $route() {
+            store.dispatch("getCompanyList")
+        }
+    },
     methods: {
         isFb(company){
             return company.FbPageId.length > 0
