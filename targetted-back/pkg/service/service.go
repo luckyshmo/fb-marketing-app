@@ -18,9 +18,11 @@ type User interface {
 }
 
 type AdCompany interface {
-	CreateCompany(ac models.AdCompany) (uuid.UUID, error)
-	GetCompanyList(userID uuid.UUID) ([]models.AdCompany, error)
-	GetCompanyByID(userID uuid.UUID, companyID string) (models.AdCompany, error)
+	Create(ac models.AdCompany) (uuid.UUID, error)
+	Delete(ID string) error
+	Update(ac models.AdCompany, ID string) (uuid.UUID, error)
+	GetAll(userID uuid.UUID) ([]models.AdCompany, error)
+	GetByID(userID uuid.UUID, companyID string) (models.AdCompany, error)
 }
 
 type Service struct {

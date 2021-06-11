@@ -37,7 +37,7 @@
 <script>
 import store from '../../store/store'
 export default {
-    name: "main",
+    name: "main-page",
     data() {
         return{
             store,

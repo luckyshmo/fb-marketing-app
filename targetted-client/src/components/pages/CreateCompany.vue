@@ -5,6 +5,9 @@
             <router-link :to="{name: 'mainPage'}">
                 <p id="navigation-text" style="margin:0;">← К списку кампаний</p>
             </router-link>
+            <b-card class="mt-3" header="Form Data Result">
+                <pre class="m-0">{{ company }}</pre>
+            </b-card>
             <h1 id="h1">{{isEdit ? "Редактирование":"Создание"}} кампании</h1>
             <div>
                 <b-form @submit.prevent="createCompany()">
@@ -157,7 +160,7 @@
                     >
                         <b-form-input
                         class="form-input"
-                        v-model="company.BusinessAdress"
+                        v-model="company.BusinessAddress"
                         placeholder="Точный адрес"
                         ></b-form-input>
                     </b-form-group>
@@ -319,7 +322,7 @@
                         id="submit-button"
                         type="submit"
                     >
-                        Создать компанию
+                        {{isEdit ? "Обновить":"Создать"}} компанию
                     </b-button>
                 </b-form>
             </div>
@@ -352,10 +355,11 @@ export default {
             Images: [],
             company: {
                 FbPageId: '',
+                Id: '',
                 CompanyName: '',
                 CompnayPurpose: '',
                 CompanyField: '',
-                BusinessAdress: '',
+                BusinessAddress: '',
                 ImagesDescription: [],
                 ImagesSmallDescription: [],
                 CreativeStatus: '',
@@ -480,57 +484,75 @@ export default {
             accountService.login()
         },
         createCompany(){
-            // sendFbRequest() //TODO
-            console.log("Page ID", this.company.FbPageId)
             const companyData = new FormData();
             companyData.append("FbPageId", this.company.FbPageId)
+            companyData.append("Id", this.company.Id)
             companyData.append("CompanyName", this.company.CompanyName)
             companyData.append("CompnayPurpose", this.company.CompnayPurpose)
             companyData.append("CompanyField", this.company.CompanyField)
-            companyData.append("BusinessAdress", this.company.BusinessAdress)
+            companyData.append("BusinessAddress", this.company.BusinessAddress)
             companyData.append("ImagesDescription", this.company.ImagesDescription)
             companyData.append("ImagesSmallDescription", this.company.ImagesSmallDescription)
             companyData.append("CreativeStatus", this.company.CreativeStatus)
             companyData.append("PostDescription", this.company.PostDescription)
-            Array.from(this.company.ImagesSmall).forEach(Image => {
+            Array.from(this.ImagesSmall).forEach(Image => {
                 companyData.append("ImageSmall", Image); //TODO не прилетают.
             });
-            Array.from(this.company.Images).forEach(Image => {
+            Array.from(this.Images).forEach(Image => {
                 companyData.append("Image", Image);
             });
-            store.dispatch("saveCompany", companyData)
-            .then((resp)=>{
-                console.log(resp.data) //TODO log company id
-                this.form = {
-                    FbPageId: '',
-                    CompanyName: '',
-                    CompnayPurpose: '',
-                    CompanyField: '',
-                    BusinessAdress: '',
-                    Images: [],
-                    ImagesDescription: [],
-                    ImagesSmall: [],
-                    ImagesSmallDescription: [],
-                    CreativeStatus: '',
-                    PostDescription: '',
-                }
-                this.isInfoPopupVisible = false
-                this.isRequestSent = false
-                router.push('main')
-            })
-            .catch(err => {
-                console.log(err) //TODO popup
-            })
+            if (!this.isEdit) {
+                store.dispatch("saveCompany", companyData)
+                .then((resp)=>{
+                    console.log(resp.data) //TODO log company id
+                    this.company = {
+                        FbPageId: '',
+                        Id: '',
+                        CompanyName: '',
+                        CompnayPurpose: '',
+                        CompanyField: '',
+                        BusinessAddress: '',
+                        Images: [],
+                        ImagesDescription: [],
+                        ImagesSmall: [],
+                        ImagesSmallDescription: [],
+                        CreativeStatus: '',
+                        PostDescription: '',
+                        CurrentAmount: 0,
+                        DailyAmount: 0,
+                        Days: 0,
+                    }
+                    this.isInfoPopupVisible = false
+                    this.isRequestSent = false
+                    router.push('main')
+                })
+                .catch(err => {
+                    console.log(err) //TODO popup
+                })
+            }
+            else {
+                console.log("UPDATE", this.company, this.company.Id)
+                axios({url: `${VUE_APP_API_URL}/api/company/${this.company.Id}`, data: companyData, method: 'PUT' })
+                .then(resp => {
+                    console.log(resp)
+                    router.push({path: '/company-balance/'+ this.company.Id, query: { isEdit: false }})
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+                // store.dispatch("updateCompany", companyData, this.company.Id)
+            }
+            
         },
         sendFbRequest(){
             // let appToken = 'EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD'
-            // let companyId = 856950044859235
+            // let companyFbId = 856950044859235
             // let files = {
             //     'page_id': this.company.FbPageId,
             //     'permitted_tasks': '[\'MANAGE\', \'CREATE_CONTENT\', \'MODERATE\', \'ADVERTISE\', \'ANALYZE\']',
             //     'access_token': appToken,
             // }
-            // axios.post(`https://graph.facebook.com/v10.0/${companyId}/client_pages`, files)
+            // axios.post(`https://graph.facebook.com/v10.0/${companyFbId}/client_pages`, files)
             // .then(
             //     this.isRequestSent = true
             // )
