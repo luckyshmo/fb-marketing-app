@@ -18,6 +18,9 @@
             </div>
     
             <h2 id="h2">Общий баланс</h2>
+
+            <div id="payment-form">лул</div>
+
             <b-button 
                 variant="primary"
                 id="main-button"
@@ -104,6 +107,26 @@ export default {
                 Days: 0,
             },
         }
+    },
+    mounted() {
+        let mScript = document.createElement('script')
+        mScript.setAttribute('src', 'https://yookassa.ru/checkout-widget/v1/checkout-widget.js')
+        document.head.appendChild(mScript)
+
+        const checkout = new window.YooMoneyCheckoutWidget({
+            confirmation_token: 'confirmation-token', //Token that must be obtained from YooMoney before the payment process
+            return_url: 'https://merchant.site', //URL to the payment completion page
+            error_callback: function(error) {
+                console.log(error)
+                //Processing of initialization errors
+            }
+        })
+        checkout.render('payment-form')
+        //После отображения платежной формы метод render возвращает Promise (можно не использовать).
+        .then(() => {
+            //Код, который нужно выполнить после отображения платежной формы.
+        });
+        
     },
     watch: {
         $route(to) {

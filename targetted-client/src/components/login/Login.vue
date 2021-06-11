@@ -19,24 +19,23 @@
                 id="input-group"
             >
                 <b-form-input
+                type='password'
                 class="form-input"
                 v-model="form.password"
                 placeholder="Пароль"
                 required
                 ></b-form-input>
             </b-form-group>
-
             <b-button type="submit" id="main-button">Войти</b-button>
-            <router-link :to="{name: 'register'}">
-                <p id="navigation-text">Регистрация</p>
-            </router-link>
+            
+            <p id="navigation-text">или <router-link style="color: #6C1BD2" :to="{name: 'register'}">заргестрироваться</router-link></p>
+            
         </b-form>
     </div>
 </template>
 <script>
 import router from '../../../router/router'
 import store from '../../../store/store'
-// import axios from 'axios'
   export default {
     data() {
       return {
