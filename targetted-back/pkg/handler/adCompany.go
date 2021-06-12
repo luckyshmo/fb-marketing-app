@@ -110,7 +110,13 @@ func (h *Handler) updateCompany(c *gin.Context) {
 	DailyAmountS := v["DailyAmount"][0]
 	DaysS := v["Days"][0]
 	ca, err := strconv.Atoi(CurrentAmountS)
+	if err != nil {
+		logrus.Error(err)
+	}
 	da, err := strconv.Atoi(DailyAmountS)
+	if err != nil {
+		logrus.Error(err)
+	}
 	days, err := strconv.Atoi(DaysS)
 	if err != nil {
 		logrus.Error(err)
@@ -196,7 +202,13 @@ func (h *Handler) createAdCompany(c *gin.Context) {
 	DailyAmountS := v["DailyAmount"][0]
 	DaysS := v["Days"][0]
 	ca, err := strconv.Atoi(CurrentAmountS)
+	if err != nil {
+		logrus.Error(err)
+	}
 	da, err := strconv.Atoi(DailyAmountS)
+	if err != nil {
+		logrus.Error(err)
+	}
 	days, err := strconv.Atoi(DaysS)
 	if err != nil {
 		logrus.Error(err)
