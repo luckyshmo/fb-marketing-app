@@ -32,8 +32,7 @@
 
             <b-button 
                 variant="primary"
-                id="main-button"
-                style="background: #F3F3F3; color: black; margin-top: 15px"
+                class="main-button-grey"
                 @click="showPopupInfo"
             >
                 Пополнить баланс
@@ -84,15 +83,14 @@
                 <router-link :to="{path: '/company/'+ company.Id, query: { isEdit: true }}">
                 <b-button 
                     variant="primary"
-                    id="main-button"
-                    style="margin-top: 20px; background: #F3F3F3; color: black"
+                    class="main-button-grey"
                 >
                     Настройки компании
                 </b-button>
                 </router-link>
             </div>
             <b-button
-                id="submit-button"
+                class="submit-button"
                 type="submit"
             >
                 {{isEdit ? "Обновить":"Запустить"}} кампанию
@@ -249,5 +247,18 @@ export default {
   top: 0px;
   margin-top: 1%;
   margin-right: 30px;
+}
+@media (max-width: 600px) {
+    .left{
+         text-align: left;
+        position:relative;
+    }
+    .right{
+        position:relative;
+    }
+    .company-status{
+        height: auto;
+        position:relative;
+    }
 }
 </style>

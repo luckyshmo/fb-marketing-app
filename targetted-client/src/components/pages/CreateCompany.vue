@@ -17,7 +17,7 @@
                         <b-button 
                             v-if="!(store.getters.GET_FB_PAGES.length > 0)"
                             variant="primary"
-                            id="main-button"
+                            class="main-button"
                             @click="loginFB"
                         >
                             У меня есть бизнес-аккаунт
@@ -34,8 +34,8 @@
                         <b-button 
                             v-if="!(store.getters.GET_FB_PAGES.length > 0)"
                             variant="primary"
-                            id="main-button"
-                            style="margin-left: 15px;"
+                            class="main-button"
+                            id="primary-under"
                             @click="showPopupInfo"
                         >
                             Нет бизнесс-аккаунта
@@ -59,7 +59,7 @@
                         </div>
                         <b-button 
                             variant="primary"
-                            id="main-button"
+                            class="main-button"
                             @click="sendFbRequest()"
                         >
                             Привязать
@@ -69,7 +69,7 @@
                         <p id="p1">Зайди в аккаунт на Facebook и подтверди привязку страницы в сообщениях</p>
                         <b-button 
                             variant="primary"
-                            id="main-button"
+                            class="main-button"
                             target="_blank"
                             rel="noopener noreferrer"
                             href="https://facebook.com"
@@ -78,7 +78,7 @@
                         </b-button>
                         <b-button 
                             variant="primary"
-                            id="main-button"
+                            class="main-button"
                             style="margin-left: 15px"
                             @click="checkPageSubmitted()"
                         >
@@ -95,7 +95,7 @@
                     <b-button 
                         v-if="store.getters.GET_FB_PAGES.length > 0 || isRequestSent && pageSubmitted"
                         variant="primary"
-                        id="main-button"
+                        class="main-button-grey"
                         style="margin-top: 30px; background: #F3F3F3; color: black"
                         @click="logout"
                     >
@@ -340,7 +340,7 @@
                         ></b-form-textarea>
                     </b-form-group>
                     <b-button
-                        id="submit-button"
+                        class="submit-button"
                         type="submit"
                     >
                         {{isEdit ? "Обновить кампанию":"Продолжить"}}
@@ -550,7 +550,7 @@ export default {
             companyData.append("DailyAmount",this.company.DailyAmount)
             companyData.append("Days",this.company.Days)
             Array.from(this.ImagesSmall).forEach(Image => {
-                companyData.append("ImageSmall", Image); //TODO не прилетают.
+                companyData.append("ImageSmall", Image);
             });
             Array.from(this.Images).forEach(Image => {
                 companyData.append("Image", Image);
@@ -666,6 +666,15 @@ export default {
 }
 </script>
 <style>
+#primary-under{
+    margin-left: 20px;
+}
+@media (max-width: 600px) {
+    #primary-under{
+        margin-left: 0px;
+        margin-top: 20px;
+    }
+}
 .custom-radio{
     margin: 10px;
 }

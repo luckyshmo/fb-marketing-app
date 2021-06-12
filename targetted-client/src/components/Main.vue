@@ -4,7 +4,7 @@
         <h2 id="h2">Ваши рекламные кампании</h2>
         <p id="p1">Создайте рекламную кампанию, чтобы приводить новых клиентов в ваш бизнес</p>
         <router-link :to="{path: '/company'}">
-            <b-button variant="primary" id="main-button">Создать компанию</b-button>
+            <b-button variant="primary" class="main-button">Создать компанию</b-button>
         </router-link>
         <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
             <h2 id="h2">Ваши рекламные кампании</h2>
@@ -92,6 +92,9 @@ export default {
   margin-left: 30px;
   height: 25%;
 }
+a {
+    text-decoration: none !important;
+}
 .r {
   position: absolute;
   right: 0px;
@@ -107,6 +110,32 @@ export default {
     font-family: Montserrat;
     font-style: normal;
     font-size: 1em;
+}
+@media (max-width: 600px){
+    .c-status-text{
+        margin-left: 15px;
+        margin-right: 10px;
+    }
+    .c-div{
+        height: auto;
+    }
+    .l {
+        position: relative;
+        text-align: left;
+        margin-top: 20px;
+        margin-left: 20px;
+        height: auto;
+    }
+    .r {
+        position: relative;
+        right: auto;
+        top: auto;
+        margin-right: auto;
+        margin-top: auto;
+        height: auto;
+        margin: 20px;
+        
+    }
 }
 #white{
     background: white;

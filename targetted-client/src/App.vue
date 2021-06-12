@@ -67,30 +67,43 @@ html {
 }
 
 /* Global styles */
-#main-button {
-    color:white;
+
+.main-button-grey{
+    background: #F3F3F3 !important; 
+    color: black; 
+    margin-top: 20px !important;
+    outline: none !important;
+    border-radius: 8px !important;
+    padding: 12px 28px !important;
+    border:none !important;
+    font-family: Montserrat !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+}
+.main-button {
+    color:white !important;
      outline: none !important;
-    background-color: #6C1BD2;
-    border-radius: 8px;
-    padding: 12px 28px;
-    border:none;
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: 600;
+    background-color: #6C1BD2 !important;
+    border-radius: 8px !important;
+    padding: 12px 28px !important;
+    border:none !important;
+    font-family: Montserrat !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
 }
 
-#submit-button{
+.submit-button{
    outline: none !important;
-    position: absolute;
+    position: absolute !important;
     margin-top: 115px; /* //TODO dependce on content-wrapper */
-    color:white;
-    background-color: #FF62B7;
-    border-radius: 8px;
-    padding: 12px 28px;
-    border:none;
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: 600;
+    color:white !important;
+    background-color: #FF62B7 !important;
+    border-radius: 8px !important;
+    padding: 12px 28px !important;
+    border:none !important;
+    font-family: Montserrat !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
 }
 
 #content {
@@ -219,4 +232,19 @@ html {
   width: 0px;
 }
 
+@media (max-width: 600px) {
+    .main-button {
+      padding: 12px 10px !important;
+    }
+    .main-button-grey{
+      background: #F3F3F3; color: black; margin-top: 15px
+    }
+    .submit-button{
+      margin-top: 75px;
+      padding: 12px 10px !important;
+    }
+    #content{
+      padding: 40px;
+    }
+}
 </style>

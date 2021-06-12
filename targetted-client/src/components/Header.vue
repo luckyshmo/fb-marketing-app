@@ -14,13 +14,13 @@
               </div>
             </div>
           </popup>
-        <p v-if="isLoggedIn" @click="showPopupInfo">Написать нам</p>
+        <p v-if="isLoggedIn" @click="showPopupInfo" id="write-us-text">Написать нам</p>
         </div>
         <div class="logo" id="middle">
-          <img src="logo.svg">
+          <img id="l-im" src="logo.svg">
         </div>
         <div class="nav" id="right">
-            <p @click="logout" v-if="isLoggedIn">Выход</p>
+            <p id="r-text" @click="logout" v-if="isLoggedIn">Выход</p>
         </div>
     </div>
 </template>
@@ -73,29 +73,16 @@ import store from '../../store/store'
 
     width: 50%;
 }
-@media (max-width: 600px) {
-    .logo{
-      font-size: 1.2em;
-      letter-spacing: 0.7em;
-    }
-}
-@media (max-width: 510px) {
-    .logo{
-      font-size: 1.1em;
-      letter-spacing: 0.6em;
-    }
-}
-@media (max-width: 464px) {
-  .logo{
-    font-size: 1em;
-    letter-spacing: 0.5em;
+@media (max-width: 465px){
+  #l-im{
+    width: 183px;
+    padding-bottom: 15px;
+  }  
+  #r-text{
+    position: absolute;
+    right:20px;
+    top: 55px;
   }
-}
-@media (max-width: 450px) {
-    .logo{
-      font-size: 1em;
-      letter-spacing: 0.4em;
-    }
 }
 .nav {
     cursor: pointer;
@@ -110,10 +97,10 @@ import store from '../../store/store'
     width: 25%;
 }
 
-#container {height: 100%; width:100%; text-align: center; margin: 40px 0px 25px 0px;}
-#left, #middle, #right {display: inline-block; *display: inline; zoom: 1; vertical-align: center;}
+#container {height: 100%; width:100%; margin: 40px 0px 25px 0px; text-align: center;}
+#left, #middle, #right {display: inline-block;}
 #left {width: 25%;}
-#middle {width: 50%;}
+#middle {width: 50%; }
 #right {width: 25%;}
     
 </style>
