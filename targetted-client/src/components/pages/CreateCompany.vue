@@ -166,6 +166,25 @@
                     </b-form-group>
                 <h2 id="h2">Креативы</h2>
                 <b-form-group
+                v-if="isEdit && imageNames.length > 0"
+                label="Уже имеющиеся креативы"
+                :label-cols="label_cols"
+                :content-cols="content_cols"
+                id="input-group1"
+                label-for="input-horizontal"
+                >
+                    <div id="block">
+                        <div 
+                        v-for="(name) in imageNames"
+                        :key="name">
+                        <div id="Image-preview">
+                                <img id="preview" :src="getImageByName(name)"/>
+                            </div>
+                        </div>
+                    </div>  
+                </b-form-group>
+                
+                <b-form-group
                         label="Наличие креативов"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
@@ -189,7 +208,7 @@
                 >
                     <div id="block">
                         <div 
-                        v-for="(Image, key) in company.Images" 
+                        v-for="(Image, key) in Images" 
                         :key="key">
                             <div id="Image-preview">
                                 <div 
@@ -205,7 +224,7 @@
                             </div>
                         </div>
                         
-                        <div v-if="ImagesSmall.length < 5">
+                        <div v-if="Images.length < 5">
                             <input 
                             style="display: none"
                             type="file" 
@@ -251,7 +270,7 @@
 
                     <div id="block">
                     <div 
-                    v-for="(Image, key) in company.ImagesSmall" 
+                    v-for="(Image, key) in ImagesSmall" 
                     :key="key">
                         <div id="Image-preview">
                             <div 
@@ -351,10 +370,12 @@ export default {
             content_cols: this.getWidth().content,
             isRequestSent: false,
             pageSubmitted: false,
+            imageNames: [],
             ImagesSmall: [],
             Images: [],
             company: {
                 FbPageId: '',
+                UserId: '',
                 Id: '',
                 CompanyName: '',
                 CompnayPurpose: '',
@@ -378,6 +399,8 @@ export default {
                 .then(resp => {
                     console.log("cSet", resp.data)
                     this.company = resp.data
+
+                    this.getImages()
                     if (this.company.FbPageId != ""){
                         this.isRequestSent = true
                         this.pageSubmitted = true
@@ -397,6 +420,8 @@ export default {
             .then(resp => {
                 console.log(resp.data)
                 this.company = resp.data
+
+                this.getImages()
                 if (this.company.FbPageId != ""){
                     this.isRequestSent = true
                     this.pageSubmitted = true
@@ -405,6 +430,24 @@ export default {
         }
     },
     methods: {
+        getImages(){
+            return axios({url: `${VUE_APP_API_URL}/api/company/${this.company.Id}/images/`, method: 'GET' })
+            .then(resp => {
+                console.log(resp.data)
+                // this.getImageByName(resp.data[0])
+                this.imageNames = resp.data
+                return resp.data
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        },
+        getImageByName(name){
+            let uID = this.company.UserId
+            let cID = this.company.Id
+            console.log(`https://client.targetted.online/images/${uID}/${cID}${name}`)
+            return `https://client.targetted.online/images/${uID}/${cID}${name}`
+        },
         getWidth() {
             let width = Math.max(
                 document.body.scrollWidth,
@@ -431,7 +474,7 @@ export default {
             this.isInfoPopupVisible = true;
         },
         removeImageSmall(Image){
-            this.remove(this.company.ImagesSmall, Image);
+            this.remove(this.ImagesSmall, Image);
             for (let i = 0; i < this.ImagesSmall.length; i++) {
                 let reader = new FileReader();
                 reader.onload = () => {
@@ -442,14 +485,14 @@ export default {
             }
         },
         removeImage(Image){
-            this.remove(this.company.Images, Image)
-            for (let i = 0; i < this.ImagesSmall.length; i++) {
+            this.remove(this.Images, Image)
+            for (let i = 0; i < this.Images.length; i++) {
                 let reader = new FileReader();
                 reader.onload = () => {
                     this.$refs.Image[i].src = reader.result;
                 };
 
-                reader.readAsDataURL(this.ImagesSmall[i]);
+                reader.readAsDataURL(this.Images[i]);
             }
         },
         remove(arr, img) {
@@ -577,16 +620,16 @@ export default {
             let selectedFiles = e.target.files;
             let len = Math.min(selectedFiles.length, 5)
             for (let i = 0; i < len; i++) {
-                this.ImagesSmall.push(selectedFiles[i]);
+                this.Images.push(selectedFiles[i]);
             }
 
-            for (let i = 0; i < this.ImagesSmall.length; i++) {
+            for (let i = 0; i < this.Images.length; i++) {
                 let reader = new FileReader();
                 reader.onload = () => {
                     this.$refs.Image[i].src = reader.result;
                 };
 
-                reader.readAsDataURL(this.ImagesSmall[i]);
+                reader.readAsDataURL(this.Images[i]);
             }
         },
         onSmallFileSelected(e) {

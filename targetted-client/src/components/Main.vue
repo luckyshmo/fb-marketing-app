@@ -58,19 +58,9 @@ export default {
             }
             return "Запущена"
         },
-        getImageByName(name){
-            console.log("store USER: ", store.getters.GET_COMPANY_DATA.c.UserId)
-            console.log("store COMPANY: ", store.getters.GET_COMPANY_DATA.c.Id)
-            let uID = store.getters.GET_COMPANY_DATA.c.UserId
-            let cID = store.getters.GET_COMPANY_DATA.c.Id
-            return `https://client.targetted.online/images/${uID}/${cID}/${name}`
-        },
         getAdCompanyList(){
             store.dispatch("getCompanyList")
         },
-        printComData(id){
-            store.dispatch("getCompanyByID", id)
-        }
     },
     mounted(){
         this.getAdCompanyList()
@@ -84,7 +74,7 @@ export default {
     background: lightgray;
     border-radius: 20px;
     height: 100px;
-    width:100%;
+    width: 100%;
     overflow: hidden;
     position: relative;
 }
