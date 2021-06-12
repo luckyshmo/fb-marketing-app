@@ -17,7 +17,7 @@
         <p v-if="isLoggedIn" @click="showPopupInfo">Написать нам</p>
         </div>
         <div class="logo" id="middle">
-            <p>Targetted</p>
+          <img src="logo.svg">
         </div>
         <div class="nav" id="right">
             <p @click="logout" v-if="isLoggedIn">Выход</p>

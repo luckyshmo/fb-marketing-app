@@ -26,7 +26,7 @@ if (token) {
 Vue.config.productionTip = false
 
 import initFacebookSdk from '../src/_helpers/init-facebook-sdk';
-// fakeBackend();
+
 initFacebookSdk();
 new Vue({
   render: h => h(App),

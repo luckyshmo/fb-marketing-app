@@ -3,7 +3,7 @@
         <h1 id="h1">Главная</h1>
         <h2 id="h2">Ваши рекламные кампании</h2>
         <p id="p1">Создайте рекламную кампанию, чтобы приводить новых клиентов в ваш бизнес</p>
-        <router-link :to="{path: '/createCompany'}">
+        <router-link :to="{path: '/company'}">
             <b-button variant="primary" id="main-button">Создать компанию</b-button>
         </router-link>
         <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
@@ -11,85 +11,44 @@
             <div>
                 <div
                 v-for="company in store.getters.GET_COMPANY_LIST" 
-                :key="company.Id">
-                <edit-company
-                    :form="company"
+                :key="company.Id"
                 >
-                </edit-company>
-                    <popup
-                        v-if="isInfoPopupVisible"
-                        rightBtnTitle="Add to cart"
-                        :popupTitle="company.CompanyName"
-                        @closePopup="closeInfoPopup"
-                    >
-                        <div>
-                            <pre class="m-0" style="text-align: left">{{ store.getters.GET_COMPANY_DATA.c }}</pre>
-                            <div 
-                            v-for="(image, key) in store.getters.GET_COMPANY_DATA.i" 
-                            :key="key">
-                                <div class="image-preview">
-                                    <div 
-                                    style="position: absolute;
-                                    margin-right: 140px;
-                                    margin-top: -15px;">
-                                    </div>
-                                    <img v-bind:src="getImageByName(image)" />
+                    <router-link :to="{path: '/company-balance/'+ company.Id, query: { isEdit: true }}">
+                        <div class="c-div">
+                            <div class='l'>
+                                <p class="c-name">
+                                    {{company.CompanyName}}
+                                </p>
+                            </div>
+                            <div class='r'>
+                                <div class="c-status">
+                                    <div class="elipse" id="red" v-if="!isFb(company)"></div>
+                                    <div class="elipse" id="green" v-if="isFb(company)"></div>
+                                    <p class="c-status-text">{{getStatus(company)}}</p>
                                 </div>
                             </div>
                         </div>
-                    </popup>
-                    <div 
-                    class="c-div"
-                    @click="showPopupInfo(company.Id)"
-                    >
-                        <div class='l'>
-                            <p class="c-name">
-                                {{company.CompanyName}}
-                            </p>
-                        </div>
-                        <div class='r'>
-                            <div class="c-status">
-                                <div class="elipse" id="red" v-if="!isFb(company)"></div>
-                                <div class="elipse" id="green" v-if="isFb(company)"></div>
-                                <p class="c-status-text">{{getStatus(company)}}</p>
-                            </div>
-                        </div>
-                    </div>
+                    </router-link>
                 </div>                
             </div>
         </div>
     </div>
 </template>
 <script>
-import router from '../../router/router'
-import popup from './popup.vue'
 import store from '../../store/store'
-import editCompany from './pages/EditCompany.vue'
 export default {
-    components: {
-      popup,
-      editCompany
-    },
-    name: 'CreateCompany',
+    name: "main-page",
     data() {
         return{
             store,
-            isInfoPopupVisible: false,
+        }
+    },
+    watch: {
+        $route() {
+            store.dispatch("getCompanyList")
         }
     },
     methods: {
-        closeInfoPopup() {
-            this.isInfoPopupVisible = false;
-        },
-        showPopupInfo(id) {
-            this.printComData(id)
-            this.isInfoPopupVisible = true;
-        },
-        editCompany(company){
-            console.log("company to edit", company)
-            store.dispatch("setAdCompanyIsEdit", true)
-            router.push('/createCompany')
-        },
         isFb(company){
             return company.FbPageId.length > 0
         },
@@ -99,19 +58,9 @@ export default {
             }
             return "Запущена"
         },
-        getImageByName(name){
-            console.log("store USER: ", store.getters.GET_COMPANY_DATA.c.UserId)
-            console.log("store COMPANY: ", store.getters.GET_COMPANY_DATA.c.Id)
-            let uID = store.getters.GET_COMPANY_DATA.c.UserId
-            let cID = store.getters.GET_COMPANY_DATA.c.Id
-            return `https://client.targetted.online/images/${uID}/${cID}/${name}`
-        },
         getAdCompanyList(){
             store.dispatch("getCompanyList")
         },
-        printComData(id){
-            store.dispatch("getCompanyByID", id)
-        }
     },
     mounted(){
         this.getAdCompanyList()
@@ -125,9 +74,9 @@ export default {
     background: lightgray;
     border-radius: 20px;
     height: 100px;
-    width:100%;
+    width: 100%;
     overflow: hidden;
-  position: relative;
+    position: relative;
 }
 .l {
   position: absolute;

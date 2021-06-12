@@ -2,6 +2,7 @@ package pg
 
 import (
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/google/uuid"
@@ -19,7 +20,7 @@ func NewAdCompanyPg(db *sqlx.DB) *AdCompanyPg {
 	return &AdCompanyPg{db: db}
 }
 
-func (r *AdCompanyPg) CreateCompany(ac models.AdCompany) (uuid.UUID, error) {
+func (r *AdCompanyPg) Create(ac models.AdCompany) (uuid.UUID, error) {
 	var id uuid.UUID
 
 	query := fmt.Sprintf(`INSERT INTO %s 
@@ -41,6 +42,32 @@ func (r *AdCompanyPg) CreateCompany(ac models.AdCompany) (uuid.UUID, error) {
 	return id, nil
 }
 
+func (r *AdCompanyPg) Delete(id string) error {
+	query := fmt.Sprintf(`DELETE FROM %s WHERE id = '%s'`, adCompanyTable, id)
+	return r.db.QueryRow(query).Err()
+}
+
+func (r *AdCompanyPg) Update(ac models.AdCompany, id string) (uuid.UUID, error) {
+	query := fmt.Sprintf(`UPDATE %s set 
+	user_id = '%s', 
+	fb_page_id = '%s', 
+	business_address = '%s',
+	field = '%s',
+	name = '%s',
+	purpose = '%s',
+	creative_status = '%s',
+	images_description = '%s',
+	images_small_description = '%s',
+	post_description = '%s'
+	WHERE id = '%s'`,
+		adCompanyTable,
+		ac.UserId, ac.FbPageId, ac.BusinessAddress, ac.CompanyField, ac.CompanyName, ac.CompnayPurpose,
+		ac.CreativeStatus, ac.ImagesDescription[0], ac.ImagesSmallDescription[0], ac.PostDescription,
+		id)
+	log.Print(query)
+	return uuid.Nil, r.db.QueryRow(query).Err()
+}
+
 type adCompanyScan struct {
 	Id                     uuid.UUID
 	UserId                 uuid.UUID `db:"user_id"`
@@ -55,7 +82,7 @@ type adCompanyScan struct {
 	PostDescription        string    `db:"post_description"`
 }
 
-func (r *AdCompanyPg) GetCompanyList(userId uuid.UUID) ([]models.AdCompany, error) {
+func (r *AdCompanyPg) GetAll(userId uuid.UUID) ([]models.AdCompany, error) {
 	var companyList []models.AdCompany
 	var companyListS []adCompanyScan
 
@@ -85,7 +112,7 @@ func (r *AdCompanyPg) GetCompanyList(userId uuid.UUID) ([]models.AdCompany, erro
 	return companyList, err
 }
 
-func (r *AdCompanyPg) GetCompanyByID(companyID string) (models.AdCompany, error) {
+func (r *AdCompanyPg) GetByID(companyID string) (models.AdCompany, error) {
 	var company models.AdCompany
 	var scanCompany adCompanyScan
 

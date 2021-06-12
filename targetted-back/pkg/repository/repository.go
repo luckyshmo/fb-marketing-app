@@ -18,9 +18,11 @@ type User interface {
 }
 
 type AdCompany interface {
-	CreateCompany(ac models.AdCompany) (uuid.UUID, error)
-	GetCompanyList(userID uuid.UUID) ([]models.AdCompany, error)
-	GetCompanyByID(companyID string) (models.AdCompany, error)
+	Create(ac models.AdCompany) (uuid.UUID, error)
+	Delete(idStr string) error
+	Update(ac models.AdCompany, idStr string) (uuid.UUID, error)
+	GetAll(userID uuid.UUID) ([]models.AdCompany, error)
+	GetByID(companyID string) (models.AdCompany, error)
 }
 
 type Repository struct {

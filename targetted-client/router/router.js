@@ -5,6 +5,7 @@ import login from '../src/components/login/Login.vue'
 import register from '../src/components/login/Register.vue'
 import createCompany from '../src/components/pages/CreateCompany.vue'
 import store from '../store/store'
+import CompanyBalance from '../src/components/pages/CompanyBalance.vue'
 
 Vue.use(Router);
 
@@ -38,20 +39,25 @@ let router = new Router({
       }
     },
     {
-      path: '/createCompany',
-      name: 'createCompany',
+      path: '/company',
+      name: 'create-company',
       component: createCompany,
       meta: {
         requiresAuth: true
       }
     },
     {
-      path: '/createCompany/*',
-      name: 'editCompany',
+      path: '/company/:id',
+      name: 'edit-company',
       component: createCompany,
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: "/company-balance/:id",
+      name: "company-balance",
+      component: CompanyBalance
     },
   ]
 })

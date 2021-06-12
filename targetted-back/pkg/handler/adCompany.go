@@ -21,7 +21,7 @@ func (h *Handler) getCompanyList(c *gin.Context) {
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 	}
-	companyList, err := h.services.AdCompany.GetCompanyList(userID)
+	companyList, err := h.services.AdCompany.GetAll(userID)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -99,10 +99,88 @@ func (h *Handler) getCompanyByID(c *gin.Context) {
 		return
 	}
 
-	company, err := h.services.AdCompany.GetCompanyByID(userID, companyIDstring) //TODO probably delete userID?
+	company, err := h.services.AdCompany.GetByID(userID, companyIDstring) //TODO probably delete userID?
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
+	}
+
+	sendStatusResponse(c, http.StatusOK, company)
+}
+func (h *Handler) deleteCompany(c *gin.Context) {
+	companyIDstring := c.Param("id")
+	h.services.AdCompany.Delete(companyIDstring)
+}
+
+func (h *Handler) updateCompany(c *gin.Context) {
+	userID, err := getUserId(c)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	companyIDstring := c.Param("id")
+	if err != nil { //TODO!!
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.Request.ParseMultipartForm(100000000) // приблизительно 95 мегабайт
+
+	v := c.Request.MultipartForm.Value
+	company := models.AdCompany{
+		UserId:                 userID,
+		FbPageId:               v["FbPageId"][0],
+		BusinessAddress:        v["BusinessAddress"][0],
+		CompanyField:           v["CompanyField"][0],
+		CompanyName:            v["CompanyName"][0],
+		CompnayPurpose:         v["CompnayPurpose"][0],
+		CreativeStatus:         v["CreativeStatus"][0],
+		ImagesDescription:      v["ImagesDescription"],
+		ImagesSmallDescription: v["ImagesSmallDescription"],
+		PostDescription:        v["PostDescription"][0],
+	}
+	logrus.Print(company)
+
+	companyID, err := h.services.AdCompany.Update(company, companyIDstring)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	// if companyID == uuid.Nil {
+	// 	sendErrorResponse(c, http.StatusInternalServerError, "Company not created")
+	// 	return
+	// }
+
+	path := "images/" + userID.String() + "/" + companyID.String()
+
+	err = os.MkdirAll(path+storiesFolder, os.ModePerm)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, "Fail creating folder struct for images")
+		return
+	}
+	err = os.MkdirAll(path+postsFolder, os.ModePerm)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, "Fail creating folder struct for images")
+		return
+	}
+
+	imagesMap := c.Request.MultipartForm.File
+	imagesArr := imagesMap["Image"]
+	for _, multipartImage := range imagesArr {
+		err = writeMultiPartImage(multipartImage, path+storiesFolder)
+		if err != nil {
+			sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+			return
+		}
+	}
+	imagesSmallArr := imagesMap["ImageSmall"]
+	for _, multipartImage := range imagesSmallArr {
+		err = writeMultiPartImage(multipartImage, path+postsFolder)
+		if err != nil {
+			sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+			return
+		}
 	}
 
 	sendStatusResponse(c, http.StatusOK, company)
@@ -126,19 +204,19 @@ func (h *Handler) createAdCompany(c *gin.Context) {
 	v := c.Request.MultipartForm.Value
 	company := models.AdCompany{
 		UserId:                 userID,
-		FbPageId:               v["fbPageId"][0],
-		BusinessAddress:        v["businessAdress"][0],
-		CompanyField:           v["companyField"][0],
-		CompanyName:            v["companyName"][0],
-		CompnayPurpose:         v["compnayPurpose"][0],
-		CreativeStatus:         v["creativeStatus"][0],
-		ImagesDescription:      v["imagesDescription"],
-		ImagesSmallDescription: v["imagesSmallDescription"],
-		PostDescription:        v["postDescription"][0],
+		FbPageId:               v["FbPageId"][0],
+		BusinessAddress:        v["BusinessAddress"][0],
+		CompanyField:           v["CompanyField"][0],
+		CompanyName:            v["CompanyName"][0],
+		CompnayPurpose:         v["CompnayPurpose"][0],
+		CreativeStatus:         v["CreativeStatus"][0],
+		ImagesDescription:      v["ImagesDescription"],
+		ImagesSmallDescription: v["ImagesSmallDescription"],
+		PostDescription:        v["PostDescription"][0],
 	}
 	logrus.Print(company)
 
-	companyID, err := h.services.AdCompany.CreateCompany(company)
+	companyID, err := h.services.AdCompany.Create(company)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -162,7 +240,7 @@ func (h *Handler) createAdCompany(c *gin.Context) {
 	}
 
 	imagesMap := c.Request.MultipartForm.File
-	imagesArr := imagesMap["image"]
+	imagesArr := imagesMap["Image"]
 	for _, multipartImage := range imagesArr {
 		err = writeMultiPartImage(multipartImage, path+storiesFolder)
 		if err != nil {
@@ -170,7 +248,7 @@ func (h *Handler) createAdCompany(c *gin.Context) {
 			return
 		}
 	}
-	imagesSmallArr := imagesMap["imageSmall"]
+	imagesSmallArr := imagesMap["ImageSmall"]
 	for _, multipartImage := range imagesSmallArr {
 		err = writeMultiPartImage(multipartImage, path+postsFolder)
 		if err != nil {

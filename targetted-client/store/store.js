@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
+import router from '../router/router'
 
 Vue.use(Vuex);
 
@@ -49,6 +50,7 @@ let store = new Vuex.Store({
     },
     actions: {
         saveCompany({commit}, companyData) {
+            console.log(companyData)
             return new Promise((resolve, reject) => {
                 commit('save_request') //TOdo
                 axios({url: `${VUE_APP_API_URL}/api/company/`, data: companyData, method: 'POST' })
@@ -58,6 +60,35 @@ let store = new Vuex.Store({
                         localStorage.setItem('user_company', resp.data)
                         commit('set_user_company', resp.data)
                         resolve(resp)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        reject(err)
+                    })
+                    // localStorage.setItem('user_company', resp.data) //?
+                    // commit('set_user_company', resp.data) //?
+                    resolve(resp)
+                })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
+            })
+        },
+        updateCompany({commit}, companyData) {
+            console.log(companyData)
+            let id = ""
+            return new Promise((resolve, reject) => {
+                commit('save_request') //TOdo
+                axios({url: `${VUE_APP_API_URL}/api/company/${id}`, data: companyData, method: 'PUT' })
+                .then(resp => {
+                    axios({url: `${VUE_APP_API_URL}/api/company/${id}`, method: 'GET' })
+                    .then(resp => {
+                        localStorage.setItem('user_company', resp.data)
+                        commit('set_user_company', resp.data)
+                        console.log(resp.data)
+                        resolve(resp)
+                        router.push({path: '/company-balance/'+ resp.data.Id, query: { isEdit: false }})
                     })
                     .catch(err => {
                         console.log(err)
@@ -170,7 +201,7 @@ let store = new Vuex.Store({
             // let appToken = 'EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD'
             // let companyId = 856950044859235
             // let files = {
-            //     'page_id': this.form.fbPageId,
+            //     'page_id': this.form.FbPageId,
             //     'permitted_tasks': '[\'MANAGE\', \'CREATE_CONTENT\', \'MODERATE\', \'ADVERTISE\', \'ANALYZE\']',
             //     'access_token': appToken,
             // }
@@ -221,7 +252,26 @@ let store = new Vuex.Store({
         }
     },
     getters: {
-        GET_COMPANY_DATA(state){            
+        GET_COMPANY_DATA(state){  
+            if (typeof state.adCompany.FbPageId === 'undefined') {
+                let data = {
+                    c: {
+                        FbPageId: '',
+                        CompanyName: '',
+                        CompnayPurpose: '',
+                        CompanyField: '',
+                        BusinessAdress: '',
+                        Images: [],
+                        ImagesDescription: [],
+                        ImagesSmall: [],
+                        ImagesSmallDescription: [],
+                        CreativeStatus: '',
+                        PostDescription: '',
+                    },
+                    i: state.adCompanyImages,
+                }
+                return data
+            }         
             let data = {
                 c: state.adCompany,
                 i: state.adCompanyImages,

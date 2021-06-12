@@ -44,6 +44,8 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			adCompany.POST("/", h.createAdCompany)
 			adCompany.GET("/", h.getCompanyList)
 			adCompany.GET("/:id", h.getCompanyByID)
+			adCompany.PUT("/:id", h.updateCompany)
+			adCompany.DELETE("/:id", h.deleteCompany)
 
 			images := adCompany.Group(":id/images")
 			{
@@ -65,6 +67,7 @@ func CORS() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", config.Get().CorsHeader) //TODO separate production and dev
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
 
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)
