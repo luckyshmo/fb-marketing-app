@@ -8,7 +8,7 @@
             >
                 <b-form-input
                 class="form-input"
-                v-model="form.email"
+                v-model="email"
                 type="email"
                 placeholder="Электронная почта"
                 required
@@ -21,7 +21,7 @@
                 <b-form-input
                 type='password'
                 class="form-input"
-                v-model="form.password"
+                v-model="password"
                 placeholder="Пароль"
                 required
                 ></b-form-input>
@@ -34,26 +34,30 @@
     </div>
 </template>
 <script>
+import {minLength} from 'vuelidate/lib/validators'
 import router from '../../../router/router'
 import store from '../../../store/store'
   export default {
     data() {
       return {
-        form: {
-          email: '',
-          password: '',
-        },
+        email: '',
+        password: '',
       }
     },
     methods: {
       login: function () {
-        let email = this.form.email 
-        let password = this.form.password
-        console.log({ email, password })
+        console.log(this.password)
+        let email = this.email 
+        let password = this.password
         store.dispatch('login', { email, password })
         .then(() => router.push('main'))
-        .catch(err => console.log(err))
+        .catch(err => console.log(err)) 
       },
+    },
+    validations: {
+      password: {
+        minLength: minLength(8)
+      }
     }
   }
 </script>

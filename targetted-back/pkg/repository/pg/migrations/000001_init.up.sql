@@ -21,5 +21,8 @@ CREATE TABLE ad_company
     images_description          varchar(255),
     images_small_description    varchar(255),
     post_description            varchar(255),
+    current_amount              integer,
+	daily_amount                integer,
+	days                        integer,
     UNIQUE (name, user_id)
 );

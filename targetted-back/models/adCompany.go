@@ -3,7 +3,7 @@ package models
 import "github.com/google/uuid"
 
 type AdCompany struct {
-	Id                     uuid.UUID
+	Id                     uuid.UUID `db:"id"`
 	UserId                 uuid.UUID `db:"user_id"`
 	FbPageId               string    `db:"fb_page_id"`
 	BusinessAddress        string    `db:"business_address"` //TODO RENAME
@@ -14,4 +14,7 @@ type AdCompany struct {
 	ImagesDescription      []string  `db:"images_description"`
 	ImagesSmallDescription []string  `db:"images_small_description"`
 	PostDescription        string    `db:"post_description"`
+	CurrentAmount          int       `db:"current_amount"`
+	DailyAmount            int       `db:"daily_amount"`
+	Days                   int       `db:"days"`
 }

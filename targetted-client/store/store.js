@@ -50,7 +50,6 @@ let store = new Vuex.Store({
     },
     actions: {
         saveCompany({commit}, companyData) {
-            console.log(companyData)
             return new Promise((resolve, reject) => {
                 commit('save_request') //TOdo
                 axios({url: `${VUE_APP_API_URL}/api/company/`, data: companyData, method: 'POST' })

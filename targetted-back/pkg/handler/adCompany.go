@@ -9,6 +9,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -29,29 +30,6 @@ func (h *Handler) getCompanyList(c *gin.Context) {
 
 	sendStatusResponse(c, http.StatusOK, companyList)
 }
-
-// func (h *Handler) getCompanyImageByName(c *gin.Context) {
-// 	userID, err := getUserId(c)
-// 	if err != nil {
-// 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
-// 		return
-// 	}
-// 	companyIDstring := c.Param("id")
-// 	name := c.Param("name")
-
-// 	path := "./images/" + userID.String() + "/" + companyIDstring
-
-// 	c.Writer.Header().Set("Content-Type", "image/jpeg")
-
-// 	file, err := ioutil.ReadFile(path + "/" + name)
-// 	if err != nil {
-// 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
-// 		return
-// 	}
-// 	c.Writer.Write(file)
-
-// 	sendStatusResponse(c, http.StatusOK, file)
-// }
 
 func (h *Handler) getCompanyImages(c *gin.Context) {
 	userID, err := getUserId(c)
@@ -128,6 +106,15 @@ func (h *Handler) updateCompany(c *gin.Context) {
 	c.Request.ParseMultipartForm(100000000) // приблизительно 95 мегабайт
 
 	v := c.Request.MultipartForm.Value
+	CurrentAmountS := v["CurrentAmount"][0]
+	DailyAmountS := v["DailyAmount"][0]
+	DaysS := v["Days"][0]
+	ca, err := strconv.Atoi(CurrentAmountS)
+	da, err := strconv.Atoi(DailyAmountS)
+	days, err := strconv.Atoi(DaysS)
+	if err != nil {
+		logrus.Error(err)
+	}
 	company := models.AdCompany{
 		UserId:                 userID,
 		FbPageId:               v["FbPageId"][0],
@@ -139,6 +126,9 @@ func (h *Handler) updateCompany(c *gin.Context) {
 		ImagesDescription:      v["ImagesDescription"],
 		ImagesSmallDescription: v["ImagesSmallDescription"],
 		PostDescription:        v["PostDescription"][0],
+		CurrentAmount:          ca,
+		DailyAmount:            da,
+		Days:                   days,
 	}
 	logrus.Print(company)
 
@@ -202,6 +192,15 @@ func (h *Handler) createAdCompany(c *gin.Context) {
 	c.Request.ParseMultipartForm(100000000) // приблизительно 95 мегабайт
 
 	v := c.Request.MultipartForm.Value
+	CurrentAmountS := v["CurrentAmount"][0]
+	DailyAmountS := v["DailyAmount"][0]
+	DaysS := v["Days"][0]
+	ca, err := strconv.Atoi(CurrentAmountS)
+	da, err := strconv.Atoi(DailyAmountS)
+	days, err := strconv.Atoi(DaysS)
+	if err != nil {
+		logrus.Error(err)
+	}
 	company := models.AdCompany{
 		UserId:                 userID,
 		FbPageId:               v["FbPageId"][0],
@@ -213,6 +212,9 @@ func (h *Handler) createAdCompany(c *gin.Context) {
 		ImagesDescription:      v["ImagesDescription"],
 		ImagesSmallDescription: v["ImagesSmallDescription"],
 		PostDescription:        v["PostDescription"][0],
+		CurrentAmount:          ca,
+		DailyAmount:            da,
+		Days:                   days,
 	}
 	logrus.Print(company)
 

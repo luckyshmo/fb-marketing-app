@@ -5,9 +5,9 @@
             <router-link :to="{name: 'mainPage'}">
                 <p id="navigation-text" style="margin:0;">← К списку кампаний</p>
             </router-link>
-            <b-card class="mt-3" header="Form Data Result">
+            <!-- <b-card class="mt-3" header="Form Data Result">
                 <pre class="m-0">{{ company }}</pre>
-            </b-card>
+            </b-card> -->
             <h1 id="h1">{{isEdit ? "Редактирование":"Создание"}} кампании</h1>
             <div>
                 <b-form @submit.prevent="createCompany()">
@@ -48,7 +48,7 @@
                             label="Выберите страницу"
                             :label-cols="label_cols"
                             :content-cols="content_cols"
-                            id="input-group1"
+                            id="input-group-main"
                             label-for="input-horizontal"
                             >
                                 <b-form-radio-group
@@ -86,7 +86,7 @@
                         </b-button>
                     </div>
                     <div v-if="pageSubmitted">
-                        <div class="c-status" style="margin-top: 30px;">
+                        <div class="c-status" style="margin-top: 30px; max-width: 800px">
                             <div class="elipse" id="green"></div>
                             <p class="c-status-text" style="text-align: left;" 
                             >Страница {{company.FbPageId}} привязана к targetted</p>
@@ -108,7 +108,7 @@
                         label="Название компании"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
-                        id="input-group1"
+                        id="input-group-main"
                         label-for="input-horizontal"
                     >
                         <b-form-input
@@ -123,7 +123,7 @@
                         label="Цель кампании"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
-                        id="input-group1"
+                        id="input-group-main"
                         label-for="input-horizontal"
                     >
                         <b-form-radio-group
@@ -140,7 +140,7 @@
                         label="Сфера деятельности"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
-                        id="input-group1"
+                        id="input-group-main"
                         label-for="input-horizontal"
                     >
                         <b-form-input
@@ -154,7 +154,7 @@
                         label="Адрес бизнеса"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
-                        id="input-group1"
+                        id="input-group-main"
                         label-for="input-horizontal"
                         description="Нужен только для офлайн бизнеса"
                     >
@@ -165,30 +165,32 @@
                         ></b-form-input>
                     </b-form-group>
                 <h2 id="h2">Креативы</h2>
-                <b-form-group
-                v-if="isEdit && imageNames.length > 0"
-                label="Уже имеющиеся креативы"
-                :label-cols="label_cols"
-                :content-cols="content_cols"
-                id="input-group1"
-                label-for="input-horizontal"
-                >
-                    <div id="block">
-                        <div 
-                        v-for="(name) in imageNames"
-                        :key="name">
-                        <div id="Image-preview">
-                                <img id="preview" :src="getImageByName(name)"/>
+                <div v-if="isEdit" >
+                    <b-form-group
+                    v-if="imageNames.length > 0"
+                    label="Уже имеющиеся креативы"
+                    :label-cols="label_cols"
+                    :content-cols="content_cols"
+                    id="input-group-main"
+                    label-for="input-horizontal"
+                    >
+                        <div id="block">
+                            <div 
+                            v-for="(name) in imageNames"
+                            :key="name">
+                            <div id="Image-preview">
+                                    <img id="preview" :src="getImageByName(name)"/>
+                                </div>
                             </div>
-                        </div>
-                    </div>  
-                </b-form-group>
+                        </div>  
+                    </b-form-group>
+                </div>
                 
                 <b-form-group
                         label="Наличие креативов"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
-                        id="input-group1"
+                        id="input-group-main"
                         label-for="input-horizontal"
                 >
                     <b-form-radio-group
@@ -202,7 +204,7 @@
                 <b-form-group
                         :label="getStoriesLabel()"
                         :label-cols="label_cols"
-                        id="input-group1"
+                        id="input-group-main"
                         label-for="input-horizontal"
                         description="До 5 слайдов в сториз"
                 >
@@ -243,13 +245,13 @@
                 </b-form-group>
                 <div v-if="isCreative()">
                     <div 
-                    v-for="(Image, index) in company.Images" 
+                    v-for="(Image, index) in Images" 
                     :key="Image.name">
                         <b-form-group
                             :label="textOnSlide(index)"
                             :label-cols="label_cols"
                             :content-cols="content_cols"
-                            id="input-group1"
+                            id="input-group-main"
                             label-for="input-horizontal"
                         >
                             <b-form-input
@@ -263,7 +265,7 @@
                 <b-form-group
                         :label="getPostLabel()"
                         :label-cols="label_cols"
-                        id="input-group1"
+                        id="input-group-main"
                         label-for="input-horizontal"
                         description="До 5 слайдов в посте"
                 >
@@ -305,13 +307,13 @@
                 </b-form-group>
                 <div v-if="isCreative()">
                     <div 
-                    v-for="(Image, index) in company.ImagesSmall" 
+                    v-for="(Image, index) in ImagesSmall" 
                     :key="Image.name">
                         <b-form-group
                             :label="textOnImage(index)"
                             :label-cols="label_cols"
                             :content-cols="content_cols"
-                            id="input-group1"
+                            id="input-group-main"
                             label-for="input-horizontal"
                         >
                             <b-form-input
@@ -327,7 +329,7 @@
                         label="Описание под постом в ленте"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
-                        id="input-group1"
+                        id="input-group-main"
                         label-for="input-horizontal"
                     >
                         <b-form-textarea
@@ -341,7 +343,7 @@
                         id="submit-button"
                         type="submit"
                     >
-                        {{isEdit ? "Обновить":"Создать"}} компанию
+                        {{isEdit ? "Обновить кампанию":"Продолжить"}}
                     </b-button>
                 </b-form>
             </div>
@@ -431,12 +433,15 @@ export default {
     },
     methods: {
         getImages(){
-            return axios({url: `${VUE_APP_API_URL}/api/company/${this.company.Id}/images/`, method: 'GET' })
+            axios({url: `${VUE_APP_API_URL}/api/company/${this.company.Id}/images/`, method: 'GET' })
             .then(resp => {
                 console.log(resp.data)
-                // this.getImageByName(resp.data[0])
-                this.imageNames = resp.data
-                return resp.data
+                if (resp.data == null) {
+                    this.imageNames = []
+                }
+                else {
+                    this.imageNames = resp.data
+                }
             })
             .catch(err => {
                 console.log(err)
@@ -527,9 +532,12 @@ export default {
             accountService.login()
         },
         createCompany(){
+            console.log("asdasd")
             const companyData = new FormData();
             companyData.append("FbPageId", this.company.FbPageId)
-            companyData.append("Id", this.company.Id)
+            if (this.isEdit) {
+                companyData.append("Id", this.company.Id)
+            }
             companyData.append("CompanyName", this.company.CompanyName)
             companyData.append("CompnayPurpose", this.company.CompnayPurpose)
             companyData.append("CompanyField", this.company.CompanyField)
@@ -538,16 +546,21 @@ export default {
             companyData.append("ImagesSmallDescription", this.company.ImagesSmallDescription)
             companyData.append("CreativeStatus", this.company.CreativeStatus)
             companyData.append("PostDescription", this.company.PostDescription)
+            companyData.append("CurrentAmount",this.company.CurrentAmount)
+            companyData.append("DailyAmount",this.company.DailyAmount)
+            companyData.append("Days",this.company.Days)
             Array.from(this.ImagesSmall).forEach(Image => {
                 companyData.append("ImageSmall", Image); //TODO не прилетают.
             });
             Array.from(this.Images).forEach(Image => {
                 companyData.append("Image", Image);
             });
+            console.log("HUW", this.isEdit)
             if (!this.isEdit) {
+                console.log("HUW1")
                 store.dispatch("saveCompany", companyData)
                 .then((resp)=>{
-                    console.log(resp.data) //TODO log company id
+                    console.log("HUW2")
                     this.company = {
                         FbPageId: '',
                         Id: '',
@@ -567,10 +580,11 @@ export default {
                     }
                     this.isInfoPopupVisible = false
                     this.isRequestSent = false
-                    router.push('main')
+                    console.log("id after save", resp)
+                    router.push({path: '/company-balance/'+ resp.data, query: {}}) //TODO QUERY
                 })
                 .catch(err => {
-                    console.log(err) //TODO popup
+                    console.log(err)
                 })
             }
             else {
@@ -618,7 +632,7 @@ export default {
         },
         onFileSelected(e) {
             let selectedFiles = e.target.files;
-            let len = Math.min(selectedFiles.length, 5)
+            let len = Math.min(selectedFiles.length, 5 - this.Images.length)
             for (let i = 0; i < len; i++) {
                 this.Images.push(selectedFiles[i]);
             }
@@ -634,7 +648,7 @@ export default {
         },
         onSmallFileSelected(e) {
             let selectedFiles = e.target.files;
-            let len = Math.min(selectedFiles.length, 5)
+            let len = Math.min(selectedFiles.length, 5 - this.ImagesSmall.length)
             for (let i = 0; i < len; i++) {
                 this.ImagesSmall.push(selectedFiles[i]);
             }
@@ -671,7 +685,7 @@ export default {
 #block {
     margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill,minmax(160px, 1fr));
     justify-content: space-between;
     align-items: center;
     grid-gap: 30px;

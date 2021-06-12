@@ -22,8 +22,9 @@
                             </div>
                             <div class='r'>
                                 <div class="c-status">
-                                    <div class="elipse" id="red" v-if="!isFb(company)"></div>
-                                    <div class="elipse" id="green" v-if="isFb(company)"></div>
+                                    <div class="elipse" id="white" v-if="!isFb(company)"></div>
+                                    <div class="elipse" id="yellow" v-if="isFb(company) && !isMoney(company)"></div>
+                                    <div class="elipse" id="green" v-if="isFb(company) && isMoney(company)"></div>
                                     <p class="c-status-text">{{getStatus(company)}}</p>
                                 </div>
                             </div>
@@ -49,14 +50,20 @@ export default {
         }
     },
     methods: {
+        isMoney(company){
+            return company.CurrentAmount > 0
+        },
         isFb(company){
             return company.FbPageId.length > 0
         },
         getStatus(company){
             if (company.FbPageId.length === 0) {
-                return "FB не подключен"
+                return "facebook не подключен"
             }
-            return "Запущена"
+            if (company.CurrentAmount === 0){
+                return "закончился рекламный бюджет"
+            }
+            return "в работе"
         },
         getAdCompanyList(){
             store.dispatch("getCompanyList")
@@ -70,7 +77,7 @@ export default {
 <style>
 .c-div{
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 40px;
     background: lightgray;
     border-radius: 20px;
     height: 100px;
@@ -101,8 +108,11 @@ export default {
     font-style: normal;
     font-size: 1em;
 }
-#red{
-    background: red;
+#white{
+    background: white;
+}
+#yellow{
+    background: yellow;
 }
 #green{
     background: lightgreen;

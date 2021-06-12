@@ -42,12 +42,16 @@
       rightBtnAction() {
         this.$emit('rightBtnAction')
       },
+      renderAction() {
+        this.$emit('renderAction')
+      },
       closePopup() {
         this.$emit('closePopup')
       }
     },
     mounted() {
       let vm = this;
+      vm.renderAction()
       document.addEventListener('click', function (item) {
         if (item.target === vm.$refs['popup_wrapper']) {
           vm.closePopup()

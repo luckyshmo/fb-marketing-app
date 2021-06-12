@@ -8,10 +8,11 @@
                 <div class='left'>
                     <h1 id="h1">{{company.CompanyName}}</h1>
                 </div>
-                <div class='right'>
+                <div class='right' style="padding-top: 7px">
                     <div class="c-status">
-                        <div class="elipse" id="red" v-if="!isFb(company)"></div>
-                        <div class="elipse" id="green" v-if="isFb(company)"></div>
+                        <div class="elipse" id="white" v-if="!isFb(company)"></div>
+                        <div class="elipse" id="yellow" v-if="isFb(company) && !isMoney(company)"></div>
+                        <div class="elipse" id="green" v-if="isFb(company) && isMoney(company)"></div>
                         <p class="c-status-text">{{getStatus(company)}}</p>
                     </div>
                 </div>
@@ -19,15 +20,34 @@
     
             <h2 id="h2">Общий баланс</h2>
 
-            <div id="payment-form">лул</div>
+            <b-form-group
+                label="Всего на счету"
+                :label-cols="label_cols"
+                :content-cols="content_cols"
+                id="input-group-main"
+                label-for="input-horizontal"
+            >
+                <p id="balance">{{company.CurrentAmount}}000₽</p>
+            </b-form-group>
 
             <b-button 
                 variant="primary"
                 id="main-button"
-                style="background: #F3F3F3; color: black"
+                style="background: #F3F3F3; color: black; margin-top: 15px"
+                @click="showPopupInfo"
             >
                 Пополнить баланс
             </b-button>
+
+            <popup
+              v-if="isInfoPopupVisible"
+              style="margin-top: -250px;"
+              popupTitle="Пополнение счета"
+              @closePopup="closeInfoPopup"
+              @renderAction="render"
+            >
+                 <div id="payment-form"></div>
+            </popup>
 
             <b-form @submit.prevent="startCompany()">
                 <h2 id="h2">Рекламный бюджет</h2>
@@ -36,7 +56,7 @@
                         description="Минимальная сумма 200₽ в сутки"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
-                        id="input-group1"
+                        id="input-group-main"
                         label-for="input-horizontal"
                 >
                     <b-form-input
@@ -49,7 +69,7 @@
                         label="Количество дней"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
-                        id="input-group1"
+                        id="input-group-main"
                         label-for="input-horizontal"
                 >
                     <b-form-input
@@ -84,10 +104,15 @@
 import store from '../../../store/store'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 import axios from 'axios'
+import popup from '../popup.vue'
 export default {
+    components: {
+      popup
+    },
     data(){
         return {
             store,
+            isInfoPopupVisible: false,
             label_cols: this.getWidth().label,
             content_cols: this.getWidth().content,
             company: {
@@ -109,23 +134,6 @@ export default {
         }
     },
     mounted() {
-        let mScript = document.createElement('script')
-        mScript.setAttribute('src', 'https://yookassa.ru/checkout-widget/v1/checkout-widget.js')
-        document.head.appendChild(mScript)
-
-        const checkout = new window.YooMoneyCheckoutWidget({
-            confirmation_token: 'confirmation-token', //Token that must be obtained from YooMoney before the payment process
-            return_url: 'https://merchant.site', //URL to the payment completion page
-            error_callback: function(error) {
-                console.log(error)
-                //Processing of initialization errors
-            }
-        })
-        checkout.render('payment-form')
-        //После отображения платежной формы метод render возвращает Promise (можно не использовать).
-        .then(() => {
-            //Код, который нужно выполнить после отображения платежной формы.
-        });
         
     },
     watch: {
@@ -144,20 +152,51 @@ export default {
         }
     },
     beforeMount(){
+        let mScript = document.createElement('script')
+        mScript.setAttribute('src', 'https://yookassa.ru/checkout-widget/v1/checkout-widget.js')
+        document.head.appendChild(mScript)
+
         axios({url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`, method: 'GET' })
         .then(resp => {
             this.company = resp.data
         }) 
     },
     methods: {
+        render(){
+            const checkout = new window.YooMoneyCheckoutWidget({
+                confirmation_token: 'confirmation-token', //Token that must be obtained from YooMoney before the payment process
+                return_url: 'https://merchant.site', //URL to the payment completion page
+                error_callback: function(error) {
+                    console.log(error)
+                    //Processing of initialization errors
+                }
+            })
+            checkout.render('payment-form')
+            //После отображения платежной формы метод render возвращает Promise (можно не использовать).
+            .then(() => {
+                //Код, который нужно выполнить после отображения платежной формы.
+            });
+        },
+        closeInfoPopup() {
+            this.isInfoPopupVisible = false;
+        },
+        showPopupInfo() {
+            this.isInfoPopupVisible = true;
+        },
         startCompany(){
             console.log(this.balanceForm)
         },
+        isMoney(company){
+            return company.CurrentAmount > 0
+        },
         getStatus(company){
             if (company.FbPageId.length === 0) {
-                return "FB не подключен"
+                return "facebook не подключен"
             }
-            return "Запущена"
+            if (company.CurrentAmount === 0){
+                return "закончился рекламный бюджет"
+            }
+            return "в работе"
         },
         isFb(company){
             return company.FbPageId.length > 0
@@ -186,6 +225,14 @@ export default {
 }
 </script>
 <style>
+#balance{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    padding-top: 7px;
+}
 .company-status{
     height: 70px;
     width:100%;

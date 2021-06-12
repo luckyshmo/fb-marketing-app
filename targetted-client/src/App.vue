@@ -82,9 +82,8 @@ html {
 #submit-button{
    outline: none !important;
     position: absolute;
-    margin-top: 75px; /* //TODO dependce on content-wrapper */
+    margin-top: 115px; /* //TODO dependce on content-wrapper */
     color:white;
-    /* margin-top: 15px; */
     background-color: #FF62B7;
     border-radius: 8px;
     padding: 12px 28px;
@@ -95,7 +94,7 @@ html {
 }
 
 #content {
-  padding: 40px;
+  padding: 80px;
   max-width: 1220px;
   margin: 0% auto 0% auto !important; 
   background-color: white !important;
@@ -129,11 +128,12 @@ html {
 }
 
 #h1 {
-  margin-top: 0px;
+  margin: 0px;
   font-family: Montserrat;
   font-style: normal;
   font-weight: 900;
-  font-size: 3.5em;
+  /* font-size: 3.5em; */
+  font-size: 72px;
   color: #000000;
 }
 #h1-centered {
@@ -150,18 +150,21 @@ html {
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
-  font-size: 1.3em;
+  /* font-size: 1.3em; */
+  font-size: 16px;
 
   color: #000000;
 
 }
 
 #h2 {
-  margin-top: 50px;
+  margin-top: 60px;
+  margin-bottom: 20px;
   font-family: Montserrat;
   font-style: normal;
   font-weight: 900;
-  font-size: 2.3em;
+  /* font-size: 2.3em; */
+  font-size: 36px;
 
   color: #000000;
 }
@@ -172,8 +175,11 @@ html {
 #input-group{
   margin: 32px 20px 32px 20px !important;
 }
-#input-group1{
-  margin-top: 10px;
+.form-input{
+  max-width: 540px !important;
+}
+#input-group-main{
+  margin-top: 32px;
   color: black;
   display: flex;
   font-family: Montserrat;
@@ -191,7 +197,7 @@ html {
   cursor: pointer;
 }
 @media (max-width: 600px) {
-    #input-group1{
+    #input-group-main{
         display:grid;
     }
     #h1-centered {
