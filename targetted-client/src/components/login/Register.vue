@@ -72,7 +72,8 @@
 </template>
 <script>
   import router from '../../../router/router'
-  import store from '../../../store/store'
+  import axios from 'axios'
+  const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
   export default {
     data() {
       return {
@@ -93,12 +94,12 @@
             password: this.form.password,
             phoneNumber: this.form.phoneNumber
         }
-        store.dispatch('register', data)
-        .then((resp) => {
-          console.log(resp)
-          router.push('login')
-        }
-        )
+        console.log("rData", data)
+        axios({url: `${VUE_APP_API_URL}/auth/sign-up`, data: data, method: 'POST'})
+        .then(resp => {
+            console.log(resp)
+            router.push('login')
+        })
         .catch(err => console.log(err))
       },
     }

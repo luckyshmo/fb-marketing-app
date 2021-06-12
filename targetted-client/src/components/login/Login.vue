@@ -46,7 +46,6 @@ import store from '../../../store/store'
     },
     methods: {
       login: function () {
-        console.log(this.password)
         let email = this.email 
         let password = this.password
         store.dispatch('login', { email, password })
