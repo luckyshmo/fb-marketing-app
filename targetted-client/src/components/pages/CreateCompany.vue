@@ -178,9 +178,9 @@
                             <div 
                             v-for="(name) in imageNames"
                             :key="name">
-                            <div id="Image-preview">
-                                    <img id="preview" :src="getImageByName(name)"/>
-                                </div>
+                            <div>
+                                <img id="preview" :src="getImageByName(name)"/>
+                            </div>
                             </div>
                         </div>  
                     </b-form-group>
@@ -212,11 +212,9 @@
                         <div 
                         v-for="(Image, key) in Images" 
                         :key="key">
-                            <div id="Image-preview">
-                                <div 
-                                style="position: absolute;
-                                margin-left: 140px;
-                                margin-top: -15px;">
+                            <div>
+                                <div
+                                id="icon-div-image">
                                     <b-icon
                                     @click="removeImage(Image)"
                                     class="x-button"
@@ -238,7 +236,7 @@
                             @click="$refs.fileInput.click()"
                             id="load-frame">
                                 <p id="load-file">Загрузить<br>файл</p>
-                                <p id="file-size" style="margin: 140px auto;">Размер<br>1920х1080рх</p>
+                                <p id="file-size">Размер<br>1920х1080рх</p>
                             </div>
                         </div>
                     </div>
@@ -273,19 +271,14 @@
                     <div id="block">
                     <div 
                     v-for="(Image, key) in ImagesSmall" 
-                    :key="key">
-                        <div id="Image-preview">
-                            <div 
-                            style="position: absolute;
-                            margin-left: 140px;
-                            margin-top: -15px;">
-                                <b-icon
-                                @click="removeImageSmall(Image)"
-                                class="x-button"
-                                icon="x"></b-icon>
-                            </div>
-                            <img id="preview-small" :ref="'ImageSmall'" />
+                    :key="key" style="width: 160px; height: 160px;">
+                        <div id="icon-div-image">
+                            <b-icon
+                            @click="removeImageSmall(Image)"
+                            class="x-button"
+                            icon="x"></b-icon>
                         </div>
+                        <img id="preview-small" :ref="'ImageSmall'" />
                     </div>
                     <div v-if="ImagesSmall.length < 5">
                         <input 
@@ -408,6 +401,23 @@ export default {
                         this.pageSubmitted = true
                     }
                 })
+            } else {
+                this.company = {
+                    FbPageId: '',
+                    UserId: '',
+                    Id: '',
+                    CompanyName: '',
+                    CompnayPurpose: '',
+                    CompanyField: '',
+                    BusinessAddress: '',
+                    ImagesDescription: [],
+                    ImagesSmallDescription: [],
+                    CreativeStatus: '',
+                    PostDescription: '',
+                    CurrentAmount: 0,
+                    DailyAmount: 0,
+                    Days: 0,
+                }
             }
         }
     },
@@ -666,6 +676,11 @@ export default {
 }
 </script>
 <style>
+#icon-div-image{
+    position: absolute;
+    margin-left: 140px;
+    margin-top: -15px;
+}
 #primary-under{
     margin-left: 20px;
 }
@@ -695,12 +710,12 @@ export default {
     border-radius: 20px;
 }
 #block {
-    margin-top: 20px;
+    max-width: 600px;
     display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill,148px);
     justify-content: space-between;
     align-items: center;
-    grid-gap: 30px;
+    grid-gap: 8px;
 }
 #load-frame {
     border: 2px dashed #CCCCCC;
