@@ -79,7 +79,7 @@
                         <b-button 
                             variant="primary"
                             class="main-button"
-                            style="margin-left: 15px"
+                            id="primary-under"
                             @click="checkPageSubmitted()"
                         >
                             Я подтвердил в сообщениях
@@ -88,7 +88,7 @@
                     <div v-if="pageSubmitted">
                         <div class="c-status" style="margin-top: 30px; max-width: 800px">
                             <div class="elipse" id="green"></div>
-                            <p class="c-status-text" style="text-align: left;" 
+                            <p class="c-status-text" id="c-status-text-u" style="text-align: left;" 
                             >Страница {{company.FbPageId}} привязана к targetted</p>
                         </div>
                     </div>
@@ -669,7 +669,10 @@ export default {
 #primary-under{
     margin-left: 20px;
 }
-@media (max-width: 600px) {
+@media (max-width: 722px) {
+    #c-status-text-u{
+        margin-left: 30px;
+    }
     #primary-under{
         margin-left: 0px;
         margin-top: 20px;

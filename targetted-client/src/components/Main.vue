@@ -107,35 +107,10 @@ a {
     color: white;  
     margin-left: 30px;
     margin-right: 20px;
+    margin-top: 2px;
     font-family: Montserrat;
     font-style: normal;
     font-size: 1em;
-}
-@media (max-width: 600px){
-    .c-status-text{
-        margin-left: 15px;
-        margin-right: 10px;
-    }
-    .c-div{
-        height: auto;
-    }
-    .l {
-        position: relative;
-        text-align: left;
-        margin-top: 20px;
-        margin-left: 20px;
-        height: auto;
-    }
-    .r {
-        position: relative;
-        right: auto;
-        top: auto;
-        margin-right: auto;
-        margin-top: auto;
-        height: auto;
-        margin: 20px;
-        
-    }
 }
 #white{
     background: white;
@@ -159,7 +134,8 @@ a {
     padding-top: 13px;
     padding-left: 10px;
     /* width: 150px; */
-    height: 50px;
+    /* height: 50px; */
+    padding-bottom: 1px; 
     background: #000000;
     border-radius: 16px;
 }
@@ -174,5 +150,36 @@ a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+@media (max-width: 600px){
+    .c-status{
+       height: auto;
+       padding-bottom: 4px; 
+    }
+    .c-status-text{
+        margin-left: 15px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+    .c-div{
+        height: auto;
+    }
+    .l {
+        position: relative;
+        text-align: left;
+        margin-top: 20px;
+        margin-left: 20px;
+        height: auto;
+    }
+    .r {
+        position: relative;
+        right: auto;
+        top: auto;
+        margin-right: auto;
+        margin-top: auto;
+        height: auto;
+        margin: 20px;
+        
+    }
 }
 </style>
