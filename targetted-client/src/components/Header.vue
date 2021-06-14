@@ -92,15 +92,20 @@ import store from '../../store/store'
     font-size: 1em;
     text-align: center;
 
-    color:whitesmoke;
+    color:whitesmoke !important;
 
     width: 25%;
 }
 
-#container {height: 100%; width:100%; margin: 40px 0px 25px 0px; text-align: center;}
+#container {
+  height: 100px;
+  max-width: 1220px;
+  text-align: center;
+  margin: 0 auto
+}
 #left, #middle, #right {display: inline-block;}
-#left {width: 25%;}
-#middle {width: 50%; }
+#left {width: 25%; padding-top: 40px;}
+#middle {width: 50%;}
 #right {width: 25%;}
     
 </style>

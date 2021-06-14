@@ -88,7 +88,7 @@ export default {
 .l {
   position: absolute;
   text-align: center;
-  margin-top: 35px;
+  margin-top: 40px;
   margin-left: 30px;
   height: 25%;
 }
@@ -110,7 +110,7 @@ a {
     margin-top: 2px;
     font-family: Montserrat;
     font-style: normal;
-    font-size: 1em;
+    padding: 0px !important;
 }
 #white{
     background: white;
@@ -123,18 +123,17 @@ a {
 }
 .elipse{
     position: absolute;
-    width: 15px;
-    margin-top: 5px;
-    margin-left: 5px;
-    height: 15px;
-    border-radius: 7.5px;
+    width: 10px;
+    margin-top: 9px;
+    margin-left: 9px;
+    height: 10px;
+    border-radius: 5px;
 }
 .c-status{
     text-align: center;
     padding-top: 13px;
     padding-left: 10px;
-    /* width: 150px; */
-    /* height: 50px; */
+    height: 55px;
     padding-bottom: 1px; 
     background: #000000;
     border-radius: 16px;
@@ -146,12 +145,15 @@ a {
     font-size: 1.3em;
     color: #000000;
     text-align: left;
-    width: 450px;
+    width: 600px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 @media (max-width: 600px){
+    .c-name{
+        max-width: 260px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
+    }
     .c-status{
        height: auto;
        padding-bottom: 4px; 
@@ -162,6 +164,7 @@ a {
         margin-bottom: 10px;
     }
     .c-div{
+        margin-top: 15px;
         height: auto;
     }
     .l {

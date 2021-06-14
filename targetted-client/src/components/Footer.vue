@@ -1,6 +1,6 @@
 <template>
     <div class="footer">
-        <p>© targetted.ru, 2020–2021</p>
+        <p1 id="footer-t">© targetted.ru, 2020–2021</p1>
     </div>
 </template>
 <script>
@@ -9,8 +9,12 @@ export default {
 }
 </script>
 <style>
+#footer-t{
+    position:relative;
+    bottom: -38px;
+}
 .footer {
-    margin-top: 20px;
+    height: 100px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: normal;

@@ -63,6 +63,7 @@
 
 <style>
   .popup_wrapper {
+    /* //TODO */
     cursor: grab;
     position: fixed;
     z-index: 1;

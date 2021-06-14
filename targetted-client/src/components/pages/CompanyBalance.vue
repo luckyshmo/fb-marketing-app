@@ -4,17 +4,15 @@
             <router-link :to="{name: 'mainPage'}">
                 <p id="navigation-text" style="margin:0;">← К списку кампаний</p>
             </router-link>
-            <div class="company-status">
-                <div class='left'>
-                    <h1 id="h1">{{company.CompanyName}}</h1>
-                </div>
-                <div class='right' style="padding-top: 7px">
-                    <div class="c-status">
-                        <div class="elipse" id="white" v-if="!isFb(company)"></div>
-                        <div class="elipse" id="yellow" v-if="isFb(company) && !isMoney(company)"></div>
-                        <div class="elipse" id="green" v-if="isFb(company) && isMoney(company)"></div>
-                        <p class="c-status-text">{{getStatus(company)}}</p>
-                    </div>
+            <div id="company-status-wrapper">
+                <h1 id="h1" style="max-width: 700px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                    {{company.CompanyName}}
+                </h1>
+                <div class="c-status" id="c-status">
+                    <div class="elipse" id="white" v-if="!isFb(company)"></div>
+                    <div class="elipse" id="yellow" v-if="isFb(company) && !isMoney(company)"></div>
+                    <div class="elipse" id="green" v-if="isFb(company) && isMoney(company)"></div>
+                    <p class="c-status-text">{{getStatus(company)}}</p>
                 </div>
             </div>
     
@@ -50,6 +48,7 @@
 
             <b-form @submit.prevent="startCompany()">
                 <h2 id="h2">Рекламный бюджет</h2>
+                <!-- //TODO descrip отступ сверху, цвет, размер -->
                 <b-form-group
                         label="Бюджет на сутки"
                         description="Минимальная сумма 200₽ в сутки"
@@ -223,6 +222,13 @@ export default {
 }
 </script>
 <style>
+#c-status{
+    margin: 12px;
+}
+#company-status-wrapper{
+    display: flex;
+    align-items: stretch;
+}
 #balance{
     font-family: Montserrat;
     font-style: normal;
@@ -230,12 +236,6 @@ export default {
     font-size: 16px;
     line-height: 24px;
     padding-top: 7px;
-}
-.company-status{
-    height: 70px;
-    width:100%;
-    overflow: hidden;
-    position: relative;
 }
 .left {
     position: absolute;

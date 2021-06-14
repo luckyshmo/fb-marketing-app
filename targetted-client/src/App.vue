@@ -56,7 +56,6 @@ export default {
   -moz-osx-font-smoothing: grayscale !important; */
   /* text-align: center; */
   overflow: hidden;
-  color: red;
   background-color: black !important;
 }
 html { 
@@ -70,7 +69,7 @@ html {
 
 .main-button-grey{
     background: #F3F3F3 !important; 
-    color: black; 
+    color: black !important; 
     margin-top: 20px !important;
     outline: none !important;
     border-radius: 8px !important;
@@ -79,53 +78,105 @@ html {
     font-family: Montserrat !important;
     font-style: normal !important;
     font-weight: 600 !important;
+    line-height: 24px;
+    height: 48px;
 }
+
+.main-button-big{
+  color:white !important;
+  outline: none !important;
+  height: 56px;
+  background-color: #6C1BD2 !important;
+  border-radius: 8px !important;
+  padding: 12px 28px !important;
+  border:none !important;
+
+  line-height: 32px;
+  font-family: Montserrat !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 20px;
+}
+
 .main-button {
-    color:white !important;
-     outline: none !important;
-    background-color: #6C1BD2 !important;
-    border-radius: 8px !important;
-    padding: 12px 28px !important;
-    border:none !important;
-    font-family: Montserrat !important;
-    font-style: normal !important;
-    font-weight: 600 !important;
+  color:white !important;
+  outline: none !important;
+  height: 48px;
+  background-color: #6C1BD2 !important;
+  border-radius: 8px !important;
+  padding: 12px 28px !important;
+  border:none !important;
+
+  line-height: 24px;
+  font-family: Montserrat !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 20px;
+}
+.main-button-grey:hover{
+  background-color: #EEEEEE !important;
+}
+.main-button:hover {
+  background-color: #5101B5 !important;
+}
+.main-button-big:hover {
+  background-color: #5101B5 !important;
+}
+@media (max-width: 600px) {
+    .main-button {
+      height: 48px;
+      font-size: 16px;
+    }
 }
 
 .submit-button{
-   outline: none !important;
-    position: absolute !important;
-    margin-top: 115px; /* //TODO dependce on content-wrapper */
-    color:white !important;
-    background-color: #FF62B7 !important;
-    border-radius: 8px !important;
-    padding: 12px 28px !important;
-    border:none !important;
-    font-family: Montserrat !important;
-    font-style: normal !important;
-    font-weight: 600 !important;
+  outline: none !important;
+  position: absolute !important;
+  margin-top: 115px; /* //TODO dependce on content-wrapper */
+  color:white !important;
+  background-color: #FF62B7 !important;
+  border-radius: 8px !important;
+  padding: 12px 28px !important;
+  height: 56px;
+  border:none !important;
+  font-family: Montserrat !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  line-height: 32px;
+  font-size: 20px;
+}
+.submit-button:hover{
+  background-color:#F248A4 !important;
 }
 
 #content {
   padding: 80px;
-  max-width: 1220px;
+  width: 1220px;
   margin: 0% auto 0% auto !important; 
   background-color: white !important;
   border-radius: 25px !important;
 }
 #content-wrapper {
-  max-width: 1220px;
+  width: 1220px;
   margin: 0% auto 0% auto !important; 
   background-color: #6C1BD2 !important;
   border-radius: 25px !important;
   padding-bottom: 120px;
+}
+@media (max-width: 600px) {
+  #content{
+    width: 375px;
+  }
+  #content-wrapper{
+    width: 375px;
+  }
 }
 #content-login {
   padding: 80px 40px 80px 40px;
   margin: 0px 50px 0px 50px !important; 
   background-color: white !important;
   border-radius: 25px !important;
-  max-width:600px;
+  max-width:640px;
   margin:0 auto !important;
 }
 
@@ -134,7 +185,6 @@ html {
     font-style: normal;
     font-weight: normal;
     font-size: 1em;
-    /* line-height: 24px; */
     max-width: 250px;
     margin: 32px auto 0px auto;
     color: #767676;
@@ -145,29 +195,23 @@ html {
   font-family: Montserrat;
   font-style: normal;
   font-weight: 900;
-  /* font-size: 3.5em; */
+  line-height: 72px;
   font-size: 72px;
-  color: #000000;
 }
 #h1-centered {
   font-family: Montserrat;
   font-style: normal;
   font-weight: 900;
   font-size: 72px;
-  /* font-size: 3.5em; */
-  line-height: 100%;
+  line-height: 72px;
   text-align: center;
-  color: #000000;
 }
-#p1 {
+p {
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
-  /* font-size: 1.3em; */
   font-size: 16px;
-
-  color: #000000;
-
+  line-height: 24px;
 }
 
 #h2 {
@@ -202,10 +246,10 @@ html {
   font-size: 1em;
 }
 .x-button{
-  height: 35px;
-  width: 35px;
+  height: 40px;
+  width: 40px;
   color: black;
-  background: #e4e4e4;
+  background: #f3f3f3;
   border-radius: 17.5px;
   cursor: pointer;
 }
@@ -214,10 +258,18 @@ html {
         display:grid;
     }
     #h1-centered {
-      font-size: 2.5em;
+      font-size: 36px;
+      line-height: 44px;
     }
     #h1 {
-      font-size: 2.5em;
+      font-size: 36px;
+      line-height: 44px;
+    }
+    #h2 {
+      font-size: 24px;
+      line-height: 32px;
+      margin-top: 24px;
+      margin-bottom: 20px;
     }
 }
 .form-input{

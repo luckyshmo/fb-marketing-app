@@ -13,7 +13,7 @@
                 <b-form @submit.prevent="createCompany()">
                     <h2 id="h2">Доступ к кабинету Facebook</h2>
                     <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
-                        <p id="p1">Привяжите свой аккаунт Facebook к targetted, чтобы натсроить и запустить рекламунюу компанию </p>
+                        <p>Привяжите свой аккаунт Facebook к targetted, чтобы натсроить и запустить рекламунюу компанию </p>
                         <b-button 
                             v-if="!(store.getters.GET_FB_PAGES.length > 0)"
                             variant="primary"
@@ -22,13 +22,14 @@
                         >
                             У меня есть бизнес-аккаунт
                         </b-button>
+                        <!-- //TODO ситуация с осутсвием страниц -->
                         <popup
                         v-if="isInfoPopupVisible"
                         popupTitle="Инструкция по созданию бизнесс-аккаунта"
                         @closePopup="closeInfoPopup"
                         >
                             <div>
-                            <p id="p1">Тип инструкция все дела</p>
+                            <p>Тип инструкция все дела</p>
                             </div>
                         </popup>
                         <b-button 
@@ -43,7 +44,8 @@
                     </div>
                     <div v-if="store.getters.GET_FB_PAGES.length > 0 && !isRequestSent && !pageSubmitted">
                         <div>
-                            <p id="p1">Выберите страницу которую хотите привязать</p>
+                            <p>Выберите страницу которую хотите привязать</p>
+                            <!-- //TODO SELECT -->
                             <b-form-group
                             label="Выберите страницу"
                             :label-cols="label_cols"
@@ -66,7 +68,7 @@
                         </b-button>
                     </div>
                     <div v-if="isRequestSent && !pageSubmitted">
-                        <p id="p1">Зайди в аккаунт на Facebook и подтверди привязку страницы в сообщениях</p>
+                        <p>Зайди в аккаунт на Facebook и подтверди привязку страницы в сообщениях</p>
                         <b-button 
                             variant="primary"
                             class="main-button"
@@ -92,8 +94,8 @@
                             >Страница {{company.FbPageId}} привязана к targetted</p>
                         </div>
                     </div>
+                    <!-- store.getters.GET_FB_PAGES.length > 0 ||  v-if="isRequestSent && pageSubmitted"-->
                     <b-button 
-                        v-if="store.getters.GET_FB_PAGES.length > 0 || isRequestSent && pageSubmitted"
                         variant="primary"
                         class="main-button-grey"
                         style="margin-top: 30px; background: #F3F3F3; color: black"
@@ -117,6 +119,7 @@
                         v-model="company.CompanyName"
                         placeholder="Введите название"
                         ></b-form-input>
+                        <!-- //TODO max len 30sym -->
                     </b-form-group>
 
                     <b-form-group
@@ -174,7 +177,7 @@
                     id="input-group-main"
                     label-for="input-horizontal"
                     >
-                        <div id="block">
+                        <div id="image-block">
                             <div 
                             v-for="(name) in imageNames"
                             :key="name">
@@ -208,7 +211,7 @@
                         label-for="input-horizontal"
                         description="До 5 слайдов в сториз"
                 >
-                    <div id="block">
+                    <div id="image-block">
                         <div 
                         v-for="(Image, key) in Images" 
                         :key="key">
@@ -235,8 +238,11 @@
                             <div 
                             @click="$refs.fileInput.click()"
                             id="load-frame">
+                            <!-- Обводка у кнопок -->
+                            <!-- ПОехал размер -->
                                 <p id="load-file">Загрузить<br>файл</p>
-                                <p id="file-size">Размер<br>1920х1080рх</p>
+                                <p id="file-size-big">Размер<br>1920х1080рх</p>
+                                <!-- TODO FILL -->
                             </div>
                         </div>
                     </div>
@@ -268,7 +274,7 @@
                         description="До 5 слайдов в посте"
                 >
 
-                    <div id="block">
+                    <div id="image-block">
                     <div 
                     v-for="(Image, key) in ImagesSmall" 
                     :key="key" style="width: 160px; height: 160px;">
@@ -702,20 +708,32 @@ export default {
 #preview{
     width: 160px;
     height: 280px;
+    object-fit: cover;
     border-radius: 20px;
 }
 #preview-small{
     width: 160px;
     height: 160px;
+    object-fit: cover;
     border-radius: 20px;
 }
-#block {
-    max-width: 600px;
+#image-block {
+    max-width: 530px;
     display: grid;
-    grid-template-columns: repeat(auto-fill,148px);
+    grid-template-columns: repeat(auto-fill,minmax(160px, 1fr));
     justify-content: space-between;
     align-items: center;
-    grid-gap: 8px;
+    grid-gap: 24px;
+}
+@media (max-width: 790px) {
+    #image-block {
+    max-width: 350px;
+    }
+}
+@media (max-width: 450px) {
+    #image-block {
+        max-width: 200px;
+    }
 }
 #load-frame {
     border: 2px dashed #CCCCCC;
@@ -729,6 +747,12 @@ export default {
     width: 160px;
     height: 160px;
 }
+#load-frame:hover {
+    background: #F3F3F3;
+}
+#load-frame-small:hover {
+    background: #F3F3F3;
+}
 #load-file {
     font-family: Montserrat;
     font-style: normal;
@@ -738,6 +762,17 @@ export default {
     margin: 20px auto;
     text-align: center;
     color: #000000;
+}
+#file-size-big {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 20px;
+    /* bottom: 0;//TODO почему то не работает */
+    margin-top: 140px;
+    text-align: center;
+    color: #767676;
 }
 #file-size {
     font-family: Montserrat;
