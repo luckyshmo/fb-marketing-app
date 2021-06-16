@@ -229,12 +229,6 @@ p {
 #form-centred{
     text-align: center !important;
 }
-#input-group{
-  margin: 32px 20px 32px 20px !important;
-}
-.form-input{
-  max-width: 540px !important;
-}
 #input-group-main{
   margin-top: 32px;
   color: black;
