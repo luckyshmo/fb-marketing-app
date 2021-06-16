@@ -68,7 +68,6 @@ import store from '../../../store/store'
     },
     methods: {
       resetErr(){
-        console.log("rest")
         this.userNotExist = false;
       },
       validateState(name) {

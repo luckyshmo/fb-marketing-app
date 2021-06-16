@@ -16,7 +16,7 @@
                         <p>Привяжите свой аккаунт Facebook к targetted, чтобы натсроить и запустить рекламунюу компанию </p>
                         <b-button 
                             v-if="!(store.getters.GET_FB_PAGES.length > 0)"
-                            variant="primary"
+                             
                             class="main-button"
                             @click="loginFB"
                         >
@@ -34,7 +34,6 @@
                         </popup>
                         <b-button 
                             v-if="!(store.getters.GET_FB_PAGES.length > 0)"
-                            variant="primary"
                             class="main-button"
                             id="primary-under"
                             @click="showPopupInfo"
@@ -60,7 +59,6 @@
                             </b-form-group>
                         </div>
                         <b-button 
-                            variant="primary"
                             class="main-button"
                             @click="sendFbRequest()"
                         >
@@ -70,7 +68,6 @@
                     <div v-if="isRequestSent && !pageSubmitted">
                         <p>Зайди в аккаунт на Facebook и подтверди привязку страницы в сообщениях</p>
                         <b-button 
-                            variant="primary"
                             class="main-button"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -79,7 +76,7 @@
                         Перейти в facebook
                         </b-button>
                         <b-button 
-                            variant="primary"
+                             
                             class="main-button"
                             id="primary-under"
                             @click="checkPageSubmitted()"
@@ -94,9 +91,11 @@
                             >Страница {{company.FbPageId}} привязана к targetted</p>
                         </div>
                     </div>
-                    <!-- store.getters.GET_FB_PAGES.length > 0 ||  v-if="isRequestSent && pageSubmitted"-->
                     <b-button 
-                        variant="primary"
+                        v-if="store.getters.GET_FB_PAGES.length > 0 ||
+                        (isRequestSent && pageSubmitted) ||
+                        (store.getters.GET_FB_PAGES.length == 0 || isRequestSent)"
+                         
                         class="main-button-grey"
                         style="margin-top: 30px; background: #F3F3F3; color: black"
                         @click="logout"
@@ -115,11 +114,20 @@
                     >
                         <b-form-input
                         class="form-input"
-                        required
+                        id="c-name"
                         v-model="company.CompanyName"
+                        :state="validateState('CompanyName')"
                         placeholder="Введите название"
+                        @click="resetNameErr()"
                         ></b-form-input>
-                        <!-- //TODO max len 30sym -->
+                        <b-form-invalid-feedback 
+                        class="error-message" 
+                        id="c-name">
+                            Название должно быть между 3 и 30 символами 
+                        </b-form-invalid-feedback>
+                        <small v-if="isCompanyExist" class="error-message">
+                            Кампания с таким иминем уже создана
+                        </small>
                     </b-form-group>
 
                     <b-form-group
@@ -149,8 +157,13 @@
                         <b-form-input
                         class="form-input"
                         v-model="company.CompanyField"
+                        :state="validateState('CompanyField')"
                         placeholder="Введите сферу"
                         ></b-form-input>
+                        <b-form-invalid-feedback
+                        class="error-message">
+                            Обязательное поле 
+                        </b-form-invalid-feedback>
                     </b-form-group>
 
                     <b-form-group
@@ -207,6 +220,7 @@
                 <b-form-group
                         :label="getStoriesLabel()"
                         :label-cols="label_cols"
+                        :state="validateImages()"
                         id="input-group-main"
                         label-for="input-horizontal"
                         description="До 5 слайдов в сториз"
@@ -246,6 +260,10 @@
                             </div>
                         </div>
                     </div>
+                    <b-form-invalid-feedback 
+                    class="error-message">
+                        Необходим минимум один файл
+                    </b-form-invalid-feedback>
                 </b-form-group>
                 <div v-if="isCreative()">
                     <div 
@@ -269,40 +287,44 @@
                 <b-form-group
                         :label="getPostLabel()"
                         :label-cols="label_cols"
+                        :state="validateImagesSmall()"
                         id="input-group-main"
                         label-for="input-horizontal"
                         description="До 5 слайдов в посте"
                 >
 
                     <div id="image-block">
-                    <div 
-                    v-for="(Image, key) in ImagesSmall" 
-                    :key="key" style="width: 160px; height: 160px;">
-                        <div id="icon-div-image">
-                            <b-icon
-                            @click="removeImageSmall(Image)"
-                            class="x-button"
-                            icon="x"></b-icon>
-                        </div>
-                        <img id="preview-small" :ref="'ImageSmall'" />
-                    </div>
-                    <div v-if="ImagesSmall.length < 5">
-                        <input 
-                        style="display: none"
-                        type="file" 
-                        multiple
-                        accept="Image/gif, Image/jpeg, Image/png, Image/jpg" 
-                        @change="onSmallFileSelected"
-                        ref="smallFileInput">
                         <div 
-                        @click="$refs.smallFileInput.click()"
-                        id="load-frame-small">
-                            <p id="load-file">Загрузить<br>файл</p>
-                            <p id="file-size">Размер<br>1080х1080рх</p>
+                        v-for="(Image, key) in ImagesSmall" 
+                        :key="key" style="width: 160px; height: 160px;">
+                            <div id="icon-div-image">
+                                <b-icon
+                                @click="removeImageSmall(Image)"
+                                class="x-button"
+                                icon="x"></b-icon>
+                            </div>
+                            <img id="preview-small" :ref="'ImageSmall'" />
+                        </div>
+                        <div v-if="ImagesSmall.length < 5">
+                            <input 
+                            style="display: none"
+                            type="file" 
+                            multiple
+                            accept="Image/gif, Image/jpeg, Image/png, Image/jpg" 
+                            @change="onSmallFileSelected"
+                            ref="smallFileInput">
+                            <div 
+                            @click="$refs.smallFileInput.click()"
+                            id="load-frame-small">
+                                <p id="load-file">Загрузить<br>файл</p>
+                                <p id="file-size">Размер<br>1080х1080рх</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                    
+                    <b-form-invalid-feedback 
+                    class="error-message">
+                        Необходим минимум один файл
+                    </b-form-invalid-feedback>
                 </b-form-group>
                 <div v-if="isCreative()">
                     <div 
@@ -358,14 +380,18 @@ import router from '../../../router/router'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 import axios from 'axios'
 import popup from '../popup.vue'
+import { validationMixin } from "vuelidate";
+import { required, maxLength, minLength } from "vuelidate/lib/validators";
 export default {
     name: 'CreateCompany',
+    mixins: [validationMixin],
     components: {
       popup
     },
     data() {
         return{
             store,
+            isCompanyExist: false,
             isInfoPopupVisible: false,
             label_cols: this.getWidth().label,
             content_cols: this.getWidth().content,
@@ -379,12 +405,12 @@ export default {
                 UserId: '',
                 Id: '',
                 CompanyName: '',
-                CompnayPurpose: '',
+                CompnayPurpose: 'Сообщения в директ',
                 CompanyField: '',
                 BusinessAddress: '',
                 ImagesDescription: [],
                 ImagesSmallDescription: [],
-                CreativeStatus: '',
+                CreativeStatus: 'Есть рекламные креативы',
                 PostDescription: '',
                 CurrentAmount: 0,
                 DailyAmount: 0,
@@ -407,23 +433,17 @@ export default {
                         this.pageSubmitted = true
                     }
                 })
+                .catch(err => {
+                    console.log(err);
+                    if (err.response.status === 401) {
+                        store.dispatch('logout')
+                        .then(() => {
+                            this.$router.push('/login')
+                        })
+                    }
+                })
             } else {
-                this.company = {
-                    FbPageId: '',
-                    UserId: '',
-                    Id: '',
-                    CompanyName: '',
-                    CompnayPurpose: '',
-                    CompanyField: '',
-                    BusinessAddress: '',
-                    ImagesDescription: [],
-                    ImagesSmallDescription: [],
-                    CreativeStatus: '',
-                    PostDescription: '',
-                    CurrentAmount: 0,
-                    DailyAmount: 0,
-                    Days: 0,
-                }
+                this.reset()
             }
         }
     },
@@ -444,10 +464,63 @@ export default {
                     this.isRequestSent = true
                     this.pageSubmitted = true
                 }
-            }) 
+            })
+            .catch(err => {
+                console.log(err);
+                if (err.response.status === 401) {
+                    router.push({path: '/login'})
+                }
+            })
+        }
+    },
+    validations: {
+        company: {
+            CompanyName: {
+                required,
+                maxLength: maxLength(30),
+                minLength: minLength(3)
+            },
+            CompanyField: {
+                required,
+            },
         }
     },
     methods: {
+        reset(){
+            this.isCompanyExist = false;
+            this.company = {
+                FbPageId: '',
+                Id: '',
+                CompanyName: '',
+                CompnayPurpose: 'Сообщения в директ',
+                CompanyField: '',
+                BusinessAddress: '',
+                Images: [],
+                ImagesDescription: [],
+                ImagesSmall: [],
+                ImagesSmallDescription: [],
+                CreativeStatus: 'Есть рекламные креативы',
+                PostDescription: '',
+                CurrentAmount: 0,
+                DailyAmount: 0,
+                Days: 0,
+            }
+            this.isInfoPopupVisible = false
+            this.isRequestSent = false
+        },
+        resetNameErr(){
+            this.isCompanyExist = false;
+        },
+        validateState(name) {
+            const { $dirty, $error } = this.$v.company[name];
+            return $dirty ? !$error : null;
+        },
+        validateImages(){
+            return this.Images.length === 0
+        },
+        validateImagesSmall(){
+            return this.ImagesSmall.length === 0
+        },
         getImages(){
             axios({url: `${VUE_APP_API_URL}/api/company/${this.company.Id}/images/`, method: 'GET' })
             .then(resp => {
@@ -460,7 +533,13 @@ export default {
                 }
             })
             .catch(err => {
-                console.log(err)
+                console.log(err);
+                if (err.response.status === 401) {
+                    store.dispatch('logout')
+                    .then(() => {
+                        this.$router.push('/login')
+                    })
+                }
             })
         },
         getImageByName(name){
@@ -548,6 +627,10 @@ export default {
             accountService.login()
         },
         createCompany(){
+            this.$v.$touch();
+            if (this.$v.$anyError) {
+                return;
+            }
             console.log("asdasd")
             const companyData = new FormData();
             companyData.append("FbPageId", this.company.FbPageId)
@@ -573,34 +656,23 @@ export default {
             });
             console.log("HUW", this.isEdit)
             if (!this.isEdit) {
-                console.log("HUW1")
                 store.dispatch("saveCompany", companyData)
                 .then((resp)=>{
-                    console.log("HUW2")
-                    this.company = {
-                        FbPageId: '',
-                        Id: '',
-                        CompanyName: '',
-                        CompnayPurpose: '',
-                        CompanyField: '',
-                        BusinessAddress: '',
-                        Images: [],
-                        ImagesDescription: [],
-                        ImagesSmall: [],
-                        ImagesSmallDescription: [],
-                        CreativeStatus: '',
-                        PostDescription: '',
-                        CurrentAmount: 0,
-                        DailyAmount: 0,
-                        Days: 0,
-                    }
-                    this.isInfoPopupVisible = false
-                    this.isRequestSent = false
+                    this.reset()
                     console.log("id after save", resp)
                     router.push({path: '/company-balance/'+ resp.data, query: {}}) //TODO QUERY
                 })
                 .catch(err => {
-                    console.log(err)
+                    console.log(err.response.data.message);
+                    if (err.response.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
+                        this.isCompanyExist = true;
+                    }
+                    if (err.response.status === 401) {
+                        store.dispatch('logout')
+                        .then(() => {
+                            this.$router.push('/login')
+                        })
+                    }
                 })
             }
             else {
@@ -611,9 +683,17 @@ export default {
                     router.push({path: '/company-balance/'+ this.company.Id, query: { isEdit: false }})
                 })
                 .catch(err => {
-                    console.log(err)
+                    console.log(err.response.data.message);
+                    if (err.response.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
+                        this.isCompanyExist = true;
+                    }
+                    if (err.response.status === 401) {
+                        store.dispatch('logout')
+                        .then(() => {
+                            this.$router.push('/login')
+                        })
+                    }
                 })
-                // store.dispatch("updateCompany", companyData, this.company.Id)
             }
             
         },
