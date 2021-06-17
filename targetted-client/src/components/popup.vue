@@ -10,11 +10,6 @@
           class="x-button"
           icon="x"></b-icon>
       </div>
-      <div class="popup-header">
-        <span><h1 id="h1">{{popupTitle}}</h1></span>
-        <span>
-      </span>
-      </div>
       <div class="popup-content">
         <slot></slot>
       </div>
@@ -90,23 +85,6 @@
     margin-top:-235px;   /* negative half of height above */
     background-color: white;
     border-radius: 25px;
-  }
-  .popup-header {
-    /* display: flex; */
-    padding-top: 50px;
-      justify-content: space-between;
-      align-items: center;
-  }
-  .popup-footer {
-    color: violet;
-    padding-left: 150px;
-    padding-right: 150px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .popup-content {
-    padding: 40px;
   }
   @media (max-width: 600px) {
     .popup{

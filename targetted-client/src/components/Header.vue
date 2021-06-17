@@ -3,14 +3,14 @@
         <div class="nav" id="left">
           <popup
               v-if="isInfoPopupVisible"
-              popupTitle="Напишите нам"
               @closePopup="closeInfoPopup"
           >
-            <div>
+            <div style="padding: 80px 100px 80px 100px">
+              <h1>Напишите нам</h1>
               <p id="p1">Свяжитесь с нами, если у вас возникли вопросы или предложения :)</p>
-              <div class="popup-footer">
-                <p>Whatsup</p>
-                <p>Telegram</p>
+              <div>
+                <a href="" id="social-link">Whatsup</a>
+                <a href="" id="social-link">Telegram</a>
               </div>
             </div>
           </popup>
@@ -56,6 +56,10 @@ import store from '../../store/store'
   }
 </script>
 <style>
+#social-link{
+  margin: 30px;
+  color: #6C1BD2
+}
 .logo {
     font-family: Monument Extended;
     font-style: normal;

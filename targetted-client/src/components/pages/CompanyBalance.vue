@@ -39,10 +39,10 @@
             <popup
               v-if="isInfoPopupVisible"
               style="margin-top: -250px;"
-              popupTitle="Пополнение"
               @closePopup="closeInfoPopup"
               @renderAction="render"
             >
+                <h1 style="margin-top: 60px; margin-bottom: 20px">Пополнение</h1>
                 <p>Минимальная сумма пополнения 2500 ₽</p>
                 <div id="payment-form"></div>
             </popup>

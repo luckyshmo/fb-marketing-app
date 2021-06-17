@@ -702,22 +702,25 @@ export default {
             
         },
         sendFbRequest(){
-            // let appToken = 'EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD'
-            // let companyFbId = 856950044859235
-            // let files = {
-            //     'page_id': this.company.FbPageId,
-            //     'permitted_tasks': '[\'MANAGE\', \'CREATE_CONTENT\', \'MODERATE\', \'ADVERTISE\', \'ANALYZE\']',
-            //     'access_token': appToken,
-            // }
-            // axios.post(`https://graph.facebook.com/v10.0/${companyFbId}/client_pages`, files)
-            // .then(
-            //     this.isRequestSent = true
-            // )
-            // .catch(err => {
-            //     console.log(err) //TODO popup
-            // })
-
-            this.isRequestSent = true
+            console.log("SEND FB PAGE REQUEST")
+            // let appToken = 'EAAEDuTXOcAgBAALPXTOQ8jhvjX8JvAB57z05lQP0UgOAI5Gda85L67eI5zvkJSfWO7xW24RsiUZAMiH1umPsg16UUH8P95a5Mj0gjTxjytJBVEy4m8GvbZBcKNgezopRkBuAUeV7ur6UDa49VYugK7shQGP6tBhgThy0Jgh7l5igc5hXoCZBOY6UgTZA2EP1UuOLaCllVAZDZD'
+            let appToken = 'EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD'
+            let companyFbId = 856950044859235
+            let files = {
+                'page_id': this.company.FbPageId,
+                'permitted_tasks': '[\'MANAGE\', \'CREATE_CONTENT\', \'MODERATE\', \'ADVERTISE\', \'ANALYZE\']',
+                'access_token': appToken,
+            }
+            axios.post(`https://graph.facebook.com/v10.0/${companyFbId}/client_pages`, files)
+            .then(resp => {
+                console.log(resp)
+                this.isRequestSent = true
+            })
+            .catch(err => {
+                console.log(err.response.data.error.message)
+                console.log(err.response)
+                alert(err) //TODO popup
+            })
         },
         checkPageSubmitted(){
              //         	curl -G \
