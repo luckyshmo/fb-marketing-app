@@ -3,7 +3,7 @@
         <h1 id="h1">Главная</h1>
         <h2 id="h2">Ваши рекламные кампании</h2>
         <p id="p1">Создайте рекламную кампанию, чтобы приводить новых клиентов в ваш бизнес</p>
-        <router-link :to="{path: '/company'}">
+        <router-link v-if="store.getters.GET_COMPANY_LIST.length < 3" :to="{path: '/company'}">
             <b-button variant="primary" class="main-button">Создать компанию</b-button>
         </router-link>
         <div v-if="store.getters.GET_COMPANY_LIST.length > 0">

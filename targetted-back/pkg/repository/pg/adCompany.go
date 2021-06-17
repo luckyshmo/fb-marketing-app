@@ -131,7 +131,7 @@ func (r *AdCompanyPg) GetByID(companyID string) (models.AdCompany, error) {
 
 	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
 	field, name, purpose, creative_status,
-	images_description, images_small_description, post_description FROM %s WHERE id = '%s'`, adCompanyTable, idString)
+	images_description, images_small_description, post_description, current_amount, daily_amount, days FROM %s WHERE id = '%s'`, adCompanyTable, idString)
 	err := r.db.Get(&scanCompany, query)
 
 	company = models.AdCompany{
@@ -146,6 +146,9 @@ func (r *AdCompanyPg) GetByID(companyID string) (models.AdCompany, error) {
 		ImagesDescription:      strings.Split(scanCompany.ImagesDescription, ","),
 		ImagesSmallDescription: strings.Split(scanCompany.ImagesSmallDescription, ","),
 		PostDescription:        scanCompany.PostDescription,
+		CurrentAmount:          scanCompany.CurrentAmount,
+		DailyAmount:            scanCompany.DailyAmount,
+		Days:                   scanCompany.Days,
 	}
 
 	return company, err

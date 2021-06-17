@@ -14,13 +14,13 @@
               </div>
             </div>
           </popup>
-        <p v-if="isLoggedIn" @click="showPopupInfo" id="write-us-text">Написать нам</p>
+        <div v-if="isLoggedIn" @click="showPopupInfo" id="write-us-text">Написать нам</div>
         </div>
         <div class="logo" id="middle">
           <img id="l-im" src="logo.svg">
         </div>
         <div class="nav" id="right">
-            <p id="r-text" @click="logout" v-if="isLoggedIn">Выход</p>
+            <div id="r-text" @click="logout" v-if="isLoggedIn">Выход</div>
         </div>
     </div>
 </template>
@@ -92,7 +92,7 @@ import store from '../../store/store'
     font-size: 1em;
     text-align: center;
 
-    color:whitesmoke !important;
+    color:white !important;
 
     width: 25%;
 }

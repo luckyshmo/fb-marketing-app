@@ -17,6 +17,11 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+const (
+	storiesFolder = "/stories/"
+	postsFolder   = "/posts/"
+)
+
 func (h *Handler) getCompanyList(c *gin.Context) {
 	userID, err := getUserId(c)
 	if err != nil {
@@ -85,6 +90,7 @@ func (h *Handler) getCompanyByID(c *gin.Context) {
 
 	sendStatusResponse(c, http.StatusOK, company)
 }
+
 func (h *Handler) deleteCompany(c *gin.Context) {
 	companyIDstring := c.Param("id")
 	h.services.AdCompany.Delete(companyIDstring)
@@ -181,11 +187,6 @@ func (h *Handler) updateCompany(c *gin.Context) {
 
 	sendStatusResponse(c, http.StatusOK, company)
 }
-
-const (
-	storiesFolder = "/stories/"
-	postsFolder   = "/posts/"
-)
 
 func (h *Handler) createAdCompany(c *gin.Context) {
 

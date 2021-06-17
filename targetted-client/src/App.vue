@@ -190,13 +190,14 @@ html {
     color: #767676;
 }
 
-#h1 {
+h1 {
   margin: 0px;
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 900;
-  line-height: 72px;
-  font-size: 72px;
+  font-family: Montserrat !important;
+  font-style: normal !important;
+  font-weight: 900 !important;
+  line-height: 72px !important;
+  font-size: 72px !important;
+  color: black;
 }
 #h1-centered {
   font-family: Montserrat;
@@ -212,6 +213,7 @@ p {
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
+  color: black;
 }
 
 #h2 {

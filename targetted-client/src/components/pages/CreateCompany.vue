@@ -141,8 +141,9 @@
                             v-model="company.CompnayPurpose"
                             :options="[
                                 'Сообщения в директ',
-                                'Лиды через лидформу',
-                                'Конверсия на сайте'
+                                'Подписки в instagram',
+                                'Заявки через форму обратной связи',
+                                'Целевое действие на сайте'
                             ]"
                         ></b-form-radio-group>
                     </b-form-group>
@@ -217,6 +218,11 @@
                         ]"
                     ></b-form-radio-group>
                 </b-form-group>
+
+                <div class="creative-message">
+                    <a href="" style="color: #6C1BD2">Воспользуйтесь советами</a> при самостоятельном создании креативов, чтобы увеличить эффективность рекламной кампании.
+                </div>
+
                 <b-form-group
                         :label="getStoriesLabel()"
                         :label-cols="label_cols"
@@ -487,7 +493,9 @@ export default {
     },
     methods: {
         reset(){
-            this.isCompanyExist = false;
+            this.isCompanyExist = false
+            this.Images = []
+            this.ImagesSmall = []
             this.company = {
                 FbPageId: '',
                 Id: '',
@@ -507,6 +515,9 @@ export default {
             }
             this.isInfoPopupVisible = false
             this.isRequestSent = false
+            this.pageSubmitted = false
+            this.label_cols = this.getWidth().label
+            this.content_cols = this.getWidth().content
         },
         resetNameErr(){
             this.isCompanyExist = false;
@@ -524,7 +535,6 @@ export default {
         getImages(){
             axios({url: `${VUE_APP_API_URL}/api/company/${this.company.Id}/images/`, method: 'GET' })
             .then(resp => {
-                console.log(resp.data)
                 if (resp.data == null) {
                     this.imageNames = []
                 }
@@ -545,7 +555,6 @@ export default {
         getImageByName(name){
             let uID = this.company.UserId
             let cID = this.company.Id
-            console.log(`https://client.targetted.online/images/${uID}/${cID}${name}`)
             return `https://client.targetted.online/images/${uID}/${cID}${name}`
         },
         getWidth() {
@@ -631,7 +640,6 @@ export default {
             if (this.$v.$anyError) {
                 return;
             }
-            console.log("asdasd")
             const companyData = new FormData();
             companyData.append("FbPageId", this.company.FbPageId)
             if (this.isEdit) {
@@ -654,12 +662,10 @@ export default {
             Array.from(this.Images).forEach(Image => {
                 companyData.append("Image", Image);
             });
-            console.log("HUW", this.isEdit)
             if (!this.isEdit) {
                 store.dispatch("saveCompany", companyData)
                 .then((resp)=>{
                     this.reset()
-                    console.log("id after save", resp)
                     router.push({path: '/company-balance/'+ resp.data, query: {}}) //TODO QUERY
                 })
                 .catch(err => {
@@ -676,14 +682,12 @@ export default {
                 })
             }
             else {
-                console.log("UPDATE", this.company, this.company.Id)
                 axios({url: `${VUE_APP_API_URL}/api/company/${this.company.Id}`, data: companyData, method: 'PUT' })
                 .then(resp => {
                     console.log(resp)
                     router.push({path: '/company-balance/'+ this.company.Id, query: { isEdit: false }})
                 })
                 .catch(err => {
-                    console.log(err.response.data.message);
                     if (err.response.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
                         this.isCompanyExist = true;
                     }
@@ -762,6 +766,14 @@ export default {
 }
 </script>
 <style>
+.creative-message{
+    margin: 28px 0px 40px 0px;
+    padding: 40px;
+    width: 800px;
+    height: 128px;
+    background: #F3F3F3;
+    border-radius: 20px;
+}
 #icon-div-image{
     position: absolute;
     margin-left: 140px;

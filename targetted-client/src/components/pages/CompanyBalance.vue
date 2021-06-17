@@ -25,7 +25,7 @@
                 id="input-group-main"
                 label-for="input-horizontal"
             >
-                <p id="balance">{{company.CurrentAmount}}000₽</p>
+                <p id="balance">{{company.CurrentAmount}}₽</p>
             </b-form-group>
 
             <b-button 
@@ -39,19 +39,18 @@
             <popup
               v-if="isInfoPopupVisible"
               style="margin-top: -250px;"
-              popupTitle="Пополнение счета"
+              popupTitle="Пополнение"
               @closePopup="closeInfoPopup"
               @renderAction="render"
             >
-                 <div id="payment-form"></div>
+                <p>Минимальная сумма пополнения 2500 ₽</p>
+                <div id="payment-form"></div>
             </popup>
 
             <b-form @submit.prevent="startCompany()">
                 <h2 id="h2">Рекламный бюджет</h2>
-                <!-- //TODO descrip отступ сверху, цвет, размер -->
                 <b-form-group
                         label="Бюджет на сутки"
-                        description="Минимальная сумма 200₽ в сутки"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
                         id="input-group-main"
@@ -59,9 +58,15 @@
                 >
                     <b-form-input
                     class="form-input"
-                    v-model="company.dailyAmount"
+                    v-model="company.DailyAmount"
+                    :state="validateState('DailyAmount')"
                     placeholder="Введите сумму"
                     ></b-form-input>
+                    <b-form-invalid-feedback 
+                    class="error-message">
+                    <!-- description="Минимальная сумма 200₽ в сутки" -->
+                        Минимальная сумма 200₽ в сутки
+                    </b-form-invalid-feedback>
                 </b-form-group>
                 <b-form-group
                         label="Количество дней"
@@ -72,9 +77,14 @@
                 >
                     <b-form-input
                     class="form-input"
-                    v-model="company.days"
-                    placeholder="Введите кодчиество дней"
+                    :state="validateState('Days')"
+                    v-model="company.Days"
+                    placeholder="Введите колчиество дней"
                     ></b-form-input>
+                    <b-form-invalid-feedback 
+                    class="error-message">
+                        Минимально один день
+                    </b-form-invalid-feedback>
                 </b-form-group>
             </b-form>
             <div>
@@ -91,6 +101,7 @@
             <b-button
                 class="submit-button"
                 type="submit"
+                @click="updateCompany()"
             >
                 {{isEdit ? "Обновить":"Запустить"}} кампанию
             </b-button>
@@ -100,11 +111,27 @@
 <script>
 import store from '../../../store/store'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
+import router from '../../../router/router'
 import axios from 'axios'
 import popup from '../popup.vue'
+import { validationMixin } from "vuelidate";
+import { required, minValue} from "vuelidate/lib/validators";
 export default {
+    mixins: [validationMixin],
     components: {
       popup
+    },
+    validations: {
+        company: {
+            DailyAmount: {
+                required,
+                minValue: minValue(200)
+            },
+            Days: {
+                required,
+                maxValue: minValue(1),
+            }
+        }
     },
     data(){
         return {
@@ -129,9 +156,6 @@ export default {
                 Days: 0,
             },
         }
-    },
-    mounted() {
-        
     },
     watch: {
         $route(to) {
@@ -159,6 +183,10 @@ export default {
         }) 
     },
     methods: {
+        validateState(name) {
+            const { $dirty, $error } = this.$v.company[name];
+            return $dirty ? !$error : null;
+        },
         render(){
             const checkout = new window.YooMoneyCheckoutWidget({
                 confirmation_token: 'confirmation-token', //Token that must be obtained from YooMoney before the payment process
@@ -217,6 +245,44 @@ export default {
                     content:9
             };
         },
+        updateCompany(){
+            this.$v.$touch();
+            if (this.$v.$anyError) {
+                return;
+            }
+            const companyData = new FormData();
+            companyData.append("FbPageId", this.company.FbPageId)
+            if (this.isEdit) {
+                companyData.append("Id", this.company.Id)
+            }
+            companyData.append("CompanyName", this.company.CompanyName)
+            companyData.append("CompnayPurpose", this.company.CompnayPurpose)
+            companyData.append("CompanyField", this.company.CompanyField)
+            companyData.append("BusinessAddress", this.company.BusinessAddress)
+            companyData.append("ImagesDescription", this.company.ImagesDescription)
+            companyData.append("ImagesSmallDescription", this.company.ImagesSmallDescription)
+            companyData.append("CreativeStatus", this.company.CreativeStatus)
+            companyData.append("PostDescription", this.company.PostDescription)
+            companyData.append("CurrentAmount",this.company.CurrentAmount)
+            companyData.append("DailyAmount",this.company.DailyAmount)
+            companyData.append("Days",this.company.Days)
+            axios({url: `${VUE_APP_API_URL}/api/company/${this.company.Id}`, data: companyData, method: 'PUT' })
+            .then(resp => {
+                console.log(resp)
+                router.push({path: '/main'})
+            })
+            .catch(err => {
+                if (err.response.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
+                    this.isCompanyExist = true;
+                }
+                if (err.response.status === 401) {
+                    store.dispatch('logout')
+                    .then(() => {
+                        this.$router.push('/login')
+                    })
+                }
+            })
+        }
 
     }
 }
