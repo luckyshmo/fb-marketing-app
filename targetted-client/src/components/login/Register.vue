@@ -94,7 +94,7 @@
               </small>
           </b-form-group>
 
-          <b-button type="submit" class="main-button-big">Зарегистрироваться</b-button>
+          <b-button class="main-button-big" @click="register()">Зарегистрироваться</b-button>
           
           <p id="navigation-text">
             или <router-link style="color: #6C1BD2" :to="{name: 'login'}">войдите</router-link> в свой аккаунт
@@ -165,8 +165,7 @@
           return $dirty ? !$error : null;
         }
       },
-      register: function () {
-
+      register() {
         this.$v.form.$touch();
         if (this.$v.form.$anyError) {
           return;
