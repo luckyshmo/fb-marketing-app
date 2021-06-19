@@ -49,7 +49,8 @@ func (r *AdCompanyPg) Delete(id string) error {
 	return r.db.QueryRow(query).Err()
 }
 
-func (r *AdCompanyPg) Update(ac models.AdCompany, id string) (uuid.UUID, error) {
+func (r *AdCompanyPg) Update(ac models.AdCompany, idStr string) (uuid.UUID, error) {
+	var id uuid.UUID
 	query := fmt.Sprintf(`UPDATE %s set 
 	user_id = '%s', 
 	fb_page_id = '%s', 
@@ -64,13 +65,17 @@ func (r *AdCompanyPg) Update(ac models.AdCompany, id string) (uuid.UUID, error) 
 	current_amount = '%d',
 	daily_amount = '%d',
 	days = '%d'
-	WHERE id = '%s'`,
+	WHERE id = '%s' RETURNING id`,
 		adCompanyTable,
 		ac.UserId, ac.FbPageId, ac.BusinessAddress, ac.CompanyField, ac.CompanyName, ac.CompnayPurpose,
 		ac.CreativeStatus, ac.ImagesDescription[0], ac.ImagesSmallDescription[0], ac.PostDescription,
 		ac.CurrentAmount, ac.DailyAmount, ac.Days,
-		id)
-	return uuid.Nil, r.db.QueryRow(query).Err()
+		idStr)
+	row := r.db.QueryRow(query)
+	if err := row.Scan(&id); err != nil {
+		return uuid.Nil, err
+	}
+	return id, nil
 }
 
 type adCompanyScan struct {
