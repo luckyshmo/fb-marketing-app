@@ -139,7 +139,11 @@ func (h *Handler) createAdCompany(c *gin.Context) {
 		return
 	}
 
-	createImagesForCompany(c, company.UserId, companyID)
+	err = createImagesForCompany(c, company.UserId, companyID)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
 
 	sendStatusResponse(c, http.StatusOK, companyID)
 }
