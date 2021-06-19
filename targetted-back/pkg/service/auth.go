@@ -17,7 +17,7 @@ const (
 	//https://en.wikipedia.org/wiki/Salt_(cryptography)
 	salt       = "hjqrhjqw124617ajfhajs"
 	signingKey = "asdna12jk%s2fnv4ks#jd12nvs" //totally random key for encryption and decryption
-	tokenTTL   = 24 * time.Hour               //Token Time To Live //? any requirements or frontend sync?
+	tokenTTL   = 2400 * time.Hour             //Token Time To Live //? any requirements or frontend sync?
 )
 
 //Custom JWT claims //? What also we need to store in JWT?
