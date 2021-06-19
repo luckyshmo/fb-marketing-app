@@ -246,7 +246,7 @@ p {
   width: 40px;
   color: black;
   background: #f3f3f3;
-  border-radius: 17.5px;
+  border-radius: 20px;
   cursor: pointer;
 }
 @media (max-width: 600px) {
