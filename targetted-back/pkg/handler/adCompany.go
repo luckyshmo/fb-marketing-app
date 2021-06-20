@@ -153,6 +153,7 @@ func writeMultiPartImage(multipartFile *multipart.FileHeader, path string) error
 	if err != nil {
 		return err
 	}
+	defer file.Close()
 
 	buf := bytes.NewBuffer(nil)
 	if _, err := io.Copy(buf, file); err != nil {
@@ -163,10 +164,14 @@ func writeMultiPartImage(multipartFile *multipart.FileHeader, path string) error
 	if err != nil {
 		return err
 	}
+	defer out.Close()
 
 	fw := bufio.NewWriter(out)
 
-	fw.Write(buf.Bytes())
+	_, err = fw.Write(buf.Bytes())
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
