@@ -239,7 +239,7 @@
                                 <div
                                 id="icon-div-image">
                                     <b-icon
-                                    @click="removeImage(Image)"
+                                    @click.stop="removeImage(Image)"
                                     class="x-button"
                                     icon="x"></b-icon>
                                 </div>
@@ -305,7 +305,7 @@
                         :key="key" style="width: 160px; height: 160px;">
                             <div id="icon-div-image">
                                 <b-icon
-                                @click="removeImageSmall(Image)"
+                                @click.stop="removeImageSmall(Image)"
                                 class="x-button"
                                 icon="x"></b-icon>
                             </div>
