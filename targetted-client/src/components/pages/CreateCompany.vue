@@ -703,9 +703,8 @@ export default {
         },
         sendFbRequest(){
             console.log("SEND FB PAGE REQUEST")
-            // let appToken = 'EAAEDuTXOcAgBAALPXTOQ8jhvjX8JvAB57z05lQP0UgOAI5Gda85L67eI5zvkJSfWO7xW24RsiUZAMiH1umPsg16UUH8P95a5Mj0gjTxjytJBVEy4m8GvbZBcKNgezopRkBuAUeV7ur6UDa49VYugK7shQGP6tBhgThy0Jgh7l5igc5hXoCZBOY6UgTZA2EP1UuOLaCllVAZDZD'
-            let appToken = 'EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD'
-            let companyFbId = 856950044859235
+            let appToken = 'EAALCaNdmu2oBAPvRnxhl5KKzFpk3Naka68uc2EFXvm4j4LrZAZCFZCFkYwtH9HZCfvhjZAG7y0FMZAmKZBRCQa7JrDn55zWdEQM99EhJhgB1ul0CTVJhNmhFrFcL2oLhsnAjUi9ySmo68DxvxNAfxgOqtlfQ2KgOJZAD6eoZB8jUZC9ESiW2Iumjml'
+            let companyFbId = 1952680544750321
             let files = {
                 'page_id': this.company.FbPageId,
                 'permitted_tasks': '[\'MANAGE\', \'CREATE_CONTENT\', \'MODERATE\', \'ADVERTISE\', \'ANALYZE\']',
