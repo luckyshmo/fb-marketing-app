@@ -15,6 +15,7 @@ type Authorization interface {
 type User interface {
 	GetById(userId uuid.UUID) (models.User, error)
 	GetAll() ([]models.User, error)
+	AddMoney(userId uuid.UUID, amount float64) error
 }
 
 type AdCompany interface {

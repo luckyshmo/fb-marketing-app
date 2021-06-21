@@ -21,3 +21,7 @@ func (s *UserService) GetAll() ([]models.User, error) {
 func (s *UserService) GetById(userId uuid.UUID) (models.User, error) {
 	return s.repo.GetById(userId)
 }
+
+func (s *UserService) AddMoney(userId uuid.UUID, amount float64) error {
+	return s.repo.AddMoney(userId, amount)
+}

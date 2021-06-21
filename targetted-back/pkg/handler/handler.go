@@ -46,12 +46,13 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			adCompany.GET("/:id", h.getCompanyByID)
 			adCompany.PUT("/:id", h.updateCompany)
 			adCompany.DELETE("/:id", h.deleteCompany)
+			adCompany.POST("/paymentToken", h.getPaymentToken)
+			adCompany.POST("/paymentStatus/:id", h.getPaymentStatus)
 
 			images := adCompany.Group(":id/images")
 			{
 				images.GET("/", h.getCompanyImages)
 			}
-			// adCompany.DELETE("/:id")
 		}
 		users := api.Group("/user")
 		{
@@ -65,7 +66,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 func CORS() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", config.Get().CorsHeader) //TODO separate production and dev
+		c.Writer.Header().Set("Access-Control-Allow-Origin", config.Get().CorsHeader)
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "*")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
 

@@ -40,10 +40,22 @@
               v-if="isInfoPopupVisible"
               style="margin-top: -250px;"
               @closePopup="closeInfoPopup"
-              @renderAction="render"
             >
                 <h1 style="margin-top: 60px; margin-bottom: 20px">Пополнение</h1>
-                <p>Минимальная сумма пополнения 2500 ₽</p>
+                <b-form-input
+                class="form-input"
+                v-model="paymentAmount"
+                :state="validateState1('paymentAmount')"
+                placeholder="Введите сумму"
+                ></b-form-input>
+                <b-form-invalid-feedback 
+                class="error-message">
+                    Минимальная сумма пополнения 2500₽
+                </b-form-invalid-feedback>
+                <button 
+                class="main-button-big"
+                @click="render"
+                >Оплатить</button>
                 <div id="payment-form"></div>
             </popup>
 
@@ -64,7 +76,6 @@
                     ></b-form-input>
                     <b-form-invalid-feedback 
                     class="error-message">
-                    <!-- description="Минимальная сумма 200₽ в сутки" -->
                         Минимальная сумма 200₽ в сутки
                     </b-form-invalid-feedback>
                 </b-form-group>
@@ -122,6 +133,10 @@ export default {
       popup
     },
     validations: {
+        paymentAmount:{
+            required,
+            minValue: minValue(1)
+        },
         company: {
             DailyAmount: {
                 required,
@@ -135,6 +150,9 @@ export default {
     },
     data(){
         return {
+            confirmationToken: '',
+            paymentAmount: 0,
+            paymentID: '',
             store,
             isInfoPopupVisible: false,
             label_cols: this.getWidth().label,
@@ -187,20 +205,47 @@ export default {
             const { $dirty, $error } = this.$v.company[name];
             return $dirty ? !$error : null;
         },
+        validateState1(name) {
+            const { $dirty, $error } = this.$v[name];
+            return $dirty ? !$error : null;
+        },
         render(){
-            const checkout = new window.YooMoneyCheckoutWidget({
-                confirmation_token: 'confirmation-token', //Token that must be obtained from YooMoney before the payment process
-                return_url: 'https://merchant.site', //URL to the payment completion page
-                error_callback: function(error) {
-                    console.log(error)
-                    //Processing of initialization errors
-                }
+            this.$v.paymentAmount.$touch();
+            if (this.$v.paymentAmount.$anyError) {
+                return;
+            }
+            const data = `{
+                "amount": "${this.paymentAmount}.00"
+            }`
+            axios({url: `${VUE_APP_API_URL}/api/company/paymentToken`, data: data, method: 'POST' })
+            .then(resp => {
+                console.log(resp)
+                this.paymentID = resp.data.id
+                // setInterval(async () => {
+                    axios({url: `${VUE_APP_API_URL}/api/company/paymentStatus/${this.paymentID}`, data: data, method: 'POST' })
+                    .then(resp => {
+                        console.log("status resp: ", resp.data)
+                        if (resp.data.status === "succeeded"){
+                            this.company.DailyAmount = this.company.DailyAmount + resp.data.amount.value
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                // }, 3000)
+                const checkout = new window.YooMoneyCheckoutWidget({
+                    confirmation_token: resp.data.confirmation.confirmation_token, //Token that must be obtained from YooMoney before the payment process
+                    return_url: window.location.origin + router.history.current.fullPath, //URL to the payment completion page
+                    error_callback: function(error) {
+                        console.log(error)
+                        //Processing of initialization errors
+                    }
+                })
+                checkout.render('payment-form')
             })
-            checkout.render('payment-form')
-            //После отображения платежной формы метод render возвращает Promise (можно не использовать).
-            .then(() => {
-                //Код, который нужно выполнить после отображения платежной формы.
-            });
+            .catch(err => {
+                console.log(err)
+            })
         },
         closeInfoPopup() {
             this.isInfoPopupVisible = false;
@@ -246,8 +291,8 @@ export default {
             };
         },
         updateCompany(){
-            this.$v.$touch();
-            if (this.$v.$anyError) {
+            this.$v.company.$touch();
+            if (this.$v.company.$anyError) {
                 return;
             }
             const companyData = new FormData();
@@ -263,7 +308,6 @@ export default {
             companyData.append("ImagesSmallDescription", this.company.ImagesSmallDescription)
             companyData.append("CreativeStatus", this.company.CreativeStatus)
             companyData.append("PostDescription", this.company.PostDescription)
-            companyData.append("CurrentAmount",this.company.CurrentAmount)
             companyData.append("DailyAmount",this.company.DailyAmount)
             companyData.append("Days",this.company.Days)
             axios({url: `${VUE_APP_API_URL}/api/company/${this.company.Id}`, data: companyData, method: 'PUT' })

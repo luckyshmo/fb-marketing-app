@@ -418,7 +418,6 @@ export default {
                 ImagesSmallDescription: [],
                 CreativeStatus: 'Есть рекламные креативы',
                 PostDescription: '',
-                CurrentAmount: 0,
                 DailyAmount: 0,
                 Days: 0,
             },
@@ -509,7 +508,6 @@ export default {
                 ImagesSmallDescription: [],
                 CreativeStatus: 'Есть рекламные креативы',
                 PostDescription: '',
-                CurrentAmount: 0,
                 DailyAmount: 0,
                 Days: 0,
             }
@@ -653,7 +651,6 @@ export default {
             companyData.append("ImagesSmallDescription", this.company.ImagesSmallDescription)
             companyData.append("CreativeStatus", this.company.CreativeStatus)
             companyData.append("PostDescription", this.company.PostDescription)
-            companyData.append("CurrentAmount",this.company.CurrentAmount)
             companyData.append("DailyAmount",this.company.DailyAmount)
             companyData.append("Days",this.company.Days)
             Array.from(this.ImagesSmall).forEach(Image => {

@@ -16,10 +16,32 @@ func NewUserPG(db *sqlx.DB) *UserPG {
 	return &UserPG{db: db}
 }
 
+func (r *UserPG) AddMoney(userId uuid.UUID, amount float64) error {
+
+	var user models.User
+
+	query := fmt.Sprintf("SELECT amount FROM %s WHERE id = $1", usersTable)
+	err := r.db.Get(&user, query, userId)
+	if err != nil {
+		return err
+	}
+
+	var id uuid.UUID
+	query = fmt.Sprintf(`UPDATE %s set 
+	amount = '%f'
+	WHERE id = '%s' RETURNING id`,
+		usersTable, user.Amount+amount, userId)
+	row := r.db.QueryRow(query)
+	if err := row.Scan(&id); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (r *UserPG) GetAll() ([]models.User, error) {
 	var userList []models.User
 
-	query := fmt.Sprintf("SELECT name, email, id FROM %s", usersTable)
+	query := fmt.Sprintf("SELECT name, email, id, amount FROM %s", usersTable)
 	err := r.db.Select(&userList, query)
 
 	return userList, err
@@ -28,7 +50,7 @@ func (r *UserPG) GetAll() ([]models.User, error) {
 func (r *UserPG) GetById(userId uuid.UUID) (models.User, error) {
 	var user models.User
 
-	query := fmt.Sprintf("SELECT name, email FROM %s WHERE id = $1", usersTable)
+	query := fmt.Sprintf("SELECT name, email, amount FROM %s WHERE id = $1", usersTable) //todo phone_number
 	err := r.db.Get(&user, query, userId)
 
 	return user, err
