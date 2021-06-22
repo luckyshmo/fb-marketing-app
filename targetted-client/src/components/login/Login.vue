@@ -88,7 +88,7 @@ import store from '../../../store/store'
             router.push('main')
         })
         .catch(err => {
-            console.log(err.response)
+            console.log(err)
             if (err.response.data.message === 'sql: no rows in result set') {
               this.userNotExist = true;
             }

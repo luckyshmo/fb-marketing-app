@@ -10,7 +10,7 @@ let store = new Vuex.Store({
     state: {
         token: localStorage.getItem('token') || '',
         adCompanyList: localStorage.getItem('user_company') || [],
-        user : {},  
+        user : localStorage.getItem('user') || {},  
         account : localStorage.getItem('account') || {},
         status: '',
         adCompany: {},
@@ -26,9 +26,11 @@ let store = new Vuex.Store({
         auth_request(state){
             state.status = 'loading'
         },
-        auth_success(state, token, user){
+        auth_success(state, token){
             state.status = 'success'
             state.token = token
+        },
+        set_user(state, user){
             state.user = user
         },
         set_user_company(state, companies){
@@ -151,12 +153,15 @@ let store = new Vuex.Store({
                 commit('auth_request')
                 axios({url: `${VUE_APP_API_URL}/auth/sign-in`, data: user, method: 'POST' })
                 .then(resp => {
+                    console.log("usr + resp: ", resp.data)
                     const token = resp.data.token
                     const user = resp.data.user
                     localStorage.setItem('token', token)
+                    localStorage.setItem('user', user)
                     axios.defaults.headers.common['Authorization'] = token
                     axios.defaults.headers.post['Authorization'] = token
-                    commit('auth_success', token, user)
+                    commit('auth_success', token)
+                    commit('set_user', user)
                     resolve(resp)
                 })
                 .catch(err => {

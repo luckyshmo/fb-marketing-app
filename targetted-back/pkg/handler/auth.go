@@ -72,5 +72,8 @@ func (h *Handler) signIn(c *gin.Context) {
 
 	sendStatusResponse(c, http.StatusOK, map[string]interface{}{
 		"token": token, //JSON body
+		"user": models.User{
+			Email: input.Email,
+		},
 	})
 }

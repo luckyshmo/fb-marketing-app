@@ -11,97 +11,99 @@
             <h1 id="h1">{{isEdit ? "Редактирование":"Создание"}} кампании</h1>
             <div>
                 <b-form @submit.prevent="createCompany()">
-                    <h2 id="h2">Доступ к кабинету Facebook</h2>
-                    <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
-                        <p>Привяжите свой аккаунт Facebook к targetted, чтобы натсроить и запустить рекламунюу компанию </p>
-                        <b-button 
-                            v-if="!(store.getters.GET_FB_PAGES.length > 0)"
-                             
-                            class="main-button"
-                            @click="loginFB"
-                        >
-                            У меня есть бизнес-аккаунт
-                        </b-button>
-                        <!-- //TODO ситуация с осутсвием страниц -->
-                        <popup
-                        v-if="isInfoPopupVisible"
-                        popupTitle="Инструкция по созданию бизнесс-аккаунта"
-                        @closePopup="closeInfoPopup"
-                        >
-                            <div>
-                            <p>Тип инструкция все дела</p>
-                            </div>
-                        </popup>
-                        <b-button 
-                            v-if="!(store.getters.GET_FB_PAGES.length > 0)"
-                            class="main-button"
-                            id="primary-under"
-                            @click="showPopupInfo"
-                        >
-                            Нет бизнесс-аккаунта
-                        </b-button>
-                    </div>
-                    <div v-if="store.getters.GET_FB_PAGES.length > 0 && !isRequestSent && !pageSubmitted">
-                        <div>
-                            <p>Выберите страницу которую хотите привязать</p>
-                            <!-- //TODO SELECT -->
-                            <b-form-group
-                            label="Выберите страницу"
-                            :label-cols="label_cols"
-                            :content-cols="content_cols"
-                            id="input-group-main"
-                            label-for="input-horizontal"
+                    <div v-if="store.getters.GET_USER.email === 'facebook@gmail.com'">
+                        <h2 id="h2">Доступ к кабинету Facebook</h2>
+                        <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
+                            <p>Привяжите свой аккаунт Facebook к targetted, чтобы натсроить и запустить рекламунюу компанию </p>
+                            <b-button 
+                                v-if="!(store.getters.GET_FB_PAGES.length > 0)"
+                                
+                                class="main-button"
+                                @click="loginFB"
                             >
-                                <b-form-radio-group
-                                    v-model="company.FbPageId"
-                                    :options="store.getters.GET_FB_PAGES"
-                                ></b-form-radio-group>
-                            </b-form-group>
+                                У меня есть бизнес-аккаунт
+                            </b-button>
+                            <!-- //TODO ситуация с осутсвием страниц -->
+                            <popup
+                            v-if="isInfoPopupVisible"
+                            popupTitle="Инструкция по созданию бизнесс-аккаунта"
+                            @closePopup="closeInfoPopup"
+                            >
+                                <div>
+                                <p>Тип инструкция все дела</p>
+                                </div>
+                            </popup>
+                            <b-button 
+                                v-if="!(store.getters.GET_FB_PAGES.length > 0)"
+                                class="main-button"
+                                id="primary-under"
+                                @click="showPopupInfo"
+                            >
+                                Нет бизнесс-аккаунта
+                            </b-button>
+                        </div>
+                        <div v-if="store.getters.GET_FB_PAGES.length > 0 && !isRequestSent && !pageSubmitted">
+                            <div>
+                                <p>Выберите страницу которую хотите привязать</p>
+                                <!-- //TODO SELECT -->
+                                <b-form-group
+                                label="Выберите страницу"
+                                :label-cols="label_cols"
+                                :content-cols="content_cols"
+                                id="input-group-main"
+                                label-for="input-horizontal"
+                                >
+                                    <b-form-radio-group
+                                        v-model="company.FbPageId"
+                                        :options="store.getters.GET_FB_PAGES"
+                                    ></b-form-radio-group>
+                                </b-form-group>
+                            </div>
+                            <b-button 
+                                class="main-button"
+                                @click="sendFbRequest()"
+                            >
+                                Привязать
+                            </b-button>
+                        </div>
+                        <div v-if="isRequestSent && !pageSubmitted">
+                            <p>Зайди в аккаунт на Facebook и подтверди привязку страницы в сообщениях</p>
+                            <b-button 
+                                class="main-button"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                href="https://facebook.com"
+                            >
+                            Перейти в facebook
+                            </b-button>
+                            <b-button 
+                                
+                                class="main-button"
+                                id="primary-under"
+                                @click="checkPageSubmitted()"
+                            >
+                                Я подтвердил в сообщениях
+                            </b-button>
+                        </div>
+                        <div v-if="pageSubmitted">
+                            <div class="c-status" style="margin-top: 30px; max-width: 800px">
+                                <div class="elipse" id="green"></div>
+                                <p class="c-status-text" id="c-status-text-u" style="text-align: left;" 
+                                >Страница {{company.FbPageId}} привязана к targetted</p>
+                            </div>
                         </div>
                         <b-button 
-                            class="main-button"
-                            @click="sendFbRequest()"
+                            v-if="store.getters.GET_FB_PAGES.length > 0 ||
+                            (isRequestSent && pageSubmitted) ||
+                            (store.getters.GET_FB_PAGES.length == 0 || isRequestSent)"
+                            
+                            class="main-button-grey"
+                            style="margin-top: 30px; background: #F3F3F3; color: black"
+                            @click="logout"
                         >
-                            Привязать
+                            Привязать другой аккаунт
                         </b-button>
                     </div>
-                    <div v-if="isRequestSent && !pageSubmitted">
-                        <p>Зайди в аккаунт на Facebook и подтверди привязку страницы в сообщениях</p>
-                        <b-button 
-                            class="main-button"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href="https://facebook.com"
-                        >
-                        Перейти в facebook
-                        </b-button>
-                        <b-button 
-                             
-                            class="main-button"
-                            id="primary-under"
-                            @click="checkPageSubmitted()"
-                        >
-                            Я подтвердил в сообщениях
-                        </b-button>
-                    </div>
-                    <div v-if="pageSubmitted">
-                        <div class="c-status" style="margin-top: 30px; max-width: 800px">
-                            <div class="elipse" id="green"></div>
-                            <p class="c-status-text" id="c-status-text-u" style="text-align: left;" 
-                            >Страница {{company.FbPageId}} привязана к targetted</p>
-                        </div>
-                    </div>
-                    <b-button 
-                        v-if="store.getters.GET_FB_PAGES.length > 0 ||
-                        (isRequestSent && pageSubmitted) ||
-                        (store.getters.GET_FB_PAGES.length == 0 || isRequestSent)"
-                         
-                        class="main-button-grey"
-                        style="margin-top: 30px; background: #F3F3F3; color: black"
-                        @click="logout"
-                    >
-                        Привязать другой аккаунт
-                    </b-button>
                     
                     <h2 id="h2">Основное</h2>
 
@@ -425,7 +427,6 @@ export default {
     },
     watch: {
         $route(to) {
-            console.log("id", to.params.id, to)
             if (!(typeof to.params.id === 'undefined')){
                 axios({url: `${VUE_APP_API_URL}/api/company/${to.params.id}`, method: 'GET' })
                 .then(resp => {
@@ -461,7 +462,6 @@ export default {
         if (!(typeof this.$router.history.current.params.id === 'undefined')){
             axios({url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`, method: 'GET' })
             .then(resp => {
-                console.log(resp.data)
                 this.company = resp.data
 
                 this.getImages()
