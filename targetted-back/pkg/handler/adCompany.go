@@ -325,13 +325,8 @@ func parseCompanyFromContext(c *gin.Context) (models.AdCompany, error) {
 	c.Request.ParseMultipartForm(104857600) // 100 мегабайт
 
 	v := c.Request.MultipartForm.Value
-	CurrentAmountS := v["CurrentAmount"][0]
 	DailyAmountS := v["DailyAmount"][0]
 	DaysS := v["Days"][0]
-	ca, err := strconv.Atoi(CurrentAmountS)
-	if err != nil {
-		logrus.Error(err)
-	}
 	da, err := strconv.Atoi(DailyAmountS)
 	if err != nil {
 		logrus.Error(err)
@@ -351,7 +346,6 @@ func parseCompanyFromContext(c *gin.Context) (models.AdCompany, error) {
 		ImagesDescription:      v["ImagesDescription"],
 		ImagesSmallDescription: v["ImagesSmallDescription"],
 		PostDescription:        v["PostDescription"][0],
-		CurrentAmount:          ca,
 		DailyAmount:            da,
 		Days:                   days,
 	}

@@ -26,15 +26,15 @@ func (r *AdCompanyPg) Create(ac models.AdCompany) (uuid.UUID, error) {
 		(user_id, fb_page_id, business_address,
 		field, name, purpose, creative_status,
 		images_description, images_small_description, post_description,
-		current_amount, daily_amount, days)
-		values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id`,
+		daily_amount, days)
+		values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id`,
 		adCompanyTable)
 
 	row := r.db.QueryRow(query,
 		ac.UserId, ac.FbPageId, ac.BusinessAddress,
 		ac.CompanyField, ac.CompanyName, ac.CompnayPurpose, ac.CreativeStatus,
 		ac.ImagesDescription[0], ac.ImagesSmallDescription[0], ac.PostDescription,
-		ac.CurrentAmount, ac.DailyAmount, ac.Days,
+		ac.DailyAmount, ac.Days,
 	)
 
 	if err := row.Scan(&id); err != nil {
@@ -62,14 +62,13 @@ func (r *AdCompanyPg) Update(ac models.AdCompany, idStr string) (uuid.UUID, erro
 	images_description = '%s',
 	images_small_description = '%s',
 	post_description = '%s',
-	current_amount = '%d',
 	daily_amount = '%d',
 	days = '%d'
 	WHERE id = '%s' RETURNING id`,
 		adCompanyTable,
 		ac.UserId, ac.FbPageId, ac.BusinessAddress, ac.CompanyField, ac.CompanyName, ac.CompnayPurpose,
 		ac.CreativeStatus, ac.ImagesDescription[0], ac.ImagesSmallDescription[0], ac.PostDescription,
-		ac.CurrentAmount, ac.DailyAmount, ac.Days,
+		ac.DailyAmount, ac.Days,
 		idStr)
 	row := r.db.QueryRow(query)
 	if err := row.Scan(&id); err != nil {
@@ -90,7 +89,6 @@ type adCompanyScan struct {
 	ImagesDescription      string    `db:"images_description"`
 	ImagesSmallDescription string    `db:"images_small_description"`
 	PostDescription        string    `db:"post_description"`
-	CurrentAmount          int       `db:"current_amount"`
 	DailyAmount            int       `db:"daily_amount"`
 	Days                   int       `db:"days"`
 }
@@ -103,7 +101,7 @@ func (r *AdCompanyPg) GetAll(userId uuid.UUID) ([]models.AdCompany, error) {
 
 	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
 	field, name, purpose, creative_status,
-	images_description, images_small_description, post_description, current_amount, daily_amount, days FROM %s WHERE user_id = '%s'`, adCompanyTable, idString)
+	images_description, images_small_description, post_description, daily_amount, days FROM %s WHERE user_id = '%s'`, adCompanyTable, idString)
 	err := r.db.Select(&companyListS, query)
 
 	for _, c := range companyListS {
@@ -119,7 +117,6 @@ func (r *AdCompanyPg) GetAll(userId uuid.UUID) ([]models.AdCompany, error) {
 			ImagesDescription:      strings.Split(c.ImagesDescription, ","),
 			ImagesSmallDescription: strings.Split(c.ImagesSmallDescription, ","),
 			PostDescription:        c.PostDescription,
-			CurrentAmount:          c.CurrentAmount,
 			DailyAmount:            c.DailyAmount,
 			Days:                   c.Days,
 		})
@@ -136,7 +133,7 @@ func (r *AdCompanyPg) GetByID(companyID string) (models.AdCompany, error) {
 
 	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
 	field, name, purpose, creative_status,
-	images_description, images_small_description, post_description, current_amount, daily_amount, days FROM %s WHERE id = '%s'`, adCompanyTable, idString)
+	images_description, images_small_description, post_description, daily_amount, days FROM %s WHERE id = '%s'`, adCompanyTable, idString)
 	err := r.db.Get(&scanCompany, query)
 
 	company = models.AdCompany{
@@ -151,7 +148,6 @@ func (r *AdCompanyPg) GetByID(companyID string) (models.AdCompany, error) {
 		ImagesDescription:      strings.Split(scanCompany.ImagesDescription, ","),
 		ImagesSmallDescription: strings.Split(scanCompany.ImagesSmallDescription, ","),
 		PostDescription:        scanCompany.PostDescription,
-		CurrentAmount:          scanCompany.CurrentAmount,
 		DailyAmount:            scanCompany.DailyAmount,
 		Days:                   scanCompany.Days,
 	}

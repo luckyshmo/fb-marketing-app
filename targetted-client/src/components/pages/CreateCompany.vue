@@ -685,10 +685,11 @@ export default {
                     router.push({path: '/company-balance/'+ this.company.Id, query: { isEdit: false }})
                 })
                 .catch(err => {
-                    if (err.response.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
+                    console.log(err)
+                    if (err.response?.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
                         this.isCompanyExist = true;
                     }
-                    if (err.response.status === 401) {
+                    if (err.response?.status === 401) {
                         store.dispatch('logout')
                         .then(() => {
                             this.$router.push('/login')

@@ -42,20 +42,24 @@
               @closePopup="closeInfoPopup"
             >
                 <h1 style="margin-top: 60px; margin-bottom: 20px">Пополнение</h1>
-                <b-form-input
-                class="form-input"
-                v-model="paymentAmount"
-                :state="validateState1('paymentAmount')"
-                placeholder="Введите сумму"
-                ></b-form-input>
-                <b-form-invalid-feedback 
-                class="error-message">
-                    Минимальная сумма пополнения 2500₽
-                </b-form-invalid-feedback>
-                <button 
-                class="main-button-big"
-                @click="render"
-                >Оплатить</button>
+                <div v-if="!isFormRendered">
+                    <b-form-input
+                    style="margin: 0 auto; margin-top: 30px;"
+                    class="form-input"
+                    v-model="paymentAmount"
+                    :state="validateState1('paymentAmount')"
+                    placeholder="Введите сумму"
+                    ></b-form-input>
+                    <b-form-invalid-feedback 
+                    class="error-message">
+                        Минимальная сумма пополнения 2500₽
+                    </b-form-invalid-feedback>
+                    <button
+                    style="margin-top: 30px;"
+                    class="main-button-big"
+                    @click="render"
+                    >Оплатить</button>
+                </div>
                 <div id="payment-form"></div>
             </popup>
 
@@ -151,8 +155,9 @@ export default {
     data(){
         return {
             confirmationToken: '',
-            paymentAmount: 0,
+            paymentAmount: null,
             paymentID: '',
+            isFormRendered: false,
             store,
             isInfoPopupVisible: false,
             label_cols: this.getWidth().label,
@@ -242,12 +247,14 @@ export default {
                     }
                 })
                 checkout.render('payment-form')
+                this.isFormRendered = true
             })
             .catch(err => {
                 console.log(err)
             })
         },
         closeInfoPopup() {
+            this.isFormRendered = false;
             this.isInfoPopupVisible = false;
         },
         showPopupInfo() {
