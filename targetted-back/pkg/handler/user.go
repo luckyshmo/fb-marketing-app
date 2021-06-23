@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"io/ioutil"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -47,4 +48,48 @@ func (h *Handler) getUserList(c *gin.Context) {
 	}
 
 	sendStatusResponse(c, http.StatusOK, users)
+}
+
+func (h *Handler) getCompanyListByUserID(c *gin.Context) {
+	userID := c.Param("id")
+	uID, err := uuid.Parse(userID)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
+	companyList, err := h.services.AdCompany.GetAll(uID)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	sendStatusResponse(c, http.StatusOK, companyList)
+}
+
+func (h *Handler) getUserCompanyImages(c *gin.Context) {
+	companyID := c.Param("company-id")
+	userID := c.Param("id")
+
+	path := "./images/" + userID + "/" + companyID
+
+	files, err := ioutil.ReadDir(path + storiesFolder)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	filesSmall, err := ioutil.ReadDir(path + postsFolder)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	var names []string
+	for _, f := range files {
+		names = append(names, storiesFolder+f.Name())
+	}
+	for _, f := range filesSmall {
+		names = append(names, postsFolder+f.Name())
+	}
+
+	sendStatusResponse(c, http.StatusOK, names)
 }

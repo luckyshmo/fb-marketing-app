@@ -5,7 +5,7 @@ import "github.com/google/uuid"
 //User model
 type User struct {
 	//'binding' is tag from GIN
-	Id          uuid.UUID `json:"-" db:"id"`
+	Id          uuid.UUID `json:"id" db:"id"`
 	Name        string    `json:"name"`
 	Email       string    `json:"email" binding:"required"`
 	Password    string    `json:"password" binding:"required"`

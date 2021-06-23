@@ -6,6 +6,7 @@ import register from '../src/components/login/Register.vue'
 import createCompany from '../src/components/pages/CreateCompany.vue'
 import store from '../store/store'
 import CompanyBalance from '../src/components/pages/CompanyBalance.vue'
+import adminka from '../src/components/pages/Adminka.vue'
 
 Vue.use(Router);
 
@@ -34,6 +35,14 @@ let router = new Router({
       path: '/main',
       name: 'mainPage',
       component: mainPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/adminka',
+      name: 'adminka',
+      component: adminka,
       meta: {
         requiresAuth: true
       }

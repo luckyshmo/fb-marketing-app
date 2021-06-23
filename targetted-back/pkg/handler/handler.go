@@ -58,6 +58,15 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		{
 			users.GET("/", h.getUserList)
 			users.GET("/:id", h.getUser)
+
+			company := users.Group(":id/company")
+			{
+				company.GET("/", h.getCompanyListByUserID)
+				images := company.Group(":company-id/images")
+				{
+					images.GET("/", h.getUserCompanyImages)
+				}
+			}
 		}
 	}
 

@@ -1,0 +1,145 @@
+<template lang="">
+    <div 
+    id="content">
+        <div
+        v-for="user in users"
+        :key=user.email
+        >
+            <div class="user-content">
+                <h3>Данные пользователя</h3>
+                <p>ID: <b>{{user.id}}</b></p>
+                <p>Имя: <b>{{user.name}}</b></p>
+                <p>email: <b>{{user.email}}</b></p>
+                <p>телефон: <b>{{user.phoneNumber}}</b></p>
+                <p>баланс: <b>{{user.amount}}</b></p>
+                <h3>Данные кампаний</h3>
+                <div
+                v-for="company in filteredCompanies(user.id)"
+                :key="company.Id"
+                style="padding: 30px; background: rgb(255, 255, 255); margin: 10px; border-radius: 30px"
+                >
+                    <h4>{{company.CompanyName}}</h4>
+                    <p>ID: <b>{{company.Id}}</b></p>
+                    <p>Бизнесс адрес: <b>{{company.BusinessAddress}}</b></p>
+                    <p>Название: <b>{{company.CompanyName}}</b></p>
+                    <p>Цель: <b>{{company.CompnayPurpose}}</b></p>
+                    <p>Статус креативов: <b>{{company.CreativeStatus}}</b></p>
+                    <p>Надписи сториз: <b>{{company.ImagesDescription}}</b></p>
+                    <p>Написи постов: <b>{{company.ImagesSmallDescription}}</b></p>
+                    <p>Описание под постом: <b>{{company.PostDescription}}</b></p>
+                    <p>Дневной бюджет <b>{{company.DailyAmount}}</b></p>
+                    <p>Количество дней: <b>{{company.Days}}</b></p>
+                    <!-- <button class="main-button">Выгрузить креативы</button> -->
+
+                    <h5>Истории</h5>
+                    <div id="image-block">
+                        <div 
+                        v-for="(image) in filteredImageNames(company.Id, true)"
+                        :key="image.name">
+                            <div>
+                                <img 
+                                id="preview"
+                                :src="getImageByName(image.name, company.UserId, company.Id)"/>
+                            </div>
+                        </div>
+                    </div>
+                    <h5>Посты</h5>
+                    <div id="image-block">
+                        <div 
+                        v-for="(image) in filteredImageNames(company.Id, false)"
+                        :key="image.name">
+                            <div>
+                                <img 
+                                id="preview"
+                                :src="getImageByName(image.name, company.UserId, company.Id)"/>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </div>        
+    </div>
+</template>
+<script>
+import axios from 'axios'
+import store from '../../../store/store'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
+export default {
+    data(){
+        return {
+            store,
+            users: [],
+            companies: [],
+            imageNames: [],
+        }
+    },
+    $route() {
+        this.getUsers()
+    },
+    mounted() {
+        this.getUsers()
+    },
+    methods: {
+        isStoriesImage(name){
+            return name.includes("stories")
+        },
+        filteredImageNames(id, isStories){
+            return this.imageNames.filter(image => image.id === id && this.isStoriesImage(image.name) === isStories)
+        },
+        filteredCompanies(id){
+            return this.companies.filter(c => c.UserId === id);
+        },
+        getUsers(){
+            axios({url: `${VUE_APP_API_URL}/api/user/`, method: 'GET' })
+            .then(resp => {
+                this.users = resp.data
+                for (let i = 0; i < this.users.length; i++){
+                    this.getAddCompanies(this.users[i].id)
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        },
+        getAddCompanies(id){
+            axios({ url: `${VUE_APP_API_URL}/api/user/${id}/company/`, method: 'GET' })
+            .then(resp => {
+                if (resp.data != null){
+                    this.companies.push(...resp.data)
+                    for (let i = 0; i < resp.data.length; i++){
+                        console.log(resp.data[i])
+                        this.getCompanyImagesNames(resp.data[i].Id, resp.data[i].UserId)
+                    }
+                }
+            });
+        },
+        getCompanyImagesNames(cID, uID){
+            axios({url: `${VUE_APP_API_URL}/api/user/${uID}/company/${cID}/images/`, method: 'GET' })
+            .then(resp => {
+                console.log("images: ", resp.data)
+                if (resp.data != null){
+                    for (let i = 0; i < resp.data.length; i++){
+                        console.log(resp.data)
+                        this.imageNames.push({
+                            id: cID,
+                            name: resp.data[i],
+                        })
+                    }
+                }
+            });
+        },
+        getImageByName(name, uID, cID){
+            console.log("user:", uID, "\n company: ", cID)
+            return `https://client.targetted.online/images/${uID}/${cID}${name}`
+        },
+    }
+}
+</script>
+<style>
+.user-content{
+    background-color: rgb(235, 235, 235);
+    border-radius: 30px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+</style>
