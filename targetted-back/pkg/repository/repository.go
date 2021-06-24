@@ -16,12 +16,15 @@ type User interface {
 	GetById(userId uuid.UUID) (models.User, error)
 	GetAll() ([]models.User, error)
 	AddMoney(userId uuid.UUID, amount float64) error
+	SetBalance(userId uuid.UUID, amount float64) error
 }
 
 type AdCompany interface {
 	Create(ac models.AdCompany) (uuid.UUID, error)
 	Delete(idStr string) error
 	Update(ac models.AdCompany, idStr string) (uuid.UUID, error)
+	Start(id uuid.UUID) error
+	Stop(id uuid.UUID) error
 	GetAll(userID uuid.UUID) ([]models.AdCompany, error)
 	GetByID(companyID string) (models.AdCompany, error)
 }

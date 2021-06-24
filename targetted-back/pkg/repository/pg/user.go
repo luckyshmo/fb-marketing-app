@@ -16,6 +16,19 @@ func NewUserPG(db *sqlx.DB) *UserPG {
 	return &UserPG{db: db}
 }
 
+func (r *UserPG) SetBalance(id uuid.UUID, amount float64) error {
+	var uuid uuid.UUID
+	query := fmt.Sprintf(`UPDATE %s set 
+	amount = '%f'
+	WHERE id = '%s' RETURNING id`,
+		usersTable, amount, id)
+	row := r.db.QueryRow(query)
+	if err := row.Scan(&uuid); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (r *UserPG) AddMoney(userId uuid.UUID, amount float64) error {
 
 	var user models.User

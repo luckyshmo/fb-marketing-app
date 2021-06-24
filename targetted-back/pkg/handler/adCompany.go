@@ -99,12 +99,26 @@ func (h *Handler) getCompanyByID(c *gin.Context) {
 }
 
 func (h *Handler) deleteCompany(c *gin.Context) {
+	// id := c.Param("id") //id in request //TODO!
+
+	// uuid, err := uuid.Parse(id)
+	// if err != nil {
+	// 	sendErrorResponse(c, http.StatusBadRequest, err.Error())
+	// 	return
+	// }
 	companyIDstring := c.Param("id")
 	h.services.AdCompany.Delete(companyIDstring)
 }
 
 func (h *Handler) updateCompany(c *gin.Context) {
 
+	// id := c.Param("id") //id in request //TODO!
+
+	// uuid, err := uuid.Parse(id)
+	// if err != nil {
+	// 	sendErrorResponse(c, http.StatusBadRequest, err.Error())
+	// 	return
+	// }
 	companyIDstring := c.Param("id")
 	if companyIDstring == "" {
 		sendErrorResponse(c, http.StatusInternalServerError, "ID is empty")
@@ -153,6 +167,47 @@ func (h *Handler) createAdCompany(c *gin.Context) {
 	}
 
 	sendStatusResponse(c, http.StatusOK, companyID)
+}
+
+func (h *Handler) startAdCompany(c *gin.Context) {
+	id := c.Param("id") //id in request
+
+	uuid, err := uuid.Parse(id)
+	if err != nil {
+		sendErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	err = h.services.AdCompany.Start(uuid)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	//TODO:
+	//money service remove payment
+	//company service change status
+
+	sendStatusResponse(c, http.StatusOK, "Company startted")
+
+}
+
+func (h *Handler) stopAdCompany(c *gin.Context) {
+	id := c.Param("id") //id in request
+
+	uuid, err := uuid.Parse(id)
+	if err != nil {
+		sendErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	err = h.services.AdCompany.Stop(uuid)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	sendStatusResponse(c, http.StatusOK, "Company stopped")
 }
 
 type paymentRequest struct {

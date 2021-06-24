@@ -30,6 +30,14 @@ func (s *AdCompanyService) Update(ac models.AdCompany, id string) (uuid.UUID, er
 	return s.repo.Update(ac, id)
 }
 
+func (s *AdCompanyService) Start(id uuid.UUID) error {
+	return s.repo.Start(id)
+}
+
+func (s *AdCompanyService) Stop(id uuid.UUID) error {
+	return s.repo.Stop(id)
+}
+
 //TODO call image REPOS SERVICE
 func (s *AdCompanyService) GetByID(userID uuid.UUID, companyID string) (models.AdCompany, error) {
 	return s.repo.GetByID(companyID)

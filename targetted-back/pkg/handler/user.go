@@ -3,6 +3,7 @@ package handler
 import (
 	"io/ioutil"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -37,6 +38,30 @@ func (h *Handler) getUser(c *gin.Context) {
 	}
 
 	sendStatusResponse(c, http.StatusOK, user)
+}
+
+func (h *Handler) updateBalance(c *gin.Context) {
+	am := c.Param("amount")
+	id := c.Param("id")
+
+	amount, err := strconv.Atoi(am)
+	if err != nil {
+		sendErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+	if amount < 0 {
+		sendErrorResponse(c, http.StatusBadRequest, "Negative balance")
+		return
+	}
+
+	uuid, err := uuid.Parse(id)
+	if err != nil {
+		sendErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	h.services.User.SetBalance(uuid, float64(amount))
+
 }
 
 func (h *Handler) getUserList(c *gin.Context) {

@@ -1,8 +1,10 @@
 package pg
 
 import (
+	"database/sql"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -77,20 +79,46 @@ func (r *AdCompanyPg) Update(ac models.AdCompany, idStr string) (uuid.UUID, erro
 	return id, nil
 }
 
+func (r *AdCompanyPg) changeStatus(id uuid.UUID, status bool) error {
+	var uuid uuid.UUID
+	query := fmt.Sprintf(`UPDATE %s set 
+	is_started = '%t'
+	WHERE id = '%s' RETURNING id`,
+		adCompanyTable,
+		status,
+		id.String())
+	row := r.db.QueryRow(query)
+	if err := row.Scan(&uuid); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r *AdCompanyPg) Start(id uuid.UUID) error {
+	return r.changeStatus(id, true)
+}
+
+func (r *AdCompanyPg) Stop(id uuid.UUID) error {
+	return r.changeStatus(id, false)
+}
+
 type adCompanyScan struct {
-	Id                     uuid.UUID `db:"id"`
-	UserId                 uuid.UUID `db:"user_id"`
-	FbPageId               string    `db:"fb_page_id"`
-	BusinessAddress        string    `db:"business_address"` //TODO RENAME
-	CompanyField           string    `db:"field"`
-	CompanyName            string    `db:"name"`
-	CompnayPurpose         string    `db:"purpose"`
-	CreativeStatus         string    `db:"creative_status"`
-	ImagesDescription      string    `db:"images_description"`
-	ImagesSmallDescription string    `db:"images_small_description"`
-	PostDescription        string    `db:"post_description"`
-	DailyAmount            int       `db:"daily_amount"`
-	Days                   int       `db:"days"`
+	Id                     uuid.UUID    `db:"id"`
+	UserId                 uuid.UUID    `db:"user_id"`
+	FbPageId               string       `db:"fb_page_id"`
+	BusinessAddress        string       `db:"business_address"` //TODO RENAME
+	CompanyField           string       `db:"field"`
+	CompanyName            string       `db:"name"`
+	CompnayPurpose         string       `db:"purpose"`
+	CreativeStatus         string       `db:"creative_status"`
+	ImagesDescription      string       `db:"images_description"`
+	ImagesSmallDescription string       `db:"images_small_description"`
+	PostDescription        string       `db:"post_description"`
+	DailyAmount            int          `db:"daily_amount"`
+	Days                   int          `db:"days"`
+	IsStarted              bool         `db:"is_started"`
+	CreationDate           time.Time    `db:"date_created"`
+	StartDate              sql.NullTime `db:"date_started"`
 }
 
 func (r *AdCompanyPg) GetAll(userId uuid.UUID) ([]models.AdCompany, error) {
@@ -101,11 +129,11 @@ func (r *AdCompanyPg) GetAll(userId uuid.UUID) ([]models.AdCompany, error) {
 
 	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
 	field, name, purpose, creative_status,
-	images_description, images_small_description, post_description, daily_amount, days FROM %s WHERE user_id = '%s'`, adCompanyTable, idString)
+	images_description, images_small_description, post_description, daily_amount, days,
+	is_started, date_created, date_started FROM %s WHERE user_id = '%s'`, adCompanyTable, idString)
 	err := r.db.Select(&companyListS, query)
-
 	for _, c := range companyListS {
-		companyList = append(companyList, models.AdCompany{
+		company := models.AdCompany{
 			Id:                     c.Id,
 			UserId:                 c.UserId,
 			FbPageId:               c.FbPageId,
@@ -119,7 +147,13 @@ func (r *AdCompanyPg) GetAll(userId uuid.UUID) ([]models.AdCompany, error) {
 			PostDescription:        c.PostDescription,
 			DailyAmount:            c.DailyAmount,
 			Days:                   c.Days,
-		})
+			IsStarted:              c.IsStarted,
+			CreationDate:           c.CreationDate,
+		}
+		if c.StartDate.Valid {
+			company.StartDate = c.StartDate.Time
+		}
+		companyList = append(companyList, company)
 	}
 
 	return companyList, err
@@ -133,7 +167,8 @@ func (r *AdCompanyPg) GetByID(companyID string) (models.AdCompany, error) {
 
 	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
 	field, name, purpose, creative_status,
-	images_description, images_small_description, post_description, daily_amount, days FROM %s WHERE id = '%s'`, adCompanyTable, idString)
+	images_description, images_small_description, post_description, daily_amount, days,
+	is_started, date_created, date_started FROM %s WHERE id = '%s'`, adCompanyTable, idString)
 	err := r.db.Get(&scanCompany, query)
 
 	company = models.AdCompany{
@@ -150,6 +185,11 @@ func (r *AdCompanyPg) GetByID(companyID string) (models.AdCompany, error) {
 		PostDescription:        scanCompany.PostDescription,
 		DailyAmount:            scanCompany.DailyAmount,
 		Days:                   scanCompany.Days,
+		IsStarted:              scanCompany.IsStarted,
+		CreationDate:           scanCompany.CreationDate,
+	}
+	if scanCompany.StartDate.Valid {
+		company.StartDate = scanCompany.StartDate.Time
 	}
 
 	return company, err

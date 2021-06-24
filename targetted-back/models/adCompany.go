@@ -1,6 +1,10 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type AdCompany struct {
 	Id                     uuid.UUID `db:"id"`
@@ -17,4 +21,7 @@ type AdCompany struct {
 	CurrentAmount          int       `db:"current_amount"`
 	DailyAmount            int       `db:"daily_amount"`
 	Days                   int       `db:"days"`
+	IsStarted              bool      `db:"is_started"`
+	CreationDate           time.Time `db:"date_created"`
+	StartDate              time.Time `db:"date_started"`
 }

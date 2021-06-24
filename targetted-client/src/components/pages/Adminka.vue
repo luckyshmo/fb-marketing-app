@@ -12,49 +12,82 @@
                 <p>email: <b>{{user.email}}</b></p>
                 <p>телефон: <b>{{user.phoneNumber}}</b></p>
                 <p>баланс: <b>{{user.amount}}</b></p>
+                <b-form-input
+                class="form-input"
+                disabled-field
+                style="margin-bottom: 20px"
+                v-model="user.amount"
+                placeholder="Введите сумму"
+                ></b-form-input>
+                <button
+                @click="changeBalance(user.id, user.amount)" 
+                class="main-button"
+                style="margin-bottom: 25px">
+                    Поменять баланс
+                </button>  
                 <h3>Данные кампаний</h3>
                 <div
                 v-for="company in filteredCompanies(user.id)"
                 :key="company.Id"
                 style="padding: 30px; background: rgb(255, 255, 255); margin: 10px; border-radius: 30px"
                 >
+                {{company}}
                     <h4>{{company.CompanyName}}</h4>
                     <p>ID: <b>{{company.Id}}</b></p>
-                    <p>Бизнесс адрес: <b>{{company.BusinessAddress}}</b></p>
                     <p>Название: <b>{{company.CompanyName}}</b></p>
                     <p>Цель: <b>{{company.CompnayPurpose}}</b></p>
+                    <p>Сфера деятнльности: <b>{{company.CompanyField}}</b></p>
+                    <p>Бизнесс адрес: <b>{{company.BusinessAddress}}</b></p>
                     <p>Статус креативов: <b>{{company.CreativeStatus}}</b></p>
                     <p>Надписи сториз: <b>{{company.ImagesDescription}}</b></p>
                     <p>Написи постов: <b>{{company.ImagesSmallDescription}}</b></p>
                     <p>Описание под постом: <b>{{company.PostDescription}}</b></p>
                     <p>Дневной бюджет <b>{{company.DailyAmount}}</b></p>
                     <p>Количество дней: <b>{{company.Days}}</b></p>
+                    <p>Дата создания: <b>{{company.CreationDate}}</b></p>
+                    <p>Дата запуска: <b>{{company.StartDate}}</b></p>
                     <!-- <button class="main-button">Выгрузить креативы</button> -->
-
-                    <h5>Истории</h5>
-                    <div id="image-block">
-                        <div 
-                        v-for="(image) in filteredImageNames(company.Id, true)"
-                        :key="image.name">
-                            <div>
-                                <img 
-                                id="preview"
-                                :src="getImageByName(image.name, company.UserId, company.Id)"/>
+                    <div>
+                        <h5>Истории</h5>
+                        <div id="image-block">
+                            <div 
+                            v-for="(image) in filteredImageNames(company.Id, true)"
+                            :key="image.name">
+                                <div>
+                                    <img 
+                                    id="preview"
+                                    :src="getImageByName(image.name, company.UserId, company.Id)"/>
+                                </div>
+                            </div>
+                        </div>
+                        <h5>Посты</h5>
+                        <div id="image-block">
+                            <div 
+                            v-for="(image) in filteredImageNames(company.Id, false)"
+                            :key="image.name">
+                                <div>
+                                    <img 
+                                    id="preview"
+                                    :src="getImageByName(image.name, company.UserId, company.Id)"/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <h5>Посты</h5>
-                    <div id="image-block">
-                        <div 
-                        v-for="(image) in filteredImageNames(company.Id, false)"
-                        :key="image.name">
-                            <div>
-                                <img 
-                                id="preview"
-                                :src="getImageByName(image.name, company.UserId, company.Id)"/>
-                            </div>
-                        </div>
-                    </div>  
+                    
+                    <button 
+                    class="main-button"
+                    style="margin-top: 25px"
+                    @click="stopCompany(company.Id)"
+                    v-if="company.IsStarted">
+                        Остановить кампанию
+                    </button>
+                    <button 
+                    class="main-button"
+                    style="margin-top: 25px"
+                    @click="startCompany(company.Id)"
+                    v-if="!company.IsStarted">
+                        Запустить кампанию
+                    </button>  
                 </div>
             </div>
         </div>        
@@ -80,6 +113,33 @@ export default {
         this.getUsers()
     },
     methods: {
+        changeBalance(id, amount){
+            axios({url: `${VUE_APP_API_URL}/api/user/${id}/update-balance/${amount}`, method: 'POST' })
+            .then(resp => {
+                alert(resp.statusText)
+            })
+            .catch(err => {
+                alert(err.response.data.message)
+            })
+        },
+        startCompany(id){
+            axios({url: `${VUE_APP_API_URL}/api/company/start/${id}`, method: 'POST' })
+            .then(resp => {
+                alert(resp.statusText)
+            })
+            .catch(err => {
+                alert(err.response.data.message)
+            })
+        },
+        stopCompany(id){
+            axios({url: `${VUE_APP_API_URL}/api/company/stop/${id}`, method: 'POST' })
+            .then(resp => {
+                alert(resp.statusText)
+            })
+            .catch(err => {
+                alert(err.response.data.message)
+            })
+        },
         isStoriesImage(name){
             return name.includes("stories")
         },

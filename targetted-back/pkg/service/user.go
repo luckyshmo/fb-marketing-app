@@ -25,3 +25,7 @@ func (s *UserService) GetById(userId uuid.UUID) (models.User, error) {
 func (s *UserService) AddMoney(userId uuid.UUID, amount float64) error {
 	return s.repo.AddMoney(userId, amount)
 }
+
+func (s *UserService) SetBalance(id uuid.UUID, amount float64) error {
+	return s.repo.SetBalance(id, amount)
+}

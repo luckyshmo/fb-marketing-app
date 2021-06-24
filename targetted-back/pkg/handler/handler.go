@@ -46,6 +46,11 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			adCompany.GET("/:id", h.getCompanyByID)
 			adCompany.PUT("/:id", h.updateCompany)
 			adCompany.DELETE("/:id", h.deleteCompany)
+
+			adCompany.POST("/start/:id", h.startAdCompany)
+			adCompany.POST("/stop/:id", h.stopAdCompany)
+
+			//TODO payment service
 			adCompany.POST("/paymentToken", h.getPaymentToken)
 			adCompany.POST("/paymentStatus/:id", h.getPaymentStatus)
 
@@ -58,6 +63,8 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		{
 			users.GET("/", h.getUserList)
 			users.GET("/:id", h.getUser)
+
+			users.POST("/:id/update-balance/:amount", h.updateBalance)
 
 			company := users.Group(":id/company")
 			{
