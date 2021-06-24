@@ -118,6 +118,7 @@
                         class="form-input"
                         id="c-name"
                         v-model="company.CompanyName"
+                        :disabled="isEdit"
                         :state="validateState('CompanyName')"
                         placeholder="Введите название"
                         @click="resetNameErr()"
@@ -141,6 +142,7 @@
                     >
                         <b-form-radio-group
                             v-model="company.CompnayPurpose"
+                            :disabled="isEdit"
                             :options="[
                                 'Сообщения в директ',
                                 'Подписки в instagram',
@@ -159,6 +161,7 @@
                     >
                         <b-form-input
                         class="form-input"
+                        :disabled="isEdit"
                         v-model="company.CompanyField"
                         :state="validateState('CompanyField')"
                         placeholder="Введите сферу"
@@ -179,6 +182,7 @@
                     >
                         <b-form-input
                         class="form-input"
+                        :disabled="isEdit"
                         v-model="company.BusinessAddress"
                         placeholder="Точный адрес"
                         ></b-form-input>
@@ -205,152 +209,154 @@
                     </b-form-group>
                 </div>
                 
-                <b-form-group
-                        label="Наличие креативов"
-                        :label-cols="label_cols"
-                        :content-cols="content_cols"
-                        id="input-group-main"
-                        label-for="input-horizontal"
-                >
-                    <b-form-radio-group
-                        v-model="company.CreativeStatus"
-                        :options="[
-                            'Есть рекламные креативы',
-                            'Создать рекламные креативы'
-                        ]"
-                    ></b-form-radio-group>
-                </b-form-group>
+                <div v-if="!isEdit">
+                    <b-form-group
+                            label="Наличие креативов"
+                            :label-cols="label_cols"
+                            :content-cols="content_cols"
+                            id="input-group-main"
+                            label-for="input-horizontal"
+                    >
+                        <b-form-radio-group
+                            v-model="company.CreativeStatus"
+                            :options="[
+                                'Есть рекламные креативы',
+                                'Создать рекламные креативы'
+                            ]"
+                        ></b-form-radio-group>
+                    </b-form-group>
 
-                <div class="creative-message">
-                    <a href="" style="color: #6C1BD2">Воспользуйтесь советами</a> при самостоятельном создании креативов, чтобы увеличить эффективность рекламной кампании.
-                </div>
+                    <div class="creative-message">
+                        <a href="" style="color: #6C1BD2">Воспользуйтесь советами</a> при самостоятельном создании креативов, чтобы увеличить эффективность рекламной кампании.
+                    </div>
 
-                <b-form-group
-                        :label="getStoriesLabel()"
-                        :label-cols="label_cols"
-                        :state="validateImages()"
-                        id="input-group-main"
-                        label-for="input-horizontal"
-                        description="До 5 слайдов в сториз"
-                >
-                    <div id="image-block">
+                    <b-form-group
+                            :label="getStoriesLabel()"
+                            :label-cols="label_cols"
+                            :state="validateImages()"
+                            id="input-group-main"
+                            label-for="input-horizontal"
+                            description="До 5 слайдов в сториз"
+                    >
+                        <div id="image-block">
+                            <div 
+                            v-for="(Image, key) in Images" 
+                            :key="key">
+                                <div>
+                                    <div
+                                    id="icon-div-image">
+                                        <b-icon
+                                        @click.stop="removeImage(Image)"
+                                        class="x-button"
+                                        icon="x"></b-icon>
+                                    </div>
+                                    <img id="preview" :ref="'Image'" />
+                                </div>
+                            </div>
+                            
+                            <div v-if="Images.length < 5">
+                                <input 
+                                style="display: none"
+                                type="file" 
+                                multiple
+                                accept="Image/gif, Image/jpeg, Image/png, Image/jpg" 
+                                @change="onFileSelected"
+                                ref="fileInput">
+                                <div 
+                                @click="$refs.fileInput.click()"
+                                id="load-frame">
+                                <!-- Обводка у кнопок -->
+                                <!-- ПОехал размер -->
+                                    <p id="load-file">Загрузить<br>файл</p>
+                                    <p id="file-size-big">Размер<br>1920х1080рх</p>
+                                    <!-- TODO FILL -->
+                                </div>
+                            </div>
+                        </div>
+                        <b-form-invalid-feedback 
+                        class="error-message">
+                            Необходим минимум один файл
+                        </b-form-invalid-feedback>
+                    </b-form-group>
+                    <div v-if="isCreative()">
                         <div 
-                        v-for="(Image, key) in Images" 
-                        :key="key">
-                            <div>
-                                <div
-                                id="icon-div-image">
+                        v-for="(Image, index) in Images" 
+                        :key="Image.name">
+                            <b-form-group
+                                :label="textOnSlide(index)"
+                                :label-cols="label_cols"
+                                :content-cols="content_cols"
+                                id="input-group-main"
+                                label-for="input-horizontal"
+                            >
+                                <b-form-input
+                                class="form-input"
+                                v-model="company.ImagesDescription[index]"
+                                placeholder="Введите текст"
+                                ></b-form-input>
+                            </b-form-group>
+                        </div>
+                    </div>
+                    <b-form-group
+                            :label="getPostLabel()"
+                            :label-cols="label_cols"
+                            :state="validateImagesSmall()"
+                            id="input-group-main"
+                            label-for="input-horizontal"
+                            description="До 5 слайдов в посте"
+                    >
+
+                        <div id="image-block">
+                            <div 
+                            v-for="(Image, key) in ImagesSmall" 
+                            :key="key" style="width: 160px; height: 160px;">
+                                <div id="icon-div-image">
                                     <b-icon
-                                    @click.stop="removeImage(Image)"
+                                    @click.stop="removeImageSmall(Image)"
                                     class="x-button"
                                     icon="x"></b-icon>
                                 </div>
-                                <img id="preview" :ref="'Image'" />
+                                <img id="preview-small" :ref="'ImageSmall'" />
+                            </div>
+                            <div v-if="ImagesSmall.length < 5">
+                                <input 
+                                style="display: none"
+                                type="file" 
+                                multiple
+                                accept="Image/gif, Image/jpeg, Image/png, Image/jpg" 
+                                @change="onSmallFileSelected"
+                                ref="smallFileInput">
+                                <div 
+                                @click="$refs.smallFileInput.click()"
+                                id="load-frame-small">
+                                    <p id="load-file">Загрузить<br>файл</p>
+                                    <p id="file-size">Размер<br>1080х1080рх</p>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div v-if="Images.length < 5">
-                            <input 
-                            style="display: none"
-                            type="file" 
-                            multiple
-                            accept="Image/gif, Image/jpeg, Image/png, Image/jpg" 
-                            @change="onFileSelected"
-                            ref="fileInput">
-                            <div 
-                            @click="$refs.fileInput.click()"
-                            id="load-frame">
-                            <!-- Обводка у кнопок -->
-                            <!-- ПОехал размер -->
-                                <p id="load-file">Загрузить<br>файл</p>
-                                <p id="file-size-big">Размер<br>1920х1080рх</p>
-                                <!-- TODO FILL -->
-                            </div>
-                        </div>
-                    </div>
-                    <b-form-invalid-feedback 
-                    class="error-message">
-                        Необходим минимум один файл
-                    </b-form-invalid-feedback>
-                </b-form-group>
-                <div v-if="isCreative()">
-                    <div 
-                    v-for="(Image, index) in Images" 
-                    :key="Image.name">
-                        <b-form-group
-                            :label="textOnSlide(index)"
-                            :label-cols="label_cols"
-                            :content-cols="content_cols"
-                            id="input-group-main"
-                            label-for="input-horizontal"
-                        >
-                            <b-form-input
-                            class="form-input"
-                            v-model="company.ImagesDescription[index]"
-                            placeholder="Введите текст"
-                            ></b-form-input>
-                        </b-form-group>
-                    </div>
-                </div>
-                <b-form-group
-                        :label="getPostLabel()"
-                        :label-cols="label_cols"
-                        :state="validateImagesSmall()"
-                        id="input-group-main"
-                        label-for="input-horizontal"
-                        description="До 5 слайдов в посте"
-                >
-
-                    <div id="image-block">
+                        <b-form-invalid-feedback 
+                        class="error-message">
+                            Необходим минимум один файл
+                        </b-form-invalid-feedback>
+                    </b-form-group>
+                    <div v-if="isCreative()">
                         <div 
-                        v-for="(Image, key) in ImagesSmall" 
-                        :key="key" style="width: 160px; height: 160px;">
-                            <div id="icon-div-image">
-                                <b-icon
-                                @click.stop="removeImageSmall(Image)"
-                                class="x-button"
-                                icon="x"></b-icon>
-                            </div>
-                            <img id="preview-small" :ref="'ImageSmall'" />
+                        v-for="(Image, index) in ImagesSmall" 
+                        :key="Image.name">
+                            <b-form-group
+                                :label="textOnImage(index)"
+                                :label-cols="label_cols"
+                                :content-cols="content_cols"
+                                id="input-group-main"
+                                label-for="input-horizontal"
+                            >
+                                <b-form-input
+                                class="form-input"
+                                v-model="company.ImagesSmallDescription[index]"
+                                placeholder="Введите текст"
+                                ></b-form-input>
+                            </b-form-group>
                         </div>
-                        <div v-if="ImagesSmall.length < 5">
-                            <input 
-                            style="display: none"
-                            type="file" 
-                            multiple
-                            accept="Image/gif, Image/jpeg, Image/png, Image/jpg" 
-                            @change="onSmallFileSelected"
-                            ref="smallFileInput">
-                            <div 
-                            @click="$refs.smallFileInput.click()"
-                            id="load-frame-small">
-                                <p id="load-file">Загрузить<br>файл</p>
-                                <p id="file-size">Размер<br>1080х1080рх</p>
-                            </div>
-                        </div>
-                    </div>
-                    <b-form-invalid-feedback 
-                    class="error-message">
-                        Необходим минимум один файл
-                    </b-form-invalid-feedback>
-                </b-form-group>
-                <div v-if="isCreative()">
-                    <div 
-                    v-for="(Image, index) in ImagesSmall" 
-                    :key="Image.name">
-                        <b-form-group
-                            :label="textOnImage(index)"
-                            :label-cols="label_cols"
-                            :content-cols="content_cols"
-                            id="input-group-main"
-                            label-for="input-horizontal"
-                        >
-                            <b-form-input
-                            class="form-input"
-                            v-model="company.ImagesSmallDescription[index]"
-                            placeholder="Введите текст"
-                            ></b-form-input>
-                        </b-form-group>
                     </div>
                 </div>
                 <b-form-group
