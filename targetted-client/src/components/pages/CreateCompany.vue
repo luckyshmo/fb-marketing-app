@@ -649,6 +649,7 @@ export default {
         createCompany(){
             this.$v.$touch();
             if (this.$v.$anyError) {
+                window.scrollTo(0, 100);
                 return;
             }
             const companyData = new FormData();
