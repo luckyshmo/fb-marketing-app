@@ -267,13 +267,16 @@ export default {
             return company.CurrentAmount > 0
         },
         getStatus(company){
-            if (company.FbPageId.length === 0) {
-                return "facebook не подключен"
-            }
+            // if (company.FbPageId.length === 0) {
+            //     return "facebook не подключен"
+            // }
             if (company.CurrentAmount === 0){
                 return "закончился рекламный бюджет"
             }
-            return "в работе"
+            if (!company.IsStarted){
+                return "настраивается"
+            }
+            return "работает"
         },
         isFb(company){
             return company.FbPageId.length > 0
