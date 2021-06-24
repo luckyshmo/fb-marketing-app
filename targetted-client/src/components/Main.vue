@@ -78,9 +78,9 @@ export default {
 .c-div{
     cursor: pointer;
     margin-top: 40px;
-    background: lightgray;
+    background: #F3F3F3;
     border-radius: 20px;
-    height: 100px;
+    height: 112px;
     width: 100%;
     overflow: hidden;
     position: relative;
@@ -88,8 +88,8 @@ export default {
 .l {
   position: absolute;
   text-align: center;
-  margin-top: 40px;
-  margin-left: 30px;
+  margin-top: 46px;
+  margin-left: 35px;
   height: 25%;
 }
 a {
@@ -100,7 +100,7 @@ a {
   right: 0px;
   top: 0px;
   margin-right: 30px;
-  margin-top: 25px;
+  margin-top: 29px;
   height: 25%;
 }
 .c-status-text{

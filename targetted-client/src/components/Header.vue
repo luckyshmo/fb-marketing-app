@@ -7,10 +7,21 @@
           >
             <div style="padding: 80px 100px 80px 100px">
               <h1>Напишите нам</h1>
-              <p id="p1">Свяжитесь с нами, если у вас возникли вопросы или предложения :)</p>
+              <p id="p1" style="margin-top: 20px">Свяжитесь с нами, если у вас возникли вопросы или предложения :)</p>
               <div>
-                <a href="" id="social-link">Whatsup</a>
-                <a href="" id="social-link">Telegram</a>
+                <a 
+                href=""
+                id="social-link"
+                target="_blank"
+                rel="noopener noreferrer">
+                  Whatsup
+                </a>
+                <a href="" 
+                id="social-link"
+                target="_blank"
+                rel="noopener noreferrer">
+                  Telegram
+                </a>
               </div>
             </div>
           </popup>

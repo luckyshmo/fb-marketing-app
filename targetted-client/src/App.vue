@@ -111,7 +111,7 @@ html {
   font-family: Montserrat !important;
   font-style: normal !important;
   font-weight: 600 !important;
-  font-size: 20px;
+  font-size: 16px;
 }
 .main-button-grey:hover{
   background-color: #EEEEEE !important;
@@ -132,7 +132,7 @@ html {
 .submit-button{
   outline: none !important;
   position: absolute !important;
-  margin-top: 115px; /* //TODO dependce on content-wrapper */
+  margin-top: 138px; /* //TODO dependce on content-wrapper */
   color:white !important;
   background-color: #FF62B7 !important;
   border-radius: 8px !important;
@@ -161,7 +161,7 @@ html {
   margin: 0% auto 0% auto !important; 
   background-color: #6C1BD2 !important;
   border-radius: 25px !important;
-  padding-bottom: 120px;
+  padding-bottom: 176px;
 }
 @media (max-width: 600px) {
   #content{
@@ -273,7 +273,7 @@ p {
     border-radius: 8px !important;
     border: none !important;
     background-color: #F3F3F3 !important;
-    color: #767676 !important;
+    color: black !important;
 }
 
 ::-webkit-scrollbar {
