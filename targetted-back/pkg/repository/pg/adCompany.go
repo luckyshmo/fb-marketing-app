@@ -132,6 +132,9 @@ func (r *AdCompanyPg) GetAll(userId uuid.UUID) ([]models.AdCompany, error) {
 	images_description, images_small_description, post_description, daily_amount, days,
 	is_started, date_created, date_started FROM %s WHERE user_id = '%s'`, adCompanyTable, idString)
 	err := r.db.Select(&companyListS, query)
+	if err != nil {
+		return nil, err
+	}
 	for _, c := range companyListS {
 		company := models.AdCompany{
 			Id:                     c.Id,
@@ -156,7 +159,7 @@ func (r *AdCompanyPg) GetAll(userId uuid.UUID) ([]models.AdCompany, error) {
 		companyList = append(companyList, company)
 	}
 
-	return companyList, err
+	return companyList, nil
 }
 
 func (r *AdCompanyPg) GetByID(companyID string) (models.AdCompany, error) {

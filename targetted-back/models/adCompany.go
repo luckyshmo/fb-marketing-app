@@ -18,7 +18,7 @@ type AdCompany struct {
 	ImagesDescription      []string  `db:"images_description"`
 	ImagesSmallDescription []string  `db:"images_small_description"`
 	PostDescription        string    `db:"post_description"`
-	CurrentAmount          int       `db:"current_amount"`
+	CurrentAmount          float64   `db:"current_amount"`
 	DailyAmount            int       `db:"daily_amount"`
 	Days                   int       `db:"days"`
 	IsStarted              bool      `db:"is_started"`

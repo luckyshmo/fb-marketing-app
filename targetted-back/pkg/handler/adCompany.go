@@ -93,7 +93,7 @@ func (h *Handler) getCompanyByID(c *gin.Context) {
 		return
 	}
 
-	company.CurrentAmount = int(user.Amount) //TODO ну как бы бред
+	company.CurrentAmount = user.Amount //TODO ну как бы бред
 
 	sendStatusResponse(c, http.StatusOK, company)
 }
