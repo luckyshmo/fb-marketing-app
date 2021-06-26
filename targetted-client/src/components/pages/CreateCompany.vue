@@ -444,6 +444,7 @@ export default {
     },
     watch: {
         $route(to) {
+            window.scrollTo(0, 100);
             this.isLoading = false
             if (!(typeof to.params.id === 'undefined')){
                 axios({url: `${VUE_APP_API_URL}/api/company/${to.params.id}`, method: 'GET' })
