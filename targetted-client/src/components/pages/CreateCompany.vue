@@ -1,5 +1,6 @@
 <template>
     <div>
+        <loading v-if="isLoading"/>
         <div id="content-wrapper">
             <div id="content">
             <router-link :to="{name: 'mainPage'}">
@@ -403,15 +404,18 @@ import axios from 'axios'
 import popup from '../popup.vue'
 import { validationMixin } from "vuelidate";
 import { required, maxLength, minLength } from "vuelidate/lib/validators";
+import loading from "../Loading.vue"
 export default {
     name: 'CreateCompany',
     mixins: [validationMixin],
     components: {
-      popup
+      popup,
+      loading
     },
     data() {
         return{
             store,
+            isLoading: false,
             isCompanyExist: false,
             isInfoPopupVisible: false,
             label_cols: this.getWidth().label,
@@ -440,10 +444,10 @@ export default {
     },
     watch: {
         $route(to) {
+            this.isLoading = false
             if (!(typeof to.params.id === 'undefined')){
                 axios({url: `${VUE_APP_API_URL}/api/company/${to.params.id}`, method: 'GET' })
                 .then(resp => {
-                    console.log("cSet", resp.data)
                     this.company = resp.data
 
                     this.getImages()
@@ -468,7 +472,7 @@ export default {
     },
     computed: {
         isEdit() {
-            return this.$route.query.isEdit
+            return this.$route.query.isEdit === 'true'
         }
     },
     beforeMount(){
@@ -508,6 +512,7 @@ export default {
             this.isCompanyExist = false
             this.Images = []
             this.ImagesSmall = []
+            this.isLoading = false
             this.company = {
                 FbPageId: '',
                 Id: '',
@@ -652,6 +657,7 @@ export default {
                 window.scrollTo(0, 100);
                 return;
             }
+            this.isLoading = true;
             const companyData = new FormData();
             companyData.append("FbPageId", this.company.FbPageId)
             if (this.isEdit) {
@@ -695,7 +701,7 @@ export default {
             else {
                 axios({url: `${VUE_APP_API_URL}/api/company/${this.company.Id}`, data: companyData, method: 'PUT' })
                 .then(resp => {
-                    console.log(resp)
+                    console.log(resp.status)
                     router.push({path: '/company-balance/'+ this.company.Id, query: { isEdit: false }})
                 })
                 .catch(err => {

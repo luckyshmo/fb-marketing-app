@@ -1,5 +1,6 @@
 <template>
     <div id="content-wrapper">
+        <loading v-if="isLoading"/>
         <div id="content">
             <router-link :to="{name: 'mainPage'}">
                 <p id="navigation-text" style="margin:0;">← К списку кампаний</p>
@@ -131,10 +132,12 @@ import axios from 'axios'
 import popup from '../popup.vue'
 import { validationMixin } from "vuelidate";
 import { required, minValue} from "vuelidate/lib/validators";
+import loading from "../Loading.vue"
 export default {
     mixins: [validationMixin],
     components: {
-      popup
+      popup,
+      loading
     },
     validations: {
         paymentAmount:{
@@ -154,6 +157,7 @@ export default {
     },
     data(){
         return {
+            isLoading: false,
             confirmationToken: '',
             paymentAmount: null,
             paymentID: '',
@@ -182,6 +186,7 @@ export default {
     },
     watch: {
         $route(to) {
+            this.isLoading = false;
             if (!(typeof to.params.id === 'undefined')){
                 axios({url: `${VUE_APP_API_URL}/api/company/${to.params.id}`, method: 'GET' })
                 .then(resp => {
@@ -305,6 +310,9 @@ export default {
             if (this.$v.company.$anyError) {
                 return;
             }
+
+            this.isLoading = true;
+
             const companyData = new FormData();
             companyData.append("FbPageId", this.company.FbPageId)
             if (this.isEdit) {
