@@ -10,13 +10,13 @@
               <p id="p1" style="margin-top: 20px">Свяжитесь с нами, если у вас возникли вопросы или проблемы</p>
               <div>
                 <a 
-                href=""
+                href="https://wa.me/79952335503"
                 id="social-link"
                 target="_blank"
                 rel="noopener noreferrer">
                   Whatsup
                 </a>
-                <a href="" 
+                <a href="http://t.me/targetted" 
                 id="social-link"
                 target="_blank"
                 rel="noopener noreferrer">

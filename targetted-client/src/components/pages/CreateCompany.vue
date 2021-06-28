@@ -230,11 +230,11 @@
                     <div class="creative-message">
                         <div 
                         v-if="isCreative()">
-                            Для создания рекламных креативов загрузите картинки и напишите текст, который будет на них отображаться. <a href="" style="color: #6C1BD2" target="_blank">Посмотрите пример,</a> как это будет выглядеть и подробную инструкцию.  
+                            Для создания рекламных креативов загрузите картинки и напишите текст, который будет на них отображаться. <a href="https://docs.google.com/document/d/1DGJQw2lw_Y6KzyPeqA6To8u9UuiYi2Kokx_yjvTxgKE/edit?usp=sharing" style="color: #6C1BD2" target="_blank">Посмотрите пример,</a> как это будет выглядеть и подробную инструкцию.  
                         </div>
                         <div 
                         v-if="!isCreative()">
-                            <a href="" style="color: #6C1BD2" target="_blank">Воспользуйтесь советами</a> при самостоятельном создании креативов, чтобы увеличить эффективность рекламной кампании.
+                            <a href="https://docs.google.com/document/d/1gqOkpxDJ1wNt-AYlt5Q1Et1kF8NRLRYdG-dXK7WdT1k/edit?usp=sharing" style="color: #6C1BD2" target="_blank">Воспользуйтесь советами</a> при самостоятельном создании креативов, чтобы увеличить эффективность рекламной кампании.
                         </div>
                     </div>
 
@@ -386,7 +386,7 @@
                         class="submit-button"
                         type="submit"
                     >
-                        {{isEdit ? "Обновить кампанию":"Продолжить"}}
+                        {{isEdit ? "Назад":"Продолжить"}}
                     </b-button>
                 </b-form>
             </div>
@@ -653,72 +653,73 @@ export default {
             accountService.login()
         },
         createCompany(){
-            this.$v.$touch();
-            if (this.$v.$anyError) {
-                window.scrollTo(0, 100);
-                return;
-            }
-            this.isLoading = true;
-            const companyData = new FormData();
-            companyData.append("FbPageId", this.company.FbPageId)
-            if (this.isEdit) {
-                companyData.append("Id", this.company.Id)
-            }
-            companyData.append("CompanyName", this.company.CompanyName)
-            companyData.append("CompnayPurpose", this.company.CompnayPurpose)
-            companyData.append("CompanyField", this.company.CompanyField)
-            companyData.append("BusinessAddress", this.company.BusinessAddress)
-            companyData.append("ImagesDescription", this.company.ImagesDescription)
-            companyData.append("ImagesSmallDescription", this.company.ImagesSmallDescription)
-            companyData.append("CreativeStatus", this.company.CreativeStatus)
-            companyData.append("PostDescription", this.company.PostDescription)
-            companyData.append("DailyAmount",this.company.DailyAmount)
-            companyData.append("Days",this.company.Days)
-            Array.from(this.ImagesSmall).forEach(Image => {
-                companyData.append("ImageSmall", Image);
-            });
-            Array.from(this.Images).forEach(Image => {
-                companyData.append("Image", Image);
-            });
-            if (!this.isEdit) {
-                store.dispatch("saveCompany", companyData)
-                .then((resp)=>{
-                    this.reset()
-                    router.push({path: '/company-balance/'+ resp.data, query: {}}) //TODO QUERY
-                })
-                .catch(err => {
-                    console.log(err.response.data.message);
-                    if (err.response.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
-                        this.isCompanyExist = true;
-                    }
-                    if (err.response.status === 401) {
-                        store.dispatch('logout')
-                        .then(() => {
-                            this.$router.push('/login')
-                        })
-                    }
-                })
-            }
-            else {
-                axios({url: `${VUE_APP_API_URL}/api/company/${this.company.Id}`, data: companyData, method: 'PUT' })
-                .then(resp => {
-                    console.log(resp.status)
-                    router.push({path: '/company-balance/'+ this.company.Id, query: { isEdit: false }})
-                })
-                .catch(err => {
-                    console.log(err)
-                    if (err.response?.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
-                        this.isCompanyExist = true;
-                    }
-                    if (err.response?.status === 401) {
-                        store.dispatch('logout')
-                        .then(() => {
-                            this.$router.push('/login')
-                        })
-                    }
-                })
-            }
-            
+            if (!this.isEdit) { //TODO isEdit = isInView for some time
+                this.$v.$touch();
+                if (this.$v.$anyError) {
+                    window.scrollTo(0, 100);
+                    return;
+                }
+                this.isLoading = true;
+                const companyData = new FormData();
+                companyData.append("FbPageId", this.company.FbPageId)
+                if (this.isEdit) {
+                    companyData.append("Id", this.company.Id)
+                }
+                companyData.append("CompanyName", this.company.CompanyName)
+                companyData.append("CompnayPurpose", this.company.CompnayPurpose)
+                companyData.append("CompanyField", this.company.CompanyField)
+                companyData.append("BusinessAddress", this.company.BusinessAddress)
+                companyData.append("ImagesDescription", this.company.ImagesDescription)
+                companyData.append("ImagesSmallDescription", this.company.ImagesSmallDescription)
+                companyData.append("CreativeStatus", this.company.CreativeStatus)
+                companyData.append("PostDescription", this.company.PostDescription)
+                companyData.append("DailyAmount",this.company.DailyAmount)
+                companyData.append("Days",this.company.Days)
+                Array.from(this.ImagesSmall).forEach(Image => {
+                    companyData.append("ImageSmall", Image);
+                });
+                Array.from(this.Images).forEach(Image => {
+                    companyData.append("Image", Image);
+                });
+                if (!this.isEdit) {
+                    store.dispatch("saveCompany", companyData)
+                    .then((resp)=>{
+                        this.reset()
+                        router.push({path: '/company-balance/'+ resp.data, query: {}}) //TODO QUERY
+                    })
+                    .catch(err => {
+                        console.log(err.response.data.message);
+                        if (err.response.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
+                            this.isCompanyExist = true;
+                        }
+                        if (err.response.status === 401) {
+                            store.dispatch('logout')
+                            .then(() => {
+                                this.$router.push('/login')
+                            })
+                        }
+                    })
+                }
+                else {
+                    axios({url: `${VUE_APP_API_URL}/api/company/${this.company.Id}`, data: companyData, method: 'PUT' })
+                    .then(resp => {
+                        console.log(resp.status)
+                        router.push({path: '/company-balance/'+ this.company.Id, query: { isEdit: false }})
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        if (err.response?.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
+                            this.isCompanyExist = true;
+                        }
+                        if (err.response?.status === 401) {
+                            store.dispatch('logout')
+                            .then(() => {
+                                this.$router.push('/login')
+                            })
+                        }
+                    })
+                }
+            }            
         },
         sendFbRequest(){
             console.log("SEND FB PAGE REQUEST")

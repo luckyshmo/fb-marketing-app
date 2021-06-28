@@ -26,7 +26,7 @@
                 id="input-group-main"
                 label-for="input-horizontal"
             >
-                <p id="balance">{{company.CurrentAmount}}₽</p>
+                <p id="balance">{{company.CurrentAmount}} ₽</p>
             </b-form-group>
 
             <b-button 
@@ -43,9 +43,10 @@
               @closePopup="closeInfoPopup"
             >
                 <h1 style="margin-top: 60px; margin-bottom: 20px">Пополнение</h1>
-                <div v-if="!isFormRendered">
+                <p>Минимальная сумма пополнения 500 ₽.<br>Сумма пополнения идет на рекламный<br>бюджет вашей кампании.</p>
+                <div v-if="!isFormRendered" id="company-status-wrapper"  style="margin: 0 auto; width: 430px;">
                     <b-form-input
-                    style="margin: 0 auto; margin-top: 30px;"
+                    style="margin: 28px 12px 0px 0px"
                     class="form-input"
                     v-model="paymentAmount"
                     :state="validateState1('paymentAmount')"
@@ -53,13 +54,13 @@
                     ></b-form-input>
                     <b-form-invalid-feedback 
                     class="error-message">
-                        Минимальная сумма пополнения 2500₽
+                        Минимальная сумма пополнения 500₽
                     </b-form-invalid-feedback>
                     <button
-                    style="margin-top: 30px;"
-                    class="main-button-big"
+                    style="margin-top: 28px;"
+                    class="main-button"
                     @click="render"
-                    >Оплатить</button>
+                    >Пополнить</button>
                 </div>
                 <div id="payment-form"></div>
             </popup>
@@ -105,12 +106,13 @@
             </b-form>
             <div>
                 <h2 id="h2">Настройки кампании</h2>
+                <p>Пока вы не можете изменить настройки кампании. Если хотите внести<br>какие-то изменения, то напишите нам или создайте новую кампанию.</p>
                 <router-link :to="{path: '/company/'+ company.Id, query: { isEdit: true }}">
                 <b-button 
                     variant="primary"
                     class="main-button-grey"
                 >
-                    Настройки компании
+                    К настройкам кампании
                 </b-button>
                 </router-link>
             </div>
@@ -142,7 +144,7 @@ export default {
     validations: {
         paymentAmount:{
             required,
-            minValue: minValue(1)
+            minValue: minValue(500)
         },
         company: {
             DailyAmount: {

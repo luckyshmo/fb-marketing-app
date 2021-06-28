@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
+const timeout = 10000
 import router from '../router/router'
 
 Vue.use(Vuex);
@@ -54,9 +55,9 @@ let store = new Vuex.Store({
         saveCompany({commit}, companyData) {
             return new Promise((resolve, reject) => {
                 commit('save_request') //TOdo
-                axios({url: `${VUE_APP_API_URL}/api/company/`, data: companyData, method: 'POST' })
+                axios({url: `${VUE_APP_API_URL}/api/company/`, data: companyData, method: 'POST', timeout: timeout })
                 .then(resp => {
-                    axios({url: `${VUE_APP_API_URL}/api/company/`, method: 'GET' })
+                    axios({url: `${VUE_APP_API_URL}/api/company/`, method: 'GET', timeout: timeout })
                     .then(resp => {
                         localStorage.setItem('user_company', resp.data)
                         commit('set_user_company', resp.data)
@@ -81,9 +82,9 @@ let store = new Vuex.Store({
             let id = ""
             return new Promise((resolve, reject) => {
                 commit('save_request') //TOdo
-                axios({url: `${VUE_APP_API_URL}/api/company/${id}`, data: companyData, method: 'PUT' })
+                axios({url: `${VUE_APP_API_URL}/api/company/${id}`, data: companyData, method: 'PUT', timeout: timeout })
                 .then(resp => {
-                    axios({url: `${VUE_APP_API_URL}/api/company/${id}`, method: 'GET' })
+                    axios({url: `${VUE_APP_API_URL}/api/company/${id}`, method: 'GET', timeout: timeout })
                     .then(resp => {
                         localStorage.setItem('user_company', resp.data)
                         commit('set_user_company', resp.data)
@@ -107,7 +108,7 @@ let store = new Vuex.Store({
         },
         getCompanyList({commit}){
             return new Promise((resolve, reject) => {
-                axios({url: `${VUE_APP_API_URL}/api/company/`, method: 'GET' })
+                axios({url: `${VUE_APP_API_URL}/api/company/`, method: 'GET', timeout: timeout })
                 .then(resp => {
                     localStorage.setItem('user_company', resp.data)
                     commit('set_user_company', resp.data)
@@ -121,7 +122,7 @@ let store = new Vuex.Store({
         },
         getCompanyByID({commit}, id){
             function getCompany(id) {
-                return axios({url: `${VUE_APP_API_URL}/api/company/${id}`, method: 'GET' })
+                return axios({url: `${VUE_APP_API_URL}/api/company/${id}`, method: 'GET', timeout: timeout })
                 .then(resp => {
                     return resp.data
                 })
@@ -130,7 +131,7 @@ let store = new Vuex.Store({
                 })
             }
             function getCompanyImages(id) {
-                return axios({url: `${VUE_APP_API_URL}/api/company/${id}/images/`, method: 'GET' })
+                return axios({url: `${VUE_APP_API_URL}/api/company/${id}/images/`, method: 'GET', timeout: timeout })
                 .then(resp => {
                     return resp.data
                 })
@@ -151,7 +152,7 @@ let store = new Vuex.Store({
         login({commit}, user){
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                axios({url: `${VUE_APP_API_URL}/auth/sign-in`, data: user, method: 'POST' })
+                axios({url: `${VUE_APP_API_URL}/auth/sign-in`, data: user, method: 'POST', timeout: timeout })
                 .then(resp => {
                     console.log("usr + resp: ", resp.data)
                     const token = resp.data.token
