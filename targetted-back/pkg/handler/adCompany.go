@@ -233,7 +233,7 @@ type paymentStatus struct {
 }
 
 func (h *Handler) getPaymentStatus(c *gin.Context) {
-	for {
+	for i := 0; i < 300; i++ { //TODO! GOVNOKOD
 		userID, err := getUserId(c)
 		if err != nil {
 			sendErrorResponse(c, http.StatusInternalServerError, err.Error())
@@ -259,7 +259,6 @@ func (h *Handler) getPaymentStatus(c *gin.Context) {
 		if err != nil {
 			logrus.Error(err)
 		}
-		fmt.Println("response Body:", string(body))
 
 		var paymentStat paymentStatus
 		err = json.Unmarshal(body, &paymentStat)
