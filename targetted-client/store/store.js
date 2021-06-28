@@ -59,6 +59,7 @@ let store = new Vuex.Store({
                 .then(resp => {
                     axios({url: `${VUE_APP_API_URL}/api/company/`, method: 'GET', timeout: timeout })
                     .then(resp => {
+                        console.log("user companies resp", resp)
                         localStorage.setItem('user_company', resp.data)
                         commit('set_user_company', resp.data)
                         resolve(resp)

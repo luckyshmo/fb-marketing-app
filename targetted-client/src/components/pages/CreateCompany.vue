@@ -659,6 +659,7 @@ export default {
                     window.scrollTo(0, 100);
                     return;
                 }
+                console.log("begin gen comp")
                 this.isLoading = true;
                 const companyData = new FormData();
                 companyData.append("FbPageId", this.company.FbPageId)
@@ -682,12 +683,16 @@ export default {
                     companyData.append("Image", Image);
                 });
                 if (!this.isEdit) {
+                    console.log("dispatch")
                     store.dispatch("saveCompany", companyData)
                     .then((resp)=>{
                         this.reset()
                         router.push({path: '/company-balance/'+ resp.data, query: {}}) //TODO QUERY
                     })
                     .catch(err => {
+                        console.log(err)
+                        console.log(err.response)
+                        console.log(err.response.data)
                         console.log(err.response.data.message);
                         if (err.response.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
                             this.isCompanyExist = true;
@@ -753,35 +758,39 @@ export default {
             accountService.logout()
         },
         onFileSelected(e) {
-            let selectedFiles = e.target.files;
-            let len = Math.min(selectedFiles.length, 5 - this.Images.length)
-            for (let i = 0; i < len; i++) {
-                this.Images.push(selectedFiles[i]);
-            }
+            if (e != null) {
+                let selectedFiles = e.target.files;
+                let len = Math.min(selectedFiles.length, 5 - this.Images.length)
+                for (let i = 0; i < len; i++) {
+                    this.Images.push(selectedFiles[i]);
+                }
 
-            for (let i = 0; i < this.Images.length; i++) {
-                let reader = new FileReader();
-                reader.onload = () => {
-                    this.$refs.Image[i].src = reader.result;
-                };
+                for (let i = 0; i < this.Images.length; i++) {
+                    let reader = new FileReader();
+                    reader.onload = () => {
+                        this.$refs.Image[i].src = reader.result;
+                    };
 
-                reader.readAsDataURL(this.Images[i]);
+                    reader.readAsDataURL(this.Images[i]);
+                }
             }
         },
         onSmallFileSelected(e) {
-            let selectedFiles = e.target.files;
-            let len = Math.min(selectedFiles.length, 5 - this.ImagesSmall.length)
-            for (let i = 0; i < len; i++) {
-                this.ImagesSmall.push(selectedFiles[i]);
-            }
+            if (e != null) {
+                let selectedFiles = e.target.files;
+                let len = Math.min(selectedFiles.length, 5 - this.ImagesSmall.length)
+                for (let i = 0; i < len; i++) {
+                    this.ImagesSmall.push(selectedFiles[i]);
+                }
 
-            for (let i = 0; i < this.ImagesSmall.length; i++) {
-                let reader = new FileReader();
-                reader.onload = () => {
-                    this.$refs.ImageSmall[i].src = reader.result;
-                };
+                for (let i = 0; i < this.ImagesSmall.length; i++) {
+                    let reader = new FileReader();
+                    reader.onload = () => {
+                        this.$refs.ImageSmall[i].src = reader.result;
+                    };
 
-                reader.readAsDataURL(this.ImagesSmall[i]);
+                    reader.readAsDataURL(this.ImagesSmall[i]);
+                }
             }
         },
     }
