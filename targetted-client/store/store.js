@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 const timeout = 10000
-import router from '../router/router'
+// import router from '../router/router'
 
 Vue.use(Vuex);
 
