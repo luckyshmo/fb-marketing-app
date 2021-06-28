@@ -86,7 +86,7 @@ let store = new Vuex.Store({
             let id = ""
             return new Promise((resolve, reject) => {
                 commit('save_request') //TOdo
-                axios({url: `${VUE_APP_API_URL}/api/company/${id}`, data: companyData, method: 'PUT', timeout: timeout })
+                axios({url: `${VUE_APP_API_URL}/api/company/${id}`, data: companyData, method: 'PUT', timeout: 100000 })
                 .then(resp => {
                     axios({url: `${VUE_APP_API_URL}/api/company/${id}`, method: 'GET', timeout: timeout })
                     .then(resp => {
