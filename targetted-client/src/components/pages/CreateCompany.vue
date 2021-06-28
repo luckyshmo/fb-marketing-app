@@ -728,6 +728,9 @@ export default {
                     })
                 }
             }
+            else {
+                //! 
+            }
         },
         sendFbRequest(){
             console.log("SEND FB PAGE REQUEST")
