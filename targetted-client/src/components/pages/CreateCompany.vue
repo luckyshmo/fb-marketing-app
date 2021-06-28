@@ -690,6 +690,7 @@ export default {
                         router.push({path: '/company-balance/'+ resp.data, query: {}}) //TODO QUERY
                     })
                     .catch(err => {
+                        this.reset()
                         console.log(err)
                         console.log(err.response)
                         console.log(err.response.data)
@@ -708,10 +709,12 @@ export default {
                 else {
                     axios({url: `${VUE_APP_API_URL}/api/company/${this.company.Id}`, data: companyData, method: 'PUT' })
                     .then(resp => {
+                        this.reset()
                         console.log(resp.status)
                         router.push({path: '/company-balance/'+ this.company.Id, query: { isEdit: false }})
                     })
                     .catch(err => {
+                        this.reset()
                         console.log(err)
                         if (err.response?.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
                             this.isCompanyExist = true;
@@ -724,7 +727,7 @@ export default {
                         }
                     })
                 }
-            }            
+            }
         },
         sendFbRequest(){
             console.log("SEND FB PAGE REQUEST")
@@ -774,6 +777,9 @@ export default {
                     reader.readAsDataURL(this.Images[i]);
                 }
             }
+            else {
+                console.log("FUCKING NUULL")
+            }
         },
         onSmallFileSelected(e) {
             if (e != null) {
@@ -791,6 +797,9 @@ export default {
 
                     reader.readAsDataURL(this.ImagesSmall[i]);
                 }
+            }
+            else {
+                console.log("FUCKING NUULL")
             }
         },
     }
