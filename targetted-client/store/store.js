@@ -55,7 +55,7 @@ let store = new Vuex.Store({
         saveCompany({commit}, companyData) {
             return new Promise((resolve, reject) => {
                 commit('save_request') //TOdo
-                axios({url: `${VUE_APP_API_URL}/api/company/`, data: companyData, method: 'POST', timeout: timeout })
+                axios({url: `${VUE_APP_API_URL}/api/company/`, data: companyData, method: 'POST', timeout: 100000 })
                 .then(resp => {
                     // resolve(resp)
                     console.log("only r", resp)
