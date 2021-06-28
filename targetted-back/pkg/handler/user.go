@@ -3,6 +3,7 @@ package handler
 import (
 	"io/ioutil"
 	"net/http"
+	"sort"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -67,6 +68,11 @@ func (h *Handler) updateBalance(c *gin.Context) {
 func (h *Handler) getUserList(c *gin.Context) {
 
 	users, err := h.services.User.GetAll()
+
+	sort.SliceStable(users, func(i, j int) bool {
+		return users[i].DateCreated.After(users[j].DateCreated)
+	})
+
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

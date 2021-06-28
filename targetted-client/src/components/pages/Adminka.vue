@@ -6,6 +6,7 @@
         :key=user.email
         >
             <div class="user-content">
+                {{user}}
                 <h3>Данные пользователя</h3>
                 <p>ID: <b>{{user.id}}</b></p>
                 <p>Имя: <b>{{user.name}}</b></p>

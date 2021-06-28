@@ -11,6 +11,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"os"
+	"sort"
 	"strconv"
 	"time"
 
@@ -35,6 +36,10 @@ func (h *Handler) getCompanyList(c *gin.Context) {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
+
+	sort.SliceStable(companyList, func(i, j int) bool {
+		return companyList[i].CreationDate.After(companyList[j].CreationDate)
+	})
 
 	sendStatusResponse(c, http.StatusOK, companyList)
 }
