@@ -1,13 +1,32 @@
 <template>
     <div id="content">
         <h1 id="h1">Главная</h1>
-        <h2 id="h2">Ваши рекламные кампании</h2>
-        <p id="p1">Создайте рекламную кампанию, чтобы приводить новых клиентов в ваш бизнес</p>
-        <router-link v-if="store.getters.GET_COMPANY_LIST.length < 3" :to="{path: '/company'}">
-            <b-button variant="primary" class="main-button">Создать компанию</b-button>
-        </router-link>
         <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
-            <h2 id="h2">Ваши рекламные кампании</h2>
+            <h2 id="h2">Общий баланс</h2>
+
+            <b-form-group
+                label="Всего на счету"
+                :label-cols="3"
+                :content-cols="7"
+                id="input-group-main"
+                label-for="input-horizontal"
+            >
+                <p id="balance">{{user.amount}} ₽</p>
+            </b-form-group>
+
+            <b-button 
+                variant="primary"
+                class="main-button-grey"
+                @click="push"
+            >
+                Пополнить баланс
+            </b-button>
+        </div>
+        <h2 id="h2">Ваши рекламные кампании</h2>
+        <p 
+        v-if="!(store.getters.GET_COMPANY_LIST.length > 0)" 
+        id="p1">Создайте рекламную кампанию, чтобы приводить новых<br>клиентов в ваш бизнес</p>
+        <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
             <div>
                 <div
                 v-for="company in store.getters.GET_COMPANY_LIST" 
@@ -33,23 +52,46 @@
                 </div>                
             </div>
         </div>
+        <router-link v-if="store.getters.GET_COMPANY_LIST.length < 3" :to="{path: '/company'}">
+            <b-button style="margin-top: 32px" variant="primary" class="main-button">Создать кампанию</b-button>
+        </router-link>
     </div>
 </template>
 <script>
 import store from '../../store/store'
+import axios from 'axios'
+import router from '../../router/router'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL //TODO GLOABL APP CONST
 export default {
     name: "main-page",
     data() {
         return{
+            user: {},
             store,
         }
     },
+    beforeMount(){
+        axios({url: `${VUE_APP_API_URL}/api/user/0`, method: 'GET' })
+        .then(resp => {
+            this.user = resp.data
+        })
+    },
     watch: {
-        $route() {
+        $route(to) {
             store.dispatch("getCompanyList")
+            console.log("TO", to)
+            if (to.name === "mainPage"){
+                axios({url: `${VUE_APP_API_URL}/api/user/0`, method: 'GET' })
+                .then(resp => {
+                    this.user = resp.data
+                })
+            }
         }
     },
     methods: {
+        push(){
+            router.push({path: '/company-balance/'+ store.getters.GET_COMPANY_LIST[0].Id, query: { isEdit: true }})
+        },
         isMoney(company){
             return company.CurrentAmount > 0
         },

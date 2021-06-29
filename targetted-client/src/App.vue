@@ -257,9 +257,9 @@ p {
       font-size: 36px;
       line-height: 44px;
     }
-    #h1 {
-      font-size: 36px;
-      line-height: 44px;
+    h1 {
+      font-size: 36px !important;
+      line-height: 44px !important;
     }
     #h2 {
       font-size: 24px;

@@ -5,8 +5,19 @@
             <router-link :to="{name: 'mainPage'}">
                 <p id="navigation-text" style="margin:0;">← К списку кампаний</p>
             </router-link>
-            <div id="company-status-wrapper">
+            <div v-if="getWidthPx() > 600" id="company-status-wrapper">
                 <h1 id="h1" style="max-width: 700px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                    {{company.CompanyName}}
+                </h1>
+                <div class="c-status" id="c-status">
+                    <div class="elipse" id="white" v-if="!isFb(company)"></div>
+                    <div class="elipse" id="yellow" v-if="isFb(company) && !isMoney(company)"></div>
+                    <div class="elipse" id="green" v-if="isFb(company) && isMoney(company)"></div>
+                    <p class="c-status-text">{{getStatus(company)}}</p>
+                </div>
+            </div>
+            <div v-if="!(getWidthPx() > 600)">
+                <h1 id="h1" style="max-width: 300px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
                     {{company.CompanyName}}
                 </h1>
                 <div class="c-status" id="c-status">
@@ -44,24 +55,47 @@
             >
                 <h1 style="margin-top: 60px; margin-bottom: 20px">Пополнение</h1>
                 <p>Минимальная сумма пополнения 500 ₽.<br>Сумма пополнения идет на рекламный<br>бюджет вашей кампании.</p>
-                <div v-if="!isFormRendered" id="company-status-wrapper"  style="margin: 0 auto; width: 430px;">
-                    <b-form-input
-                    style="margin: 28px 12px 0px 0px"
-                    class="form-input"
-                    v-model="paymentAmount"
-                    :state="validateState1('paymentAmount')"
-                    placeholder="Введите сумму"
-                    ></b-form-input>
-                    <b-form-invalid-feedback 
-                    class="error-message">
-                        Минимальная сумма пополнения 500₽
-                    </b-form-invalid-feedback>
-                    <button
-                    style="margin-top: 28px;"
-                    class="main-button"
-                    @click="render"
-                    >Пополнить</button>
-                </div>
+                
+                    <div v-if="getWidthPx() > 600">
+                        <div v-if="!isFormRendered" id="company-status-wrapper"  style="margin: 0 auto; width: 430px;">
+                            <b-form-input
+                            style="margin: 28px 12px 0px 0px"
+                            class="form-input"
+                            v-model="paymentAmount"
+                            :state="validateState1('paymentAmount')"
+                            placeholder="Введите сумму"
+                            ></b-form-input>
+                            <b-form-invalid-feedback 
+                            class="error-message">
+                                Минимальная сумма пополнения 500₽
+                            </b-form-invalid-feedback>
+                            <button
+                            style="margin-top: 28px;"
+                            class="main-button"
+                            @click="render"
+                            >Пополнить</button>
+                        </div>
+                    </div>
+                    <div v-if="!(getWidthPx() > 600)">
+                        <div v-if="!isFormRendered" style="margin: 0 auto;">
+                            <b-form-input
+                            class="form-input"
+                            style="margin: 0 auto;"
+                            v-model="paymentAmount"
+                            :state="validateState1('paymentAmount')"
+                            placeholder="Введите сумму"
+                            ></b-form-input>
+                            <b-form-invalid-feedback 
+                            class="error-message">
+                                Минимальная сумма пополнения 500₽
+                            </b-form-invalid-feedback>
+                            <button
+                            style="margin-top: 28px;"
+                            class="main-button"
+                            @click="render"
+                            >Пополнить</button>
+                        </div>
+                    </div>
                 <div id="payment-form"></div>
             </popup>
 
@@ -213,6 +247,16 @@ export default {
         }) 
     },
     methods: {
+        getWidthPx() {
+            let width = Math.max(
+                document.body.scrollWidth,
+                document.documentElement.scrollWidth,
+                document.body.offsetWidth,
+                document.documentElement.offsetWidth,
+                document.documentElement.clientWidth
+            );
+            return width
+        },
         validateState(name) {
             const { $dirty, $error } = this.$v.company[name];
             return $dirty ? !$error : null;

@@ -9,13 +9,13 @@
             <!-- <b-card class="mt-3" header="Form Data Result">
                 <pre class="m-0">{{ company }}</pre>
             </b-card> -->
-            <h1 id="h1">{{isEdit ? "Редактирование":"Создание"}} кампании</h1>
+            <h1>{{isEdit ? "Редактирование":"Создание"}} кампании</h1>
             <div>
                 <b-form @submit.prevent="createCompany()">
                     <div v-if="store.getters.GET_USER.email === 'facebook@gmail.com'">
-                        <h2 id="h2">Доступ к кабинету Facebook</h2>
+                        <h2 id="h2">Доступ к странице Facebook и Instagram</h2>
                         <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
-                            <p>Привяжите свой аккаунт Facebook к targetted, чтобы натсроить и запустить рекламунюу компанию </p>
+                            <p>Раздайте доступ к вашей Facebook и Instagram странице<br>для запуска и управления рекламой от имени ваших страниц. </p>
                             <b-button 
                                 v-if="!(store.getters.GET_FB_PAGES.length > 0)"
                                 
@@ -109,7 +109,7 @@
                     <h2 id="h2">Основное</h2>
 
                     <b-form-group
-                        label="Название компании"
+                        label="Название кампании"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
                         id="input-group-main"
@@ -726,7 +726,10 @@ export default {
                         }
                     })
                 }
-            }            
+            }
+            else {
+                router.push({path: '/company-balance/'+ this.company.Id, query: { isEdit: false }})
+            }      
         },
         sendFbRequest(){
             console.log("SEND FB PAGE REQUEST")
@@ -807,6 +810,7 @@ export default {
     background: #F3F3F3;
     border-radius: 20px;
 }
+
 #icon-div-image{
     position: absolute;
     margin-left: 140px;
@@ -822,6 +826,11 @@ export default {
     #primary-under{
         margin-left: 0px;
         margin-top: 20px;
+    }
+    .creative-message{
+        width: auto!important;
+        height: auto!important;
+        padding: 25px!important;
     }
 }
 .custom-radio{

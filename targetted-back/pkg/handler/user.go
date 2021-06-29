@@ -26,13 +26,24 @@ func (h *Handler) getUser(c *gin.Context) {
 
 	id := c.Param("id") //id in request
 
-	uuid, err := uuid.Parse(id)
-	if err != nil {
-		sendErrorResponse(c, http.StatusBadRequest, err.Error())
-		return
+	var uid uuid.UUID
+	if id == "0" {
+		_uid, err := getUserId(c)
+		if err != nil {
+			sendErrorResponse(c, http.StatusBadRequest, err.Error())
+			return
+		}
+		uid = _uid
+	} else {
+		_uid, err := uuid.Parse(id)
+		if err != nil {
+			sendErrorResponse(c, http.StatusBadRequest, err.Error())
+			return
+		}
+		uid = _uid
 	}
 
-	user, err := h.services.User.GetById(uuid)
+	user, err := h.services.User.GetById(uid)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
