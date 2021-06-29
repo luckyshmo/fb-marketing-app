@@ -57,23 +57,20 @@ let store = new Vuex.Store({
                 commit('save_request') //TOdo
                 axios({url: `${VUE_APP_API_URL}/api/company/`, data: companyData, method: 'POST', timeout: 100000 })
                 .then(resp => {
-                    // resolve(resp)
-                    console.log("only r", resp)
+                    axios({url: `${VUE_APP_API_URL}/api/company/`, method: 'GET', timeout: timeout })
+                    .then(resp => {
+                        console.log("user companies resp", resp)
+                        localStorage.setItem('user_company', resp.data)
+                        commit('set_user_company', resp.data)
+                        resolve(resp)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        reject(err)
+                    })
+                    // localStorage.setItem('user_company', resp.data) //?
+                    // commit('set_user_company', resp.data) //?
                     resolve(resp)
-                    // axios({url: `${VUE_APP_API_URL}/api/company/`, method: 'GET', timeout: timeout })
-                    // .then(resp => {
-                    //     console.log("user companies resp", resp)
-                    //     localStorage.setItem('user_company', resp.data)
-                    //     commit('set_user_company', resp.data)
-                    //     resolve(resp)
-                    // })
-                    // .catch(err => {
-                    //     console.log(err)
-                    //     reject(err)
-                    // })
-                    // // localStorage.setItem('user_company', resp.data) //?
-                    // // commit('set_user_company', resp.data) //?
-                    // resolve(resp)
                 })
                 .catch(err => {
                     console.log(err)
