@@ -690,6 +690,7 @@ export default {
                         router.push({path: '/company-balance/'+ resp.data, query: {}}) //TODO QUERY
                     })
                     .catch(err => {
+                        this.isLoading = false
                         console.log(err)
                         console.log(err.response)
                         console.log(err.response.data)
@@ -712,6 +713,7 @@ export default {
                         router.push({path: '/company-balance/'+ this.company.Id, query: { isEdit: false }})
                     })
                     .catch(err => {
+                        this.isLoading = false
                         console.log(err)
                         if (err.response?.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
                             this.isCompanyExist = true;
