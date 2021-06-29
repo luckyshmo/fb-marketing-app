@@ -216,6 +216,15 @@ p {
   color: black;
 }
 
+#h2-n {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 900;
+  /* font-size: 2.3em; */
+  font-size: 36px;
+
+  color: #000000;
+}
 #h2 {
   margin-top: 60px;
   margin-bottom: 20px;

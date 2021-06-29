@@ -27,11 +27,61 @@
                             <!-- //TODO ситуация с осутсвием страниц -->
                             <popup
                             v-if="isInfoPopupVisible"
+                            style="margin-top: -480px;"
                             popupTitle="Инструкция по созданию бизнесс-аккаунта"
                             @closePopup="closeInfoPopup"
                             >
-                                <div>
-                                <p>Тип инструкция все дела</p>
+                                <div style="text-align: left; padding: 30px">
+                                    <h2 id="h2-n" style="margin=0px !important;">Как создать<br>бизнес-аккаунт</h2>
+                                    <p>Профессиональный аккаунт в Instagram необходим для того,<br>чтобы мы могли запустить и управлять рекламными кампаниями <br>от имени вашего бизнеса. </p>
+                                    <div class="num-wrapper">
+                                        <div class="num">
+                                            <div class="num-num">
+                                                1
+                                            </div>
+                                        </div>
+                                        <p class="num-text">Откройте мобильное приложение Инстаграм.</p>
+                                    </div>
+                                    <div class="num-wrapper">
+                                        <div class="num">
+                                            <div class="num-num">
+                                                2
+                                            </div>
+                                        </div>
+                                        <p class="num-text">Зайдите в настройки профиля. </p>
+                                    </div>
+                                    <div class="num-wrapper">
+                                        <div class="num">
+                                            <div class="num-num">
+                                                3
+                                            </div>
+                                        </div>
+                                        <p class="num-text">Нажмите на вкладку “Переключиться на профессиональный аккаунт”.</p>
+                                    </div>
+                                    <div class="num-wrapper">
+                                        <div class="num">
+                                            <div class="num-num">
+                                                4
+                                            </div>
+                                        </div>
+                                        <p class="num-text">Дайте разрешение приложению Инстаграма управлять вашими Фейсбук-страницами. Не вашим личным аккаунтом, а именно страницами в Фейсбуке, к которым вы имеете доступ. Вы можете выбрать или существующую страницу в Facebook, к которой у вас есть доступ, или создать новую. </p>
+                                    </div>
+                                    <div class="num-wrapper">
+                                        <div class="num">
+                                            <div class="num-num">
+                                                5
+                                            </div>
+                                        </div>
+                                        <p class="num-text">Настройка контактной информации для профиля Инстаграма. Укажите в соответствующие поля рабочий email компании, номер телефона и физический адрес (если есть).</p>
+                                    </div>
+                                    <div class="num-wrapper">
+                                        <div class="num">
+                                            <div class="num-num">
+                                                6
+                                            </div>
+                                        </div>
+                                        <p class="num-text">Когда вы прошли все шаги и включили профессиональный аккаунт, то, пожалуйста, вернитесь на сайт client.targetted.online и нажмите кнопку “у меня есть профессиональный аккаунт” и следуйте дальнейшим инструкциям на сайте.</p>
+                                    </div>
                                 </div>
                             </popup>
                             <b-button 
@@ -802,6 +852,25 @@ export default {
 }
 </script>
 <style>
+.num-wrapper{
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 16px;
+}
+.num{
+    background: #F3F3F3;
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+}
+.num-num{
+    padding-top: 11px;
+    padding-left: 19px;
+}
+.num-text{
+    margin-left: 16px;
+    max-width: 450px;
+}
 .creative-message{
     margin: 28px 0px 40px 0px;
     padding: 40px;
