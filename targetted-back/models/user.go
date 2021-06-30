@@ -13,7 +13,7 @@ type User struct {
 	Name        string    `json:"name"`
 	Email       string    `json:"email" binding:"required"`
 	Password    string    `json:"password" binding:"required"`
-	PhoneNumber string    `json:"phone_number" db:"phone_number"`
+	PhoneNumber string    `json:"phoneNumber" db:"phone_number"`
 	Amount      float64   `json:"amount" db:"amount"`
 	DateCreated time.Time `db:"date_created"`
 }
