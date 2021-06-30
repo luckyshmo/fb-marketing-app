@@ -1,6 +1,7 @@
 <template lang="">
     <div 
     id="content">
+    <div v-if="store.getters.GET_USER.email === 'admin@admin.com'">
         <div
         v-for="user in users"
         :key=user.email
@@ -91,7 +92,8 @@
                     </button>  
                 </div>
             </div>
-        </div>        
+        </div>
+    </div>       
     </div>
 </template>
 <script>
@@ -168,7 +170,6 @@ export default {
                 if (resp.data != null){
                     this.companies.push(...resp.data)
                     for (let i = 0; i < resp.data.length; i++){
-                        console.log(resp.data[i])
                         this.getCompanyImagesNames(resp.data[i].Id, resp.data[i].UserId)
                     }
                 }
@@ -180,7 +181,6 @@ export default {
                 console.log("images: ", resp.data)
                 if (resp.data != null){
                     for (let i = 0; i < resp.data.length; i++){
-                        console.log(resp.data)
                         this.imageNames.push({
                             id: cID,
                             name: resp.data[i],
@@ -190,7 +190,6 @@ export default {
             });
         },
         getImageByName(name, uID, cID){
-            console.log("user:", uID, "\n company: ", cID)
             return `https://client.targetted.online/images/${uID}/${cID}${name}`
         },
     }
