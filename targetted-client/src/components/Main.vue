@@ -42,8 +42,8 @@
                             <div class='r'>
                                 <div class="c-status">
                                     <div class="elipse" id="white" v-if="!isFb(company)"></div>
-                                    <div class="elipse" id="yellow" v-if="isFb(company) && !isMoney(company)"></div>
-                                    <div class="elipse" id="green" v-if="isFb(company) && isMoney(company)"></div>
+                                    <div class="elipse" id="yellow" v-if="isFb(company) && !isMoney()"></div>
+                                    <div class="elipse" id="green" v-if="isFb(company) && isMoney()"></div>
                                     <p class="c-status-text">{{getStatus(company)}}</p>
                                 </div>
                             </div>
@@ -92,8 +92,8 @@ export default {
         push(){
             router.push({path: '/company-balance/'+ store.getters.GET_COMPANY_LIST[0].Id, query: { isEdit: true }})
         },
-        isMoney(company){
-            return company.CurrentAmount > 0
+        isMoney(){
+            return this.user.Amount > 0
         },
         isFb(company){
             return company.FbPageId.length > 0
@@ -102,7 +102,7 @@ export default {
             // if (company.FbPageId.length === 0) {
             //     return "facebook не подключен"
             // }
-            if (company.CurrentAmount === 0){
+            if (this.user.Amount === 0){
                 return "закончился рекламный бюджет"
             }
             if (!company.IsStarted){

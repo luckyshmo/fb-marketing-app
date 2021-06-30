@@ -47,7 +47,7 @@
             </b-form-group>
             <b-button type="submit" class="main-button-big">Войти</b-button>
             
-            <p id="navigation-text">или <router-link style="color: #6C1BD2" :to="{name: 'register'}">заргестрироваться</router-link></p>
+            <p id="navigation-text">или <router-link style="color: #6C1BD2" :to="{name: 'register'}">зарегестрироваться</router-link></p>
             
         </b-form>
     </div>

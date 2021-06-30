@@ -5,7 +5,7 @@
               v-if="isInfoPopupVisible"
               @closePopup="closeInfoPopup"
           >
-            <div style="padding: 80px 100px 80px 100px">
+            <div class="p-wrapper">
               <h1>Напишите нам</h1>
               <p id="p1" style="margin-top: 20px">Свяжитесь с нами, если у вас возникли вопросы или проблемы</p>
               <div>
@@ -14,7 +14,7 @@
                 id="social-link"
                 target="_blank"
                 rel="noopener noreferrer">
-                  Whatsup
+                  Whatsapp
                 </a>
                 <a href="http://t.me/targetted" 
                 id="social-link"
@@ -71,6 +71,9 @@ import store from '../../store/store'
   margin: 30px;
   color: #6C1BD2
 }
+.p-wrapper{
+  padding: 80px 100px 80px 100px
+}
 .logo {
     font-family: Monument Extended;
     font-style: normal;
@@ -97,6 +100,9 @@ import store from '../../store/store'
     position: absolute;
     right:20px;
     top: 55px;
+  }
+  .p-wrapper{
+    padding: 20px 25px 20px 25px
   }
 }
 .nav {

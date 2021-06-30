@@ -280,11 +280,11 @@
                     <div class="creative-message">
                         <div 
                         v-if="isCreative()">
-                            Для создания рекламных креативов загрузите картинки и напишите текст, который будет на них отображаться. <a href="https://docs.google.com/document/d/1DGJQw2lw_Y6KzyPeqA6To8u9UuiYi2Kokx_yjvTxgKE/edit?usp=sharing" style="color: #6C1BD2" target="_blank">Посмотрите пример,</a> как это будет выглядеть и подробную инструкцию.  
+                            Для создания рекламных креативов загрузите картинки и напишите текст, который будет на них отображаться. <a href="https://docs.google.com/document/d/1gqOkpxDJ1wNt-AYlt5Q1Et1kF8NRLRYdG-dXK7WdT1k/edit?usp=sharing" style="color: #6C1BD2" target="_blank">Посмотрите пример,</a> как это будет выглядеть и подробную инструкцию.  
                         </div>
                         <div 
                         v-if="!isCreative()">
-                            <a href="https://docs.google.com/document/d/1gqOkpxDJ1wNt-AYlt5Q1Et1kF8NRLRYdG-dXK7WdT1k/edit?usp=sharing" style="color: #6C1BD2" target="_blank">Воспользуйтесь советами</a> при самостоятельном создании креативов, чтобы увеличить эффективность рекламной кампании.
+                            <a href="https://docs.google.com/document/d/1DGJQw2lw_Y6KzyPeqA6To8u9UuiYi2Kokx_yjvTxgKE/edit?usp=sharing" style="color: #6C1BD2" target="_blank">Воспользуйтесь советами</a> при самостоятельном создании креативов, чтобы увеличить эффективность рекламной кампании.
                         </div>
                     </div>
 
