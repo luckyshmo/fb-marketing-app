@@ -204,7 +204,7 @@
                     </b-form-group>
 
                     <b-form-group
-                        label="Сфера деятельности"
+                        label="Instagram страница или сайт"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
                         id="input-group-main"
@@ -215,7 +215,7 @@
                         :disabled="isEdit"
                         v-model="company.CompanyField"
                         :state="validateState('CompanyField')"
-                        placeholder="Введите сферу"
+                        placeholder="Вставьте ссылку"
                         ></b-form-input>
                         <b-form-invalid-feedback
                         class="error-message">

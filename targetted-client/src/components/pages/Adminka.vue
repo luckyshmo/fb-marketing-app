@@ -38,7 +38,7 @@
                     <p>ID: <b>{{company.Id}}</b></p>
                     <p>Название: <b>{{company.CompanyName}}</b></p>
                     <p>Цель: <b>{{company.CompnayPurpose}}</b></p>
-                    <p>Сфера деятнльности: <b>{{company.CompanyField}}</b></p>
+                    <p>Instagram или страница ФБ: <b>{{company.CompanyField}}</b></p>
                     <p>Бизнесс адрес: <b>{{company.BusinessAddress}}</b></p>
                     <p>Статус креативов: <b>{{company.CreativeStatus}}</b></p>
                     <p>Надписи сториз: <b>{{company.ImagesDescription}}</b></p>
