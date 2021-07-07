@@ -1,7 +1,7 @@
 <template lang="">
     <div 
     id="content">
-    <div v-if="store.getters.GET_USER.email === 'admin@admin.com'">
+    <div v-if="store.getters.GET_USER === 'admin@admin.com'">
         <div
         v-for="user in users"
         :key=user.email

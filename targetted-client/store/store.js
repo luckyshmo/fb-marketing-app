@@ -11,7 +11,7 @@ let store = new Vuex.Store({
     state: {
         token: localStorage.getItem('token') || '',
         adCompanyList: localStorage.getItem('user_company') || [],
-        user : localStorage.getItem('user') || {},  
+        user : localStorage.getItem('user') || '',  
         account : localStorage.getItem('account') || {},
         status: '',
         adCompany: {},
@@ -160,7 +160,7 @@ let store = new Vuex.Store({
                     const token = resp.data.token
                     const user = resp.data.user
                     localStorage.setItem('token', token)
-                    localStorage.setItem('user', user)
+                    localStorage.setItem('user', user.email)
                     axios.defaults.headers.common['Authorization'] = token
                     axios.defaults.headers.post['Authorization'] = token
                     commit('auth_success', token)
@@ -288,6 +288,7 @@ let store = new Vuex.Store({
             return []
         },
         GET_USER(state){
+            console.log(state.user)
             return state.user
         },
         GET_TOKEN(state){
