@@ -14,6 +14,7 @@
                 <p>email: <b>{{user.email}}</b></p>
                 <p>телефон: <b>{{user.phoneNumber}}</b></p>
                 <p>баланс: <b>{{user.amount}}</b></p>
+                <p>дата регистрации<b>{{user.TimeCreated}}</b></p>
                 <b-form-input
                 class="form-input"
                 disabled-field

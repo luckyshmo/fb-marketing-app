@@ -81,7 +81,7 @@ func (h *Handler) getUserList(c *gin.Context) {
 	users, err := h.services.User.GetAll()
 
 	sort.SliceStable(users, func(i, j int) bool {
-		return users[i].DateCreated.After(users[j].DateCreated)
+		return users[i].TimeCreated.After(users[j].TimeCreated)
 	})
 
 	if err != nil {

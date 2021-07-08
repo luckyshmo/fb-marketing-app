@@ -54,7 +54,7 @@ func (r *UserPG) AddMoney(userId uuid.UUID, amount float64) error {
 func (r *UserPG) GetAll() ([]models.User, error) {
 	var userList []models.User
 
-	query := fmt.Sprintf("SELECT name, email, id, phone_number, amount, date_created FROM %s", usersTable)
+	query := fmt.Sprintf("SELECT name, email, id, phone_number, amount, date_created, time_created FROM %s", usersTable)
 	err := r.db.Select(&userList, query)
 
 	return userList, err
@@ -63,7 +63,7 @@ func (r *UserPG) GetAll() ([]models.User, error) {
 func (r *UserPG) GetById(userId uuid.UUID) (models.User, error) {
 	var user models.User
 
-	query := fmt.Sprintf("SELECT name, email, amount FROM %s WHERE id = $1", usersTable) //todo phone_number
+	query := fmt.Sprintf("SELECT name, email, amount, time_created FROM %s WHERE id = $1", usersTable) //todo phone_number
 	err := r.db.Get(&user, query, userId)
 
 	return user, err

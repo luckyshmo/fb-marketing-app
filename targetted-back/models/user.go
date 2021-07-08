@@ -15,5 +15,6 @@ type User struct {
 	Password    string    `json:"password" binding:"required"`
 	PhoneNumber string    `json:"phoneNumber" db:"phone_number"`
 	Amount      float64   `json:"amount" db:"amount"`
-	DateCreated time.Time `db:"date_created"`
+	DateCreated time.Time `db:"date_created"` //!DEPRECATED
+	TimeCreated time.Time `db:"time_created"`
 }
