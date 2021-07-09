@@ -1,7 +1,7 @@
 <template lang="">
     <div 
     id="content">
-    <div v-if="store.getters.GET_USER === 'admin@admin.com'">
+    <div v-if="showInfo">
         <div
         v-for="user in users"
         :key=user.email
@@ -104,6 +104,7 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 export default {
     data(){
         return {
+            showInfo: false,
             store,
             users: [],
             companies: [],
@@ -111,9 +112,17 @@ export default {
         }
     },
     $route() {
+        console.log("route ", store.getters.GET_USER)
+        this.showInfo = store.getters.GET_USER === 'admin@admin.com'
         this.getUsers()
     },
+    beforeMount() {
+        console.log("BM ", store.getters.GET_USER.email)
+        this.showInfo = store.getters.GET_USER.email === 'admin@admin.com'
+    },
     mounted() {
+        console.log("M ", store.getters.GET_USER.email)
+        this.showInfo = store.getters.GET_USER.email === 'admin@admin.com'
         this.getUsers()
     },
     methods: {
@@ -179,7 +188,6 @@ export default {
         getCompanyImagesNames(cID, uID){
             axios({url: `${VUE_APP_API_URL}/api/user/${uID}/company/${cID}/images/`, method: 'GET' })
             .then(resp => {
-                console.log("images: ", resp.data)
                 if (resp.data != null){
                     for (let i = 0; i < resp.data.length; i++){
                         this.imageNames.push({

@@ -12,7 +12,7 @@
             <h1>{{isEdit ? "Редактирование":"Создание"}} кампании</h1>
             <div>
                 <b-form @submit.prevent="createCompany()">
-                    <div v-if="store.getters.GET_USER === 'facebook@gmail.com'">
+                    <div v-if="showFB">
                         <h2 id="h2">Доступ к странице Facebook и Instagram</h2>
                         <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
                             <p>Раздайте доступ к вашей Facebook и Instagram странице<br>для запуска и управления рекламой от имени ваших страниц. </p>
@@ -464,6 +464,7 @@ export default {
     data() {
         return{
             store,
+            showFB: false,
             isLoading: false,
             isCompanyExist: false,
             isInfoPopupVisible: false,
@@ -493,6 +494,8 @@ export default {
     },
     watch: {
         $route(to) {
+            console.log("route ", store.getters.GET_USER)
+            this.showFB = store.getters.GET_USER === 'facebook@gmail.com'
             window.scrollTo(0, 100);
             this.isLoading = false
             if (!(typeof to.params.id === 'undefined')){
@@ -526,6 +529,8 @@ export default {
         }
     },
     beforeMount(){
+        console.log("BM ", store.getters.GET_USER)
+        this.showFB = store.getters.GET_USER === 'facebook@gmail.com'
         if (!(typeof this.$router.history.current.params.id === 'undefined')){
             axios({url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`, method: 'GET' })
             .then(resp => {
