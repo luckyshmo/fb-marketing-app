@@ -27,7 +27,7 @@
           </popup>
         <div v-if="isLoggedIn" @click="showPopupInfo" id="write-us-text">Написать нам</div>
         </div>
-        <a href="https://www.targetted.online/" target="_blank">
+        <a href="https://targetted.ru/" target="_blank">
           <div class="logo" id="middle">
             <img id="l-im" src="logo.svg">
           </div>
