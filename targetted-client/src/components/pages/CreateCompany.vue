@@ -787,7 +787,7 @@ export default {
         },
         sendFbRequest(){
             console.log("SEND FB PAGE REQUEST")
-            let appToken = 'EAALCaNdmu2oBAPvRnxhl5KKzFpk3Naka68uc2EFXvm4j4LrZAZCFZCFkYwtH9HZCfvhjZAG7y0FMZAmKZBRCQa7JrDn55zWdEQM99EhJhgB1ul0CTVJhNmhFrFcL2oLhsnAjUi9ySmo68DxvxNAfxgOqtlfQ2KgOJZAD6eoZB8jUZC9ESiW2Iumjml'
+            let appToken = 'EAALCaNdmu2oBAPV17qyo3rW8pm8m59TgKDYhWHvNOSXNNti4GLeZAX38riwwcz02GOAaT4pXoqpnEzq2rv3SxMyfKXMxjTRP3M4UasIRqFCg5p2aZAXKzIiihNSS1XNs9eoMf0iwJCI4pNUbgZCCVvPgjZCEdi5yiOBZABzXsDtFWyY9ryaUb'
             let companyFbId = 1952680544750321
             let files = {
                 'page_id': this.company.FbPageId,
