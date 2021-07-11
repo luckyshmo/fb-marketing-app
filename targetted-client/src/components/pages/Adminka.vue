@@ -112,17 +112,17 @@ export default {
         }
     },
     $route() {
-        console.log("route ", store.getters.GET_USER)
-        this.showInfo = store.getters.GET_USER === 'admin@admin.com'
+        console.log("route ", store.getters.GET_EMAIL)
+        this.showInfo = store.getters.GET_EMAIL === 'admin@admin.com'
         this.getUsers()
     },
     beforeMount() {
-        console.log("BM ", store.getters.GET_USER.email)
-        this.showInfo = store.getters.GET_USER.email === 'admin@admin.com'
+        console.log("BM ", store.getters.GET_EMAIL)
+        this.showInfo = store.getters.GET_EMAIL === 'admin@admin.com'
     },
     mounted() {
-        console.log("M ", store.getters.GET_USER.email)
-        this.showInfo = store.getters.GET_USER.email === 'admin@admin.com'
+        console.log("M ", store.getters.GET_EMAIL)
+        this.showInfo = store.getters.GET_EMAIL === 'admin@admin.com'
         this.getUsers()
     },
     methods: {

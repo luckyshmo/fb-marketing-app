@@ -11,7 +11,8 @@ let store = new Vuex.Store({
     state: {
         token: localStorage.getItem('token') || '',
         adCompanyList: localStorage.getItem('user_company') || [],
-        user : localStorage.getItem('user') || '',  
+        user : localStorage.getItem('user') || '',
+        email : localStorage.getItem('email') || '',  
         account : localStorage.getItem('account') || {},
         status: '',
         adCompany: {},
@@ -34,6 +35,9 @@ let store = new Vuex.Store({
         set_user(state, user){
             state.user = user
         },
+        set_email(state, email){
+            state.email = email
+        },
         set_user_company(state, companies){
             state.adCompanyList = companies
         },
@@ -48,6 +52,8 @@ let store = new Vuex.Store({
         },
         logout(state){
             state.status = ''
+            state.user = ''
+            state.email = ''
             state.token = ''
         },
     },
@@ -160,11 +166,12 @@ let store = new Vuex.Store({
                     const token = resp.data.token
                     const user = resp.data.user
                     localStorage.setItem('token', token)
-                    localStorage.setItem('user', user.email)
+                    console.log("set User email", user.email)
+                    localStorage.setItem('email', user.email)
                     axios.defaults.headers.common['Authorization'] = token
                     axios.defaults.headers.post['Authorization'] = token
                     commit('auth_success', token)
-                    commit('set_user', user)
+                    commit('set_email', user.email)
                     resolve(resp)
                 })
                 .catch(err => {
@@ -178,6 +185,8 @@ let store = new Vuex.Store({
                 console.log(reject) //?
                 commit('logout')
                 localStorage.removeItem('token')
+                localStorage.removeItem('email')
+                localStorage.removeItem('user')
                 delete axios.defaults.headers.common['Authorization']
                 resolve()
             })
@@ -290,6 +299,10 @@ let store = new Vuex.Store({
         GET_USER(state){
             console.log(state.user)
             return state.user
+        },
+        GET_EMAIL(state){
+            console.log("get email: ", state.email)
+            return state.email
         },
         GET_TOKEN(state){
             return state.token
