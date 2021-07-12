@@ -43,6 +43,7 @@
             <b-button 
                 variant="primary"
                 class="main-button-grey"
+                style="margint-top: 20px"
                 @click="showPopupInfo"
             >
                 Пополнить баланс
@@ -145,6 +146,7 @@
                 <b-button 
                     variant="primary"
                     class="main-button-grey"
+                    style="margint-top: 20px"
                 >
                     К настройкам кампании
                 </b-button>

@@ -69,8 +69,7 @@ html {
 
 .main-button-grey{
     background: #F3F3F3 !important; 
-    color: black !important; 
-    margin-top: 20px !important;
+    color: black !important;
     outline: none !important;
     border-radius: 8px !important;
     padding: 12px 28px !important;
