@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
+import * as Sentry from "@sentry/vue";
+import { Integrations } from "@sentry/tracing";
 import router from '../router/router'
 import Axios from 'axios'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -16,6 +18,17 @@ Vue.config.productionTip = false
 
 //this.$http для использования axios
 Vue.prototype.$http = Axios;
+
+Sentry.init({
+  Vue,
+  dsn: "https://82f24fb7c99446c4b66188326b3dc99b@o918498.ingest.sentry.io/5861741",
+  integrations: [new Integrations.BrowserTracing()],
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
 
 const token = localStorage.getItem('token')
 if (token) {
