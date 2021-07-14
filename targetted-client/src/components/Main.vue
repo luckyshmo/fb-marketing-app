@@ -71,7 +71,7 @@
         </div>
         <div v-if="isVideo">
             <iframe id="ytplayer" type="text/html" width="640" height="360"
-            src="https://www.youtube.com/embed/iYODqbo_9OY?autoplay=1&origin=https://www.youtube.com/watch?v=iYODqbo_9OY"
+            src="https://www.youtube.com/embed/oxyoOhmmGH4?autoplay=1&origin=https://www.youtube.com/watch?v=oxyoOhmmGH4"
             frameborder="0"/>
             <div 
             style="position: absolute;
