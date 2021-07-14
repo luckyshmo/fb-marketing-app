@@ -1,60 +1,88 @@
 <template>
     <div id="content">
-        <h1 id="h1">Главная</h1>
         <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
-            <h2 id="h2">Общий баланс</h2>
-
-            <b-form-group
-                label="Всего на счету"
-                :label-cols="3"
-                :content-cols="7"
-                id="input-group-main"
-                label-for="input-horizontal"
-            >
-                <p id="balance">{{user.amount}} ₽</p>
-            </b-form-group>
-
-            <b-button 
-                variant="primary"
-                class="main-button-grey"
-                @click="push"
-            >
-                Пополнить баланс
-            </b-button>
-        </div>
-        <h2 id="h2">Ваши рекламные кампании</h2>
-        <p 
-        v-if="!(store.getters.GET_COMPANY_LIST.length > 0)" 
-        id="p1">Создайте рекламную кампанию, чтобы приводить новых<br>клиентов в ваш бизнес</p>
-        <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
+            <h1 id="h1">Главная</h1>
             <div>
-                <div
-                v-for="company in store.getters.GET_COMPANY_LIST" 
-                :key="company.Id"
+                <h2 id="h2">Общий баланс</h2>
+
+                <b-form-group
+                    label="Всего на счету"
+                    :label-cols="3"
+                    :content-cols="7"
+                    id="input-group-main"
+                    label-for="input-horizontal"
                 >
-                    <router-link :to="{path: '/company-balance/'+ company.Id, query: { isEdit: true }}">
-                        <div class="c-div">
-                            <div class='l'>
-                                <p class="c-name">
-                                    {{company.CompanyName}}
-                                </p>
-                            </div>
-                            <div class='r'>
-                                <div class="c-status">
-                                    <div class="elipse" id="white" v-if="!isFb(company)"></div>
-                                    <div class="elipse" id="yellow" v-if="isFb(company) && !isMoney()"></div>
-                                    <div class="elipse" id="green" v-if="isFb(company) && isMoney()"></div>
-                                    <p class="c-status-text">{{getStatus(company)}}</p>
+                    <p id="balance">{{user.amount}} ₽</p>
+                </b-form-group>
+
+                <b-button 
+                    variant="primary"
+                    class="main-button-grey"
+                    style="margint-top: 20px"
+                    @click="push"
+                >
+                    Пополнить баланс
+                </b-button>
+            </div>
+            <h2 id="h2">Ваши рекламные кампании</h2>
+            <div>
+                <div>
+                    <div
+                    v-for="company in store.getters.GET_COMPANY_LIST" 
+                    :key="company.Id"
+                    >
+                        <router-link :to="{path: '/company-balance/'+ company.Id, query: { isEdit: true }}">
+                            <div class="c-div">
+                                <div class='l'>
+                                    <p class="c-name">
+                                        {{company.CompanyName}}
+                                    </p>
+                                </div>
+                                <div class='r'>
+                                    <div class="c-status">
+                                        <div class="elipse" id="white" v-if="!isFb(company)"></div>
+                                        <div class="elipse" id="yellow" v-if="isFb(company) && !isMoney()"></div>
+                                        <div class="elipse" id="green" v-if="isFb(company) && isMoney()"></div>
+                                        <p class="c-status-text">{{getStatus(company)}}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </router-link>
-                </div>                
+                        </router-link>
+                    </div>                
+                </div>
             </div>
         </div>
-        <router-link v-if="store.getters.GET_COMPANY_LIST.length < 3" :to="{path: '/company'}">
-            <b-button style="margin-top: 32px" variant="primary" class="main-button">Создать кампанию</b-button>
-        </router-link>
+
+        <div v-if="!(store.getters.GET_COMPANY_LIST.length > 0)">
+            <h1 id="h1">Добро<br>пожаловать!</h1>
+            <p id="p1">Для привлечения новых клиентов осталось<br>совсем немного. Создайте свою рекламную кампанию<br>или посмотрите видео-инструкцию, если возникли вопросы :)</p>
+        </div>
+
+        <div style="margin-top: 16px">
+            <router-link v-if="store.getters.GET_COMPANY_LIST.length < 3" :to="{path: '/company'}">
+                <b-button  variant="primary" class="main-button" style="margin-right: 12px; margin-top: 12px">Создать кампанию</b-button>
+            </router-link>
+            <b-button 
+            variant="primary" 
+            v-bind:class="{'main-button': !(store.getters.GET_COMPANY_LIST.length > 0),
+            'main-button-grey': store.getters.GET_COMPANY_LIST.length > 0  }"
+            style="margin-top: 12px"
+            @click="showVideo">Посмотреть {{!(store.getters.GET_COMPANY_LIST.length) > 0 ? "видео":"интструкцию"}}</b-button>
+        </div>
+        <div v-if="isVideo">
+            <iframe id="ytplayer" type="text/html" width="640" height="360"
+            src="https://www.youtube.com/embed/iYODqbo_9OY?autoplay=1&origin=https://www.youtube.com/watch?v=iYODqbo_9OY"
+            frameborder="0"/>
+            <div 
+            style="position: absolute;
+            margin-left: 620px;
+            margin-top: -385px;">
+                <b-icon
+                @click="closeVideo"
+                class="x-button"
+                icon="x"></b-icon>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -67,6 +95,7 @@ export default {
     data() {
         return{
             user: {},
+            isVideo: false,
             store,
         }
     },
@@ -78,6 +107,7 @@ export default {
     },
     watch: {
         $route(to) {
+            this.isVideo = false;
             store.dispatch("getCompanyList")
             console.log("TO", to)
             if (to.name === "mainPage"){
@@ -89,6 +119,12 @@ export default {
         }
     },
     methods: {
+        showVideo(){
+            this.isVideo = true;
+        },
+        closeVideo(){
+            this.isVideo = false;
+        },
         push(){
             router.push({path: '/company-balance/'+ store.getters.GET_COMPANY_LIST[0].Id, query: { isEdit: true }})
         },
@@ -120,6 +156,9 @@ export default {
 }
 </script>
 <style>
+#ytplayer{
+    margin-top: 30px;
+}
 .c-div{
     cursor: pointer;
     margin-top: 40px;
