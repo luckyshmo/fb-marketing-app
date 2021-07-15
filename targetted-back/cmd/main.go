@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"os/signal"
@@ -73,7 +74,7 @@ func run() error {
 	//Init main components
 	//Good Clean arch and dependency injection example
 	repos := repository.NewRepository(db)
-	services := service.NewService(repos)
+	services := service.NewService(repos, cfg.Facebook)
 	handlers := handler.NewHandler(services)
 
 	//starting server
@@ -83,6 +84,11 @@ func run() error {
 			logrus.Error(fmt.Sprintf("error occured while running http server: %s", err.Error()))
 		}
 	}()
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	services.Facebook.StartTicker(ctx)
 
 	logrus.Print("App Started")
 

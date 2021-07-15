@@ -26,6 +26,14 @@ type Config struct {
 
 	AppPort  string `envconfig:"APP_PORT"`
 	LogLevel string `envconfig:"LOG_LEVEL"`
+
+	Facebook Facebook
+}
+
+type Facebook struct {
+	Token      string `envconfig:"FB_TOKEN"`
+	APIVersion string `envconfig:"FB_API_VERSION"`
+	BusinessID string `envconfig:"FB_BUSINESS_ID"`
 }
 
 var (

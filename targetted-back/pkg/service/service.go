@@ -1,7 +1,10 @@
 package service
 
 import (
+	"context"
+
 	"github.com/google/uuid"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/repository"
 )
@@ -29,16 +32,25 @@ type AdCompany interface {
 	GetByID(userID uuid.UUID, companyID string) (models.AdCompany, error)
 }
 
+type Facebook interface {
+	GetOwnedPages() []models.FBPage
+	GetPendingPagesID() ([]string, error)
+	DeletePageByID(ID string) error
+	StartTicker(ctx context.Context)
+}
+
 type Service struct {
 	Authorization
 	User
 	AdCompany
+	Facebook
 }
 
-func NewService(repos *repository.Repository) *Service {
+func NewService(repos *repository.Repository, cfg config.Facebook) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
 		User:          NewUserService(repos.User),
 		AdCompany:     NewAdCompanyService(repos.AdCompany),
+		Facebook:      NewFacebookService(cfg),
 	}
 }
