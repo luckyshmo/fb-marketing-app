@@ -67,7 +67,7 @@
             v-bind:class="{'main-button': !(store.getters.GET_COMPANY_LIST.length > 0),
             'main-button-grey': store.getters.GET_COMPANY_LIST.length > 0  }"
             style="margin-top: 12px"
-            @click="showVideo">Посмотреть {{!(store.getters.GET_COMPANY_LIST.length) > 0 ? "видео":"интструкцию"}}</b-button>
+            @click="showVideo">Посмотреть {{!(store.getters.GET_COMPANY_LIST.length) > 0 ? "видео":"инструкцию"}}</b-button>
         </div>
         <div v-if="isVideo">
             <iframe id="ytplayer" type="text/html" width="640" height="360"
