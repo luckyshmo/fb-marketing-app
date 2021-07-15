@@ -7,9 +7,10 @@ import (
 	"net/http"
 	"time"
 
+	logger "github.com/luckyshmo/fb-marketing-app/targetted-back/log"
+
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
-	"github.com/sirupsen/logrus"
 )
 
 const span = 5 * time.Minute
@@ -37,14 +38,14 @@ func (f *FacebookService) StartTicker(ctx context.Context) {
 			case <-ticker.C:
 				pages, err := f.GetPendingPagesID()
 				if err != nil {
-					logrus.Error(err)
+					logger.Error(err)
 				}
 				if len(pages) > 3 {
-					logrus.Warn("pending pages to many: %d", len(pages))
+					logger.Warn(fmt.Errorf("pending pages to many: %d", len(pages)))
 				} else if len(pages) > 5 {
-					logrus.Error("pending pages limit reached: %d", len(pages))
+					logger.Error(fmt.Errorf("pending pages limit reached: %d", len(pages)))
 				} else {
-					logrus.Info(fmt.Sprintf("pending pages number is %d", len(pages)))
+					logger.Info(fmt.Sprintf("pending pages number is %d", len(pages)))
 				}
 			case <-ctx.Done():
 				ticker.Stop()
@@ -100,6 +101,6 @@ func (f *FacebookService) GetPendingPagesID() ([]string, error) {
 }
 
 func (f *FacebookService) DeletePageByID(ID string) error {
-	logrus.Info(ID)
+	logger.Info(ID)
 	return nil
 }

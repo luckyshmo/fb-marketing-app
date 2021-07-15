@@ -8,9 +8,11 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/getsentry/sentry-go"
 	_ "github.com/lib/pq"
 
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
+	logger "github.com/luckyshmo/fb-marketing-app/targetted-back/log"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/handler"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/repository"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/repository/pg"
@@ -43,20 +45,10 @@ func main() {
 func run() error {
 	// config
 	time.Sleep(time.Second)
-	cfg := config.Get() //? errors before logrus init
+	cfg := config.Get()
 	// logger configuration
-	lvl, err := logrus.ParseLevel(cfg.LogLevel)
-	if err != nil {
-		logrus.SetLevel(logrus.DebugLevel) //using debug lvl if we can't parse
-		logrus.Warn("Using debug level logger")
-	} else {
-		logrus.SetLevel(lvl)
-	}
-	if cfg.Environment == "production" {
-		var JSONF = new(logrus.JSONFormatter)
-		JSONF.TimestampFormat = time.RFC3339
-		logrus.SetFormatter(JSONF)
-	}
+	logger.Init(cfg.Logging)
+	defer sentry.Flush(2 * time.Second)
 
 	//Init DB
 	db, err := pg.NewPostgresDB(pg.Config{ //? you can get db by config
@@ -71,6 +63,10 @@ func run() error {
 		return errors.Wrap(err, "failed to initialize db")
 	}
 
+	logger.Error(fmt.Errorf("TEST ERROR"))
+	logger.Info("TEST INFO")
+	logger.Warn(fmt.Errorf("TEST WARN"))
+
 	//Init main components
 	//Good Clean arch and dependency injection example
 	repos := repository.NewRepository(db)
@@ -81,7 +77,7 @@ func run() error {
 	srv := new(server.Server) //TODO? server.Server should be *serviceName*.server
 	go func() {
 		if err := srv.Run(cfg.AppPort, handlers.InitRoutes()); err != nil {
-			logrus.Error(fmt.Sprintf("error occured while running http server: %s", err.Error()))
+			logger.Error(fmt.Errorf("running http server: %w", err))
 		}
 	}()
 
@@ -90,14 +86,14 @@ func run() error {
 
 	services.Facebook.StartTicker(ctx)
 
-	logrus.Print("App Started")
+	logger.Info("App Started")
 
 	quit := make(chan os.Signal, 1)
 	//if app get SIGTERM it will exit
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
 	<-quit
 
-	logrus.Print("App Shutting Down")
+	logger.Info("App Shutting Down")
 	if err := db.Close(); err != nil {
 		return err
 	}

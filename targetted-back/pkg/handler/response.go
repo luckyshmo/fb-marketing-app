@@ -1,8 +1,10 @@
 package handler
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
+	logger "github.com/luckyshmo/fb-marketing-app/targetted-back/log"
 )
 
 type errorResponse struct {
@@ -10,7 +12,9 @@ type errorResponse struct {
 }
 
 func sendErrorResponse(c *gin.Context, statusCode int, message string) {
-	logrus.Error(message)
+	if statusCode > 401 { //Proper check what we need to log
+		logger.Error(fmt.Errorf(message))
+	}
 	c.AbortWithStatusJSON(statusCode, errorResponse{message})
 }
 

@@ -22,11 +22,9 @@ type Config struct {
 
 	CorsHeader string `envconfig:"CORS_HEADER"`
 
-	Environment string `envconfig:"ENVI"`
+	AppPort string `envconfig:"APP_PORT"`
 
-	AppPort  string `envconfig:"APP_PORT"`
-	LogLevel string `envconfig:"LOG_LEVEL"`
-
+	Logging  Logging
 	Facebook Facebook
 }
 
@@ -34,6 +32,15 @@ type Facebook struct {
 	Token      string `envconfig:"FB_TOKEN"`
 	APIVersion string `envconfig:"FB_API_VERSION"`
 	BusinessID string `envconfig:"FB_BUSINESS_ID"`
+}
+
+type Logging struct {
+	// Logger
+	LogLevel    string `envconfig:"LOG_LEVEL"`
+	Environment string `envconfig:"ENVI"`
+
+	// Sentry
+	SentryDSN string `envconfig:"SENTRY_DSN"`
 }
 
 var (

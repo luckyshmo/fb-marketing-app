@@ -17,8 +17,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	logger "github.com/luckyshmo/fb-marketing-app/targetted-back/log"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
-	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -249,7 +249,7 @@ func (h *Handler) getPaymentStatus(c *gin.Context) {
 		url := fmt.Sprintf("https://api.yookassa.ru/v3/payments/%s", paymentID)
 		req, err := http.NewRequest("GET", url, bytes.NewBuffer([]byte{}))
 		if err != nil {
-			logrus.Error(err)
+			logger.Error(fmt.Errorf("create request for yookassa: %w", err))
 		}
 		req.Header.Add("Authorization", "Basic "+basicAuth("780282", "live_S2yXJKLRFt0Rm_8DMUmwhWb_K46v6YW8QjOsa_FiNew"))
 
@@ -262,7 +262,7 @@ func (h *Handler) getPaymentStatus(c *gin.Context) {
 
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			logrus.Error(err)
+			logger.Error(fmt.Errorf("payment status read body: %w", err))
 		}
 
 		var paymentStat paymentStatus
@@ -282,6 +282,7 @@ func (h *Handler) getPaymentStatus(c *gin.Context) {
 		}
 		time.Sleep(3 * time.Second)
 	}
+	logger.Warn(fmt.Errorf("300 payment ticks passed"))
 }
 
 func (h *Handler) getPaymentToken(c *gin.Context) {
@@ -313,7 +314,7 @@ func (h *Handler) getPaymentToken(c *gin.Context) {
 	}`, paymentReq.PaymentAmount, userID.String()))
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
 	if err != nil {
-		logrus.Error(err)
+		logger.Error(fmt.Errorf("create token request: %w", err))
 	}
 	req.Header.Set("Idempotence-Key", uuid.New().String())
 	req.Header.Set("Content-Type", "application/json")
@@ -328,7 +329,7 @@ func (h *Handler) getPaymentToken(c *gin.Context) {
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		logrus.Error(err)
+		logger.Error(fmt.Errorf("read token response body: %w", err))
 	}
 	fmt.Println("response Body:", string(body))
 
@@ -388,11 +389,11 @@ func parseCompanyFromContext(c *gin.Context) (models.AdCompany, error) {
 	DaysS := v["Days"][0]
 	da, err := strconv.Atoi(DailyAmountS)
 	if err != nil {
-		logrus.Error(err)
+		logger.Error(fmt.Errorf("parse daily amount: %w", err))
 	}
 	days, err := strconv.Atoi(DaysS)
 	if err != nil {
-		logrus.Error(err)
+		logger.Error(fmt.Errorf("parse days: %w", err))
 	}
 	company := models.AdCompany{
 		UserId:                 userID,

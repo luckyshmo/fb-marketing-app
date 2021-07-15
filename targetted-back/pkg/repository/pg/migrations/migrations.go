@@ -2,11 +2,12 @@ package migrations
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
-	"github.com/sirupsen/logrus"
 
 	"github.com/golang-migrate/migrate/v4"
+	logger "github.com/luckyshmo/fb-marketing-app/targetted-back/log"
 
 	_ "github.com/golang-migrate/migrate/v4/database/mysql"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
@@ -17,7 +18,7 @@ import (
 func RunPgMigrations() error { //? can be run from Makefile
 	cfg := config.Get()
 	if cfg.PgMigrationsPath == "" {
-		logrus.Warn("No migration path provided")
+		logger.Error(fmt.Errorf("migration path not provided"))
 		return nil
 	}
 	if cfg.PgHOST == "" || cfg.PgPORT == "" {
@@ -25,7 +26,6 @@ func RunPgMigrations() error { //? can be run from Makefile
 	}
 
 	connectionString := "postgres://" + cfg.PgUserName + ":" + cfg.PgPAS + "@" + cfg.PgHOST + "/" + cfg.PgDBName + "?sslmode=" + cfg.PgSSLMode
-	logrus.Info(connectionString)
 
 	m, err := migrate.New(
 		cfg.PgMigrationsPath,
