@@ -70,7 +70,7 @@
             @click="showVideo">Посмотреть {{!(store.getters.GET_COMPANY_LIST.length) > 0 ? "видео":"инструкцию"}}</b-button>
         </div>
         <div v-if="isVideo">
-            <iframe id="ytplayer" type="text/html" width="640" height="360"
+            <iframe id="ytplayer" type="text/html"
             src="https://www.youtube.com/embed/oxyoOhmmGH4?autoplay=1&origin=https://www.youtube.com/watch?v=oxyoOhmmGH4"
             frameborder="0"/>
             <div 
@@ -158,6 +158,8 @@ export default {
 <style>
 #ytplayer{
     margin-top: 30px;
+    width: 640px;
+    height: 360px;
 }
 .c-div{
     cursor: pointer;
@@ -235,6 +237,10 @@ a {
     text-overflow: ellipsis;
 }
 @media (max-width: 600px){
+    #ytplayer{
+        width: 290px;
+        height: 170px;
+    }
     .c-name{
         max-width: 260px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
     }

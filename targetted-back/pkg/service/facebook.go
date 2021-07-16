@@ -13,7 +13,7 @@ import (
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
 )
 
-const span = 5 * time.Minute
+const span = 5 * time.Second
 
 // https://developers.facebook.com/docs/marketing-api/business-asset-management/guides/pages
 type FacebookService struct {
@@ -39,6 +39,7 @@ func (f *FacebookService) StartTicker(ctx context.Context) {
 				pages, err := f.GetPendingPagesID()
 				if err != nil {
 					logger.Error(err)
+					continue
 				}
 				if len(pages) > 3 {
 					logger.Warn(fmt.Errorf("pending pages to many: %d", len(pages)))
