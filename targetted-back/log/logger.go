@@ -9,12 +9,10 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type Logger struct {
-}
-
 func Init(cfg config.Logging) {
 	err := sentry.Init(sentry.ClientOptions{
-		Dsn: "https://c88f0b6955b74cf28f54389c3928b382@o918498.ingest.sentry.io/5862071",
+		Dsn:         cfg.SentryDSN,
+		Environment: cfg.Environment,
 	})
 	if err != nil {
 		log.Fatalf("sentry.Init: %s", err)
@@ -32,8 +30,6 @@ func Init(cfg config.Logging) {
 		JSONF.TimestampFormat = time.RFC3339
 		logrus.SetFormatter(JSONF)
 	}
-
-	sentry.CaptureMessage("It works!")
 }
 
 func Info(args string) {

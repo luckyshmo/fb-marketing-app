@@ -37,7 +37,7 @@ type Facebook struct {
 type Logging struct {
 	// Logger
 	LogLevel    string `envconfig:"LOG_LEVEL"`
-	Environment string `envconfig:"ENVI"`
+	Environment string `envconfig:"ENV"`
 
 	// Sentry
 	SentryDSN string `envconfig:"SENTRY_DSN"`
