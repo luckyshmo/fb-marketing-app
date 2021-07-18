@@ -1,3 +1,6 @@
 ssl
 images
 readymag
+
+.env
+.env.dev
