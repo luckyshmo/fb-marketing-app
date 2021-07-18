@@ -9,6 +9,7 @@
             "name": "client",
             "request": "launch",
             "type": "node-terminal",
+            "envFile": "${workspaceFolder}/targetted-client/.env.local",
             "env": {
                 "VUE_APP_API_URL":"http://localhost:8080",
                 "VUE_APP_FACEBOOK_APP_ID":"914216406086238"
@@ -20,21 +21,7 @@
             "request": "launch",
             "mode": "auto",
             "program": "${workspaceFolder}/targetted-back/cmd",
-            "env": {
-                "PG_HOST": "localhost",
-                "PG_PORT": "5432",
-                "PG_PAS": "example",
-                "PG_SSLMODE": "disable",
-                "PG_MIGRATIONS_PATH": "file://../pkg/repository/pg/migrations",
-                "PG_USERNAME": "postgres",
-                "PG_DBNAME": "postgres",
-                "LOG_LEVEL": "debug",
-                "APP_PORT": "8080",
-
-                "CORS_HEADER": "https://localhost:3000",
-
-                "ENVI": "debug"
-            }
+            "envFile": "${workspaceFolder}/targetted-back/.env.dev",
         }
     ],
     "compounds": [
