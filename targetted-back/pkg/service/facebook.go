@@ -13,7 +13,7 @@ import (
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
 )
 
-const span = 5 * time.Second
+const span = 5 * time.Minute
 
 // https://developers.facebook.com/docs/marketing-api/business-asset-management/guides/pages
 type FacebookService struct {
