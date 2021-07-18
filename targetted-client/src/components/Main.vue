@@ -71,12 +71,10 @@
         </div>
         <div v-if="isVideo">
             <iframe id="ytplayer" type="text/html"
-            src="https://www.youtube.com/embed/oxyoOhmmGH4?autoplay=1&origin=https://www.youtube.com/watch?v=oxyoOhmmGH4"
+            src="https://www.youtube.com/embed/EgpUx9_4ZIQ?autoplay=1&origin=https://youtu.be/EgpUx9_4ZIQ"
             frameborder="0"/>
-            <div 
-            style="position: absolute;
-            margin-left: 620px;
-            margin-top: -385px;">
+            <div
+            id="ytcloser">
                 <b-icon
                 @click="closeVideo"
                 class="x-button"
@@ -161,6 +159,11 @@ export default {
     width: 640px;
     height: 360px;
 }
+#ytcloser{
+    position: absolute;
+    margin-left: 620px;
+    margin-top: -385px;
+}
 .c-div{
     cursor: pointer;
     margin-top: 40px;
@@ -237,6 +240,11 @@ a {
     text-overflow: ellipsis;
 }
 @media (max-width: 600px){
+    #ytcloser{
+        position: absolute;
+        margin-left: 270px;
+        margin-top: -195px;
+    }
     #ytplayer{
         width: 290px;
         height: 170px;
