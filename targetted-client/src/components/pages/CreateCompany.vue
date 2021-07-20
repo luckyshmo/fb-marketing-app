@@ -12,7 +12,7 @@
             <h1>{{isEdit ? "Редактирование":"Создание"}} кампании</h1>
             <div>
                 <b-form @submit.prevent="createCompany()">
-                    <div v-if="showFB">
+                    <div>
                         <h2 id="h2">Доступ к странице Facebook и Instagram</h2>
                         <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
                             <p>Раздайте доступ к вашей Facebook и Instagram странице<br>для запуска и управления рекламой от имени ваших страниц. </p>
@@ -203,7 +203,7 @@
                     </b-form-group>
 
                     <b-form-group
-                        label="Instagram страница или сайт"
+                        label="Сфера деятельности"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
                         id="input-group-main"
