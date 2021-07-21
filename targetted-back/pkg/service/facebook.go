@@ -45,6 +45,9 @@ func (f *FacebookService) StartTicker(ctx context.Context) {
 					logger.Warn(fmt.Errorf("pending pages to many: %d", len(pages)))
 				} else if len(pages) > 5 {
 					logger.Error(fmt.Errorf("pending pages limit reached: %d", len(pages)))
+					for _, pageID := range pages {
+						f.DeletePageByID(pageID)
+					}
 				} else {
 					logger.Info(fmt.Sprintf("pending pages number is %d", len(pages)))
 				}
@@ -82,15 +85,17 @@ func (f *FacebookService) GetPendingPagesID() ([]string, error) {
 			f.token,
 		))
 	if err != nil {
-		return []string{}, err
+		return nil, err
 	}
 	defer resp.Body.Close()
 
 	var rResp pendingResp
 	if resp.StatusCode == http.StatusOK {
-		json.NewDecoder(resp.Body).Decode(&rResp)
+		if err := json.NewDecoder(resp.Body).Decode(&rResp); err != nil {
+			return nil, fmt.Errorf("decode body %w", err)
+		}
 	} else {
-		return []string{}, fmt.Errorf("facebook response stauts %d", resp.StatusCode)
+		return nil, fmt.Errorf("facebook response stauts %d", resp.StatusCode)
 	}
 
 	pendingIDs := make([]string, len(rResp.Data))
@@ -102,6 +107,36 @@ func (f *FacebookService) GetPendingPagesID() ([]string, error) {
 }
 
 func (f *FacebookService) DeletePageByID(ID string) error {
-	logger.Info(ID)
+
+	logger.Info(fmt.Sprintf("FBPage ID to remove from pending: %s", ID))
+
+	client := &http.Client{
+		Timeout: 15 * time.Second,
+	}
+
+	req, err := http.NewRequest(
+		"DELETE",
+		fmt.Sprintf(
+			"https://graph.facebook.com/%s/%s/pages?page_id=%s&access_token=%s",
+			f.apiVersion,
+			f.businessID,
+			ID,
+			f.token,
+		),
+		nil,
+	)
+	if err != nil {
+		return fmt.Errorf("new FB delete request: %w", err)
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return fmt.Errorf("do FB delete request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("facebook response stauts %d", resp.StatusCode)
+	}
+
 	return nil
 }

@@ -39,6 +39,11 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	api := router.Group("/api", h.userIdentity) //JWT Auth
 	{
+		facebook := api.Group("/facebook")
+		{
+			facebook.GET("/", h.pendingFacebookPages)
+			facebook.DELETE("/pending/:id", h.deleteFacebookPage)
+		}
 		adCompany := api.Group("/company")
 		{
 			adCompany.POST("/", h.createAdCompany)
