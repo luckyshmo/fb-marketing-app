@@ -89,7 +89,7 @@
                                 id="primary-under"
                                 @click="showPopupInfo"
                             >
-                                Нет бизнесс-аккаунта
+                                Нет бизнес-аккаунта
                             </b-button>
                         </div>
                         <div v-if="store.getters.GET_FB_PAGES.length > 0 && !isRequestSent && !pageSubmitted">
