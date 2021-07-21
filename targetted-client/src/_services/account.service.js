@@ -19,7 +19,7 @@ async function login() {
 
         console.log("AccountSet")
     }, {
-        scope: 'email, ads_management, instagram_basic, business_management, pages_show_list',
+        scope: 'ads_management, public_profile, business_management, pages_show_list',
         return_scopes: true
     });
 }
