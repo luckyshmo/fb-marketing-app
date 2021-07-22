@@ -9,6 +9,8 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Vuelidate from 'vuelidate'
+import VueGtag from "vue-gtag";
+
 Vue.use(Vuelidate)
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
@@ -37,6 +39,12 @@ if (token) {
   Axios.defaults.headers.post['Authorization'] = token
   Vue.prototype.$http.defaults.headers.common['Authorization'] = token
 }
+
+Vue.use(VueGtag, {
+  config: { id: "G-BNXZ7KHKQH" },
+  appName: 'Targetted',
+  pageTrackerScreenviewEnabled: true
+}, router);
 
 Vue.config.productionTip = false
 
