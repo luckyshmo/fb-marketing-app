@@ -45,9 +45,6 @@ func (f *FacebookService) CheckPageLimitTicker(ctx context.Context) {
 			select {
 			case <-ticker.C:
 				pages, err := f.GetPendingPagesID()
-				for _, pageID := range pages {
-					f.DeletePageByID(pageID)
-				}
 				if err != nil {
 					logger.Error(err)
 					continue
