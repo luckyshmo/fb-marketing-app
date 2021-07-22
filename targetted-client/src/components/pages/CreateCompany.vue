@@ -122,7 +122,7 @@
                                 class="main-button"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                href="https://facebook.com"
+                                :href=getFBRedirect()
                             >
                             Перейти в facebook
                             </b-button>
@@ -586,6 +586,9 @@ export default {
             this.pageSubmitted = false
             this.label_cols = this.getWidth().label
             this.content_cols = this.getWidth().content
+        },
+        getFBRedirect(){
+            return `https://facebook.com/${this.company.FbPageId}`
         },
         resetNameErr(){
             this.isCompanyExist = false;
