@@ -33,10 +33,12 @@ type AdCompany interface {
 }
 
 type Facebook interface {
-	GetOwnedPages() []models.FBPage
+	PageClaim(ID string) (string, error)
+	GetOwnedPages() ([]models.FacebookPage, error)
 	GetPendingPagesID() ([]string, error)
 	DeletePageByID(ID string) error
-	StartTicker(ctx context.Context)
+	CheckPageLimitTicker(ctx context.Context)
+	IsPageOwnedByID(ID string) (bool, error)
 }
 
 type Service struct {

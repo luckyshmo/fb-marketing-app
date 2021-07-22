@@ -16,13 +16,49 @@ func (h *Handler) pendingFacebookPages(c *gin.Context) {
 	sendStatusResponse(c, http.StatusOK, pendingIDs)
 }
 
+func (h *Handler) claimPage(c *gin.Context) {
+	fbPageID := c.Param("id")
+
+	message, err := h.services.Facebook.PageClaim(fbPageID)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, message)
+		return
+	}
+
+	sendStatusResponse(c, http.StatusOK, message)
+
+}
+
+func (h *Handler) ownedFacebookPages(c *gin.Context) {
+	facebookPages, err := h.services.Facebook.GetOwnedPages()
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	sendStatusResponse(c, http.StatusOK, facebookPages)
+}
+
+func (h *Handler) isPageOwnedByID(c *gin.Context) {
+	fbPageID := c.Param("id")
+
+	isOwned, err := h.services.Facebook.IsPageOwnedByID(fbPageID)
+	if err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
+	if !isOwned {
+		sendErrorResponse(c, http.StatusNotFound, "page not found in owned list")
+	}
+	sendStatusResponse(c, http.StatusOK, true)
+}
+
 func (h *Handler) deleteFacebookPage(c *gin.Context) {
 
-	fbID := c.Param("id")
+	fbPageID := c.Param("id")
 
-	if err := h.services.Facebook.DeletePageByID(fbID); err != nil {
+	if err := h.services.Facebook.DeletePageByID(fbPageID); err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 	}
 
-	sendStatusResponse(c, http.StatusOK, fbID)
+	sendStatusResponse(c, http.StatusOK, fbPageID)
 }

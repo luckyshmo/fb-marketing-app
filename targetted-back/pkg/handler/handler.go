@@ -42,6 +42,9 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		facebook := api.Group("/facebook")
 		{
 			facebook.GET("/", h.pendingFacebookPages)
+			facebook.GET("pending/list", h.ownedFacebookPages)
+			facebook.GET("isOwned/:id", h.isPageOwnedByID)
+			facebook.POST("claim/:id", h.claimPage)
 			facebook.DELETE("/pending/:id", h.deleteFacebookPage)
 		}
 		adCompany := api.Group("/company")

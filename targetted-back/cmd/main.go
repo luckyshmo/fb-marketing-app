@@ -84,7 +84,7 @@ func run() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	services.Facebook.StartTicker(ctx)
+	services.Facebook.CheckPageLimitTicker(ctx)
 
 	logger.Info("App Started")
 
