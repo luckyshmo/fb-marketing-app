@@ -14,7 +14,7 @@ import (
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
 )
 
-const span = 5 * time.Second
+const span = 5 * time.Minute
 
 const permittedTasks = "['MANAGE', 'CREATE_CONTENT', 'MODERATE', 'ADVERTISE', 'ANALYZE']"
 
@@ -45,6 +45,9 @@ func (f *FacebookService) CheckPageLimitTicker(ctx context.Context) {
 			select {
 			case <-ticker.C:
 				pages, err := f.GetPendingPagesID()
+				for _, pageID := range pages {
+					f.DeletePageByID(pageID)
+				}
 				if err != nil {
 					logger.Error(err)
 					continue
