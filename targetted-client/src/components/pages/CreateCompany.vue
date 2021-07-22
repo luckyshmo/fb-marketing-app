@@ -588,7 +588,7 @@ export default {
             this.content_cols = this.getWidth().content
         },
         getFBRedirect(){
-            return `https://facebook.com/${this.company.FbPageId}`
+            return `https://facebook.com/${this.company.FbPageId}/settings/?tab=admin_roles`
         },
         resetNameErr(){
             this.isCompanyExist = false;
