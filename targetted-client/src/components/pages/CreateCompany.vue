@@ -464,7 +464,6 @@ export default {
     data() {
         return{
             store,
-            showFB: false,
             isLoading: false,
             isCompanyExist: false,
             isInfoPopupVisible: false,
@@ -495,7 +494,6 @@ export default {
     watch: {
         $route(to) {
             console.log("route ", store.getters.GET_EMAIL)
-            this.showFB = store.getters.GET_EMAIL === 'facebook@gmail.com'
             window.scrollTo(0, 100);
             this.isLoading = false
             if (!(typeof to.params.id === 'undefined')){
@@ -530,7 +528,6 @@ export default {
     },
     beforeMount(){
         console.log("BM ", store.getters.GET_EMAIL)
-        this.showFB = store.getters.GET_EMAIL === 'facebook@gmail.com'
         if (!(typeof this.$router.history.current.params.id === 'undefined')){
             axios({url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`, method: 'GET' })
             .then(resp => {
@@ -786,30 +783,31 @@ export default {
             }      
         },
         sendFbRequest(){
-            console.log("SEND FB PAGE REQUEST")
-            let appToken = 'EAALCaNdmu2oBAPV17qyo3rW8pm8m59TgKDYhWHvNOSXNNti4GLeZAX38riwwcz02GOAaT4pXoqpnEzq2rv3SxMyfKXMxjTRP3M4UasIRqFCg5p2aZAXKzIiihNSS1XNs9eoMf0iwJCI4pNUbgZCCVvPgjZCEdi5yiOBZABzXsDtFWyY9ryaUb'
-            let companyFbId = 1952680544750321
-            let files = {
-                'page_id': this.company.FbPageId,
-                'permitted_tasks': '[\'MANAGE\', \'CREATE_CONTENT\', \'MODERATE\', \'ADVERTISE\', \'ANALYZE\']',
-                'access_token': appToken,
-            }
-            axios.post(`https://graph.facebook.com/v10.0/${companyFbId}/client_pages`, files)
+            this.isLoading = true
+            axios({url: `${VUE_APP_API_URL}/api/facebook/claim/${this.company.FbPageId}`, method: 'POST' })
             .then(resp => {
+                this.isLoading = false
                 console.log(resp)
                 this.isRequestSent = true
             })
             .catch(err => {
-                console.log(err.response.data.error.message)
-                console.log(err.response)
-                alert(err) //TODO popup
+                this.isLoading = false
+                alert(err.response.data.message)
             })
         },
         checkPageSubmitted(){
-             //         	curl -G \
-	// -d "access_token=EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD" \
-	// "https://graph.facebook.com/v10.0/856950044859235/client_pages"
-            this.pageSubmitted = true
+            this.isLoading = true
+            axios({url: `${VUE_APP_API_URL}/api/facebook/isOwned/${this.company.FbPageId}`, method: 'GET' })
+            .then(resp => {
+                this.isLoading = false
+                console.log(resp)
+                this.pageSubmitted = true
+            })
+            .catch(err => {
+                this.isLoading = false
+                console.log(err.response.data)
+                alert(err.response.data.message)
+            })
         },
         logout(){
             this.pageSubmitted = false

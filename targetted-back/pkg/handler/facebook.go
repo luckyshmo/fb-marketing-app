@@ -45,9 +45,11 @@ func (h *Handler) isPageOwnedByID(c *gin.Context) {
 	isOwned, err := h.services.Facebook.IsPageOwnedByID(fbPageID)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
 	}
 	if !isOwned {
-		sendErrorResponse(c, http.StatusNotFound, "page not found in owned list")
+		sendErrorResponse(c, http.StatusNotFound, "страница не была передана на управление")
+		return
 	}
 	sendStatusResponse(c, http.StatusOK, true)
 }
@@ -58,6 +60,7 @@ func (h *Handler) deleteFacebookPage(c *gin.Context) {
 
 	if err := h.services.Facebook.DeletePageByID(fbPageID); err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
 	}
 
 	sendStatusResponse(c, http.StatusOK, fbPageID)

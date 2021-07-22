@@ -191,22 +191,6 @@ let store = new Vuex.Store({
                 resolve()
             })
         },
-        // setAdCompanyList({commit}){
-            // let appToken = 'EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD'
-            // let companyId = 856950044859235
-            // let files = {
-            //     'page_id': this.form.FbPageId,
-            //     'permitted_tasks': '[\'MANAGE\', \'CREATE_CONTENT\', \'MODERATE\', \'ADVERTISE\', \'ANALYZE\']',
-            //     'access_token': appToken,
-            // }
-            // axios.get(`https://graph.facebook.com/v10.0/${companyId}/client_pages`, files)
-            // .then(resp) {
-
-            // }
-    //         	curl -G \
-	// -d "access_token=EAAEDuTXOcAgBAEbAJLLg00LDOJH4LyOekYZCWtJhjul3xbrUpQZCWt0LEDTlpQrsxhwWUZBSjZAA5OyRMgZB0g83zIIKXNQRys82ZAajuUGAmZAmQGy5kH242uZAZABoMjgebiuGQkcjKJ5Kd8xyWXThFQytJP1ATmHNNQvPZA0I1RROQAbmWUJS8HgyFMtWkETMecbEPUNLC4zgZDZD" \
-	// "https://graph.facebook.com/v10.0/856950044859235/client_pages"
-        // },
         setAccount({commit}, token){
             if (token === '') {
                 localStorage.setItem('account', {})
