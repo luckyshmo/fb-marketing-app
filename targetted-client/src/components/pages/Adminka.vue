@@ -36,6 +36,7 @@
                 >
                 {{company}}
                     <h4>{{company.CompanyName}}</h4>
+                    <p>facebook page ID: <b>{{company.FbPageId}}</b></p>
                     <p>ID: <b>{{company.Id}}</b></p>
                     <p>Название: <b>{{company.CompanyName}}</b></p>
                     <p>Цель: <b>{{company.CompnayPurpose}}</b></p>
