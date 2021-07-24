@@ -49,10 +49,12 @@ func (f *FacebookService) CheckPageLimitTicker(ctx context.Context) {
 					logger.Error(err)
 					continue
 				}
-				if len(pages) > 5 {
+				if len(pages) > 4 { // begin to delete then we reached 5 pages
 					logger.Error(fmt.Errorf("pending pages limit reached: %d", len(pages)))
-					for _, pageID := range pages {
-						f.DeletePageByID(pageID)
+					for i, pageID := range pages {
+						if i < 4 { // delete only oldest 3 pages
+							f.DeletePageByID(pageID)
+						}
 					}
 				} else if len(pages) > 3 {
 					logger.Warn(fmt.Errorf("pending pages to many: %d", len(pages)))
