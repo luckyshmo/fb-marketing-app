@@ -14,7 +14,7 @@ import (
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
 )
 
-const span = 5 * time.Minute
+const span = 5 * time.Second
 
 const permittedTasks = "['MANAGE', 'CREATE_CONTENT', 'MODERATE', 'ADVERTISE', 'ANALYZE']"
 
@@ -52,7 +52,7 @@ func (f *FacebookService) CheckPageLimitTicker(ctx context.Context) {
 				if len(pages) > 4 { // begin to delete then we reached 5 pages
 					logger.Error(fmt.Errorf("pending pages limit reached: %d", len(pages)))
 					for i, pageID := range pages {
-						if i < 4 { // delete only oldest 3 pages
+						if i > 1 { // delete only oldest 3 pages (FB add newest pages in the begining)
 							f.DeletePageByID(pageID)
 						}
 					}
