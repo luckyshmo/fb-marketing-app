@@ -41,11 +41,13 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	{
 		facebook := api.Group("/facebook")
 		{
-			facebook.GET("/", h.pendingFacebookPages)
-			facebook.GET("pending/list", h.ownedFacebookPages)
-			facebook.GET("isOwned/:id", h.isPageOwnedByID)
-			facebook.POST("claim/:id", h.claimPage)
-			facebook.DELETE("/pending/:id", h.deleteFacebookPage)
+			facebook.GET("/pending", h.pendingFacebookPages)
+			facebook.DELETE("/pending/:id", h.deletePendingFacebookPage)
+
+			facebook.GET("/owned", h.ownedFacebookPages)
+			facebook.GET("/owned/:id", h.isPageOwnedByID)
+
+			facebook.POST("/claim/:id", h.claimPage)
 		}
 		adCompany := api.Group("/company")
 		{
@@ -92,7 +94,7 @@ func CORS() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", config.Get().CorsHeader)
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "*")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
 
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)

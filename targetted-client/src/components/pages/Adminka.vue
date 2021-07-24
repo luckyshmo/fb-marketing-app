@@ -2,19 +2,52 @@
     <div 
     id="content">
     <div v-if="showInfo">
+
+        <div>
+            <b-form-input
+            class="form-input"
+            disabled-field
+            style="margin-bottom: 20px"
+            v-model="fbIDforClaim"
+            placeholder="facebook id"
+            ></b-form-input>
+            <button
+            @click="makeClaimRequest()" 
+            class="main-button"
+            style="">
+                Выслать запрос
+            </button>
+
+            <button
+            @click="getPendingPages()" 
+            class="main-button"
+            style="">
+                Pending pages
+            </button>
+            <div
+            v-for="page in pendingPages"
+            :key=page>
+                <a target="_blank" :href="getFBRedirect(page)" > {{getFBRedirect(page)}} </a>
+                <b-icon
+                icon="trash-fill"
+                aria-hidden="true"
+                @click="removePageFromPendingList(page)"></b-icon>
+            </div>
+        </div>
+
         <div
         v-for="user in users"
         :key=user.email
         >
             <div class="user-content">
-                {{user}}
+                <!-- {{user}} -->
                 <h3>Данные пользователя</h3>
                 <p>ID: <b>{{user.id}}</b></p>
                 <p>Имя: <b>{{user.name}}</b></p>
                 <p>email: <b>{{user.email}}</b></p>
                 <p>телефон: <b>{{user.phoneNumber}}</b></p>
                 <p>баланс: <b>{{user.amount}}</b></p>
-                <p>дата регистрации<b>{{user.TimeCreated}}</b></p>
+                <p>дата регистрации: <b>{{user.TimeCreated}}</b></p>
                 <b-form-input
                 class="form-input"
                 disabled-field
@@ -34,9 +67,20 @@
                 :key="company.Id"
                 style="padding: 30px; background: rgb(255, 255, 255); margin: 10px; border-radius: 30px"
                 >
-                {{company}}
+                <!-- {{company}} -->
                     <h4>{{company.CompanyName}}</h4>
-                    <p>facebook page ID: <b>{{company.FbPageId}}</b></p>
+                    <p>facebook page ID: 
+                        <b>{{company.FbPageId}}</b>
+                    </p>
+                    <div v-if="company.FbPageId.length > 0">
+                        <a target="_blank" :href="getFBRedirect(company.FbPageId)" > link </a>
+                        <button
+                        @click="checkIfPageIsOwned(company.FbPageId)" 
+                        class="main-button"
+                        style="">
+                            Проверить
+                        </button>
+                    </div>
                     <p>ID: <b>{{company.Id}}</b></p>
                     <p>Название: <b>{{company.CompanyName}}</b></p>
                     <p>Цель: <b>{{company.CompnayPurpose}}</b></p>
@@ -110,6 +154,8 @@ export default {
             users: [],
             companies: [],
             imageNames: [],
+            fbIDforClaim: "",
+            pendingPages: [],
         }
     },
     $route() {
@@ -127,31 +173,34 @@ export default {
         this.getUsers()
     },
     methods: {
+        getFBRedirect(id){
+            return `https://facebook.com/${id}`
+        },
         changeBalance(id, amount){
             axios({url: `${VUE_APP_API_URL}/api/user/${id}/update-balance/${amount}`, method: 'POST' })
             .then(resp => {
-                alert(resp.statusText)
+                this.$alert(resp.statusText)
             })
             .catch(err => {
-                alert(err.response.data.message)
+                this.$alert(err.response.data.message)
             })
         },
         startCompany(id){
             axios({url: `${VUE_APP_API_URL}/api/company/start/${id}`, method: 'POST' })
             .then(resp => {
-                alert(resp.statusText)
+                this.$alert(resp.statusText)
             })
             .catch(err => {
-                alert(err.response.data.message)
+                this.$alert(err.response.data.message)
             })
         },
         stopCompany(id){
             axios({url: `${VUE_APP_API_URL}/api/company/stop/${id}`, method: 'POST' })
             .then(resp => {
-                alert(resp.statusText)
+                this.$alert(resp.statusText)
             })
             .catch(err => {
-                alert(err.response.data.message)
+                this.$alert(err.response.data.message)
             })
         },
         isStoriesImage(name){
@@ -162,6 +211,47 @@ export default {
         },
         filteredCompanies(id){
             return this.companies.filter(c => c.UserId === id);
+        },
+        getPendingPages(){
+            axios({url: `${VUE_APP_API_URL}/api/facebook/pending`, method: 'GET' })
+            .then(resp => {
+                console.log(resp)
+                this.pendingPages = resp.data
+            })
+            .catch(err => {
+                console.log(err.response)
+            })
+        },
+        checkIfPageIsOwned(id){
+            axios({url: `${VUE_APP_API_URL}/api/facebook/owned/${id}`, method: 'GET' })
+            .then(resp => {
+                console.log(resp)
+                this.$alert("Кампания доавблена в БМ")
+            })
+            .catch(err => {
+                console.log(err.response)
+                this.$alert("Кампания отсутствует в БМ")
+            })
+        },
+        makeClaimRequest(){
+            axios({url: `${VUE_APP_API_URL}/api/facebook/claim/${this.fbIDforClaim}`, method: 'POST' })
+            .then(resp => {
+                console.log(resp)
+            })
+            .catch(err => {
+                console.log(err.response)
+            })
+        },
+        removePageFromPendingList(id){
+            axios({url: `${VUE_APP_API_URL}/api/facebook/pending/${id}`, method: 'DELETE' })
+            .then(resp => {
+                this.pendingPages = this.pendingPages.filter(ID => ID != id);
+                console.log(resp)
+            })
+            .catch(err => {
+                this.$alert(err.response)
+                console.log(err.response)
+            })
         },
         getUsers(){
             axios({url: `${VUE_APP_API_URL}/api/user/`, method: 'GET' })
@@ -211,5 +301,8 @@ export default {
     border-radius: 30px;
     padding: 20px;
     margin-bottom: 30px;
+}
+.swal2-styled.swal2-confirm {
+    background-color: #6C1BD2 !important;
 }
 </style>

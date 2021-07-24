@@ -795,12 +795,12 @@ export default {
             })
             .catch(err => {
                 this.isLoading = false
-                alert(err.response.data.message)
+                this.$alert(err.response.data.message)
             })
         },
         checkPageSubmitted(){
             this.isLoading = true
-            axios({url: `${VUE_APP_API_URL}/api/facebook/isOwned/${this.company.FbPageId}`, method: 'GET' })
+            axios({url: `${VUE_APP_API_URL}/api/facebook/owned/${this.company.FbPageId}`, method: 'GET' })
             .then(resp => {
                 this.isLoading = false
                 console.log(resp)
@@ -809,7 +809,7 @@ export default {
             .catch(err => {
                 this.isLoading = false
                 console.log(err.response.data)
-                alert(err.response.data.message)
+                this.$alert(err.response.data.message)
             })
         },
         logout(){

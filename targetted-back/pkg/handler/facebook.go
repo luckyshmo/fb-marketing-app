@@ -54,7 +54,7 @@ func (h *Handler) isPageOwnedByID(c *gin.Context) {
 	sendStatusResponse(c, http.StatusOK, true)
 }
 
-func (h *Handler) deleteFacebookPage(c *gin.Context) {
+func (h *Handler) deletePendingFacebookPage(c *gin.Context) {
 
 	fbPageID := c.Param("id")
 
