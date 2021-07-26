@@ -2,7 +2,6 @@
     <div 
     id="content">
     <div v-if="showInfo">
-
         <div>
             <b-form-input
             class="form-input"
@@ -35,8 +34,26 @@
             </div>
         </div>
 
-        <div
-        v-for="user in users"
+        <div class="overflow-auto" style="margin-top: 50px;">
+
+            <b-pagination
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="my-table"
+            ></b-pagination>
+
+            <b-list
+            id="my-table"
+            :items="users"
+            :per-page="perPage"
+            :current-page="currentPage"
+            small
+            >
+            </b-list>
+
+            <div
+        v-for="user in getPUsers(currentPage, perPage)"
         :key=user.email
         >
             <div class="user-content">
@@ -139,6 +156,8 @@
                 </div>
             </div>
         </div>
+        </div>
+        
     </div>       
     </div>
 </template>
@@ -149,6 +168,8 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 export default {
     data(){
         return {
+            currentPage: 1,
+            perPage: 5,
             showInfo: false,
             store,
             users: [],
@@ -172,7 +193,15 @@ export default {
         this.showInfo = store.getters.GET_EMAIL === 'admin@admin.com'
         this.getUsers()
     },
+    computed: {
+      rows() {
+        return this.users.length
+      }
+    },
     methods: {
+        getPUsers(pageNumber, perPage){
+            return this.users.slice(pageNumber*perPage-perPage, pageNumber*perPage)
+        },
         getFBRedirect(id){
             return `https://facebook.com/${id}`
         },
