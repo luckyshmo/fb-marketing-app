@@ -10,16 +10,16 @@ import adminka from '../src/components/pages/Adminka.vue'
 
 Vue.use(Router)
 
-let router = new Router({
+const router = new Router({
   routes: [
     {
-      path :'*',
-      redirect: "/main" //TODO NOT FOUND?
+      path: '*',
+      redirect: '/main' // TODO NOT FOUND?
     },
     {
       path: '/',
       name: 'default',
-      redirect: "/main"
+      redirect: '/main'
     },
     {
       path: '/login',
@@ -64,10 +64,10 @@ let router = new Router({
       }
     },
     {
-      path: "/company-balance/:id",
-      name: "company-balance",
+      path: '/company-balance/:id',
+      name: 'company-balance',
       component: CompanyBalance
-    },
+    }
   ]
 })
 
@@ -84,5 +84,5 @@ router.beforeEach((to, from, next) => {
     next() // does not require auth, make sure to always call next()!
   }
 })
-  
-export default router;
+
+export default router
