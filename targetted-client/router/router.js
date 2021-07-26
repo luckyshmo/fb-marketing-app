@@ -8,7 +8,7 @@ import store from '../store/store'
 import CompanyBalance from '../src/components/pages/CompanyBalance.vue'
 import adminka from '../src/components/pages/Adminka.vue'
 
-Vue.use(Router);
+Vue.use(Router)
 
 let router = new Router({
   routes: [
