@@ -1,156 +1,199 @@
 <template>
-    <div id="content">
-        <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
-            <h1 id="h1">Главная</h1>
-            <div>
-                <h2 id="h2">Общий баланс</h2>
+  <div id="content">
+    <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
+      <h1 id="h1">
+        Главная
+      </h1>
+      <div>
+        <h2 id="h2">
+          Общий баланс
+        </h2>
 
-                <b-form-group
-                    label="Всего на счету"
-                    :label-cols="3"
-                    :content-cols="7"
-                    id="input-group-main"
-                    label-for="input-horizontal"
-                >
-                    <p id="balance">{{user.amount}} ₽</p>
-                </b-form-group>
+        <b-form-group
+          id="input-group-main"
+          label="Всего на счету"
+          :label-cols="3"
+          :content-cols="7"
+          label-for="input-horizontal"
+        >
+          <p id="balance">
+            {{ user.amount }} ₽
+          </p>
+        </b-form-group>
 
-                <b-button 
-                    variant="primary"
-                    class="main-button-grey"
-                    style="margint-top: 20px"
-                    @click="push"
-                >
-                    Пополнить баланс
-                </b-button>
-            </div>
-            <h2 id="h2">Ваши рекламные кампании</h2>
-            <div>
-                <div>
-                    <div
-                    v-for="company in store.getters.GET_COMPANY_LIST" 
-                    :key="company.Id"
-                    >
-                        <router-link :to="{path: '/company-balance/'+ company.Id, query: { isEdit: true }}">
-                            <div class="c-div">
-                                <div class='l'>
-                                    <p class="c-name">
-                                        {{company.CompanyName}}
-                                    </p>
-                                </div>
-                                <div class='r'>
-                                    <div class="c-status">
-                                        <div class="elipse" id="white" v-if="!isFb(company)"></div>
-                                        <div class="elipse" id="yellow" v-if="isFb(company) && !isMoney()"></div>
-                                        <div class="elipse" id="green" v-if="isFb(company) && isMoney()"></div>
-                                        <p class="c-status-text">{{getStatus(company)}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </router-link>
-                    </div>                
+        <b-button
+          variant="primary"
+          class="main-button-grey"
+          style="margint-top: 20px"
+          @click="push"
+        >
+          Пополнить баланс
+        </b-button>
+      </div>
+      <h2 id="h2">
+        Ваши рекламные кампании
+      </h2>
+      <div>
+        <div>
+          <div
+            v-for="company in store.getters.GET_COMPANY_LIST"
+            :key="company.Id"
+          >
+            <router-link :to="{path: '/company-balance/'+ company.Id, query: { isEdit: true }}">
+              <div class="c-div">
+                <div class="l">
+                  <p class="c-name">
+                    {{ company.CompanyName }}
+                  </p>
                 </div>
-            </div>
-        </div>
-
-        <div v-if="!(store.getters.GET_COMPANY_LIST.length > 0)">
-            <h1 id="h1">Добро<br>пожаловать!</h1>
-            <p id="p1">Для привлечения новых клиентов осталось<br>совсем немного. Создайте свою рекламную кампанию<br>или посмотрите видео-инструкцию, если возникли вопросы :)</p>
-        </div>
-
-        <div style="margin-top: 16px">
-            <router-link v-if="store.getters.GET_COMPANY_LIST.length < 3" :to="{path: '/company'}">
-                <b-button  variant="primary" class="main-button" style="margin-right: 12px; margin-top: 12px">Создать кампанию</b-button>
+                <div class="r">
+                  <div class="c-status">
+                    <div
+                      v-if="!isFb(company)"
+                      id="white"
+                      class="elipse"
+                    />
+                    <div
+                      v-if="isFb(company) && !isMoney()"
+                      id="yellow"
+                      class="elipse"
+                    />
+                    <div
+                      v-if="isFb(company) && isMoney()"
+                      id="green"
+                      class="elipse"
+                    />
+                    <p class="c-status-text">
+                      {{ getStatus(company) }}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </router-link>
-            <b-button 
-            variant="primary" 
-            v-bind:class="{'main-button': !(store.getters.GET_COMPANY_LIST.length > 0),
-            'main-button-grey': store.getters.GET_COMPANY_LIST.length > 0  }"
-            style="margin-top: 12px"
-            @click="showVideo">Посмотреть {{!(store.getters.GET_COMPANY_LIST.length) > 0 ? "видео":"инструкцию"}}</b-button>
+          </div>
         </div>
-        <div v-if="isVideo">
-            <iframe id="ytplayer" type="text/html"
-            src="https://www.youtube.com/embed/EgpUx9_4ZIQ?autoplay=1&origin=https://youtu.be/EgpUx9_4ZIQ"
-            frameborder="0"/>
-            <div
-            id="ytcloser">
-                <b-icon
-                @click="closeVideo"
-                class="x-button"
-                icon="x"></b-icon>
-            </div>
-        </div>
+      </div>
     </div>
+
+    <div v-if="!(store.getters.GET_COMPANY_LIST.length > 0)">
+      <h1 id="h1">
+        Добро<br>пожаловать!
+      </h1>
+      <p id="p1">
+        Для привлечения новых клиентов осталось<br>совсем немного. Создайте свою рекламную кампанию<br>или посмотрите видео-инструкцию, если возникли вопросы :)
+      </p>
+    </div>
+
+    <div style="margin-top: 16px">
+      <router-link
+        v-if="store.getters.GET_COMPANY_LIST.length < 3"
+        :to="{path: '/company'}"
+      >
+        <b-button
+          variant="primary"
+          class="main-button"
+          style="margin-right: 12px; margin-top: 12px"
+        >
+          Создать кампанию
+        </b-button>
+      </router-link>
+      <b-button
+        variant="primary"
+        :class="{'main-button': !(store.getters.GET_COMPANY_LIST.length > 0),
+                 'main-button-grey': store.getters.GET_COMPANY_LIST.length > 0 }"
+        style="margin-top: 12px"
+        @click="showVideo"
+      >
+        Посмотреть {{ !(store.getters.GET_COMPANY_LIST.length) > 0 ? "видео":"инструкцию" }}
+      </b-button>
+    </div>
+    <div v-if="isVideo">
+      <iframe
+        id="ytplayer"
+        type="text/html"
+        src="https://www.youtube.com/embed/EgpUx9_4ZIQ?autoplay=1&origin=https://youtu.be/EgpUx9_4ZIQ"
+        frameborder="0"
+      />
+      <div
+        id="ytcloser"
+      >
+        <b-icon
+          class="x-button"
+          icon="x"
+          @click="closeVideo"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import store from '../../store/store'
 import axios from 'axios'
 import router from '../../router/router'
-const VUE_APP_API_URL = process.env.VUE_APP_API_URL //TODO GLOABL APP CONST
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL // TODO GLOABL APP CONST
 export default {
-    name: "main-page",
-    data() {
-        return{
-            user: {},
-            isVideo: false,
-            store,
-        }
-    },
-    beforeMount(){
-        axios({url: `${VUE_APP_API_URL}/api/user/0`, method: 'GET' })
-        .then(resp => {
-            this.user = resp.data
-        })
-    },
-    watch: {
-        $route(to) {
-            this.isVideo = false;
-            store.dispatch("getCompanyList")
-            console.log("TO", to)
-            if (to.name === "mainPage"){
-                axios({url: `${VUE_APP_API_URL}/api/user/0`, method: 'GET' })
-                .then(resp => {
-                    this.user = resp.data
-                })
-            }
-        }
-    },
-    methods: {
-        showVideo(){
-            this.isVideo = true;
-        },
-        closeVideo(){
-            this.isVideo = false;
-        },
-        push(){
-            router.push({path: '/company-balance/'+ store.getters.GET_COMPANY_LIST[0].Id, query: { isEdit: true }})
-        },
-        isMoney(){
-            return this.user.Amount > 0
-        },
-        isFb(company){
-            return company.FbPageId.length > 0
-        },
-        getStatus(company){
-            // if (company.FbPageId.length === 0) {
-            //     return "facebook не подключен"
-            // }
-            if (this.user.Amount === 0){
-                return "закончился рекламный бюджет"
-            }
-            if (!company.IsStarted){
-                return "настраивается"
-            }
-            return "работает"
-        },
-        getAdCompanyList(){
-            store.dispatch("getCompanyList")
-        },
-    },
-    mounted(){
-        this.getAdCompanyList()
+  name: 'MainPage',
+  data () {
+    return {
+      user: {},
+      isVideo: false,
+      store
     }
+  },
+  watch: {
+    $route (to) {
+      this.isVideo = false
+      store.dispatch('getCompanyList')
+      console.log('TO', to)
+      if (to.name === 'mainPage') {
+        axios({ url: `${VUE_APP_API_URL}/api/user/0`, method: 'GET' })
+          .then(resp => {
+            this.user = resp.data
+          })
+      }
+    }
+  },
+  beforeMount () {
+    axios({ url: `${VUE_APP_API_URL}/api/user/0`, method: 'GET' })
+      .then(resp => {
+        this.user = resp.data
+      })
+  },
+  mounted () {
+    this.getAdCompanyList()
+  },
+  methods: {
+    showVideo () {
+      this.isVideo = true
+    },
+    closeVideo () {
+      this.isVideo = false
+    },
+    push () {
+      router.push({ path: '/company-balance/' + store.getters.GET_COMPANY_LIST[0].Id, query: { isEdit: true } })
+    },
+    isMoney () {
+      return this.user.Amount > 0
+    },
+    isFb (company) {
+      return company.FbPageId.length > 0
+    },
+    getStatus (company) {
+      // if (company.FbPageId.length === 0) {
+      //     return "facebook не подключен"
+      // }
+      if (this.user.Amount === 0) {
+        return 'закончился рекламный бюджет'
+      }
+      if (!company.IsStarted) {
+        return 'настраивается'
+      }
+      return 'работает'
+    },
+    getAdCompanyList () {
+      store.dispatch('getCompanyList')
+    }
+  }
 }
 </script>
 <style>
@@ -193,7 +236,7 @@ a {
   height: 25%;
 }
 .c-status-text{
-    color: white;  
+    color: white;
     margin-left: 30px;
     margin-right: 20px;
     margin-top: 2px;
@@ -223,7 +266,7 @@ a {
     padding-top: 13px;
     padding-left: 10px;
     height: 55px;
-    padding-bottom: 1px; 
+    padding-bottom: 1px;
     background: #000000;
     border-radius: 16px;
 }
@@ -254,7 +297,7 @@ a {
     }
     .c-status{
        height: auto;
-       padding-bottom: 4px; 
+       padding-bottom: 4px;
     }
     .c-status-text{
         margin-left: 15px;
@@ -280,7 +323,7 @@ a {
         margin-top: auto;
         height: auto;
         margin: 20px;
-        
+
     }
 }
 </style>

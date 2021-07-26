@@ -1,59 +1,64 @@
 <template>
-  <div class="popup_wrapper" ref="popup_wrapper">
-    <div class='popup'>
-      <div 
-      style="position: absolute;
+  <div
+    ref="popup_wrapper"
+    class="popup_wrapper"
+  >
+    <div class="popup">
+      <div
+        style="position: absolute;
       margin-left: 570px;
-      margin-top: -5px;">
-          <b-icon
-          @click="closePopup"
+      margin-top: -5px;"
+      >
+        <b-icon
           class="x-button"
-          icon="x"></b-icon>
+          icon="x"
+          @click="closePopup"
+        />
       </div>
       <div class="popup-content">
-        <slot></slot>
+        <slot />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: "popup",
-    props: {
-      popupTitle: {
-        type: String,
-        default: 'Popup name'
-      },
-      rightBtnTitle: {
-        type: String,
-        default: 'Ok'
+export default {
+  name: 'Popup',
+  props: {
+    popupTitle: {
+      type: String,
+      default: 'Popup name'
+    },
+    rightBtnTitle: {
+      type: String,
+      default: 'Ok'
+    }
+  },
+  data () {
+    return {}
+  },
+  mounted () {
+    const vm = this
+    vm.renderAction()
+    document.addEventListener('click', function (item) {
+      if (item.target === vm.$refs.popup_wrapper) {
+        vm.closePopup()
       }
+    })
+  },
+  methods: {
+    rightBtnAction () {
+      this.$emit('rightBtnAction')
     },
-    data() {
-      return {}
+    renderAction () {
+      this.$emit('renderAction')
     },
-    methods: {
-      rightBtnAction() {
-        this.$emit('rightBtnAction')
-      },
-      renderAction() {
-        this.$emit('renderAction')
-      },
-      closePopup() {
-        this.$emit('closePopup')
-      }
-    },
-    mounted() {
-      let vm = this;
-      vm.renderAction()
-      document.addEventListener('click', function (item) {
-        if (item.target === vm.$refs['popup_wrapper']) {
-          vm.closePopup()
-        }
-      })
-    },
+    closePopup () {
+      this.$emit('closePopup')
+    }
   }
+}
 </script>
 
 <style>

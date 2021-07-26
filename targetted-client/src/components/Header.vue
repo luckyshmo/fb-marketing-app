@@ -1,72 +1,107 @@
 <template>
-    <div id="container">
-        <div class="nav" id="left">
-          <popup
-              v-if="isInfoPopupVisible"
-              @closePopup="closeInfoPopup"
+  <div id="container">
+    <div
+      id="left"
+      class="nav"
+    >
+      <popup
+        v-if="isInfoPopupVisible"
+        @closePopup="closeInfoPopup"
+      >
+        <div class="p-wrapper">
+          <h1>Напишите нам</h1>
+          <p
+            id="p1"
+            style="margin-top: 20px"
           >
-            <div class="p-wrapper">
-              <h1>Напишите нам</h1>
-              <p id="p1" style="margin-top: 20px">Свяжитесь с нами, если у вас возникли вопросы или проблемы</p>
-              <div>
-                <a 
-                href="https://wa.me/79952335503"
-                id="social-link"
-                target="_blank"
-                rel="noopener noreferrer">
-                  Whatsapp
-                </a>
-                <a href="http://t.me/targetted" 
-                id="social-link"
-                target="_blank"
-                rel="noopener noreferrer">
-                  Telegram
-                </a>
-              </div>
-            </div>
-          </popup>
-        <div v-if="isLoggedIn" @click="showPopupInfo" id="write-us-text">Написать нам</div>
-        </div>
-        <a href="https://targetted.ru/" target="_blank">
-          <div class="logo" id="middle">
-            <img id="l-im" src="logo.svg">
+            Свяжитесь с нами, если у вас возникли вопросы или проблемы
+          </p>
+          <div>
+            <a
+              id="social-link"
+              href="https://wa.me/79952335503"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Whatsapp
+            </a>
+            <a
+              id="social-link"
+              href="http://t.me/targetted"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Telegram
+            </a>
           </div>
-        </a>
-        <div class="nav" id="right">
-            <div id="r-text" @click="logout" v-if="isLoggedIn">Выход</div>
         </div>
+      </popup>
+      <div
+        v-if="isLoggedIn"
+        id="write-us-text"
+        @click="showPopupInfo"
+      >
+        Написать нам
+      </div>
     </div>
+    <a
+      href="https://targetted.ru/"
+      target="_blank"
+    >
+      <div
+        id="middle"
+        class="logo"
+      >
+        <img
+          id="l-im"
+          src="logo.svg"
+        >
+      </div>
+    </a>
+    <div
+      id="right"
+      class="nav"
+    >
+      <div
+        v-if="isLoggedIn"
+        id="r-text"
+        @click="logout"
+      >
+        Выход
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import popup from './popup.vue'
 import store from '../../store/store'
-  export default {
-    components: {
-      popup
+export default {
+  components: {
+    popup
+  },
+  data () {
+    return {
+      isInfoPopupVisible: false
+    }
+  },
+  computed: {
+    isLoggedIn: function () { return store.getters.isLoggedIn }
+  },
+  methods: {
+    closeInfoPopup () {
+      this.isInfoPopupVisible = false
     },
-    data() {
-      return {
-        isInfoPopupVisible: false
-      }
+    showPopupInfo () {
+      this.isInfoPopupVisible = true
     },
-    computed : {
-      isLoggedIn : function(){ return store.getters.isLoggedIn}
-    },
-    methods: {
-      closeInfoPopup() {
-        this.isInfoPopupVisible = false;
-      },
-      showPopupInfo() {
-        this.isInfoPopupVisible = true;
-      },
-      logout: function () {
-        store.dispatch('logout')
+    logout: function () {
+      store.dispatch('logout')
         .then(() => {
           this.$router.push('/login')
         })
-      }
-    },
+    }
   }
+}
 </script>
 <style>
 #social-link{
@@ -97,7 +132,7 @@ import store from '../../store/store'
   #l-im{
     width: 183px;
     padding-bottom: 15px;
-  }  
+  }
   #r-text{
     position: absolute;
     right:20px;
@@ -130,5 +165,5 @@ import store from '../../store/store'
 #left {width: 25%; padding-top: 40px;}
 #middle {width: 50%;}
 #right {width: 25%;}
-    
+
 </style>

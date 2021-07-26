@@ -1,13 +1,13 @@
 <template>
-    <div id="app">
-      <Header/>
-      <div class="main">
-        <keep-alive>
-            <router-view></router-view>
-        </keep-alive>
-      </div>
-      <Footer/>
+  <div id="app">
+    <Header />
+    <div class="main">
+      <keep-alive>
+        <router-view />
+      </keep-alive>
     </div>
+    <Footer />
+  </div>
 </template>
 
 <script>
@@ -21,24 +21,24 @@ export default {
     Footer,
     Header
   },
+  created: function () {
+    this.$http.interceptors.response.use(undefined, function (err) {
+      return new Promise(function () {
+        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+          store.dispatch('logout')
+        }
+        throw err
+      })
+    })
+  },
   methods: {
     logout: function () {
       store.dispatch('logout')
-      .then(() => {
-        router.push('/login')
-      })
+        .then(() => {
+          router.push('/login')
+        })
     }
-  },
-  created: function () {
-      this.$http.interceptors.response.use(undefined, function (err) {
-        return new Promise(function () {
-          if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-            store.dispatch('logout')
-          }
-          throw err;
-        });
-      });
-    }
+  }
 }
 </script>
 
@@ -58,7 +58,7 @@ export default {
   overflow: hidden;
   background-color: black !important;
 }
-html { 
+html {
   overflow-y: auto;
   height: 100% !important;
   width: 100% !important;
@@ -68,7 +68,7 @@ html {
 /* Global styles */
 
 .main-button-grey{
-    background: #F3F3F3 !important; 
+    background: #F3F3F3 !important;
     color: black !important;
     outline: none !important;
     border-radius: 8px !important;
@@ -151,13 +151,13 @@ html {
 #content {
   padding: 80px;
   width: 1220px;
-  margin: 0% auto 0% auto !important; 
+  margin: 0% auto 0% auto !important;
   background-color: white !important;
   border-radius: 25px !important;
 }
 #content-wrapper {
   width: 1220px;
-  margin: 0% auto 0% auto !important; 
+  margin: 0% auto 0% auto !important;
   background-color: #6C1BD2 !important;
   border-radius: 25px !important;
   padding-bottom: 176px;
@@ -172,7 +172,7 @@ html {
 }
 #content-login {
   padding: 80px 40px 80px 40px;
-  margin: 0px 50px 0px 50px !important; 
+  margin: 0px 50px 0px 50px !important;
   background-color: white !important;
   border-radius: 25px !important;
   max-width:640px;

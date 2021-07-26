@@ -1,66 +1,77 @@
 <template>
-  <div class="popup-wrapper-big" ref="popup_wrapper">
-    <div class='popup-big'>
-      <div 
-      style="position: absolute;
+  <div
+    ref="popup_wrapper"
+    class="popup-wrapper-big"
+  >
+    <div class="popup-big">
+      <div
+        style="position: absolute;
       margin-left: 740px;
-      margin-top: -5px;">
-          <b-icon
-          @click="closePopup"
+      margin-top: -5px;"
+      >
+        <b-icon
           class="x-button"
-          icon="x"></b-icon>
+          icon="x"
+          @click="closePopup"
+        />
       </div>
       <div
-      style="position: absolute;
+        style="position: absolute;
       margin-left: 370px;
-      margin-top: 475px;">
-        <b-icon style="height: 30px; width: 30px;" icon="arrow-down-circle">huw</b-icon>
+      margin-top: 475px;"
+      >
+        <b-icon
+          style="height: 30px; width: 30px;"
+          icon="arrow-down-circle"
+        >
+          huw
+        </b-icon>
       </div>
       <div class="popup-content-big">
-        <slot></slot>
+        <slot />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: "popup",
-    props: {
-      popupTitle: {
-        type: String,
-        default: 'Popup name'
-      },
-      rightBtnTitle: {
-        type: String,
-        default: 'Ok'
+export default {
+  name: 'Popup',
+  props: {
+    popupTitle: {
+      type: String,
+      default: 'Popup name'
+    },
+    rightBtnTitle: {
+      type: String,
+      default: 'Ok'
+    }
+  },
+  data () {
+    return {}
+  },
+  mounted () {
+    const vm = this
+    vm.renderAction()
+    document.addEventListener('click', function (item) {
+      if (item.target === vm.$refs.popup_wrapper) {
+        vm.closePopup()
       }
+    })
+  },
+  methods: {
+    rightBtnAction () {
+      this.$emit('rightBtnAction')
     },
-    data() {
-      return {}
+    renderAction () {
+      this.$emit('renderAction')
     },
-    methods: {
-      rightBtnAction() {
-        this.$emit('rightBtnAction')
-      },
-      renderAction() {
-        this.$emit('renderAction')
-      },
-      closePopup() {
-        console.log("huy")
-        this.$emit('closePopup')
-      }
-    },
-    mounted() {
-      let vm = this;
-      vm.renderAction()
-      document.addEventListener('click', function (item) {
-        if (item.target === vm.$refs['popup_wrapper']) {
-          vm.closePopup()
-        }
-      })
-    },
+    closePopup () {
+      console.log('huy')
+      this.$emit('closePopup')
+    }
   }
+}
 </script>
 
 <style>
@@ -72,7 +83,7 @@
     content:'';
     margin-top: 50px;
     width:100%;
-    height:440px;    
+    height:440px;
     position:absolute;
     left:0;
     top:0;

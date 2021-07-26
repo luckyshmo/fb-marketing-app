@@ -1,22 +1,28 @@
 <template>
-  <div class="loading_wrapper" ref="popup_wrapper">
-    <b-spinner style="width: 3rem; height: 3rem;" type="grow"></b-spinner>
+  <div
+    ref="popup_wrapper"
+    class="loading_wrapper"
+  >
+    <b-spinner
+      style="width: 3rem; height: 3rem;"
+      type="grow"
+    />
   </div>
 </template>
 
 <script>
-  export default {
-    name: "lading",
-    props: {
-    },
-    data() {
-      return {}
-    },
-    methods: {
-    },
-    mounted() {
-    },
+export default {
+  name: 'Lading',
+  props: {
+  },
+  data () {
+    return {}
+  },
+  mounted () {
+  },
+  methods: {
   }
+}
 </script>
 
 <style>
