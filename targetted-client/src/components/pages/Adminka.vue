@@ -224,10 +224,10 @@ export default {
       if (this.userFilter.length > 1) {
         this.currentPage = 1
         return this.users.filter((user) => {
-          const isFiltered = user.name.match(this.userFilter) ||
-          user.email.match(this.userFilter) ||
-          user.phoneNumber.match(this.userFilter) ||
-          user.id.match(this.userFilter)
+          const isFiltered = user.name.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
+          user.email.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
+          user.phoneNumber.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
+          user.id.toLowerCase().match(this.userFilter.trim().toLowerCase())
           return isFiltered
         })
       }
