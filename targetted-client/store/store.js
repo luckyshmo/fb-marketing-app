@@ -92,21 +92,6 @@ const store = new Vuex.Store({
         axios({ url: `${VUE_APP_API_URL}/api/company/${id}`, data: companyData, method: 'PUT', timeout: 100000 })
           .then(resp => {
             resolve(resp)
-            // axios({url: `${VUE_APP_API_URL}/api/company/${id}`, method: 'GET', timeout: timeout })
-            // .then(resp => {
-            //     localStorage.setItem('user_company', resp.data)
-            //     commit('set_user_company', resp.data)
-            //     console.log(resp.data)
-            //     resolve(resp)
-            //     router.push({path: '/company-balance/'+ resp.data.Id, query: { isEdit: false }})
-            // })
-            // .catch(err => {
-            //     console.log(err)
-            //     reject(err)
-            // })
-            // localStorage.setItem('user_company', resp.data) //?
-            // commit('set_user_company', resp.data) //?
-            resolve(resp)
           })
           .catch(err => {
             console.log(err)

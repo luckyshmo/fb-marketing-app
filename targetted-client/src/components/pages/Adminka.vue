@@ -51,7 +51,15 @@
           class="form-input"
           disabled-field
           style="margin-bottom: 20px"
-          placeholder="Поиск"
+          placeholder="Поиск по людям"
+        />
+
+        <b-form-input
+          v-model="companyFilter"
+          class="form-input"
+          disabled-field
+          style="margin-bottom: 20px"
+          placeholder="Поиск по кампаниям"
         />
 
         <b-form-checkbox
@@ -74,7 +82,6 @@
           :key="user.email"
         >
           <div class="user-content">
-            <!-- {{user}} -->
             <h3>Данные пользователя</h3>
             <p>ID: <b>{{ user.id }}</b></p>
             <p>Имя: <b>{{ user.name }}</b></p>
@@ -98,11 +105,10 @@
             </button>
             <h3>Данные кампаний</h3>
             <div
-              v-for="company in filteredCompanies(user.id)"
+              v-for="company in user.companies"
               :key="company.Id"
               style="padding: 30px; background: rgb(255, 255, 255); margin: 10px; border-radius: 30px"
             >
-              <!-- {{company}} -->
               <h4>{{ company.CompanyName }}</h4>
               <p>
                 facebook page ID:
@@ -197,20 +203,19 @@ export default {
   data () {
     return {
       userFilter: '',
+      companyFilter: '',
       isAmount: false,
       currentPage: 1,
       perPage: 15,
       showInfo: false,
       store,
       users: [],
-      companies: [],
       imageNames: [],
       fbIDforClaim: '',
       pendingPages: []
     }
   },
   $route () {
-    console.log('route ', store.getters.GET_EMAIL)
     this.showInfo = store.getters.GET_EMAIL === 'admin@admin.com'
     this.getUsers()
   },
@@ -220,33 +225,41 @@ export default {
     }
   },
   beforeMount () {
-    console.log('BM ', store.getters.GET_EMAIL)
     this.showInfo = store.getters.GET_EMAIL === 'admin@admin.com'
   },
   mounted () {
-    console.log('M ', store.getters.GET_EMAIL)
     this.showInfo = store.getters.GET_EMAIL === 'admin@admin.com'
     this.getUsers()
   },
   methods: {
     filteredUsers () {
       let uArr = this.users
-      console.log(this.isAmount)
       if (this.isAmount === 'true') {
-        console.log('filtering!')
+        this.currentPage = 1
         uArr = this.users.filter((user) => {
           return user.amount > 0
         })
       }
       if (this.userFilter.length > 1) {
         this.currentPage = 1
-        return uArr.filter((user) => {
+        uArr = uArr.filter((user) => {
           const isFiltered = (user.name.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
           user.email.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
           user.phoneNumber.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
           user.id.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
           user.TimeCreated.toLowerCase().match(this.userFilter.trim().toLowerCase()))
           return isFiltered
+        })
+      }
+      if (this.companyFilter.length > 1) {
+        this.currentPage = 1
+        uArr = uArr.filter((user) => {
+          return user.companies.filter((com) => {
+            const isF = com.Id.toLowerCase().match(this.companyFilter.trim().toLowerCase()) ||
+            com.CompanyName.toLowerCase().match(this.companyFilter.trim().toLowerCase()) ||
+            com.PostDescription.toLowerCase().match(this.companyFilter.trim().toLowerCase())
+            return isF
+          }).length > 0
         })
       }
       return uArr
@@ -290,16 +303,13 @@ export default {
     filteredImageNames (id, isStories) {
       return this.imageNames.filter(image => image.id === id && this.isStoriesImage(image.name) === isStories)
     },
-    filteredCompanies (id) {
-      return this.companies.filter(c => c.UserId === id)
-    },
     getPendingPages () {
       axios({ url: `${VUE_APP_API_URL}/api/facebook/pending`, method: 'GET' })
         .then(resp => {
-          console.log(resp)
           this.pendingPages = resp.data
         })
         .catch(err => {
+          alert(err.response)
           console.log(err.response)
         })
     },
@@ -339,22 +349,29 @@ export default {
         .then(resp => {
           this.users = resp.data
           for (let i = 0; i < this.users.length; i++) {
-            this.getAddCompanies(this.users[i].id)
+            this.getAddCompanies(this.users[i].id, i)
           }
         })
         .catch(err => {
           console.log(err)
         })
     },
-    getAddCompanies (id) {
+    getAddCompanies (id, i) { // вообще во VUE 3 должно работать...
       axios({ url: `${VUE_APP_API_URL}/api/user/${id}/company/`, method: 'GET' })
         .then(resp => {
+          this.users[i].companies = []
           if (resp.data != null) {
-            this.companies.push(...resp.data)
+            this.users[i].companies.push(...resp.data)
             for (let i = 0; i < resp.data.length; i++) {
               this.getCompanyImagesNames(resp.data[i].Id, resp.data[i].UserId)
             }
+            this.isAmount = true
+            this.isAmount = false //! пздц костыль
           }
+        })
+        .catch(err => {
+          console.log(err)
+          this.users[i].companies = []
         })
     },
     getCompanyImagesNames (cID, uID) {
