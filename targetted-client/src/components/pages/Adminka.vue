@@ -2,6 +2,7 @@
   <div
     id="content"
   >
+    <loading v-if="isLoading"/>
     <div v-if="showInfo">
       <div>
         <b-form-input
@@ -198,10 +199,15 @@
 <script>
 import axios from 'axios'
 import store from '../../../store/store'
+import loading from '../Loading.vue'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
+  components: {
+    loading
+  },
   data () {
     return {
+      isLoading: false,
       userFilter: '',
       companyFilter: '',
       isAmount: false,
@@ -233,6 +239,8 @@ export default {
   },
   methods: {
     filteredUsers () {
+      this.isLoading = true
+
       let uArr = this.users
       if (this.isAmount === 'true') {
         this.currentPage = 1
@@ -262,6 +270,9 @@ export default {
           }).length > 0
         })
       }
+
+      this.isLoading = false
+
       return uArr
     },
     getPUsers (pageNumber, perPage) {
