@@ -190,7 +190,7 @@ export default {
     return {
       userFilter: '',
       currentPage: 1,
-      perPage: 1,
+      perPage: 15,
       showInfo: false,
       store,
       users: [],
@@ -226,7 +226,8 @@ export default {
         return this.users.filter((user) => {
           const isFiltered = user.name.match(this.userFilter) ||
           user.email.match(this.userFilter) ||
-          user.phoneNumber.match(this.userFilter)
+          user.phoneNumber.match(this.userFilter) ||
+          user.id.match(this.userFilter)
           return isFiltered
         })
       }
