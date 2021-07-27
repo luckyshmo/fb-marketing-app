@@ -10,6 +10,8 @@ type AdCompanyService struct {
 	repo repository.AdCompany
 }
 
+var _ AdCompany = (*AdCompanyService)(nil)
+
 func NewAdCompanyService(repo repository.AdCompany) *AdCompanyService {
 	return &AdCompanyService{repo: repo}
 }

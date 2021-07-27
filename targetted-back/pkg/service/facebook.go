@@ -27,6 +27,8 @@ type FacebookService struct {
 	client http.Client
 }
 
+var _ Facebook = (*FacebookService)(nil)
+
 func NewFacebookService(cfg config.Facebook) *FacebookService {
 	return &FacebookService{
 		token:      cfg.Token,

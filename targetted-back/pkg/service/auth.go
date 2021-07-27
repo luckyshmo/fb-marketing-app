@@ -16,8 +16,8 @@ import (
 const (
 	//https://en.wikipedia.org/wiki/Salt_(cryptography)
 	salt       = "hjqrhjqw124617ajfhajs"
-	signingKey = "asdna12jk%s2fnv4ks#jd12nvs" //totally random key for encryption and decryption
-	tokenTTL   = 2400 * time.Hour             //Token Time To Live //? any requirements or frontend sync?
+	signingKey = "asdna12jk??$#2fnv4ks#jd12nvs" //totally random key for encryption and decryption
+	tokenTTL   = 2400 * time.Hour               //Token Time To Live //? any requirements or frontend sync?
 )
 
 //Custom JWT claims //? What also we need to store in JWT?
@@ -29,6 +29,8 @@ type tokenClaims struct {
 type AuthService struct {
 	repo repository.Authorization
 }
+
+var _ Authorization = (*AuthService)(nil)
 
 func NewAuthService(repo repository.Authorization) *AuthService {
 	return &AuthService{repo: repo}

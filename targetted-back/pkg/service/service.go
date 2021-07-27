@@ -42,10 +42,10 @@ type Facebook interface {
 }
 
 type Service struct {
-	Authorization
-	User
-	AdCompany
-	Facebook
+	Authorization Authorization
+	User          User
+	AdCompany     AdCompany
+	Facebook      Facebook
 }
 
 func NewService(repos *repository.Repository, cfg config.Facebook) *Service {

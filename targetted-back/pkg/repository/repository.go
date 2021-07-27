@@ -30,12 +30,12 @@ type AdCompany interface {
 }
 
 type Repository struct {
-	Authorization
-	User
-	AdCompany
+	Authorization Authorization
+	User          User
+	AdCompany     AdCompany
 }
 
-func NewRepository(db *sqlx.DB) *Repository {
+func NewSqlxRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: pg.NewAuthPostgres(db),
 		User:          pg.NewUserPG(db),
