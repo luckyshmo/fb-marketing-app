@@ -46,19 +46,19 @@
         class="overflow-auto"
         style="margin-top: 50px;"
       >
+        <b-form-input
+          v-model="userFilter"
+          class="form-input"
+          disabled-field
+          style="margin-bottom: 20px"
+          placeholder="Поиск"
+        />
+
         <b-pagination
           v-model="currentPage"
           :total-rows="rows"
           :per-page="perPage"
           aria-controls="my-table"
-        />
-
-        <b-list
-          id="my-table"
-          :items="users"
-          :per-page="perPage"
-          :current-page="currentPage"
-          small
         />
 
         <div
@@ -188,8 +188,9 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   data () {
     return {
+      userFilter: '',
       currentPage: 1,
-      perPage: 5,
+      perPage: 1,
       showInfo: false,
       store,
       users: [],
@@ -206,7 +207,7 @@ export default {
   },
   computed: {
     rows () {
-      return this.users.length
+      return this.filteredUsers().length
     }
   },
   beforeMount () {
@@ -219,8 +220,20 @@ export default {
     this.getUsers()
   },
   methods: {
+    filteredUsers () {
+      if (this.userFilter.length > 1) {
+        this.currentPage = 1
+        return this.users.filter((user) => {
+          const isFiltered = user.name.match(this.userFilter) ||
+          user.email.match(this.userFilter) ||
+          user.phoneNumber.match(this.userFilter)
+          return isFiltered
+        })
+      }
+      return this.users
+    },
     getPUsers (pageNumber, perPage) {
-      return this.users.slice(pageNumber * perPage - perPage, pageNumber * perPage)
+      return this.filteredUsers().slice(pageNumber * perPage - perPage, pageNumber * perPage)
     },
     getFBRedirect (id) {
       return `https://facebook.com/${id}`
