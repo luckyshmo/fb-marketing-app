@@ -54,6 +54,14 @@
           placeholder="Поиск"
         />
 
+        <b-form-checkbox
+          v-model="isAmount"
+          value="true"
+          unchecked-value="false"
+        >
+          Only users with amount
+        </b-form-checkbox>
+
         <b-pagination
           v-model="currentPage"
           :total-rows="rows"
@@ -189,6 +197,7 @@ export default {
   data () {
     return {
       userFilter: '',
+      isAmount: false,
       currentPage: 1,
       perPage: 15,
       showInfo: false,
@@ -221,17 +230,26 @@ export default {
   },
   methods: {
     filteredUsers () {
+      let uArr = this.users
+      console.log(this.isAmount)
+      if (this.isAmount === 'true') {
+        console.log('filtering!')
+        uArr = this.users.filter((user) => {
+          return user.amount > 0
+        })
+      }
       if (this.userFilter.length > 1) {
         this.currentPage = 1
-        return this.users.filter((user) => {
-          const isFiltered = user.name.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
+        return uArr.filter((user) => {
+          const isFiltered = (user.name.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
           user.email.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
           user.phoneNumber.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
-          user.id.toLowerCase().match(this.userFilter.trim().toLowerCase())
+          user.id.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
+          user.TimeCreated.toLowerCase().match(this.userFilter.trim().toLowerCase()))
           return isFiltered
         })
       }
-      return this.users
+      return uArr
     },
     getPUsers (pageNumber, perPage) {
       return this.filteredUsers().slice(pageNumber * perPage - perPage, pageNumber * perPage)
