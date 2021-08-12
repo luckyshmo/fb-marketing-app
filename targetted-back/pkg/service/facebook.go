@@ -14,7 +14,7 @@ import (
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
 )
 
-const span = 5 * time.Second
+const span = 5 * time.Minute
 
 const permittedTasks = "['MANAGE', 'CREATE_CONTENT', 'MODERATE', 'ADVERTISE', 'ANALYZE']"
 
