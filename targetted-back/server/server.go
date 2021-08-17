@@ -6,24 +6,24 @@ import (
 	"time"
 )
 
-//Server is custom wrapper for additional functionality for our server
-type Server struct {
+//Backend is custom wrapper for additional functionality for our server
+type Backend struct {
 	httpServer *http.Server
 }
 
-func (s *Server) Run(port string, handler http.Handler) error {
+func (s *Backend) Run(port string, handler http.Handler) error {
 	// genCert()
 	s.httpServer = &http.Server{
 		Addr:           ":" + port,
 		Handler:        handler,
-		MaxHeaderBytes: 1 << 20,           // 1 MB //TODO? ?
-		ReadTimeout:    100 * time.Second, //TODO params? config?
+		MaxHeaderBytes: 1 << 20,
+		ReadTimeout:    100 * time.Second,
 		WriteTimeout:   100 * time.Second,
 	}
 
 	return s.httpServer.ListenAndServe()
 }
 
-func (s *Server) Shutdown(ctx context.Context) error {
+func (s *Backend) Shutdown(ctx context.Context) error {
 	return s.httpServer.Shutdown(ctx)
 }

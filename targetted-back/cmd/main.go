@@ -74,7 +74,7 @@ func run() error {
 	handlers := handler.NewHandler(services)
 
 	//starting server
-	srv := new(server.Server) //TODO? server.Server should be *serviceName*.server
+	srv := new(server.Backend)
 	go func() {
 		if err := srv.Run(cfg.AppPort, handlers.InitRoutes()); err != nil {
 			logger.Error(fmt.Errorf("running http server: %w", err))
