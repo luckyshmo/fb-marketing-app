@@ -3,6 +3,7 @@ import App from './App.vue'
 import * as Sentry from '@sentry/vue'
 import { Integrations } from '@sentry/tracing'
 import router from '../router/router'
+import store from '../store/store'
 import Axios from 'axios'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 // Import Bootstrap an BootstrapVue CSS files (order is important)
@@ -36,6 +37,26 @@ Sentry.init({
   // We recommend adjusting this value in production
   tracesSampleRate: 1.0
 })
+
+const responseSuccessHandler = response => {
+  return response;
+};
+
+const responseErrorHandler = error => {
+  if (error.response.status === 401) {
+    store.dispatch('logout')
+    .then(() => {
+      router.push('/login')
+    })
+  }
+
+  return Promise.reject(error);
+}
+
+axios.interceptors.response.use(
+  response => responseSuccessHandler(response),
+  error => responseErrorHandler(error)
+);
 
 const token = localStorage.getItem('token')
 if (token) {
