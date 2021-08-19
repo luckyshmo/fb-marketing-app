@@ -76,7 +76,10 @@ func (h *Handler) getPaymentStatus(c *gin.Context) {
 		if paymentStat.Status == "succeeded" {
 			if s, err := strconv.ParseFloat(paymentStat.Amount.Value, 64); err == nil {
 				fmt.Println(s)
-				h.services.User.AddMoney(userID, s)
+				if err := h.services.User.AddMoney(userID, s); err != nil {
+					sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+					return
+				}
 				sendStatusResponse(c, http.StatusOK, paymentStat)
 				return
 			}

@@ -72,8 +72,12 @@ func (h *Handler) updateBalance(c *gin.Context) {
 		return
 	}
 
-	h.services.User.SetBalance(uuid, float64(amount))
+	if err := h.services.User.SetBalance(uuid, float64(amount)); err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
 
+	sendStatusResponse(c, http.StatusOK, amount)
 }
 
 func (h *Handler) getUserList(c *gin.Context) {

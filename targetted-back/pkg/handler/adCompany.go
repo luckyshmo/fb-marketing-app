@@ -109,7 +109,9 @@ func (h *Handler) deleteCompany(c *gin.Context) {
 	// 	return
 	// }
 	companyIDstring := c.Param("id")
-	h.services.AdCompany.Delete(companyIDstring)
+	if err := h.services.AdCompany.Delete(companyIDstring); err != nil {
+		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
 }
 
 func (h *Handler) updateCompany(c *gin.Context) {
@@ -243,10 +245,12 @@ func writeMultiPartImage(multipartFile *multipart.FileHeader, path string) error
 func parseCompanyFromContext(c *gin.Context) (models.AdCompany, error) {
 	userID, err := getUserId(c)
 	if err != nil {
-		return models.AdCompany{}, err
+		return models.AdCompany{}, fmt.Errorf("get user id form context: %w", err)
 	}
 
-	c.Request.ParseMultipartForm(104857600) // 100 мегабайт
+	if err = c.Request.ParseMultipartForm(104857600); err != nil { // 100 MB
+		return models.AdCompany{}, fmt.Errorf("parse multiparform: %w", err)
+	}
 
 	v := c.Request.MultipartForm.Value
 	DailyAmountS := v["DailyAmount"][0]
