@@ -26,12 +26,19 @@ type Config struct {
 
 	Logging  Logging
 	Facebook Facebook
+	Youkassa Youkassa
 }
 
 type Facebook struct {
 	Token      string `envconfig:"FB_TOKEN"`
 	APIVersion string `envconfig:"FB_API_VERSION"`
 	BusinessID string `envconfig:"FB_BUSINESS_ID"`
+}
+
+type Youkassa struct {
+	Username string `envconfig:"Y_UN"`
+	Password string `envconfig:"Y_PAS"`
+	ApiUrl   string `envconfig:"Y_URL"`
 }
 
 type Logging struct {

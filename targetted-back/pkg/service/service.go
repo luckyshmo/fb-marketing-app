@@ -1,12 +1,12 @@
 package service
 
 import (
-	"context"
-
 	"github.com/google/uuid"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/repository"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/service/facebook"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/service/payment"
 )
 
 type Authorization interface {
@@ -32,27 +32,20 @@ type AdCompany interface {
 	GetByID(userID uuid.UUID, companyID string) (models.AdCompany, error)
 }
 
-type Facebook interface {
-	PageClaim(ID string) (string, error)
-	GetOwnedPages() ([]models.FacebookPage, error)
-	GetPendingPagesID() ([]string, error)
-	DeletePageByID(ID string) error
-	CheckPageLimitTicker(ctx context.Context)
-	IsPageOwnedByID(ID string) (bool, error)
-}
-
 type Service struct {
 	Authorization Authorization
 	User          User
 	AdCompany     AdCompany
-	Facebook      Facebook
+	Facebook      facebook.Service
+	Payment       *payment.Youkassa
 }
 
-func NewService(repos *repository.Repository, cfg config.Facebook) *Service {
+func NewService(repos *repository.Repository, cfg *config.Config) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
 		User:          NewUserService(repos.User),
 		AdCompany:     NewAdCompanyService(repos.AdCompany),
-		Facebook:      NewFacebookService(cfg),
+		Facebook:      facebook.NewFacebookService(cfg.Facebook),
+		Payment:       payment.NewYoukassaService(cfg.Youkassa),
 	}
 }

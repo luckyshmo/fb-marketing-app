@@ -1,4 +1,4 @@
-package service
+package facebook
 
 import (
 	"bytes"
@@ -18,6 +18,15 @@ const span = 5 * time.Minute
 
 const permittedTasks = "['MANAGE', 'CREATE_CONTENT', 'MODERATE', 'ADVERTISE', 'ANALYZE']"
 
+type Service interface {
+	PageClaim(ID string) (string, error)
+	GetOwnedPages() ([]models.FacebookPage, error)
+	GetPendingPagesID() ([]string, error)
+	DeletePageByID(ID string) error
+	CheckPageLimitTicker(ctx context.Context)
+	IsPageOwnedByID(ID string) (bool, error)
+}
+
 // https://developers.facebook.com/docs/marketing-api/business-asset-management/guides/pages
 type FacebookService struct {
 	token      string
@@ -27,7 +36,7 @@ type FacebookService struct {
 	client http.Client
 }
 
-var _ Facebook = (*FacebookService)(nil)
+var _ Service = (*FacebookService)(nil)
 
 func NewFacebookService(cfg config.Facebook) *FacebookService {
 	return &FacebookService{

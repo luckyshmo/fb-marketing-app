@@ -70,7 +70,7 @@ func run() error {
 	//Init main components
 	//Good Clean arch and dependency injection example
 	repos := repository.NewSqlxRepository(db)
-	services := service.NewService(repos, cfg.Facebook)
+	services := service.NewService(repos, cfg)
 	handlers := handler.NewHandler(services)
 
 	//starting server

@@ -60,10 +60,6 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			adCompany.POST("/start/:id", h.startAdCompany)
 			adCompany.POST("/stop/:id", h.stopAdCompany)
 
-			//TODO payment service
-			adCompany.POST("/paymentToken", h.getPaymentToken)
-			adCompany.POST("/paymentStatus/:id", h.getPaymentStatus)
-
 			images := adCompany.Group(":id/images")
 			{
 				images.GET("/", h.getCompanyImages)
@@ -73,6 +69,9 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		{
 			users.GET("/", h.getUserList)
 			users.GET("/:id", h.getUser)
+
+			users.POST("/paymentToken", h.getPaymentToken)
+			users.POST("/paymentStatus/:id", h.getPaymentStatus)
 
 			users.POST("/:id/update-balance/:amount", h.updateBalance)
 
