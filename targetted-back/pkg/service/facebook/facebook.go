@@ -9,7 +9,6 @@ import (
 	"time"
 
 	logger "github.com/luckyshmo/fb-marketing-app/targetted-back/log"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
 
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
 )
@@ -20,11 +19,16 @@ const permittedTasks = "['MANAGE', 'CREATE_CONTENT', 'MODERATE', 'ADVERTISE', 'A
 
 type Service interface {
 	PageClaim(ID string) (string, error)
-	GetOwnedPages() ([]models.FacebookPage, error)
+	GetOwnedPages() ([]FacebookPage, error)
 	GetPendingPagesID() ([]string, error)
 	DeletePageByID(ID string) error
 	CheckPageLimitTicker(ctx context.Context)
 	IsPageOwnedByID(ID string) (bool, error)
+}
+
+type FacebookPage struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
 }
 
 // https://developers.facebook.com/docs/marketing-api/business-asset-management/guides/pages
@@ -155,7 +159,7 @@ func (f *FacebookService) PageClaim(ID string) (string, error) {
 }
 
 type ownedPageResp struct {
-	Data []models.FacebookPage `json:"data"`
+	Data []FacebookPage `json:"data"`
 }
 
 func (f *FacebookService) IsPageOwnedByID(ID string) (bool, error) {
@@ -173,7 +177,7 @@ func (f *FacebookService) IsPageOwnedByID(ID string) (bool, error) {
 	return false, nil
 }
 
-func (f *FacebookService) GetOwnedPages() ([]models.FacebookPage, error) {
+func (f *FacebookService) GetOwnedPages() ([]FacebookPage, error) {
 	// 	curl -G \
 	//   -d "access_token=<token>" \
 	//   "https://graph.facebook.com/<API_version>/<business_id>/client_pages"
