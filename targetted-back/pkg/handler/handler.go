@@ -69,18 +69,23 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		{
 			users.GET("/", h.getUserList)
 			users.GET("/:id", h.getUser)
-
-			users.POST("/paymentToken", h.getPaymentToken)
-			users.POST("/paymentStatus/:id", h.getPaymentStatus)
-
-			users.POST("/:id/update-balance/:amount", h.updateBalance)
-
-			company := users.Group(":id/company")
+			user := users.Group("/:id")
 			{
-				company.GET("/", h.getCompanyListByUserID)
-				images := company.Group(":company-id/images")
+				user.POST("/update-balance/:amount", h.updateBalance)
+
+				payment := user.Group("/payment")
 				{
-					images.GET("/", h.getUserCompanyImages)
+					payment.POST("/token", h.getPaymentToken)
+					payment.POST("/status/:payment-id", h.getPaymentStatus)
+				}
+
+				company := user.Group("/company")
+				{
+					company.GET("/", h.getCompanyListByUserID)
+					images := company.Group(":company-id/images")
+					{
+						images.GET("/", h.getUserCompanyImages)
+					}
 				}
 			}
 		}

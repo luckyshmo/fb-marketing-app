@@ -16,7 +16,7 @@ func (h *Handler) getPaymentStatus(c *gin.Context) {
 		sendErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
-	paymentID := c.Param("id")
+	paymentID := c.Param("payment-id")
 
 	amount, err := h.services.Payment.WaitPaymentStatus(paymentID)
 	if err != nil {

@@ -348,12 +348,12 @@ export default {
       const data = `{
                 "amount": "${this.paymentAmount}.00"
             }`
-      axios({ url: `${VUE_APP_API_URL}/api/user/paymentToken`, data: data, method: 'POST' })
+      axios({ url: `${VUE_APP_API_URL}/api/user/payment/token`, data: data, method: 'POST' })
         .then(resp => {
           console.log(resp)
           this.paymentID = resp.data.id
           // setInterval(async () => {
-          axios({ url: `${VUE_APP_API_URL}/api/user/paymentStatus/${this.paymentID}`, data: data, method: 'POST' })
+          axios({ url: `${VUE_APP_API_URL}/api/user/payment/status/${this.paymentID}`, data: data, method: 'POST' })
             .then(resp => {
               console.log('status resp: ', resp.data)
               if (resp.data.status === 'succeeded') {
