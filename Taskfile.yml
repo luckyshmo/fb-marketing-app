@@ -1,0 +1,29 @@
+version: '3'
+
+tasks:
+  build-go:
+    cmds:
+      - task -d targetted-back build
+  lint-go:
+    cmds:
+      - task -d targetted-back lint
+  lint-vue:
+    cmds:
+      - task -d targetted-client lint
+
+  build:
+    docker-compose build
+    npm run build --prefix targetted-client/
+  run:
+    docker-compose up -d
+  stopb:
+    docker stop $(docker ps -a -q --filter="name=targetted-back") #TODO
+  stop:
+    docker-compose stop
+  ps:
+    docker ps
+  r:
+    make stop
+    make build
+    make run
+    make ps
