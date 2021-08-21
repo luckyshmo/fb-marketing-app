@@ -39,24 +39,24 @@ Sentry.init({
 })
 
 const responseSuccessHandler = response => {
-  return response;
-};
+  return response
+}
 
 const responseErrorHandler = error => {
   if (error.response.status === 401) {
     store.dispatch('logout')
-    .then(() => {
-      router.push('/login')
-    })
+      .then(() => {
+        router.push('/login')
+      })
   }
 
-  return Promise.reject(error);
+  return Promise.reject(error)
 }
 
-axios.interceptors.response.use(
+Axios.interceptors.response.use(
   response => responseSuccessHandler(response),
   error => responseErrorHandler(error)
-);
+)
 
 const token = localStorage.getItem('token')
 if (token) {

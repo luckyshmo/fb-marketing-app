@@ -239,7 +239,7 @@ export default {
   },
   methods: {
     filteredUsers () {
-      this.isLoading = true
+      // this.isLoading = true
 
       let uArr = this.users
       if (this.isAmount === 'true') {
@@ -271,7 +271,7 @@ export default {
         })
       }
 
-      this.isLoading = false
+      // this.isLoading = false
 
       return uArr
     },
