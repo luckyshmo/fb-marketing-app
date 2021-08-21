@@ -7,6 +7,10 @@ tasks:
   lint-go:
     cmds:
       - task -d targetted-back lint
+  test-go:
+    cmds:
+      - task -d targetted-back test
+
   lint-vue:
     cmds:
       - task -d targetted-client lint

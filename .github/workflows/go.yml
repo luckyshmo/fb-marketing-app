@@ -21,14 +21,21 @@ jobs:
     - name: Install Task
       uses: arduino/setup-task@v1
 
+    - name: Install Lint
+      run: go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.0
+
     - name: Build
       run: task build-go
+
+    - name: Lint
+      run: task lint-go
+  
+    - name: Test
+      run: task test-go
 
     # - name: golangci-lint
     #   uses: golangci/golangci-lint-action@v2
     #   with:
     #     version: v1.29
 
-    # - name: Test
-    #   run: make test
     

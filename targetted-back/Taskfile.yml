@@ -3,8 +3,10 @@ version: '3'
 tasks:
   build:
     go build -o bin ./cmd/main.go
-  test:
+  test-coverage:
     go test -v  ./... -coverprofile=coverage.out
     go tool cover -html=coverage.out
+  test:
+    go test -v  ./...
   lint:
     golangci-lint run
