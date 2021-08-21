@@ -27,7 +27,7 @@ tasks:
   ps:
     docker ps
   r:
-    make stop
-    make build
-    make run
-    make ps
+    task stop
+    task build
+    task run
+    task ps
