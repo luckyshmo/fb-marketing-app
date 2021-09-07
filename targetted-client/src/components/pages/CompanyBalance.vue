@@ -348,12 +348,11 @@ export default {
       const data = `{
                 "amount": "${this.paymentAmount}.00"
             }`
-      axios({ url: `${VUE_APP_API_URL}/api/user/payment/token`, data: data, method: 'POST' })
+      axios({ url: `${VUE_APP_API_URL}/api/user/0/payment/token`, data: data, method: 'POST' })
         .then(resp => {
           console.log(resp)
           this.paymentID = resp.data.id
-          // setInterval(async () => {
-          axios({ url: `${VUE_APP_API_URL}/api/user/payment/status/${this.paymentID}`, data: data, method: 'POST' })
+          axios({ url: `${VUE_APP_API_URL}/api/user/0/payment/status/${this.paymentID}`, data: data, method: 'POST' })
             .then(resp => {
               console.log('status resp: ', resp.data)
               if (resp.data.status === 'succeeded') {
@@ -363,7 +362,6 @@ export default {
             .catch(err => {
               console.log(err)
             })
-          // }, 3000)
           const checkout = new window.YooMoneyCheckoutWidget({
             confirmation_token: resp.data.confirmation.confirmation_token, // Token that must be obtained from YooMoney before the payment process
             return_url: window.location.origin + router.history.current.fullPath, // URL to the payment completion page
