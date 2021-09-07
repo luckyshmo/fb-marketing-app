@@ -32,10 +32,3 @@ jobs:
   
     - name: Test
       run: task test-go
-
-    # - name: golangci-lint
-    #   uses: golangci/golangci-lint-action@v2
-    #   with:
-    #     version: v1.29
-
-    

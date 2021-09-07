@@ -182,7 +182,7 @@ func (f *FacebookService) GetOwnedPages() ([]FacebookPage, error) {
 	//   -d "access_token=<token>" \
 	//   "https://graph.facebook.com/<API_version>/<business_id>/client_pages"
 
-	resp, err := http.DefaultClient.Get(
+	resp, err := f.client.Get(
 		fmt.Sprintf(
 			"https://graph.facebook.com/%s/%s/client_pages?access_token=%s",
 			f.apiVersion,
@@ -219,7 +219,7 @@ func (f *FacebookService) GetPendingPagesID() ([]string, error) {
 	// -d "access_token=<admin_token>" \
 	// "https://graph.facebook.com/<API_version>/<business_id>/pending_client_pages"
 
-	resp, err := http.DefaultClient.Get(
+	resp, err := f.client.Get(
 		fmt.Sprintf(
 			"https://graph.facebook.com/%s/%s/pending_client_pages?access_token=%s",
 			f.apiVersion,

@@ -12,7 +12,6 @@ type Backend struct {
 }
 
 func (s *Backend) Run(port string, handler http.Handler) error {
-	// genCert()
 	s.httpServer = &http.Server{
 		Addr:           ":" + port,
 		Handler:        handler,
