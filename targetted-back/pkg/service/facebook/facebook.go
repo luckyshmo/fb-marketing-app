@@ -190,7 +190,7 @@ func (f *FacebookService) GetOwnedPages() ([]FacebookPage, error) {
 			f.token,
 		))
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("owned page request get: %w", err)
 	}
 	defer resp.Body.Close()
 
@@ -200,7 +200,7 @@ func (f *FacebookService) GetOwnedPages() ([]FacebookPage, error) {
 			return nil, fmt.Errorf("decode body: %w", err)
 		}
 	} else {
-		return nil, fmt.Errorf("facebook response stauts %d", resp.StatusCode)
+		return nil, fmt.Errorf("facebook response status %d", resp.StatusCode)
 	}
 
 	return rResp.Data, nil
@@ -227,7 +227,7 @@ func (f *FacebookService) GetPendingPagesID() ([]string, error) {
 			f.token,
 		))
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("pending fb page request: %w", err)
 	}
 	defer resp.Body.Close()
 
@@ -249,7 +249,6 @@ func (f *FacebookService) GetPendingPagesID() ([]string, error) {
 }
 
 func (f *FacebookService) DeletePageByID(ID string) error {
-
 	logger.Info(fmt.Sprintf("FBPage ID to remove from pending: %s", ID))
 
 	req, err := http.NewRequest(
