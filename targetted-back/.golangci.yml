@@ -1,0 +1,33 @@
+# This is our linters configuration
+# We use https://github.com/golangci/golangci-lint because it allows us to run multiple linters at the same time
+
+run:
+  timeout: 5m
+
+linters:
+  enable-all: true
+  disable:
+    - interfacer
+    - golint # deprecated in favour of revive
+    - scopelint # deprecated in favour of exportloopref
+
+linters-settings:
+  funlen:
+    lines: 100
+    statements: 40
+  nakedret:
+    max-func-lines: 0
+  lll:
+    line-length: 140
+  gocyclo:
+    min-complexity: 20
+  golint:
+    min-confidence: 0
+  dupl:
+    threshold: 100
+  govet:
+    check-shadowing: true
+
+output:
+  print-issued-lines: false
+
