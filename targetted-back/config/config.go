@@ -12,21 +12,25 @@ import (
 
 // Config. Should be filled from Env. Use launch.json(vscode) on local machine
 type Config struct {
-	PgHOST           string `envconfig:"PG_HOST"`
-	PgPORT           string `envconfig:"PG_PORT"`
-	PgPAS            string `envconfig:"PG_PAS"`
-	PgSSLMode        string `envconfig:"PG_SSLMODE"`
-	PgMigrationsPath string `envconfig:"PG_MIGRATIONS_PATH"`
-	PgUserName       string `envconfig:"PG_USERNAME"`
-	PgDBName         string `envconfig:"PG_DBNAME"`
-
 	CorsHeader string `envconfig:"CORS_HEADER"`
 
 	AppPort string `envconfig:"APP_PORT"`
 
+	Pg       Postgres
 	Logging  Logging
 	Facebook Facebook
 	Youkassa Youkassa
+}
+
+// Postgres contains configurations info for Postgres DB.
+type Postgres struct {
+	HOST           string `envconfig:"PG_HOST"`
+	PORT           string `envconfig:"PG_PORT"`
+	PAS            string `envconfig:"PG_PAS"`
+	SSLMode        string `envconfig:"PG_SSLMODE"`
+	MigrationsPath string `envconfig:"PG_MIGRATIONS_PATH"`
+	UserName       string `envconfig:"PG_USERNAME"`
+	DBName         string `envconfig:"PG_DBNAME"`
 }
 
 type Facebook struct {
@@ -67,7 +71,7 @@ func Get() *Config {
 	return &config
 }
 
-func validate(cfg Config) { //TODO? logging isn't configure at this moment... probably return message or error?
+func validate(cfg Config) {
 	refConf := reflect.ValueOf(cfg)
 	typeOfRefConf := refConf.Type()
 

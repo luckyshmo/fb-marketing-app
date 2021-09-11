@@ -19,7 +19,6 @@ import (
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/service"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/server"
 
-	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
 
@@ -51,24 +50,12 @@ func run() error {
 	defer sentry.Flush(2 * time.Second)
 
 	//Init DB
-	db, err := pg.NewPostgresDB(pg.Config{ //? you can get db by config
-		Host:     cfg.PgHOST,
-		Port:     cfg.PgPORT,
-		Username: cfg.PgUserName,
-		DBName:   cfg.PgDBName,
-		SSLMode:  cfg.PgSSLMode,
-		Password: cfg.PgPAS,
-	})
+	db, err := pg.NewPostgresDB(cfg.Pg)
 	if err != nil {
-		return errors.Wrap(err, "failed to initialize db")
+		return fmt.Errorf("failed to initialize db: %w", err)
 	}
 
-	logger.Error(fmt.Errorf("TEST ERROR"))
-	logger.Info("TEST INFO")
-	logger.Warn(fmt.Errorf("TEST WARN"))
-
 	//Init main components
-	//Good Clean arch and dependency injection example
 	repos := repository.NewSqlxRepository(db)
 	services := service.NewService(repos, cfg)
 	handlers := handler.NewHandler(services)

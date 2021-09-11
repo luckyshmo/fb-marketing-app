@@ -37,3 +37,7 @@ tasks:
       - task build
       - task run
       - task ps
+
+  run-dev-front:
+    cmds:
+      - docker-compose up targetted-back

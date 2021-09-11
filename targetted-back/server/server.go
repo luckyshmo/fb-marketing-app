@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-//Backend is custom wrapper for additional functionality for our server
+// Backend is custom wrapper for additional functionality for our server
 type Backend struct {
 	httpServer *http.Server
 }

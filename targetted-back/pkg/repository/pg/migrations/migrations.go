@@ -7,35 +7,43 @@ import (
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
 
 	"github.com/golang-migrate/migrate/v4"
-	logger "github.com/luckyshmo/fb-marketing-app/targetted-back/log"
 
 	_ "github.com/golang-migrate/migrate/v4/database/mysql"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
+var (
+	errPgUrl         = errors.New("pg url not provided")
+	errMigrationPath = errors.New("pg migration path not provided")
+)
+
 // runPgMigrations runs Postgres migrations
 func RunPgMigrations() error { //? can be run from Makefile
 	cfg := config.Get()
-	if cfg.PgMigrationsPath == "" {
-		logger.Error(fmt.Errorf("migration path not provided"))
-		return nil
+	if cfg.Pg.MigrationsPath == "" {
+		return errMigrationPath
 	}
-	if cfg.PgHOST == "" || cfg.PgPORT == "" {
-		return errors.New("no cfg.PgURL provided")
+	if !validUrl(cfg.Pg) {
+		return errPgUrl
 	}
 
-	connectionString := "postgres://" + cfg.PgUserName + ":" + cfg.PgPAS + "@" + cfg.PgHOST + "/" + cfg.PgDBName + "?sslmode=" + cfg.PgSSLMode
+	connectionString := "postgres://" + cfg.Pg.UserName + ":" + cfg.Pg.PAS +
+		"@" + cfg.Pg.HOST + "/" + cfg.Pg.DBName + "?sslmode=" + cfg.Pg.SSLMode
 
 	m, err := migrate.New(
-		cfg.PgMigrationsPath,
+		cfg.Pg.MigrationsPath,
 		connectionString,
 	)
 	if err != nil {
-		return err
+		return fmt.Errorf("create pg migrate instance: %w", err)
 	}
 	if err := m.Up(); err != nil && err != migrate.ErrNoChange {
-		return err
+		return fmt.Errorf("migrate pg: %w", err)
 	}
 	return nil
+}
+
+func validUrl(cfg config.Postgres) bool {
+	return !(cfg.HOST == "" || cfg.PORT == "")
 }
