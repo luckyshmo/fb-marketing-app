@@ -38,6 +38,10 @@ tasks:
       - task run
       - task ps
 
+  rebuild-backend:
+    cmds:
+      - docker-compose build targetted-back
+
   run-dev-front:
     cmds:
       - docker-compose up targetted-back
