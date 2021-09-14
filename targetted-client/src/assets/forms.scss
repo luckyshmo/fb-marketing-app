@@ -1,0 +1,44 @@
+@import 'vars';
+@import 'generic';
+
+.app-new-button-main {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 9px 24px 11px;
+    height: 44px;
+    background: $lime;
+    border-radius: 6px;
+    border: none;
+    color: $black;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.app-new-info {
+    color: $gray;
+    text-align: left;
+}
+
+.app-new-login-sub {
+    text-align: left;
+    a {
+        color: $violet;
+    }
+}
+
+.input-group {
+    margin-left: 0px !important;;
+}
+
+.app-new-form-footer {
+    text-align: left;
+}
+
+h1 {
+    font-size: 32px;
+    line-height: 38px;
+}
+
+.app-new-button-main[disabled] {
+
+}
