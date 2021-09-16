@@ -8,7 +8,6 @@
       id="form-centred"
       @submit="register"
     >
-     
 
       <b-form-group
         class="input-group"
@@ -126,7 +125,6 @@
         >
           Зарегистрироваться
         </b-button>
-
 
         <p class="app-new-info">
           Нажимая кнопку “Зарегистрироваться” вы соглашаетесь с условиями оферты и политикой конфиденциальности.
