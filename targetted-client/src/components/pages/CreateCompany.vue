@@ -237,6 +237,8 @@
                         placeholder="Точный адрес"
                         ></b-form-input>
                     </b-form-group>
+
+                    
                 <h2 id="h2">Креативы</h2>
                 <div v-if="isEdit" >
                     <b-form-group
@@ -441,6 +443,9 @@
             </div>
         </div>
         </div>
+
+        <Step1 :label_cols={getWidth().label} :content_cols={getWidth().content}/>
+        <Step2 :label_cols={getWidth().label} :content_cols={getWidth().content}/>
     </div>
 
 </template>
@@ -452,6 +457,10 @@ import axios from 'axios'
 import popup from '../BigPopup.vue'
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
+
+import Step1 from './campagin-creation/Step1.vue';
+import Step2 from './campagin-creation/Step2.vue';
+
 import loading from '../Loading.vue'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
@@ -459,7 +468,9 @@ export default {
   mixins: [validationMixin],
   components: {
     popup,
-    loading
+    loading,
+    Step1,
+    Step2
   },
   data () {
     return {
