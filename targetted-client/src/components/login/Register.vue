@@ -1,6 +1,6 @@
 <template>
   <div id="content-login">
-    <h1 id="h1-centered">
+    <h1 class="app-header">
       Регистрация
     </h1>
 
@@ -8,25 +8,10 @@
       id="form-centred"
       @submit="register"
     >
-      <b-form-group
-        class="input-group"
-      >
-        <b-form-input
-          v-model="form.name"
-          class="form-input"
-          placeholder="Имя"
-          :state="validateState('name')"
-        />
-        <small
-          v-if="$v.form.name.$dirty && !$v.form.name.required"
-          class="error-message"
-        >
-          Пустое поле Имя
-        </small>
-      </b-form-group>
 
       <b-form-group
         class="input-group"
+        label="Номер телефона"
       >
         <b-form-input
           id="tel"
@@ -34,7 +19,7 @@
           class="form-input"
           type="tel"
           :state="validateState('phoneNumber')"
-          placeholder="Номер телефона"
+          placeholder="Введите телефон"
         />
         <b-form-invalid-feedback
           id="tel"
@@ -46,11 +31,12 @@
 
       <b-form-group
         class="input-group"
+        label="Электронная почта"
       >
         <b-form-input
           v-model.trim="form.email"
           class="form-input"
-          placeholder="Электронная почта"
+          placeholder="Введите почту"
           :state="validateState('email')"
           @click="resetErr()"
         />
@@ -64,7 +50,7 @@
           v-if="$v.form.email.$dirty && !$v.form.email.email"
           class="error-message"
         >
-          Некрорректный email
+          Некорректный email
         </small>
         <small
           v-if="emailExists"
@@ -74,8 +60,27 @@
         </small>
       </b-form-group>
 
+       <b-form-group
+        class="input-group"
+        label="Имя"
+      >
+        <b-form-input
+          v-model="form.name"
+          class="form-input"
+          placeholder="Введите имя"
+          :state="validateState('name')"
+        />
+        <small
+          v-if="$v.form.name.$dirty && !$v.form.name.required"
+          class="error-message"
+        >
+          Пустое поле Имя
+        </small>
+      </b-form-group>
+
       <b-form-group
         class="input-group"
+        label="Пароль"
       >
         <b-form-input
           id="pas"
@@ -94,6 +99,7 @@
       </b-form-group>
       <b-form-group
         class="input-group"
+        label="Введите пароль повторно"
       >
         <b-form-input
           v-model="form.passwordRepeat"
@@ -101,7 +107,7 @@
           class="form-input"
           aria-describedby="password-repeat-feedback"
           :state="validatePassword('passwordRepeat')"
-          placeholder="Введите пароль повторно"
+          placeholder="Введите пароль"
         />
         <small
           v-if="form.password != form.passwordRepeat"
@@ -111,21 +117,25 @@
         </small>
       </b-form-group>
 
-      <b-button
-        class="main-button-big"
-        @click="register()"
-      >
-        Зарегистрироваться
-      </b-button>
+      <b-form-group class="app-new-form-footer">
 
-      <p id="navigation-text">
-        или <router-link
-          style="color: #6C1BD2"
-          :to="{name: 'login'}"
+        <b-button
+          class="app-new-button-main"
+          @click="register()"
         >
-          войдите
-        </router-link> в свой аккаунт
-      </p>
+          Зарегистрироваться
+        </b-button>
+
+        <p class="app-new-info">
+          Нажимая кнопку “Зарегистрироваться” вы соглашаетесь с условиями оферты и политикой конфиденциальности.
+        </p>
+
+        <p class="app-new-login-sub">
+          Или <router-link :to="{name: 'login'}">
+            войдите
+          </router-link> в свой аккаунт
+        </p>
+      </b-form-group>
     </b-form>
   </div>
 </template>

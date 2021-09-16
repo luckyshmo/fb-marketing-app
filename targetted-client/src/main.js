@@ -13,6 +13,8 @@ import Vuelidate from 'vuelidate'
 import VueGtag from 'vue-gtag'
 import VueSimpleAlert from 'vue-simple-alert'
 
+import '@/assets/forms.scss'
+
 import initFacebookSdk from '../src/_helpers/init-facebook-sdk'
 
 Vue.use(VueSimpleAlert)

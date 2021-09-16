@@ -1,6 +1,6 @@
 <template>
   <div id="content-login">
-    <h1 id="h1-centered">
+    <h1 class="app-header">
       Вход
     </h1>
 
@@ -10,13 +10,14 @@
     >
       <b-form-group
         class="input-group"
+        label="Электронная почта"
       >
         <b-form-input
           v-model="email"
           class="form-input"
           type="email"
           :state="validateState('email')"
-          placeholder="Электронная почта"
+          placeholder="Введите почту"
           @click="resetErr()"
         />
         <small
@@ -41,6 +42,7 @@
 
       <b-form-group
         class="input-group"
+        label="Пароль"
       >
         <b-form-input
           id="pas"
@@ -48,7 +50,7 @@
           type="password"
           class="form-input"
           :state="validateState('password')"
-          placeholder="Пароль"
+          placeholder="Введите пароль"
         />
         <b-form-invalid-feedback
           id="pas"
@@ -57,21 +59,23 @@
           Пароль должен быть минимум 8 символов
         </b-form-invalid-feedback>
       </b-form-group>
+
+      <b-form-group class="app-new-form-footer">
       <b-button
         type="submit"
-        class="main-button-big"
+        class="app-new-button-main"
       >
         Войти
       </b-button>
 
-      <p id="navigation-text">
-        или <router-link
-          style="color: #6C1BD2"
-          :to="{name: 'register'}"
-        >
+      <p class="app-new-login-sub">
+        Или <router-link :to="{name: 'register'}">
           зарегистрироваться
         </router-link>
       </p>
+
+      </b-form-group>
+
     </b-form>
   </div>
 </template>
