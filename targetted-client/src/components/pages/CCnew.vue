@@ -1,19 +1,44 @@
 <template>
     <div>
-        <loading v-if="isLoading"/>
-        <div id="content-wrapper">
-            <div id="content">
-            <router-link :to="{name: 'mainPage'}">
-                <p id="navigation-text" style="margin:0;">← К списку кампаний</p>
-            </router-link>
-            <!-- <b-card class="mt-3" header="Form Data Result">
+      <loading v-if="isLoading" />
+      <div id="content-wrapper">
+        <div id="content">
+          <router-link :to="{name: 'mainPage'}">
+            <p id="navigation-text" style="margin:0;">← К списку кампаний</p>
+          </router-link>
+          <!-- <b-card class="mt-3" header="Form Data Result">
                 <pre class="m-0">{{ company }}</pre>
             </b-card> -->
-            <h1>{{isEdit ? "Редактирование":"Создание"}} кампании</h1>
-            <div>
-                <b-form @submit.prevent="createCompany()">
-                    <div>
-                        <h2 id="h2">Доступ к странице Facebook и Instagram</h2>
+          <h1>{{isEdit ? "Редактирование":"Создание"}} кампании</h1>
+          
+          <div> 
+
+            
+
+            <Step1 :label_cols="label_cols"
+                    :content_cols="content_cols"
+                    @logout="logout"
+                    v-if="currentStep ===  1"
+                    @next="saveAndNext"/>
+
+            <Step2 :label_cols="label_cols"
+                    :content_cols="content_cols"
+                    v-if="currentStep ===  2"
+                    @company="company"
+                    @next="saveAndNext"/>
+
+
+                    <hr>
+            <!-- Step3 -->
+            <!-- Step4 -->
+            <!-- Step5 -->
+
+
+        
+
+           <b-form @submit.prevent="createCompany()">
+                    
+                        <!-- <h2 id="h2">Доступ к странице Facebook и Instagram</h2>
                         <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
                             <p>Раздайте доступ к вашей Facebook и Instagram странице<br>для запуска и управления рекламой от имени ваших страниц. </p>
                             <b-button
@@ -24,7 +49,6 @@
                             >
                                 У меня есть бизнес-аккаунт
                             </b-button>
-                            <!-- //TODO ситуация с осутсвием страниц -->
                             <popup
                             v-if="isInfoPopupVisible"
                             popupTitle="Инструкция по созданию бизнесс-аккаунта"
@@ -95,7 +119,7 @@
                         <div v-if="store.getters.GET_FB_PAGES.length > 0 && !isRequestSent && !pageSubmitted">
                             <div>
                                 <p>Выберите страницу которую хотите привязать</p>
-                                <!-- //TODO SELECT -->
+                     
                                 <b-form-group
                                 label="Выберите страницу"
                                 :label-cols="label_cols"
@@ -236,10 +260,10 @@
                         v-model="company.BusinessAddress"
                         placeholder="Точный адрес"
                         ></b-form-input>
-                    </b-form-group>
+                    </b-form-group> -->
 
                     
-                <h2 id="h2">Креативы</h2>
+                <!-- <h2 id="h2">Креативы</h2>
                 <div v-if="isEdit" >
                     <b-form-group
                     v-if="imageNames.length > 0"
@@ -324,11 +348,10 @@
                                 <div
                                 @click="$refs.fileInput.click()"
                                 id="load-frame">
-                                <!-- Обводка у кнопок -->
-                                <!-- ПОехал размер -->
+                    
                                     <p id="load-file">Загрузить<br>файл</p>
                                     <p id="file-size-big">Размер<br>1920х1080рх</p>
-                                    <!-- TODO FILL -->
+                                    
                                 </div>
                             </div>
                         </div>
@@ -438,13 +461,11 @@
                         type="submit"
                     >
                         {{isEdit ? "Назад":"Продолжить"}}
-                    </b-button>
+                    </b-button> -->
                 </b-form>
-            </div>
+          </div>
         </div>
-        </div>
-
-  
+      </div>
     </div>
 
 </template>
@@ -473,12 +494,12 @@ export default {
   },
   data () {
     return {
+      currentStep: 1,
+      totalSteps: 2,
       store,
       isLoading: false,
       isCompanyExist: false,
       isInfoPopupVisible: false,
-      label_cols: this.getWidth().label,
-      content_cols: this.getWidth().content,
       isRequestSent: false,
       pageSubmitted: false,
       imageNames: [],
@@ -534,9 +555,12 @@ export default {
   computed: {
     isEdit () {
       return this.$route.query.isEdit === 'true'
-    }
+    },
+      label_cols() { return this.getWidth().label},
+      content_cols() { return this.getWidth().content },
   },
   beforeMount () {
+      this.getWidth();
     console.log('BM ', store.getters.GET_EMAIL)
     if (!(typeof this.$router.history.current.params.id === 'undefined')) {
       axios({ url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`, method: 'GET' })
@@ -570,6 +594,13 @@ export default {
     }
   },
   methods: {
+    saveAndNext(){
+        debugger
+        this.currentStep++;
+        if(this.currentStep > this.totalSteps) {
+            this.createCompany();
+        }
+    },
     reset () {
       this.isCompanyExist = false
       this.Images = []
@@ -594,8 +625,8 @@ export default {
       this.isInfoPopupVisible = false
       this.isRequestSent = false
       this.pageSubmitted = false
-      this.label_cols = this.getWidth().label
-      this.content_cols = this.getWidth().content
+      // this.label_cols = this.getWidth().label
+      // this.content_cols = this.getWidth().content
     },
     getFBRedirect () {
       return `https://facebook.com/${this.company.FbPageId}/settings/?tab=admin_roles`
