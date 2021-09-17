@@ -1,6 +1,8 @@
 <template>
 <div>
   <h2 id="h2">Доступ к странице Facebook и Instagram</h2>
+
+  {{company}}
   
   <b-form>
     <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
@@ -154,8 +156,8 @@
     </b-form-group> 
    
    <b-form-group >
-          <b-button class="app-new-submit-button" @click="$emit('next', company)">
-              {{isEdit ? "Назад":"Продолжить111"}}
+          <b-button type="button" class="app-new-submit-button" @click="sendData">
+              {{isEdit ? "Назад":"Продолжить"}}
           </b-button>
    </b-form-group>
         
@@ -175,16 +177,15 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
     name: 'Step1',
-    props: ['label_cols', 'content_cols'],
+    props: ['label_cols', 'content_cols', 'isEdit'],
     components: {
       popup
     },
     data: function() {
     return {
-        store, //fixme
-        isEdit: false,
-        isInfoPopupVisible: false,
-          isRequestSent: false,
+      store, //fixme
+      isInfoPopupVisible: false,
+      isRequestSent: false,
       pageSubmitted: false,
       isCompanyExist: false,
         company: {
@@ -205,6 +206,12 @@ export default {
     }
     },
     methods: {
+      sendData(){
+      //if(this.company)
+        this.$emit('next', {
+          'company': {}
+          })
+      },
           loginFB () {
       accountService.login()
     },

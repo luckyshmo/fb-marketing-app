@@ -9,20 +9,25 @@
           <!-- <b-card class="mt-3" header="Form Data Result">
                 <pre class="m-0">{{ company }}</pre>
             </b-card> -->
+            {{currentStep}}
+
+            {{company}}
           <h1>{{isEdit ? "Редактирование":"Создание"}} кампании</h1>
           
           <div> 
-
+dasdasd
             
 
             <Step1 :label_cols="label_cols"
                     :content_cols="content_cols"
+                    :isEdit="isEdit"
                     @logout="logout"
                     v-if="currentStep ===  1"
                     @next="saveAndNext"/>
 
             <Step2 :label_cols="label_cols"
                     :content_cols="content_cols"
+                    :isEdit="isEdit"
                     v-if="currentStep ===  2"
                     @company="company"
                     @next="saveAndNext"/>
@@ -560,7 +565,7 @@ export default {
       content_cols() { return this.getWidth().content },
   },
   beforeMount () {
-      this.getWidth();
+
     console.log('BM ', store.getters.GET_EMAIL)
     if (!(typeof this.$router.history.current.params.id === 'undefined')) {
       axios({ url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`, method: 'GET' })
@@ -594,12 +599,19 @@ export default {
     }
   },
   methods: {
-    saveAndNext(){
-        debugger
-        this.currentStep++;
+    saveAndNext(data){
+        console.log(data.company)
+
+        if(data.company){
+          this.company = company
+        }
+
+        this.currentStep = this.currentStep + 1;
         if(this.currentStep > this.totalSteps) {
             this.createCompany();
         }
+
+        debugger
     },
     reset () {
       this.isCompanyExist = false
@@ -634,16 +646,16 @@ export default {
     resetNameErr () {
       this.isCompanyExist = false
     },
-    validateState (name) {
-      const { $dirty, $error } = this.$v.company[name]
-      return $dirty ? !$error : null
-    },
-    validateImages () {
-      return this.Images.length === 0
-    },
-    validateImagesSmall () {
-      return this.ImagesSmall.length === 0
-    },
+    // validateState (name) {
+    //   const { $dirty, $error } = this.$v.company[name]
+    //   return $dirty ? !$error : null
+    // },
+    // validateImages () {
+    //   return this.Images.length === 0
+    // },
+    // validateImagesSmall () {
+    //   return this.ImagesSmall.length === 0
+    // },
     getImages () {
       axios({ url: `${VUE_APP_API_URL}/api/company/${this.company.Id}/images/`, method: 'GET' })
         .then(resp => {
@@ -693,28 +705,28 @@ export default {
     showPopupInfo () {
       this.isInfoPopupVisible = true
     },
-    removeImageSmall (Image) {
-      this.remove(this.ImagesSmall, Image)
-      for (let i = 0; i < this.ImagesSmall.length; i++) {
-        const reader = new FileReader()
-        reader.onload = () => {
-          this.$refs.ImageSmall[i].src = reader.result
-        }
+    // removeImageSmall (Image) {
+    //   this.remove(this.ImagesSmall, Image)
+    //   for (let i = 0; i < this.ImagesSmall.length; i++) {
+    //     const reader = new FileReader()
+    //     reader.onload = () => {
+    //       this.$refs.ImageSmall[i].src = reader.result
+    //     }
 
-        reader.readAsDataURL(this.ImagesSmall[i])
-      }
-    },
-    removeImage (Image) {
-      this.remove(this.Images, Image)
-      for (let i = 0; i < this.Images.length; i++) {
-        const reader = new FileReader()
-        reader.onload = () => {
-          this.$refs.Image[i].src = reader.result
-        }
+    //     reader.readAsDataURL(this.ImagesSmall[i])
+    //   }
+    // },
+    // removeImage (Image) {
+    //   this.remove(this.Images, Image)
+    //   for (let i = 0; i < this.Images.length; i++) {
+    //     const reader = new FileReader()
+    //     reader.onload = () => {
+    //       this.$refs.Image[i].src = reader.result
+    //     }
 
-        reader.readAsDataURL(this.Images[i])
-      }
-    },
+    //     reader.readAsDataURL(this.Images[i])
+    //   }
+    // },
     remove (arr, img) {
       for (let i = 0; i < arr.length; i++) {
         if (arr[i].name === img.name) {
@@ -722,30 +734,30 @@ export default {
         }
       }
     },
-    getStoriesLabel () {
-      if (!this.isCreative()) {
-        return 'Креативы для Сториз'
-      }
-      return 'Картинки для Сториз'
-    },
-    getPostLabel () {
-      if (!this.isCreative()) {
-        return 'Креативы для поста в ленте'
-      }
-      return 'Картинки для поста в ленте'
-    },
-    isCreative () {
-      return this.company.CreativeStatus === 'Создать рекламные креативы'
-    },
-    textOnSlide (index) {
-      return `Текст на слайде ${index + 1}`
-    },
-    textOnImage (index) {
-      return `Текст на картинке ${index + 1}`
-    },
-    loginFB () {
-      accountService.login()
-    },
+    // getStoriesLabel () {
+    //   if (!this.isCreative()) {
+    //     return 'Креативы для Сториз'
+    //   }
+    //   return 'Картинки для Сториз'
+    // },
+    // getPostLabel () {
+    //   if (!this.isCreative()) {
+    //     return 'Креативы для поста в ленте'
+    //   }
+    //   return 'Картинки для поста в ленте'
+    // },
+    // isCreative () {
+    //   return this.company.CreativeStatus === 'Создать рекламные креативы'
+    // },
+    // textOnSlide (index) {
+    //   return `Текст на слайде ${index + 1}`
+    // },
+    // textOnImage (index) {
+    //   return `Текст на картинке ${index + 1}`
+    // },
+    // loginFB () {
+    //   accountService.login()
+    // },
     createCompany () {
       if (!this.isEdit) { // TODO isEdit = isInView for some time
         this.$v.$touch()

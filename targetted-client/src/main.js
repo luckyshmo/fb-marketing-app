@@ -26,19 +26,23 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.config.productionTip = false
 
+const isProd = process.env.NODE_ENV === 'production';
+
 // this.$http для использования axios
 Vue.prototype.$http = Axios
 
-Sentry.init({
-  Vue,
-  dsn: 'https://82f24fb7c99446c4b66188326b3dc99b@o918498.ingest.sentry.io/5861741',
-  integrations: [new Integrations.BrowserTracing()],
+if (isProd) {
+  Sentry.init({
+    Vue,
+    dsn: 'https://82f24fb7c99446c4b66188326b3dc99b@o918498.ingest.sentry.io/5861741',
+    integrations: [new Integrations.BrowserTracing()],
 
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0
-})
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 1.0
+  })
+}
 
 const responseSuccessHandler = response => {
   return response
@@ -68,15 +72,17 @@ if (token) {
   Vue.prototype.$http.defaults.headers.common.Authorization = token
 }
 
-Vue.use(VueGtag, {
-  config: { id: 'G-BNXZ7KHKQH' },
-  appName: 'Targetted',
-  pageTrackerScreenviewEnabled: true
-}, router)
+if (isProd) {
+  Vue.use(VueGtag, {
+    config: { id: 'G-BNXZ7KHKQH' },
+    appName: 'Targetted',
+    pageTrackerScreenviewEnabled: true
+  }, router)
+}
+if (isProd) {
+  initFacebookSdk()
+}
 
-Vue.config.productionTip = false
-
-initFacebookSdk()
 new Vue({
   render: h => h(App),
   router

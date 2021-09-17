@@ -127,16 +127,15 @@ import {APP_UI_URL} from '@/constants'
 
 export default {
     name: 'Step2',
-    props: ['label_cols', 'content_cols', 'company'],
-        data: function() {
-    return {
-        store, //fixme
-        isEdit: false,
-         imageNames: [],
-      ImagesSmall: [],
-      Images: [],
-    }
-        },
+    props: ['label_cols', 'content_cols', 'company', 'isEdit'],
+    data: function() {
+      return {
+          store, //fixme
+          imageNames: [],
+          ImagesSmall: [],
+          Images: [],
+      }
+    },
     methods: {
           getImageByName (name) {
       const uID = this.company.UserId
@@ -170,7 +169,7 @@ export default {
       isCreative () {
         return this.company.CreativeStatus === 'Создать рекламные креативы'
       },
-          validateImagesSmall () {
+    validateImagesSmall () {
       return this.ImagesSmall.length === 0
     },
       onSmallFileSelected (e) {
