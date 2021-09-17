@@ -14,7 +14,7 @@
 import store from '@/../store/store'
 
 export default {
-  name: 'Step3',
+  name: 'Step5',
     props: ['label_cols', 'content_cols', 'company', 'isEdit'],
     data: function () {
         return {

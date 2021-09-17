@@ -9,37 +9,68 @@
           <!-- <b-card class="mt-3" header="Form Data Result">
                 <pre class="m-0">{{ company }}</pre>
             </b-card> -->
-            {{currentStep}}
-
-            {{company}}
-          <h1>{{isEdit ? "Редактирование":"Создание"}} кампании</h1>
+          <!-- <h1>{{isEdit ? "Редактирование":"Создание"}} кампании</h1> -->
           
           <div> 
-dasdasd
-            
+
 
             <Step1 :label_cols="label_cols"
                     :content_cols="content_cols"
                     :isEdit="isEdit"
                     @logout="logout"
                     v-if="currentStep ===  1"
-                    @next="saveAndNext"/>
+                    @next="saveAndNext">
+
+                     <template v-slot:header>
+                       <h1 id="h2">Шаг 1.<br>О бизнесе</h1>
+                     </template>
+            </Step1>
 
             <Step2 :label_cols="label_cols"
                     :content_cols="content_cols"
                     :isEdit="isEdit"
                     v-if="currentStep ===  2"
-                    @company="company"
-                    @next="saveAndNext"/>
+                    :company="company"
+                    @next="saveAndNext">
+                    <template v-slot:header>
+                      <h1 id="h2">Шаг 2.<br>Изображения </h1>
+                     </template>
+            </Step2>
 
 
-                    <hr>
-            <!-- Step3 -->
-            <!-- Step4 -->
-            <!-- Step5 -->
+            <Step3 :label_cols="label_cols"
+                    :content_cols="content_cols"
+                    :isEdit="isEdit"
+                    v-if="currentStep ===  3"
+                    :company="company"
+                    @next="saveAndNext">
+                    <template v-slot:header>
+                      <h1 id="h2">Шаг 3.<br>Аудитория</h1>
+                     </template>
+            </Step3>
+
+            <Step4 :label_cols="label_cols"
+                    :content_cols="content_cols"
+                    :isEdit="isEdit"
+                    v-if="currentStep ===  4"
+                    :company="company"
+                    @next="saveAndNext">
+                    <template v-slot:header>
+                      <h1 id="h2">Шаг 4.<br>Бизнес-аккаунт</h1>
+                     </template>
+            </Step4>
 
 
-        
+            <Step5 :label_cols="label_cols"
+                    :content_cols="content_cols"
+                    :isEdit="isEdit"
+                    v-if="currentStep ===  5"
+                    :company="company"
+                    @next="saveAndNext">
+                    <template v-slot:header>
+                      <h1 id="h2">Шаг 5.<br>Охват</h1>
+                     </template>
+            </Step5>
 
            <b-form @submit.prevent="createCompany()">
                     
@@ -485,6 +516,9 @@ import { required, maxLength, minLength } from 'vuelidate/lib/validators'
 
 import Step1 from './campagin-creation/Step1.vue';
 import Step2 from './campagin-creation/Step2.vue';
+import Step3 from './campagin-creation/Step3.vue';
+import Step4 from './campagin-creation/Step4.vue';
+import Step5 from './campagin-creation/Step5.vue';
 
 import loading from '../Loading.vue'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -495,12 +529,15 @@ export default {
     popup,
     loading,
     Step1,
-    Step2
+    Step2,
+    Step3,
+    Step4,
+    Step5,
   },
   data () {
     return {
       currentStep: 1,
-      totalSteps: 2,
+      totalSteps: 5,
       store,
       isLoading: false,
       isCompanyExist: false,
@@ -603,15 +640,16 @@ export default {
         console.log(data.company)
 
         if(data.company){
-          this.company = company
+          this.company = {
+            ...this.company,
+            ...data.company
+          }
         }
 
         this.currentStep = this.currentStep + 1;
         if(this.currentStep > this.totalSteps) {
             this.createCompany();
         }
-
-        debugger
     },
     reset () {
       this.isCompanyExist = false
@@ -640,22 +678,10 @@ export default {
       // this.label_cols = this.getWidth().label
       // this.content_cols = this.getWidth().content
     },
-    getFBRedirect () {
-      return `https://facebook.com/${this.company.FbPageId}/settings/?tab=admin_roles`
-    },
+
     resetNameErr () {
       this.isCompanyExist = false
     },
-    // validateState (name) {
-    //   const { $dirty, $error } = this.$v.company[name]
-    //   return $dirty ? !$error : null
-    // },
-    // validateImages () {
-    //   return this.Images.length === 0
-    // },
-    // validateImagesSmall () {
-    //   return this.ImagesSmall.length === 0
-    // },
     getImages () {
       axios({ url: `${VUE_APP_API_URL}/api/company/${this.company.Id}/images/`, method: 'GET' })
         .then(resp => {
@@ -675,11 +701,7 @@ export default {
           }
         })
     },
-    getImageByName (name) {
-      const uID = this.company.UserId
-      const cID = this.company.Id
-      return `https://client.targetted.online/images/${uID}/${cID}${name}`
-    },
+
     getWidth () {
       const width = Math.max(
         document.body.scrollWidth,
@@ -699,65 +721,7 @@ export default {
         content: 9
       }
     },
-    closeInfoPopup () {
-      this.isInfoPopupVisible = false
-    },
-    showPopupInfo () {
-      this.isInfoPopupVisible = true
-    },
-    // removeImageSmall (Image) {
-    //   this.remove(this.ImagesSmall, Image)
-    //   for (let i = 0; i < this.ImagesSmall.length; i++) {
-    //     const reader = new FileReader()
-    //     reader.onload = () => {
-    //       this.$refs.ImageSmall[i].src = reader.result
-    //     }
 
-    //     reader.readAsDataURL(this.ImagesSmall[i])
-    //   }
-    // },
-    // removeImage (Image) {
-    //   this.remove(this.Images, Image)
-    //   for (let i = 0; i < this.Images.length; i++) {
-    //     const reader = new FileReader()
-    //     reader.onload = () => {
-    //       this.$refs.Image[i].src = reader.result
-    //     }
-
-    //     reader.readAsDataURL(this.Images[i])
-    //   }
-    // },
-    remove (arr, img) {
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i].name === img.name) {
-          arr.splice(i, 1)
-        }
-      }
-    },
-    // getStoriesLabel () {
-    //   if (!this.isCreative()) {
-    //     return 'Креативы для Сториз'
-    //   }
-    //   return 'Картинки для Сториз'
-    // },
-    // getPostLabel () {
-    //   if (!this.isCreative()) {
-    //     return 'Креативы для поста в ленте'
-    //   }
-    //   return 'Картинки для поста в ленте'
-    // },
-    // isCreative () {
-    //   return this.company.CreativeStatus === 'Создать рекламные креативы'
-    // },
-    // textOnSlide (index) {
-    //   return `Текст на слайде ${index + 1}`
-    // },
-    // textOnImage (index) {
-    //   return `Текст на картинке ${index + 1}`
-    // },
-    // loginFB () {
-    //   accountService.login()
-    // },
     createCompany () {
       if (!this.isEdit) { // TODO isEdit = isInView for some time
         this.$v.$touch()
@@ -835,74 +799,13 @@ export default {
         router.push({ path: '/company-balance/' + this.company.Id, query: { isEdit: false } })
       }
     },
-    sendFbRequest () {
-      this.isLoading = true
-      axios({ url: `${VUE_APP_API_URL}/api/facebook/claim/${this.company.FbPageId}`, method: 'POST' })
-        .then(resp => {
-          this.isLoading = false
-          console.log(resp)
-          this.isRequestSent = true
-        })
-        .catch(err => {
-          this.isLoading = false
-          this.$alert(err.response.data.message)
-        })
-    },
-    checkPageSubmitted () {
-      this.isLoading = true
-      axios({ url: `${VUE_APP_API_URL}/api/facebook/owned/${this.company.FbPageId}`, method: 'GET' })
-        .then(resp => {
-          this.isLoading = false
-          console.log(resp)
-          this.pageSubmitted = true
-        })
-        .catch(err => {
-          this.isLoading = false
-          console.log(err.response.data)
-          this.$alert(err.response.data.message)
-        })
-    },
+
     logout () {
       this.pageSubmitted = false
       this.isRequestSent = false
       accountService.logout()
     },
-    onFileSelected (e) {
-      if (e != null) {
-        const selectedFiles = e.target.files
-        const len = Math.min(selectedFiles.length, 5 - this.Images.length)
-        for (let i = 0; i < len; i++) {
-          this.Images.push(selectedFiles[i])
-        }
 
-        for (let i = 0; i < this.Images.length; i++) {
-          const reader = new FileReader()
-          reader.onload = () => {
-            this.$refs.Image[i].src = reader.result
-          }
-
-          reader.readAsDataURL(this.Images[i])
-        }
-      }
-    },
-    onSmallFileSelected (e) {
-      if (e != null) {
-        const selectedFiles = e.target.files
-        const len = Math.min(selectedFiles.length, 5 - this.ImagesSmall.length)
-        for (let i = 0; i < len; i++) {
-          this.ImagesSmall.push(selectedFiles[i])
-        }
-
-        for (let i = 0; i < this.ImagesSmall.length; i++) {
-          const reader = new FileReader()
-          reader.onload = () => {
-            this.$refs.ImageSmall[i].src = reader.result
-          }
-
-          reader.readAsDataURL(this.ImagesSmall[i])
-        }
-      }
-    }
   }
 }
 </script>
