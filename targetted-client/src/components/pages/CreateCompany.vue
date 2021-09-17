@@ -449,6 +449,13 @@
 
 </template>
 <script>
+
+// !!!!!!!!!!!!
+// удалить эту страницу и переименовать
+// CCnew.vue в CreateCompany.vue
+// когда рефакторинг будет закончен
+// !!!!!!!!!!!!
+
 import accountService from '../../_services/account.service'
 import store from '../../../store/store'
 import router from '../../../router/router'
@@ -456,9 +463,6 @@ import axios from 'axios'
 import popup from '../BigPopup.vue'
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
-
-import Step1 from './campagin-creation/Step1.vue';
-import Step2 from './campagin-creation/Step2.vue';
 
 import loading from '../Loading.vue'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -468,8 +472,6 @@ export default {
   components: {
     popup,
     loading,
-    Step1,
-    Step2
   },
   data () {
     return {

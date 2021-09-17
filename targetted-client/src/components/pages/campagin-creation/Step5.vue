@@ -3,7 +3,9 @@
         <slot name="header"></slot>
         <b-form>
             ...
-        <b-button class="app-new-submit-button" type="submit">
+        <b-button type="button"
+                        class="app-new-submit-button"
+                        @click="sendData">
         {{isEdit ? "Назад":"Продолжить"}}
       </b-button>
     </b-form>
@@ -21,6 +23,12 @@ export default {
           store, //fixme
         }
       },
+    methods: {
+        sendData(){
+            //todo
+            this.$emit('next');
+        }
+    }
 }
 </script>
 

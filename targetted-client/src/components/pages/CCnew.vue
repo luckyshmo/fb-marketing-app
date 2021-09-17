@@ -72,433 +72,6 @@
                      </template>
             </Step5>
 
-           <b-form @submit.prevent="createCompany()">
-                    
-                        <!-- <h2 id="h2">Доступ к странице Facebook и Instagram</h2>
-                        <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
-                            <p>Раздайте доступ к вашей Facebook и Instagram странице<br>для запуска и управления рекламой от имени ваших страниц. </p>
-                            <b-button
-                                v-if="!(store.getters.GET_FB_PAGES.length > 0)"
-
-                                class="main-button"
-                                @click="loginFB"
-                            >
-                                У меня есть бизнес-аккаунт
-                            </b-button>
-                            <popup
-                            v-if="isInfoPopupVisible"
-                            popupTitle="Инструкция по созданию бизнесс-аккаунта"
-                            @closePopup="closeInfoPopup"
-                            >
-                                <div style="text-align: left; padding: 30px">
-                                    <h1 style="margin=0px !important;">Как создать<br>бизнес-аккаунт</h1>
-                                    <p>Профессиональный аккаунт в Instagram необходим для того,<br>чтобы мы могли запустить и управлять рекламными кампаниями <br>от имени вашего бизнеса. </p>
-                                    <div class="num-wrapper">
-                                        <div class="num">
-                                            <div class="num-num">
-                                                1
-                                            </div>
-                                        </div>
-                                        <p class="num-text">Откройте мобильное приложение Инстаграм.</p>
-                                    </div>
-                                    <div class="num-wrapper">
-                                        <div class="num">
-                                            <div class="num-num">
-                                                2
-                                            </div>
-                                        </div>
-                                        <p class="num-text">Зайдите в настройки профиля. </p>
-                                    </div>
-                                    <div class="num-wrapper">
-                                        <div class="num">
-                                            <div class="num-num">
-                                                3
-                                            </div>
-                                        </div>
-                                        <p class="num-text">Нажмите на вкладку “Переключиться на профессиональный аккаунт”.</p>
-                                    </div>
-                                    <div class="num-wrapper">
-                                        <div class="num">
-                                            <div class="num-num">
-                                                4
-                                            </div>
-                                        </div>
-                                        <p class="num-text">Дайте разрешение приложению Инстаграма управлять вашими Фейсбук-страницами. Не вашим личным аккаунтом, а именно страницами в Фейсбуке, к которым вы имеете доступ. Вы можете выбрать или существующую страницу в Facebook, к которой у вас есть доступ, или создать новую. </p>
-                                    </div>
-                                    <div class="num-wrapper">
-                                        <div class="num">
-                                            <div class="num-num">
-                                                5
-                                            </div>
-                                        </div>
-                                        <p class="num-text">Настройка контактной информации для профиля Инстаграма. Укажите в соответствующие поля рабочий email компании, номер телефона и физический адрес (если есть).</p>
-                                    </div>
-                                    <div class="num-wrapper">
-                                        <div class="num">
-                                            <div class="num-num">
-                                                6
-                                            </div>
-                                        </div>
-                                        <p class="num-text">Когда вы прошли все шаги и включили профессиональный аккаунт, то, пожалуйста, вернитесь на сайт client.targetted.online и нажмите кнопку “у меня есть профессиональный аккаунт” и следуйте дальнейшим инструкциям на сайте.</p>
-                                    </div>
-                                </div>
-                            </popup>
-                            <b-button
-                                v-if="!(store.getters.GET_FB_PAGES.length > 0)"
-                                class="main-button"
-                                id="primary-under"
-                                @click="showPopupInfo"
-                            >
-                                Нет бизнес-аккаунта
-                            </b-button>
-                        </div>
-                        <div v-if="store.getters.GET_FB_PAGES.length > 0 && !isRequestSent && !pageSubmitted">
-                            <div>
-                                <p>Выберите страницу которую хотите привязать</p>
-                     
-                                <b-form-group
-                                label="Выберите страницу"
-                                :label-cols="label_cols"
-                                :content-cols="content_cols"
-                                id="input-group-main"
-                                label-for="input-horizontal"
-                                >
-                                    <b-form-radio-group
-                                        v-model="company.FbPageId"
-                                        :options="store.getters.GET_FB_PAGES"
-                                    ></b-form-radio-group>
-                                </b-form-group>
-                            </div>
-                            <b-button
-                                class="main-button"
-                                @click="sendFbRequest()"
-                            >
-                                Привязать
-                            </b-button>
-                        </div>
-                        <div v-if="isRequestSent && !pageSubmitted">
-                            <p>Зайди в аккаунт на Facebook и подтверди привязку страницы в сообщениях</p>
-                            <b-button
-                                class="main-button"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                :href=getFBRedirect()
-                            >
-                            Перейти в facebook
-                            </b-button>
-                            <b-button
-
-                                class="main-button"
-                                id="primary-under"
-                                @click="checkPageSubmitted()"
-                            >
-                                Я подтвердил в сообщениях
-                            </b-button>
-                        </div>
-                        <div v-if="pageSubmitted">
-                            <div class="c-status" style="margin-top: 30px; max-width: 800px">
-                                <div class="elipse" id="green"></div>
-                                <p class="c-status-text" id="c-status-text-u" style="text-align: left;"
-                                >Страница {{company.FbPageId}} привязана к targetted</p>
-                            </div>
-                        </div>
-                        <b-button
-                            v-if="store.getters.GET_FB_PAGES.length > 0 ||
-                            (isRequestSent && pageSubmitted) ||
-                            (store.getters.GET_FB_PAGES.length == 0 || isRequestSent)"
-
-                            class="main-button-grey"
-                            style="margin-top: 30px; background: #F3F3F3; color: black"
-                            @click="logout"
-                        >
-                            Привязать другой аккаунт
-                        </b-button>
-                    </div>
-
-                    <h2 id="h2">Основное</h2>
-
-                    <b-form-group
-                        label="Название кампании"
-                        :label-cols="label_cols"
-                        :content-cols="content_cols"
-                        id="input-group-main"
-                        label-for="input-horizontal"
-                    >
-                        <b-form-input
-                        class="form-input"
-                        id="c-name"
-                        v-model="company.CompanyName"
-                        :disabled="isEdit"
-                        :state="validateState('CompanyName')"
-                        placeholder="Введите название"
-                        @click="resetNameErr()"
-                        ></b-form-input>
-                        <b-form-invalid-feedback
-                        class="error-message"
-                        id="c-name">
-                            Название должно быть между 3 и 30 символами
-                        </b-form-invalid-feedback>
-                        <small v-if="isCompanyExist" class="error-message">
-                            Кампания с таким иминем уже создана
-                        </small>
-                    </b-form-group>
-
-                    <b-form-group
-                        label="Цель кампании"
-                        :label-cols="label_cols"
-                        :content-cols="content_cols"
-                        id="input-group-main"
-                        label-for="input-horizontal"
-                    >
-                        <b-form-radio-group
-                            v-model="company.CompnayPurpose"
-                            :disabled="isEdit"
-                            :options="[
-                                'Сообщения в директ',
-                                'Подписки в instagram',
-                                'Заявки через форму обратной связи',
-                                'Целевое действие на сайте'
-                            ]"
-                        ></b-form-radio-group>
-                    </b-form-group>
-
-                    <b-form-group
-                        label="Сфера деятельности"
-                        :label-cols="label_cols"
-                        :content-cols="content_cols"
-                        id="input-group-main"
-                        label-for="input-horizontal"
-                    >
-                        <b-form-input
-                        class="form-input"
-                        :disabled="isEdit"
-                        v-model="company.CompanyField"
-                        :state="validateState('CompanyField')"
-                        placeholder="Вставьте ссылку"
-                        ></b-form-input>
-                        <b-form-invalid-feedback
-                        class="error-message">
-                            Обязательное поле
-                        </b-form-invalid-feedback>
-                    </b-form-group>
-
-                    <b-form-group
-                        label="Адрес бизнеса"
-                        :label-cols="label_cols"
-                        :content-cols="content_cols"
-                        id="input-group-main"
-                        label-for="input-horizontal"
-                        description="Нужен только для офлайн бизнеса"
-                    >
-                        <b-form-input
-                        class="form-input"
-                        :disabled="isEdit"
-                        v-model="company.BusinessAddress"
-                        placeholder="Точный адрес"
-                        ></b-form-input>
-                    </b-form-group> -->
-
-                    
-                <!-- <h2 id="h2">Креативы</h2>
-                <div v-if="isEdit" >
-                    <b-form-group
-                    v-if="imageNames.length > 0"
-                    label="Уже имеющиеся креативы"
-                    :label-cols="label_cols"
-                    :content-cols="content_cols"
-                    id="input-group-main"
-                    label-for="input-horizontal"
-                    >
-                        <div id="image-block">
-                            <div
-                            v-for="(name) in imageNames"
-                            :key="name">
-                            <div>
-                                <img id="preview" :src="getImageByName(name)"/>
-                            </div>
-                            </div>
-                        </div>
-                    </b-form-group>
-                </div>
-
-                <div v-if="!isEdit">
-                    <b-form-group
-                            label="Наличие креативов"
-                            :label-cols="label_cols"
-                            :content-cols="content_cols"
-                            id="input-group-main"
-                            label-for="input-horizontal"
-                    >
-                        <b-form-radio-group
-                            v-model="company.CreativeStatus"
-                            :options="[
-                                'Есть рекламные креативы',
-                                'Создать рекламные креативы'
-                            ]"
-                        ></b-form-radio-group>
-                    </b-form-group>
-
-                    <div class="creative-message">
-                        <div
-                        v-if="isCreative()">
-                            Для создания рекламных креативов загрузите картинки и напишите текст, который будет на них отображаться. <a href="https://docs.google.com/document/d/1gqOkpxDJ1wNt-AYlt5Q1Et1kF8NRLRYdG-dXK7WdT1k/edit?usp=sharing" style="color: #6C1BD2" target="_blank">Посмотрите пример,</a> как это будет выглядеть и подробную инструкцию.
-                        </div>
-                        <div
-                        v-if="!isCreative()">
-                            <a href="https://docs.google.com/document/d/1DGJQw2lw_Y6KzyPeqA6To8u9UuiYi2Kokx_yjvTxgKE/edit?usp=sharing" style="color: #6C1BD2" target="_blank">Воспользуйтесь советами</a> при самостоятельном создании креативов, чтобы увеличить эффективность рекламной кампании.
-                        </div>
-                    </div>
-
-                    <b-form-group
-                            :label="getStoriesLabel()"
-                            :label-cols="label_cols"
-                            :state="validateImages()"
-                            id="input-group-main"
-                            label-for="input-horizontal"
-                            description="До 5 слайдов в сториз"
-                    >
-                        <div id="image-block">
-                            <div
-                            v-for="(Image, key) in Images"
-                            :key="key">
-                                <div>
-                                    <div
-                                    id="icon-div-image">
-                                        <b-icon
-                                        @click.stop="removeImage(Image)"
-                                        class="x-button"
-                                        icon="x"></b-icon>
-                                    </div>
-                                    <img id="preview" :ref="'Image'" />
-                                </div>
-                            </div>
-
-                            <div v-if="Images.length < 5">
-                                <input
-                                style="display: none"
-                                type="file"
-                                multiple
-                                accept="Image/gif, Image/jpeg, Image/png, Image/jpg"
-                                @change="onFileSelected"
-                                ref="fileInput">
-                                <div
-                                @click="$refs.fileInput.click()"
-                                id="load-frame">
-                    
-                                    <p id="load-file">Загрузить<br>файл</p>
-                                    <p id="file-size-big">Размер<br>1920х1080рх</p>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        <b-form-invalid-feedback
-                        class="error-message">
-                            Необходим минимум один файл
-                        </b-form-invalid-feedback>
-                    </b-form-group>
-                    <div v-if="isCreative()">
-                        <div
-                        v-for="(Image, index) in Images"
-                        :key="Image.name">
-                            <b-form-group
-                                :label="textOnSlide(index)"
-                                :label-cols="label_cols"
-                                :content-cols="content_cols"
-                                id="input-group-main"
-                                label-for="input-horizontal"
-                            >
-                                <b-form-input
-                                class="form-input"
-                                v-model="company.ImagesDescription[index]"
-                                placeholder="Введите текст"
-                                ></b-form-input>
-                            </b-form-group>
-                        </div>
-                    </div>
-                    <b-form-group
-                            :label="getPostLabel()"
-                            :label-cols="label_cols"
-                            :state="validateImagesSmall()"
-                            id="input-group-main"
-                            label-for="input-horizontal"
-                            description="До 5 слайдов в посте"
-                    >
-
-                        <div id="image-block">
-                            <div
-                            v-for="(Image, key) in ImagesSmall"
-                            :key="key" style="width: 160px; height: 160px;">
-                                <div id="icon-div-image">
-                                    <b-icon
-                                    @click.stop="removeImageSmall(Image)"
-                                    class="x-button"
-                                    icon="x"></b-icon>
-                                </div>
-                                <img id="preview-small" :ref="'ImageSmall'" />
-                            </div>
-                            <div v-if="ImagesSmall.length < 5">
-                                <input
-                                style="display: none"
-                                type="file"
-                                multiple
-                                accept="Image/gif, Image/jpeg, Image/png, Image/jpg"
-                                @change="onSmallFileSelected"
-                                ref="smallFileInput">
-                                <div
-                                @click="$refs.smallFileInput.click()"
-                                id="load-frame-small">
-                                    <p id="load-file">Загрузить<br>файл</p>
-                                    <p id="file-size">Размер<br>1080х1080рх</p>
-                                </div>
-                            </div>
-                        </div>
-                        <b-form-invalid-feedback
-                        class="error-message">
-                            Необходим минимум один файл
-                        </b-form-invalid-feedback>
-                    </b-form-group>
-                    <div v-if="isCreative()">
-                        <div
-                        v-for="(Image, index) in ImagesSmall"
-                        :key="Image.name">
-                            <b-form-group
-                                :label="textOnImage(index)"
-                                :label-cols="label_cols"
-                                :content-cols="content_cols"
-                                id="input-group-main"
-                                label-for="input-horizontal"
-                            >
-                                <b-form-input
-                                class="form-input"
-                                v-model="company.ImagesSmallDescription[index]"
-                                placeholder="Введите текст"
-                                ></b-form-input>
-                            </b-form-group>
-                        </div>
-                    </div>
-                </div>
-                <b-form-group
-                v-if="ImagesSmall.length > 0"
-                        label="Описание под постом в ленте"
-                        :label-cols="label_cols"
-                        :content-cols="content_cols"
-                        id="input-group-main"
-                        label-for="input-horizontal"
-                    >
-                        <b-form-textarea
-                        class="form-input"
-                        style="height: 100px"
-                        v-model="company.PostDescription"
-                        placeholder="Введите текст"
-                        ></b-form-textarea>
-                    </b-form-group>
-                    <b-button
-                        class="submit-button"
-                        type="submit"
-                    >
-                        {{isEdit ? "Назад":"Продолжить"}}
-                    </b-button> -->
-                </b-form>
           </div>
         </div>
       </div>
@@ -509,7 +82,7 @@
 import accountService from '../../_services/account.service'
 import store from '../../../store/store'
 import router from '../../../router/router'
-import axios from 'axios'
+import {instance as axios} from '../../_services/index';
 import popup from '../BigPopup.vue'
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
@@ -519,6 +92,23 @@ import Step2 from './campagin-creation/Step2.vue';
 import Step3 from './campagin-creation/Step3.vue';
 import Step4 from './campagin-creation/Step4.vue';
 import Step5 from './campagin-creation/Step5.vue';
+
+const companyDefault = {
+        FbPageId: '',
+        Id: '',
+        CompanyName: '',
+        CompnayPurpose: 'Сообщения в директ',
+        CompanyField: '',
+        BusinessAddress: '',
+        Images: [],
+        ImagesDescription: [],
+        ImagesSmall: [],
+        ImagesSmallDescription: [],
+        CreativeStatus: 'Есть рекламные креативы',
+        PostDescription: '',
+        DailyAmount: 0,
+        Days: 0
+      }
 
 import loading from '../Loading.vue'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -547,21 +137,7 @@ export default {
       imageNames: [],
       ImagesSmall: [],
       Images: [],
-      company: {
-        FbPageId: '',
-        UserId: '',
-        Id: '',
-        CompanyName: '',
-        CompnayPurpose: 'Сообщения в директ',
-        CompanyField: '',
-        BusinessAddress: '',
-        ImagesDescription: [],
-        ImagesSmallDescription: [],
-        CreativeStatus: 'Есть рекламные креативы',
-        PostDescription: '',
-        DailyAmount: 0,
-        Days: 0
-      }
+      company: companyDefault
     }
   },
   watch: {
@@ -582,12 +158,13 @@ export default {
           })
           .catch(err => {
             console.log(err)
-            if (err.response.status === 401) {
-              store.dispatch('logout')
-                .then(() => {
-                  this.$router.push('/login')
-                })
-            }
+            //TODO: remove, replaced by axios interceptor
+            // if (err.response.status === 401) {
+            //   store.dispatch('logout')
+            //     .then(() => {
+            //       this.$router.push('/login')
+            //     })
+            // }
           })
       } else {
         this.reset()
@@ -598,8 +175,8 @@ export default {
     isEdit () {
       return this.$route.query.isEdit === 'true'
     },
-      label_cols() { return this.getWidth().label},
-      content_cols() { return this.getWidth().content },
+    label_cols() { return this.getWidth().label},
+    content_cols() { return this.getWidth().content },
   },
   beforeMount () {
 
@@ -617,9 +194,10 @@ export default {
         })
         .catch(err => {
           console.log(err)
-          if (err.response.status === 401) {
-            router.push({ path: '/login' })
-          }
+          //TODO: remove, replaced by axios interceptor
+          // if (err.response.status === 401) {
+          //   router.push({ path: '/login' })
+          // }
         })
     }
   },
@@ -637,9 +215,9 @@ export default {
   },
   methods: {
     saveAndNext(data){
-        console.log(data.company)
+        // console.log(data.company)
 
-        if(data.company){
+        if(data && data.company){
           this.company = {
             ...this.company,
             ...data.company
@@ -656,31 +234,10 @@ export default {
       this.Images = []
       this.ImagesSmall = []
       this.isLoading = false
-      this.company = {
-        FbPageId: '',
-        Id: '',
-        CompanyName: '',
-        CompnayPurpose: 'Сообщения в директ',
-        CompanyField: '',
-        BusinessAddress: '',
-        Images: [],
-        ImagesDescription: [],
-        ImagesSmall: [],
-        ImagesSmallDescription: [],
-        CreativeStatus: 'Есть рекламные креативы',
-        PostDescription: '',
-        DailyAmount: 0,
-        Days: 0
-      }
+      this.company = companyDefault;
       this.isInfoPopupVisible = false
       this.isRequestSent = false
       this.pageSubmitted = false
-      // this.label_cols = this.getWidth().label
-      // this.content_cols = this.getWidth().content
-    },
-
-    resetNameErr () {
-      this.isCompanyExist = false
     },
     getImages () {
       axios({ url: `${VUE_APP_API_URL}/api/company/${this.company.Id}/images/`, method: 'GET' })
@@ -693,15 +250,18 @@ export default {
         })
         .catch(err => {
           console.log(err)
-          if (err.response.status === 401) {
-            store.dispatch('logout')
-              .then(() => {
-                this.$router.push('/login')
-              })
-          }
+          //TODO: remove, replaced by axios interceptor
+          // if (err.response.status === 401) {
+          //   store.dispatch('logout')
+          //     .then(() => {
+          //       this.$router.push('/login')
+          //     })
+          // }
         })
     },
 
+
+    //TODO: extract
     getWidth () {
       const width = Math.max(
         document.body.scrollWidth,
@@ -729,7 +289,7 @@ export default {
           window.scrollTo(0, 100)
           return
         }
-        console.log('begin gen comp')
+        
         this.isLoading = true
         const companyData = new FormData()
         companyData.append('FbPageId', this.company.FbPageId)
@@ -762,18 +322,20 @@ export default {
             .catch(err => {
               this.isLoading = false
               console.log(err)
-              console.log(err.response)
-              console.log(err.response.data)
-              console.log(err.response.data.message)
+              // console.log(err.response)
+              // console.log(err.response.data)
+              // console.log(err.response.data.message)
               if (err.response.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
                 this.isCompanyExist = true
               }
-              if (err.response.status === 401) {
-                store.dispatch('logout')
-                  .then(() => {
-                    this.$router.push('/login')
-                  })
-              }
+              
+              //TODO: remove, replaced by axios interceptor
+              // if (err.response.status === 401) {
+              //   store.dispatch('logout')
+              //     .then(() => {
+              //       this.$router.push('/login')
+              //     })
+              // }
             })
         } else {
           axios({ url: `${VUE_APP_API_URL}/api/company/${this.company.Id}`, data: companyData, method: 'PUT' })
@@ -787,12 +349,14 @@ export default {
               if (err.response?.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
                 this.isCompanyExist = true
               }
-              if (err.response?.status === 401) {
-                store.dispatch('logout')
-                  .then(() => {
-                    this.$router.push('/login')
-                  })
-              }
+              
+              //TODO: remove, replaced by axios interceptor
+              // if (err.response?.status === 401) {
+              //   store.dispatch('logout')
+              //     .then(() => {
+              //       this.$router.push('/login')
+              //     })
+              // }
             })
         }
       } else {

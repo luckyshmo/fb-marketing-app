@@ -113,7 +113,9 @@
         <b-form-textarea class="form-input" style="height: 100px" v-model="company.PostDescription"
           placeholder="Введите текст"></b-form-textarea>
       </b-form-group>
-      <b-button class="app-new-submit-button" type="submit">
+      <b-button  type="button"
+                class="app-new-submit-button"
+                @click="sendData">
         {{isEdit ? "Назад":"Продолжить"}}
       </b-button>
     </b-form>
@@ -137,6 +139,13 @@ export default {
         }
       },
       methods: {
+        sendData(){
+            this.$emit('next', {
+            imageNames: this.imageNames,
+            ImagesSmall: this.ImagesSmall,
+            Images: this.Images,
+          })
+        },
         getImageByName(name) {
           const uID = this.company.UserId
           const cID = this.company.Id
