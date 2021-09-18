@@ -44,6 +44,7 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
 /* @import url('') format("opentype"); */
 @font-face {
     font-family: Monument Extended;

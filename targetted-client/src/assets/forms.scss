@@ -14,13 +14,14 @@
     margin-bottom: 20px;
 }
 .app-new-submit-button {
-    margin-top: 30px;
+    margin-top: 20px;
     background: $lime;
     border-radius: 6px;
     border: none;
     color: $black;
     padding: 9px 24px 11px;
     height: 44px;
+    margin-bottom: 20px;
 }
 .col-form-label {
     font-style: normal;
@@ -36,6 +37,10 @@
 .app-new-info {
     color: $gray;
     text-align: left;
+    a {
+        color: $gray;
+        text-decoration: underline !important;
+    }
 }
 
 .app-new-form-input-small {

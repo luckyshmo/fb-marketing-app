@@ -2,6 +2,7 @@ import Router from 'vue-router'
 import Vue from 'vue'
 import mainPage from '../src/components/Main.vue'
 import login from '../src/components/login/Login.vue'
+import questions from '../src/components/pages/Questions.vue'
 import register from '../src/components/login/Register.vue'
 import createCompany from '../src/components/pages/CCnew.vue'
 //import createCompany from '../src/components/pages/CreateCompany.vue'
@@ -26,6 +27,11 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: login
+    },
+    {
+      path: '/questions',
+      name: 'questions',
+      component: questions
     },
     {
       path: '/register',

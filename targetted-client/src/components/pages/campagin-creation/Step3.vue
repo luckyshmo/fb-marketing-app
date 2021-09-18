@@ -6,9 +6,10 @@
                 Мы самостоятельно подберем наиболее подходящие настройки целевой аудитории на основе анализа большого количество рекламных кампаний из вашей ниши. Но вы можете уточнить настройки, если считаете это важным.
             </p>
 
-            <b-row align-h="between">
-                <b-col cols="6">
+            <b-row align-h="between" no-gutters>
+                <b-col cols="5">
                     <b-button type="button"
+                            style="margin: 0;padding: 10px;"
                             class="app-new-submit-button"
                             v-if="!showAdvancedClicked"
                             @click="sendData">
@@ -16,9 +17,10 @@
                 </b-button>
                 </b-col>
         
-                <b-col cols="6">
+                <b-col cols="7">
                     <p
                     class="app-new-action-text" 
+                    style="margin-bottom: 0px;"
                     @click="showAdvanced = true; showAdvancedClicked = true"           v-if="!showAdvancedClicked">Уточнить настройки</p>
                 </b-col>
             </b-row>

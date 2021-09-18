@@ -248,6 +248,90 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+  @import '../../../assets/vars.scss';
+
+.creative-message{
+    margin: 28px 0px 40px 0px;
+    padding: 40px;
+    width: 800px;
+    height: 128px;
+    background: $light;
+    border-radius: 20px;
+}
+#preview{
+    width: 160px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+#preview-small{
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+#image-block {
+    max-width: 530px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(160px, 1fr));
+    justify-content: space-between;
+    align-items: center;
+    grid-gap: 24px;
+}
+#load-file {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 20px auto;
+    text-align: center;
+    color: $black;
+}
+#file-size-big {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 20px;
+    /* bottom: 0;//TODO почему то не работает */
+    margin-top: 140px;
+    text-align: center;
+    color: $gray;
+}
+#file-size {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 20px;
+    bottom: 0;
+    text-align: center;
+    color: $gray;
+}
+@media (max-width: 450px) {
+    #image-block {
+        max-width: 200px;
+    }
+}
+#load-frame {
+    border: 2px dashed #CCCCCC;
+    border-radius: 20px;
+    width: 160px;
+    height: 280px;
+}
+#load-frame-small {
+    border: 2px dashed #CCCCCC;
+    border-radius: 20px;
+    width: 160px;
+    height: 160px;
+}
+#load-frame:hover {
+    background: #F3F3F3;
+}
+#load-frame-small:hover {
+    background: #F3F3F3;
+}
 
 </style>

@@ -126,7 +126,7 @@ export default {
   },
   data () {
     return {
-      currentStep: 1,
+      currentStep: 2,
       totalSteps: 5,
       store,
       isLoading: false,
@@ -373,34 +373,8 @@ export default {
   }
 }
 </script>
-<style>
-.num-wrapper{
-    display: flex;
-    align-items: stretch;
-    margin-bottom: 16px;
-}
-.num{
-    background: #F3F3F3;
-    width: 48px;
-    height: 48px;
-    border-radius: 24px;
-}
-.num-num{
-    padding-top: 11px;
-    padding-left: 19px;
-}
-.num-text{
-    margin-left: 16px;
-    max-width: 600px;
-}
-.creative-message{
-    margin: 28px 0px 40px 0px;
-    padding: 40px;
-    width: 800px;
-    height: 128px;
-    background: #F3F3F3;
-    border-radius: 20px;
-}
+<style lang="scss">
+  @import '../../assets/vars.scss';
 
 #icon-div-image{
     position: absolute;
@@ -424,106 +398,14 @@ export default {
         padding: 25px!important;
     }
 }
-.custom-radio{
-    margin: 10px;
-}
+
 .custom-control-input{
     margin-right: 3px;
 }
-#preview{
-    width: 160px;
-    height: 280px;
-    object-fit: cover;
-    border-radius: 20px;
-}
-#preview-small{
-    width: 160px;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 20px;
-}
-#image-block {
-    max-width: 530px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(160px, 1fr));
-    justify-content: space-between;
-    align-items: center;
-    grid-gap: 24px;
-}
+
 @media (max-width: 790px) {
     #image-block {
     max-width: 350px;
     }
-}
-@media (max-width: 450px) {
-    #image-block {
-        max-width: 200px;
-    }
-}
-#load-frame {
-    border: 2px dashed #CCCCCC;
-    border-radius: 20px;
-    width: 160px;
-    height: 280px;
-}
-#load-frame-small {
-    border: 2px dashed #CCCCCC;
-    border-radius: 20px;
-    width: 160px;
-    height: 160px;
-}
-#load-frame:hover {
-    background: #F3F3F3;
-}
-#load-frame-small:hover {
-    background: #F3F3F3;
-}
-#load-file {
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
-    margin: 20px auto;
-    text-align: center;
-    color: #000000;
-}
-#file-size-big {
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 20px;
-    /* bottom: 0;//TODO почему то не работает */
-    margin-top: 140px;
-    text-align: center;
-    color: #767676;
-}
-#file-size {
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 20px;
-    bottom: 0;
-    text-align: center;
-    color: #767676;
-}
-#list {
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 20px;
-  line-height: 32px;
-
-  color: #000000;
-
-}
-#list-item {
-    border-radius: 8px;
-    border: none;
-    background-color: #e4e4e4;
-    margin: 5px;
-
 }
 </style>

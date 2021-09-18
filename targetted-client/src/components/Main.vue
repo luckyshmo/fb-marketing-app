@@ -90,21 +90,19 @@
         :to="{path: '/company'}"
       >
         <b-button
-          variant="primary"
-          class="main-button"
+          class="app-new-submit-button"
           style="margin-right: 12px; margin-top: 12px"
         >
-          Создать кампанию
+          Запустить рекламу
         </b-button>
       </router-link>
       <b-button
         variant="primary"
-        :class="{'main-button': !(store.getters.GET_COMPANY_LIST.length > 0),
-                 'main-button-grey': store.getters.GET_COMPANY_LIST.length > 0 }"
+        class="main-button-grey"
         style="margin-top: 12px"
         @click="showVideo"
       >
-        Посмотреть {{ !(store.getters.GET_COMPANY_LIST.length) > 0 ? "видео":"инструкцию" }}
+         Инструкция
       </b-button>
     </div>
     <div v-if="isVideo">

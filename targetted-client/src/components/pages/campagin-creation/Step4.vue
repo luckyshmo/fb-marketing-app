@@ -5,13 +5,21 @@
         <p>
             Привяжите страницу Facebook к targetted, чтобы настроить и запустить рекламную кампанию от имени вашего бизнеса.
         </p>
-          <b-button v-if="!(store.getters.GET_FB_PAGES.length > 0)" class="main-button" @click="loginFB">
-          У меня есть бизнес-аккаунт
-        </b-button>
-          <b-button v-if="!(store.getters.GET_FB_PAGES.length > 0)" class="main-button" id="primary-under"
-          @click="showPopupInfo">
-          Нет бизнес-аккаунта
-        </b-button>
+
+        <b-row align-h="between" no-gutters>
+            <b-col cols="6">
+                <b-button v-if="!(store.getters.GET_FB_PAGES.length > 0)"    class="app-new-submit-button"
+                  @click="loginFB">
+                Есть аккаунт
+              </b-button>
+            </b-col>
+            <b-col cols="6">
+                <b-button v-if="!(store.getters.GET_FB_PAGES.length > 0)"    class="app-new-submit-button"
+                @click="showPopupInfo">
+                Нет аккаунта
+              </b-button>
+            </b-col>
+        </b-row>
 
          <popup v-if="isInfoPopupVisible" popupTitle="Инструкция по созданию бизнесс-аккаунта"
           @closePopup="closeInfoPopup">
@@ -93,7 +101,7 @@ export default {
     data: function () {
         return {
           store, //fixme
-          isInfoPopupVisible,
+          isInfoPopupVisible: false,
         }
       },
     methods: {
@@ -111,6 +119,26 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+  @import '../../../assets/vars.scss';
+.num-wrapper{
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 16px;
+}
+.num{
+    background: #F3F3F3;
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+}
+.num-num{
+    padding-top: 11px;
+    padding-left: 19px;
+}
+.num-text{
+    margin-left: 16px;
+    max-width: 600px;
+}
 
 </style>
