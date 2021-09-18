@@ -249,7 +249,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '../../../assets/vars.scss';
+  @import '@/../../../assets/vars.scss';
 
 .creative-message{
     margin: 28px 0px 40px 0px;

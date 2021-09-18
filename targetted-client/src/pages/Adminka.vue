@@ -198,8 +198,8 @@
 </template>
 <script>
 import axios from 'axios'
-import store from '../../../store/store'
-import loading from '../Loading.vue'
+import store from '@/../store/store'
+import loading from '@/components/Loading.vue'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   components: {

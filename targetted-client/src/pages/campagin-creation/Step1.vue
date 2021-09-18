@@ -108,7 +108,7 @@
 import store from '@/../store/store'
 import router from '@/../router/router'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
-import popup from '../../BigPopup.vue'
+import popup from '@/components/BigPopup.vue'
 import accountService from '@/_services/account.service'
 
 

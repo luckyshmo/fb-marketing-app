@@ -73,8 +73,8 @@
   </div>
 </template>
 <script>
-import popup from './popup.vue'
-import store from '../../store/store'
+import popup from '@/components/popup.vue'
+import store from '@/../store/store'
 export default {
   components: {
     popup

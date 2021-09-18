@@ -236,13 +236,13 @@
   </div>
 </template>
 <script>
-import store from '../../../store/store'
-import router from '../../../router/router'
+import store from '@/../store/store'
+import router from '@/../router/router'
 import axios from 'axios'
-import popup from '../popup.vue'
+import popup from '@/components/popup.vue'
 import { validationMixin } from 'vuelidate'
 import { required, minValue } from 'vuelidate/lib/validators'
-import loading from '../Loading.vue'
+import loading from '@/components/Loading.vue'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   components: {

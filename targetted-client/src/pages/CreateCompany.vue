@@ -456,11 +456,11 @@
 // когда рефакторинг будет закончен
 // !!!!!!!!!!!!
 
-import accountService from '../../_services/account.service'
+import accountService from '@/_services/account.service'
 import store from '../../../store/store'
 import router from '../../../router/router'
 import axios from 'axios'
-import popup from '../BigPopup.vue'
+import popup from '@/components/BigPopup.vue'
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
 

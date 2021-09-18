@@ -79,13 +79,14 @@
 
 </template>
 <script>
-import accountService from '../../_services/account.service'
-import store from '../../../store/store'
-import router from '../../../router/router'
-import {instance as axios} from '../../_services/index';
-import popup from '../BigPopup.vue'
+import accountService from '@/_services/account.service'
+import store from '@/../store/store'
+import router from '@/../router/router'
+import {instance as axios} from '@/_services/index';
+import popup from '@/components/BigPopup.vue'
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
+import loading from '@/components/Loading.vue'
 
 import Step1 from './campagin-creation/Step1.vue';
 import Step2 from './campagin-creation/Step2.vue';
@@ -108,10 +109,9 @@ const companyDefault = {
         PostDescription: '',
         DailyAmount: 0,
         Days: 0
-      }
-
-import loading from '../Loading.vue'
+      };
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
+
 export default {
   name: 'CreateCompany',
   mixins: [validationMixin],
@@ -374,7 +374,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import '../../assets/vars.scss';
+  @import '@/../../assets/vars.scss';
 
 #icon-div-image{
     position: absolute;

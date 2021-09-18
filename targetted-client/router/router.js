@@ -1,14 +1,14 @@
 import Router from 'vue-router'
 import Vue from 'vue'
-import mainPage from '../src/components/Main.vue'
-import login from '../src/components/login/Login.vue'
-import questions from '../src/components/pages/Questions.vue'
-import register from '../src/components/login/Register.vue'
-import createCompany from '../src/components/pages/CCnew.vue'
+import mainPage from '@/components/Main.vue'
+import login from '@/pages/login/Login.vue'
+import questions from '@/pages/Questions.vue'
+import register from '@/pages/login/Register.vue'
+import createCompany from '@/pages/CCnew.vue'
 //import createCompany from '../src/components/pages/CreateCompany.vue'
 import store from '../store/store'
-import CompanyBalance from '../src/components/pages/CompanyBalance.vue'
-import adminka from '../src/components/pages/Adminka.vue'
+import CompanyBalance from '@/pages/CompanyBalance.vue'
+import adminka from '@/pages/Adminka.vue'
 
 Vue.use(Router)
 

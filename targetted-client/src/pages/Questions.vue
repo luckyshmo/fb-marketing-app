@@ -43,10 +43,9 @@
   </div>
 </template>
 <script>
-import router from '../../../router/router'
 import { validationMixin } from 'vuelidate'
 import { required, minLength } from 'vuelidate/lib/validators'
-import store from '../../../store/store'
+
 export default {
     name: 'Questions',
   mixins: [validationMixin],

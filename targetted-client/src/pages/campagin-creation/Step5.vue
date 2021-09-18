@@ -148,7 +148,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '../../../assets/vars.scss';
+  @import '@/../../../assets/vars.scss';
   .app-label-right {
     font-family: IBM Plex Sans;
     font-style: normal;

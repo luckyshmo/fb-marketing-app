@@ -120,7 +120,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '../../../assets/vars.scss';
+  @import '@/../../../assets/vars.scss';
 .num-wrapper{
     display: flex;
     align-items: stretch;
