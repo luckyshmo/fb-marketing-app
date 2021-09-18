@@ -60,13 +60,30 @@
       id="right"
       class="nav"
     >
-      <div
+     <button
+        variant="primary"
+        class="app-new-button-sm"
+        @click="showPopupInfo"
+      >
+        <img src="@/assets/q-icon.svg"/>
+      </button>
+      &nbsp;
+      <button
+        variant="primary"
+        class="app-new-button-sm"
         v-if="isLoggedIn"
-        id="r-text"
         @click="logout"
       >
         Выход
-      </div>
+      </button>
+       <button
+         variant="primary"
+        class="app-new-button-sm"
+        v-if="!isLoggedIn"
+        @click="isLoggedIn = true"
+      >
+        Вход
+      </button>
     </div>
   </div>
 </template>
@@ -113,10 +130,10 @@ export default {
     background: #E2FF12;
     filter: blur(9px);
     position: absolute;
-    width: 110px;
+    width: 90px;
     height: 20px;
     z-index: -1;
-    left: 10%;
+    left: 8%;
     top: 18px;
     /* font-family: Monument Extended;
     font-style: normal;
@@ -139,11 +156,6 @@ export default {
     /* width: 153px; */
     padding-bottom: 15px;
   }
-  #r-text{
-    position: absolute;
-    right:20px;
-    top: 55px;
-  }
   .p-wrapper{
     padding: 20px 25px 20px 25px
   }
@@ -162,14 +174,14 @@ export default {
 }
 
 #container {
-  height: 40px;
+  height: 50px;
   max-width: 1220px;
   text-align: center;
   margin: 0 auto
 }
-#left, #middle, #right {display: inline-block;}
+#left, #middle {display: inline-block;}
 #left {width: 25%; padding-top: 40px;}
 #middle {width: 50%;}
-#right {width: 25%;}
+#right {width: 25%;display: inline;}
 
 </style>

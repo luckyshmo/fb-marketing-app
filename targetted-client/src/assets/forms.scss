@@ -13,6 +13,17 @@
     text-align: left;
     margin-bottom: 20px;
 }
+.app-new-button-sm {
+    padding: 7px 16px;
+    border: none !important;
+    font-family: Montserrat !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    background: #F3F3F3 !important;
+    color: black !important;
+    outline: none !important;
+    border-radius: 8px !important;
+}
 .app-new-submit-button {
     margin-top: 20px;
     background: $lime;

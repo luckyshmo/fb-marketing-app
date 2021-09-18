@@ -84,7 +84,7 @@
           </b-form-input>
       </b-form-group> 
     
-      <b-form-group >
+      <b-form-group class="mt-6">
 
           <b-row align-h="between">
                 <b-col cols="6">
@@ -95,7 +95,7 @@
               </b-button>
                 </b-col>
                 <b-col cols="6">
-                  <p>Заполните все данные, чтобы продолжить</p>
+                  <p class="text-muted">Заполните все данные, чтобы продолжить</p>
                 </b-col>
           </b-row>
       </b-form-group>

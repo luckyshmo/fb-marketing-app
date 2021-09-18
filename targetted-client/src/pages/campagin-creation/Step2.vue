@@ -25,7 +25,8 @@
         </b-form-group>
 
         <div class="creative-message">
-          <div v-if="isCreative()">
+          Советы по самостоятельному созданию креативов
+          <!-- <div v-if="isCreative()">
             Для создания рекламных креативов загрузите картинки и напишите текст, который будет на них отображаться. <a
               href="https://docs.google.com/document/d/1gqOkpxDJ1wNt-AYlt5Q1Et1kF8NRLRYdG-dXK7WdT1k/edit?usp=sharing"
               style="color: #6C1BD2" target="_blank">Посмотрите пример,</a> как это будет выглядеть и подробную
@@ -35,10 +36,13 @@
             <a href="https://docs.google.com/document/d/1DGJQw2lw_Y6KzyPeqA6To8u9UuiYi2Kokx_yjvTxgKE/edit?usp=sharing"
               style="color: #6C1BD2" target="_blank">Воспользуйтесь советами</a> при самостоятельном создании креативов,
             чтобы увеличить эффективность рекламной кампании.
-          </div>
+          </div> -->
         </div>
+      <h2>{{getStoriesLabel()}}</h2>
+      
+      <p class="app-new-info">В одном рекламном объявлении может быть до 5 слайдов</p>
 
-        <b-form-group :label="getStoriesLabel()" :label-cols="label_cols" :state="validateImages()" id="input-group-main"
+        <b-form-group :label-cols="label_cols" :state="validateImages()" id="input-group-main"
           label-for="input-horizontal" description="До 5 слайдов в сториз">
           <div id="image-block">
             <div v-for="(Image, key) in Images" :key="key">
@@ -75,7 +79,12 @@
             </b-form-group>
           </div>
         </div>
-        <b-form-group :label="getPostLabel()" :label-cols="label_cols" :state="validateImagesSmall()"
+        
+        <br><br>
+        <h2>{{getPostLabel()}}</h2>
+        <p class="app-new-info">В одном рекламном объявлении может быть до 5 слайдов</p>
+
+        <b-form-group :label-cols="label_cols" :state="validateImagesSmall()"
           id="input-group-main" label-for="input-horizontal" description="До 5 слайдов в посте">
 
           <div id="image-block">
@@ -113,11 +122,27 @@
         <b-form-textarea class="form-input" style="height: 100px" v-model="company.PostDescription"
           placeholder="Введите текст"></b-form-textarea>
       </b-form-group>
-      <b-button  type="button"
-                class="app-new-submit-button"
-                @click="sendData">
-        {{isEdit ? "Назад":"Продолжить"}}
-      </b-button>
+
+
+        <br><br>
+        <h2>Предпросмотр</h2>
+        <div class="creative-message">
+          Как будет выглядеть реклама
+        </div>
+
+       <b-row align-h="between">
+        <b-col cols="6">
+          <b-button  type="button"
+                    class="app-new-submit-button"
+                    @click="sendData">
+            {{isEdit ? "Назад":"Продолжить"}}
+          </b-button>
+        </b-col>
+        <b-col cols="6">
+            <p class="text-muted">Загрузите креативы, чтобы продолжить</p>
+        </b-col>
+      </b-row>
+
     </b-form>
   </div>
 </template>
@@ -164,15 +189,15 @@ export default {
         },
         getPostLabel() {
           if (!this.isCreative()) {
-            return 'Креативы для поста в ленте'
+            return 'Для поста в ленте'
           }
-          return 'Картинки для поста в ленте'
+          return 'Для поста в ленте'
         },
         getStoriesLabel() {
           if (!this.isCreative()) {
-            return 'Креативы для Сториз'
+            return 'Для сториз'
           }
-          return 'Картинки для Сториз'
+          return 'Для сториз'
         },
 
         isCreative() {
