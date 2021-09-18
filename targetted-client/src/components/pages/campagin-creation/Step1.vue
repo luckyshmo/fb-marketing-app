@@ -85,11 +85,19 @@
       </b-form-group> 
     
       <b-form-group >
+
+          <b-row align-h="between">
+                <b-col cols="6">
               <b-button type="button"
                         class="app-new-submit-button"
                         @click="sendData">
                   {{isEdit ? "Назад":"Продолжить"}}
               </b-button>
+                </b-col>
+                <b-col cols="6">
+                  <p>Заполните все данные, чтобы продолжить</p>
+                </b-col>
+          </b-row>
       </b-form-group>
             
       </b-form>

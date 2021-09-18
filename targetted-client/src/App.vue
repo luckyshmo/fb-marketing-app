@@ -56,15 +56,16 @@ export default {
   -moz-osx-font-smoothing: grayscale !important; */
   /* text-align: center; */
   overflow: hidden;
-  background-color: black !important;
+
 }
 html {
   overflow-y: auto;
   height: 100% !important;
   width: 100% !important;
-  background-color: black !important;
 }
-
+body {
+  background: #fff;
+}
 /* Global styles */
 
 .main-button-grey{
@@ -158,9 +159,8 @@ html {
 #content-wrapper {
   width: 1220px;
   margin: 0% auto 0% auto !important;
-  background-color: #6C1BD2 !important;
   border-radius: 25px !important;
-  padding-bottom: 176px;
+  padding-bottom: 45px;
 }
 @media (max-width: 600px) {
   #content{
@@ -266,7 +266,7 @@ p {
       line-height: 44px;
     }
     h1 {
-      font-size: 36px !important;
+      font-size: 32px !important;
       line-height: 44px !important;
     }
     #h2 {

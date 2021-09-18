@@ -4,6 +4,9 @@ const vueSrc = "./src";
 
 module.exports = {
   lintOnSave: false,
+  devServer: {
+    host: 'localhost'
+  },
   configureWebpack: {
     resolve: {
       alias: {
