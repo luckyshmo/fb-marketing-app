@@ -20,7 +20,7 @@
                     label="Бюджет в день"
                 >
                 <p class="app-label-right">{{campaginData.budget}} ₽ </p>
-                    <b-form-input id="range-2" v-model="campaginData.budget" type="range" min="5" max="5000" step="5"></b-form-input>
+                    <b-form-input id="range-1" v-model="campaginData.budget" type="range" min="5" max="5000" step="5"></b-form-input>
 
     
            </b-form-group>

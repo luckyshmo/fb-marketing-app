@@ -1,5 +1,16 @@
 <template>
   <div id="container">
+    <a
+      href="https://targetted.ru/"
+      target="_blank"
+      class="logo"
+    >
+        <img
+          id="l-im"
+          src="@/assets/logo-new.png"
+        >
+        <div class="logo-bg"></div>
+    </a>
     <div
       id="left"
       class="nav"
@@ -44,20 +55,7 @@
         Написать нам
       </div>
     </div>
-    <a
-      href="https://targetted.ru/"
-      target="_blank"
-    >
-      <div
-        id="middle"
-        class="logo"
-      >
-        <img
-          id="l-im"
-          src="logo.svg"
-        >
-      </div>
-    </a>
+
     <div
       id="right"
       class="nav"
@@ -111,8 +109,16 @@ export default {
 .p-wrapper{
   padding: 80px 100px 80px 100px
 }
-.logo {
-    font-family: Monument Extended;
+.logo-bg {
+    background: #E2FF12;
+    filter: blur(9px);
+    position: absolute;
+    width: 110px;
+    height: 20px;
+    z-index: -1;
+    left: 10%;
+    top: 18px;
+    /* font-family: Monument Extended;
     font-style: normal;
     font-weight: normal;
     font-size: 1.3em;
@@ -126,11 +132,11 @@ export default {
     background-clip: text;
     -webkit-text-fill-color: transparent;
 
-    width: 50%;
+    width: 50%; */
 }
 @media (max-width: 465px){
   #l-im{
-    width: 183px;
+    /* width: 153px; */
     padding-bottom: 15px;
   }
   #r-text{
@@ -156,7 +162,7 @@ export default {
 }
 
 #container {
-  height: 100px;
+  height: 40px;
   max-width: 1220px;
   text-align: center;
   margin: 0 auto

@@ -3,12 +3,15 @@
       <loading v-if="isLoading" />
       <div id="content-wrapper">
         <div id="content">
-          <router-link :to="{name: 'mainPage'}">
-            <p id="navigation-text" style="margin:0;">← К списку кампаний</p>
-          </router-link>
-          <!-- <b-card class="mt-3" header="Form Data Result">
-                <pre class="m-0">{{ company }}</pre>
-            </b-card> -->
+          <b-row>
+            <b-col cols="4">
+              <router-link :to="{name: 'mainPage'}"><p class="text-muted" style="margin:0;">← Назад</p></router-link>
+            </b-col>
+            <b-col cols="8">
+                <div class="text-muted">&nbsp;∙&nbsp;Шаг {{currentStep}} из {{totalSteps}}</div>
+            </b-col>
+          </b-row>
+        
           <!-- <h1>{{isEdit ? "Редактирование":"Создание"}} кампании</h1> -->
           
           <div> 
@@ -95,21 +98,21 @@ import Step4 from './campagin-creation/Step4.vue';
 import Step5 from './campagin-creation/Step5.vue';
 
 const companyDefault = {
-        FbPageId: '',
-        Id: '',
-        CompanyName: '',
-        CompnayPurpose: 'Сообщения в директ',
-        CompanyField: '',
-        BusinessAddress: '',
-        Images: [],
-        ImagesDescription: [],
-        ImagesSmall: [],
-        ImagesSmallDescription: [],
-        CreativeStatus: 'Есть рекламные креативы',
-        PostDescription: '',
-        DailyAmount: 0,
-        Days: 0
-      };
+    FbPageId: '',
+    Id: '',
+    CompanyName: '',
+    CompnayPurpose: 'Сообщения в директ',
+    CompanyField: '',
+    BusinessAddress: '',
+    Images: [],
+    ImagesDescription: [],
+    ImagesSmall: [],
+    ImagesSmallDescription: [],
+    CreativeStatus: 'Есть рекламные креативы',
+    PostDescription: '',
+    DailyAmount: 0,
+    Days: 0
+  };
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
@@ -126,7 +129,7 @@ export default {
   },
   data () {
     return {
-      currentStep: 2,
+      currentStep: 1,
       totalSteps: 5,
       store,
       isLoading: false,
