@@ -894,11 +894,7 @@ export default {
     border-radius: 20px;
 }
 
-#icon-div-image{
-    position: absolute;
-    margin-left: 140px;
-    margin-top: -15px;
-}
+
 #primary-under{
     margin-left: 20px;
 }

@@ -6,14 +6,7 @@
           <p>
             Выберите желаемый охват аудитории вашей рекламной кампании.</p>
 
-      <section class="app-new-stats">
-        <div class="app-new-stats-type">3 000 – 5 000 человек</div>
-        <div class="app-new-stats-details">Увидят вашу рекламу</div>
-        <div class="app-new-stats-type">1 500 – 2 000 человек</div>
-        <div class="app-new-stats-details">Перейдут по вашей рекламе</div>
-        <div class="app-new-stats-type">1 498 ₽ за 7 дней</div>
-        <div class="app-new-stats-details">Общие затраты</div>
-
+        <CampaginStats/>
 
       <b-form-group
                     class="input-group input-group-range"
@@ -22,7 +15,8 @@
                 <p class="app-label-right">{{campaginData.budget}} ₽ </p>
                     <b-form-input id="range-1" v-model="campaginData.budget" type="range" min="5" max="5000" step="5"></b-form-input>
 
-    
+     
+
            </b-form-group>
                  <b-form-group
                     class="input-group input-group-range"
@@ -34,7 +28,6 @@
     
            </b-form-group>
 
-      </section>
 
 
       <section v-if="!isRegistered">
@@ -117,10 +110,14 @@
 
 <script>
 import store from '@/../store/store'
+import CampaginStats from '@/components/CampaginStats'
 
 export default {
   name: 'Step5',
     props: ['label_cols', 'content_cols', 'company', 'isEdit'],
+    components: {
+      CampaginStats
+    },
     data: function () {
         return {
           store, //fixme

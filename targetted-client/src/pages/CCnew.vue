@@ -13,8 +13,8 @@
           </b-row>
         
           <!-- <h1>{{isEdit ? "Редактирование":"Создание"}} кампании</h1> -->
-          
-          <div> 
+            <b-row>
+            <b-col cols="9" class="app-new-main-content"> 
 
 
             <Step1 :label_cols="label_cols"
@@ -25,7 +25,7 @@
                     @next="saveAndNext">
 
                      <template v-slot:header>
-                       <h1 id="h2">Шаг 1.<br>О бизнесе</h1>
+                       <h1 id="h2">О бизнесе</h1>
                      </template>
             </Step1>
 
@@ -36,7 +36,7 @@
                     :company="company"
                     @next="saveAndNext">
                     <template v-slot:header>
-                      <h1 id="h2">Шаг 2.<br>Изображения </h1>
+                      <h1 id="h2">Изображения </h1>
                      </template>
             </Step2>
 
@@ -48,7 +48,7 @@
                     :company="company"
                     @next="saveAndNext">
                     <template v-slot:header>
-                      <h1 id="h2">Шаг 3.<br>Аудитория</h1>
+                      <h1 id="h2">Аудитория</h1>
                      </template>
             </Step3>
 
@@ -59,7 +59,7 @@
                     :company="company"
                     @next="saveAndNext">
                     <template v-slot:header>
-                      <h1 id="h2">Шаг 4.<br>Бизнес-аккаунт</h1>
+                      <h1 id="h2">Привязка аккаунта</h1>
                      </template>
             </Step4>
 
@@ -71,11 +71,34 @@
                     :company="company"
                     @next="saveAndNext">
                     <template v-slot:header>
-                      <h1 id="h2">Шаг 5.<br>Охват</h1>
+                      <h1 id="h2">Охват рекламы</h1>
                      </template>
             </Step5>
 
-          </div>
+          </b-col>
+            <b-col cols="3" class="d-sm-none d-none">
+          <aside class="w-25">
+       <h3 class="app-new-header">     Заполнено {{(currentStep/totalSteps)*100}}%</h3>
+            <ul class="app-new-progress-text">
+              <li class="active">
+                О бизнесе
+              </li>
+              <li>
+                Изображения
+              </li>
+              <li>
+                Аудитория
+              </li>
+              <li>
+                Охват рекламы
+              </li>
+              <li>
+                Привязка аккаунта
+              </li>
+            </ul>
+          </aside>
+            </b-col>
+            </b-row>
         </div>
       </div>
     </div>
@@ -379,6 +402,12 @@ export default {
 <style lang="scss">
   @import '@/../../assets/vars.scss';
 
+.app-new-progress-text li {
+  color: #767676;
+  &.active {
+    color: #000000;
+  }
+}
 #icon-div-image{
     position: absolute;
     margin-left: 140px;

@@ -47,9 +47,10 @@
           <div id="image-block">
             <div v-for="(Image, key) in Images" :key="key">
               <div>
-                <div id="icon-div-image">
+                <div class="icon-div-image">
                   <b-icon @click.stop="removeImage(Image)" class="x-button" icon="x"></b-icon>
                 </div>
+                <div class="icon-div-number">{{key+1}}</div>
                 <img id="preview" :ref="'Image'" />
               </div>
             </div>
@@ -89,9 +90,10 @@
 
           <div id="image-block">
             <div v-for="(Image, key) in ImagesSmall" :key="key" style="width: 160px; height: 160px;">
-              <div id="icon-div-image">
+              <div class="icon-div-image">
                 <b-icon @click.stop="removeImageSmall(Image)" class="x-button" icon="x"></b-icon>
               </div>
+              <div class="icon-div-number">{{key+1}}</div>
               <img id="preview-small" :ref="'ImageSmall'" />
             </div>
             <div v-if="ImagesSmall.length < 5">
@@ -357,6 +359,19 @@ export default {
 }
 #load-frame-small:hover {
     background: #F3F3F3;
+}
+.icon-div-image{
+    position: absolute;
+    margin-left: 140px;
+    margin-top: -15px;
+}
+.icon-div-number {
+  position: absolute;
+  background-color: #000;
+  border-radius: 6px;
+  color: #F3F3F3;
+  margin-bottom: 0px;
+    padding: 6px 13px;
 }
 
 </style>
