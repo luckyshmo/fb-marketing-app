@@ -174,7 +174,7 @@ export default {
       window.scrollTo(0, 100)
       this.isLoading = false
       if (!(typeof to.params.id === 'undefined')) {
-        axios({ url: `${VUE_APP_API_URL}/api/company/${to.params.id}`, method: 'GET' })
+        axios.get({ url: `${VUE_APP_API_URL}/api/company/${to.params.id}`})
           .then(resp => {
             this.company = resp.data
 
@@ -210,7 +210,7 @@ export default {
 
     console.log('BM ', store.getters.GET_EMAIL)
     if (!(typeof this.$router.history.current.params.id === 'undefined')) {
-      axios({ url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`, method: 'GET' })
+      axios.get({ url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`})
         .then(resp => {
           this.company = resp.data
 
@@ -278,7 +278,7 @@ export default {
       this.pageSubmitted = false
     },
     getImages () {
-      axios({ url: `${VUE_APP_API_URL}/api/company/${this.company.Id}/images/`, method: 'GET' })
+      axios.get({ url: `${VUE_APP_API_URL}/api/company/${this.company.Id}/images/`})
         .then(resp => {
           if (resp.data == null) {
             this.imageNames = []
@@ -329,33 +329,13 @@ export default {
         }
         
         this.isLoading = true
-        const companyData = new FormData()
-        companyData.append('FbPageId', this.company.FbPageId)
-        if (this.isEdit) {
-          companyData.append('Id', this.company.Id)
-        }
-        companyData.append('CompanyName', this.company.CompanyName)
-        companyData.append('CompnayPurpose', this.company.CompnayPurpose)
-        companyData.append('CompanyField', this.company.CompanyField)
-        companyData.append('BusinessAddress', this.company.BusinessAddress)
-        companyData.append('ImagesDescription', this.company.ImagesDescription)
-        companyData.append('ImagesSmallDescription', this.company.ImagesSmallDescription)
-        companyData.append('CreativeStatus', this.company.CreativeStatus)
-        companyData.append('PostDescription', this.company.PostDescription)
-        companyData.append('DailyAmount', this.company.DailyAmount)
-        companyData.append('Days', this.company.Days)
-        Array.from(this.ImagesSmall).forEach(Image => {
-          companyData.append('ImageSmall', Image)
-        })
-        Array.from(this.Images).forEach(Image => {
-          companyData.append('Image', Image)
-        })
+        
         if (!this.isEdit) {
           console.log('dispatch')
           store.dispatch('saveCompany', companyData)
             .then((resp) => {
               this.reset()
-              router.push({ path: '/company-balance/' + resp.data, query: {} }) // TODO QUERY
+              router.push({ path: `/company-balance/${resp.data}`, query: {} }) // TODO QUERY
             })
             .catch(err => {
               this.isLoading = false
@@ -376,10 +356,9 @@ export default {
               // }
             })
         } else {
-          axios({ url: `${VUE_APP_API_URL}/api/company/${this.company.Id}`, data: companyData, method: 'PUT' })
-            .then(resp => {
-              console.log(resp.status)
-              router.push({ path: '/company-balance/' + this.company.Id, query: { isEdit: false } })
+          axios.get({ url: `${VUE_APP_API_URL}/api/company/${this.company.Id}`, data: companyData})
+            .then(() => {
+              router.push({ path: `/company-balance/${this.company.Id}`, query: { isEdit: false } })
             })
             .catch(err => {
               this.isLoading = false
@@ -398,7 +377,7 @@ export default {
             })
         }
       } else {
-        router.push({ path: '/company-balance/' + this.company.Id, query: { isEdit: false } })
+        router.push({ path: `/company-balance/${this.company.Id}`, query: { isEdit: false } })
       }
     },
 

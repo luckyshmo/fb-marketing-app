@@ -95,7 +95,7 @@
                   {{isEdit ? "Назад":"Продолжить"}}
               </b-button>
                 </b-col>
-                <b-col cols="6">
+                <b-col cols="6" class="app-new-small-text-fit">
                   <p class="text-muted">Заполните все данные, чтобы продолжить</p>
                 </b-col>
           </b-row>
@@ -165,7 +165,7 @@ export default {
        },
         sendFbRequest () {
           this.isLoading = true
-          axios({ url: `${VUE_APP_API_URL}/api/facebook/claim/${this.company.FbPageId}`, method: 'POST' })
+          axios.post({ url: `${VUE_APP_API_URL}/api/facebook/claim/${this.company.FbPageId}`})
             .then(resp => {
               this.isLoading = false
               console.log(resp)
@@ -178,7 +178,7 @@ export default {
         }, 
         checkPageSubmitted () {
           this.isLoading = true
-          axios({ url: `${VUE_APP_API_URL}/api/facebook/owned/${this.company.FbPageId}`, method: 'GET' })
+          axios.get({ url: `${VUE_APP_API_URL}/api/facebook/owned/${this.company.FbPageId}`})
             .then(resp => {
               this.isLoading = false
               console.log(resp)
@@ -195,9 +195,8 @@ export default {
       beforeMount() {
 
         if (!(typeof this.$router.history.current.params.id === 'undefined')) {
-          axios({
-              url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`,
-              method: 'GET'
+          axios.get({
+              url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`
             })
             .then(resp => {
               this.company = resp.data

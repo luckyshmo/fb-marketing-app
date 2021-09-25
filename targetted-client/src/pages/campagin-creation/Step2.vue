@@ -148,7 +148,7 @@
             {{isEdit ? "Назад":"Продолжить"}}
           </b-button>
         </b-col>
-        <b-col cols="6">
+        <b-col cols="6" class="app-new-small-text-fit">
             <p class="text-muted">Загрузите креативы, чтобы продолжить</p>
         </b-col>
       </b-row>

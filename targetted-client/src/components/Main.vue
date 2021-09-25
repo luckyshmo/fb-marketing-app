@@ -146,7 +146,7 @@ export default {
       store.dispatch('getCompanyList')
       console.log('TO', to)
       if (to.name === 'mainPage') {
-        axios({ url: `${VUE_APP_API_URL}/api/user/0`, method: 'GET' })
+        axios.get({ url: `${VUE_APP_API_URL}/api/user/0`})
           .then(resp => {
             this.user = resp.data
           })
@@ -154,7 +154,7 @@ export default {
     }
   },
   beforeMount () {
-    axios({ url: `${VUE_APP_API_URL}/api/user/0`, method: 'GET' })
+    axios.get({ url: `${VUE_APP_API_URL}/api/user/0`})
       .then(resp => {
         this.user = resp.data
       })

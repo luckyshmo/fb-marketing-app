@@ -213,7 +213,10 @@ export default {
         phoneNumber: this.form.phoneNumber
       }
       console.log('rData', data)
-      axios({ url: `${VUE_APP_API_URL}/auth/sign-up`, data: data, method: 'POST' })
+      axios.post({ 
+          url: `${VUE_APP_API_URL}/auth/sign-up`,
+          data
+          })
         .then(resp => {
           this.emailExists = false
           console.log(resp)
