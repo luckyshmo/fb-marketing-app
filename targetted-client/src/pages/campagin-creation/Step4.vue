@@ -146,6 +146,7 @@ export default {
         },
         sendData(){
             //todo
+            //вопрос, какие тут данные отправляем?
             this.$emit('next');
         },
         showPopupInfo() {

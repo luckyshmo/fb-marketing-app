@@ -255,10 +255,17 @@ export default {
     saveAndNext(data){
         // console.log(data.company)
 
-        if(data && data.company){
+        // if(data && data.company){
+        //   this.company = {
+        //     ...this.company,
+        //     ...data.company
+        //   }
+        // }
+
+        if(data){
           this.company = {
             ...this.company,
-            ...data.company
+            ...data
           }
         }
 
@@ -391,7 +398,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import '@/../../assets/styles/vars.scss';
+  @import '@/assets/styles/vars.scss';
 
 .app-new-progress-text  {
   list-style: none;
@@ -400,8 +407,8 @@ export default {
 }
 .app-new-progress-text li {
   color: $gray;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: $baseFont;
+  line-height: $baseLH;
 
   &::before {
     margin-right: 10px;

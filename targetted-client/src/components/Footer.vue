@@ -12,7 +12,9 @@ export default {
 
 }
 </script>
-<style>
+<style lang="scss">
+  @import '@/assets/styles/vars.scss';
+
 .footer-t{
     position:relative;
     bottom: -38px;
@@ -21,7 +23,7 @@ export default {
     margin-left: 10%;
 }
 .footer-t a {
-  color: #767676 !important;
+  color: $gray !important;
   text-decoration: underline !important;
 }
 .footer {
@@ -29,12 +31,10 @@ export default {
     font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: $baseFont;
+    line-height: $baseLH;
     /* identical to box height, or 150% */
-
     text-align: center;
-
-    color: #767676;
+    color: $gray;
 }
 </style>

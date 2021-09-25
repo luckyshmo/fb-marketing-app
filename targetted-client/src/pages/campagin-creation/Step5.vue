@@ -130,6 +130,7 @@ export default {
             budget: 100,
             timeLength: 6
           },
+          //todo: mv to separate component ?
           userData: {
             phone:'',
             email:'',
@@ -141,35 +142,34 @@ export default {
       },
     methods: {
         sendData(){
-            //todo
-            this.$emit('next');
+            this.$emit('next', campaginData);
         }
     }
 }
 </script>
 
 <style lang="scss">
-  @import '@/../../../assets/styles/vars.scss';
+  @import '@/assets/styles/vars.scss';
   
   .app-label-right {
     font-family: IBM Plex Sans;
     font-style: normal;
     font-weight: bold;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: $baseFont;
+    line-height: $baseLH;
     position: absolute;
     top: 0px;
     right: 0px;
   }
   .app-new-stats {
      &-details {
-        font-size: 16px;
-        line-height: 24px;
+        font-size: $baseFont;
+        line-height: $baseLH;
         color: $gray;
       }
       &-type {
         font-weight: bold;
-        font-size: 24px;
+        font-size: $baseLH;
         line-height: 30px;
       }
   }
@@ -196,42 +196,42 @@ input[type=range]::-webkit-slider-runnable-track {
   height: 5px;
   cursor: pointer;
   animate: 0.2s;
-  box-shadow: 0px 0px 0px #000000;
-  background: #F3F3F3;
+  box-shadow: 0px 0px 0px $black;
+  background: $light;
   border-radius: 2px;
-  border: 0px solid #000000;
+  border: 0px solid  $black;
 }
 input[type=range]::-webkit-slider-thumb {
-  box-shadow: 0px 0px 0px #FFFFFF;
-  border: 1px solid #E3E3E3;
+  box-shadow: 0px 0px 0px $white;
+  border: 1px solid $light;
   height: 21px;
   width: 21px;
   border-radius: 25px;
-  background: #050608;
+  background: $black;
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -8.5px;
 }
 input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #F3F3F3;
+  background: $light;
 }
 input[type=range]::-moz-range-track {
   width: 100%;
   height: 5px;
   cursor: pointer;
   animate: 0.2s;
-  box-shadow: 0px 0px 0px #000000;
-  background: #F3F3F3;
+  box-shadow: 0px 0px 0px $black;
+  background: $light;
   border-radius: 2px;
-  border: 0px solid #000000;
+  border: 0px solid $black;
 }
 input[type=range]::-moz-range-thumb {
-  box-shadow: 0px 0px 0px #FFFFFF;
-  border: 1px solid #E3E3E3;
+  box-shadow: 0px 0px 0px $white;
+  border: 1px solid $light;
   height: 21px;
   width: 21px;
   border-radius: 25px;
-  background: #050608;
+  background: $black;
   cursor: pointer;
 }
 input[type=range]::-ms-track {
@@ -244,31 +244,31 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 input[type=range]::-ms-fill-lower {
-  background: #F3F3F3;
-  border: 0px solid #000000;
+  background: $light;
+  border: 0px solid $black;
   border-radius: 4px;
-  box-shadow: 0px 0px 0px #000000;
+  box-shadow: 0px 0px 0px $black;
 }
 input[type=range]::-ms-fill-upper {
-  background: #F3F3F3;
-  border: 0px solid #000000;
+  background: $light;
+  border: 0px solid $black;
   border-radius: 4px;
-  box-shadow: 0px 0px 0px #000000;
+  box-shadow: 0px 0px 0px $black;
 }
 input[type=range]::-ms-thumb {
   margin-top: 1px;
-  box-shadow: 0px 0px 0px #FFFFFF;
+  box-shadow: 0px 0px 0px $white;
   border: 1px solid #E3E3E3;
   height: 21px;
   width: 21px;
   border-radius: 25px;
-  background: #050608;
+  background: $black;
   cursor: pointer;
 }
 input[type=range]:focus::-ms-fill-lower {
-  background: #F3F3F3;
+  background: $light;
 }
 input[type=range]:focus::-ms-fill-upper {
-  background: #F3F3F3;
+  background: $light;
 }
 </style>

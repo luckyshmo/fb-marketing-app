@@ -201,6 +201,8 @@ import axios from 'axios'
 import store from '@/store/store'
 import loading from '@/components/Loading.vue'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
+import {APP_UI_URL} from '../constants';
+
 export default {
   components: {
     loading
@@ -282,7 +284,7 @@ export default {
       return `https://facebook.com/${id}`
     },
     changeBalance (id, amount) {
-      axios({ url: `${VUE_APP_API_URL}/api/user/${id}/update-balance/${amount}`, method: 'POST' })
+      axios.post({ url: `${VUE_APP_API_URL}/api/user/${id}/update-balance/${amount}`})
         .then(resp => {
           this.$alert(resp.statusText)
         })
@@ -291,7 +293,7 @@ export default {
         })
     },
     startCompany (id) {
-      axios({ url: `${VUE_APP_API_URL}/api/company/start/${id}`, method: 'POST' })
+      axios.post({ url: `${VUE_APP_API_URL}/api/company/start/${id}`})
         .then(resp => {
           this.$alert(resp.statusText)
         })
@@ -300,7 +302,7 @@ export default {
         })
     },
     stopCompany (id) {
-      axios({ url: `${VUE_APP_API_URL}/api/company/stop/${id}`, method: 'POST' })
+      axios.post({ url: `${VUE_APP_API_URL}/api/company/stop/${id}`})
         .then(resp => {
           this.$alert(resp.statusText)
         })
@@ -315,7 +317,7 @@ export default {
       return this.imageNames.filter(image => image.id === id && this.isStoriesImage(image.name) === isStories)
     },
     getPendingPages () {
-      axios({ url: `${VUE_APP_API_URL}/api/facebook/pending`, method: 'GET' })
+      axios.get({ url: `${VUE_APP_API_URL}/api/facebook/pending`})
         .then(resp => {
           this.pendingPages = resp.data
         })
@@ -325,10 +327,10 @@ export default {
         })
     },
     checkIfPageIsOwned (id) {
-      axios({ url: `${VUE_APP_API_URL}/api/facebook/owned/${id}`, method: 'GET' })
+      axios.get({ url: `${VUE_APP_API_URL}/api/facebook/owned/${id}`})
         .then(resp => {
           console.log(resp)
-          this.$alert('Кампания доавблена в БМ')
+          this.$alert('Кампания добавлена в БМ')
         })
         .catch(err => {
           console.log(err.response)
@@ -336,7 +338,7 @@ export default {
         })
     },
     makeClaimRequest () {
-      axios({ url: `${VUE_APP_API_URL}/api/facebook/claim/${this.fbIDforClaim}`, method: 'POST' })
+      axios.post({ url: `${VUE_APP_API_URL}/api/facebook/claim/${this.fbIDforClaim}`})
         .then(resp => {
           console.log(resp)
         })
@@ -345,7 +347,8 @@ export default {
         })
     },
     removePageFromPendingList (id) {
-      axios({ url: `${VUE_APP_API_URL}/api/facebook/pending/${id}`, method: 'DELETE' })
+      const url = `${VUE_APP_API_URL}/api/facebook/pending/${id}`;
+      axios.delete({ url })
         .then(resp => {
           this.pendingPages = this.pendingPages.filter(ID => ID !== id)
           console.log(resp)
@@ -356,7 +359,8 @@ export default {
         })
     },
     getUsers () {
-      axios({ url: `${VUE_APP_API_URL}/api/user/`, method: 'GET' })
+      const url = `${VUE_APP_API_URL}/api/user/`;
+      axios.get({ url })
         .then(resp => {
           this.users = resp.data
           for (let i = 0; i < this.users.length; i++) {
@@ -368,7 +372,8 @@ export default {
         })
     },
     getAddCompanies (id, i) { // вообще во VUE 3 должно работать...
-      axios({ url: `${VUE_APP_API_URL}/api/user/${id}/company/`, method: 'GET' })
+    const url = `${VUE_APP_API_URL}/api/user/${id}/company/`;
+      axios.get({ url })
         .then(resp => {
           this.users[i].companies = []
           if (resp.data != null) {
@@ -386,7 +391,7 @@ export default {
         })
     },
     getCompanyImagesNames (cID, uID) {
-      axios({ url: `${VUE_APP_API_URL}/api/user/${uID}/company/${cID}/images/`, method: 'GET' })
+      axios.get({ url: `${VUE_APP_API_URL}/api/user/${uID}/company/${cID}/images/`})
         .then(resp => {
           if (resp.data != null) {
             for (let i = 0; i < resp.data.length; i++) {
@@ -399,7 +404,7 @@ export default {
         })
     },
     getImageByName (name, uID, cID) {
-      return `https://client.targetted.online/images/${uID}/${cID}${name}`
+      return `${APP_UI_URL}/images/${uID}/${cID}${name}`
     }
   }
 }

@@ -206,8 +206,8 @@ export default {
     color: $gray;
   }
   & .link {
-    font-size: 16px;
-    line-height: 24px;
+    font-size: $baseFont;
+    line-height: $baseLH;
   }
 
   & .status {

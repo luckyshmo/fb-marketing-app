@@ -54,8 +54,8 @@ h3.app-new-header {
 .col-form-label {
     font-style: normal;
     font-weight: bold;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: $baseFont;
+    line-height: $baseLH;
 }
 
 .app-new-action-text {

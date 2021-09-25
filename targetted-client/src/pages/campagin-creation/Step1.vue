@@ -145,9 +145,7 @@ export default {
       },
       methods: {
         sendData() {
-          this.$emit('next', {
-            company: this.company
-          })
+          this.$emit('next', this.company)
         },
   
         validateState(name) {

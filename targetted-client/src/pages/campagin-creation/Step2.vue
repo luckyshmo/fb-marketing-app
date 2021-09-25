@@ -320,17 +320,15 @@ export default {
     grid-gap: 24px;
 }
 #load-file {
-    font-family: Montserrat;
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: $baseFont;
+    line-height: $baseLH;
     margin: 20px auto;
     text-align: center;
     color: $black;
 }
 #file-size-big {
-    font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
     font-size: 12px;

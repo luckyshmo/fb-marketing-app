@@ -131,12 +131,8 @@ export default {
     methods: {
         sendData(){
             //todo
-            this.$emit('next');
+            this.$emit('next', companyData);
         }
     }
 }
 </script>
-
-<style>
-
-</style>
