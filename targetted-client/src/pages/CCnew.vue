@@ -8,14 +8,13 @@
               <router-link :to="{name: 'mainPage'}"><p class="text-muted" style="margin:0;">← Назад</p></router-link>
             </b-col>
             <b-col cols="8">
-                <div class="text-muted">&nbsp;∙&nbsp;Шаг {{currentStep}} из {{totalSteps}}</div>
+                <div class="text-muted d-block d-md-none d-lg-none d-xl-none">&nbsp;∙&nbsp;Шаг {{currentStep}} из {{totalSteps}}</div>
             </b-col>
           </b-row>
         
           <!-- <h1>{{isEdit ? "Редактирование":"Создание"}} кампании</h1> -->
             <b-row>
             <b-col cols="9" class="app-new-main-content"> 
-
 
             <Step1 :label_cols="label_cols"
                     :content_cols="content_cols"
@@ -76,29 +75,31 @@
             </Step5>
 
           </b-col>
-            <b-col cols="3" class="d-sm-none d-none">
-          <aside class="w-25">
-       <h3 class="app-new-header">     Заполнено {{(currentStep/totalSteps)*100}}%</h3>
-            <ul class="app-new-progress-text">
-              <li class="active">
-                О бизнесе
-              </li>
-              <li>
-                Изображения
-              </li>
-              <li>
-                Аудитория
-              </li>
-              <li>
-                Охват рекламы
-              </li>
-              <li>
-                Привязка аккаунта
-              </li>
-            </ul>
-          </aside>
-            </b-col>
-            </b-row>
+            <b-col cols="3" class=" d-none d-md-block d-lg-block d-xl-block">
+          <aside>
+       <h3 class="app-new-header">
+         Заполнено {{(currentStep/totalSteps)*100}}%
+         </h3>
+        <ul class="app-new-progress-text">
+          <li :class="{active:(currentStep>=1)}">
+            О бизнесе
+          </li>
+          <li :class="{active:(currentStep>=2)}">
+            Изображения
+          </li>
+          <li :class="{active:(currentStep>=3)}">
+            Аудитория
+          </li>
+          <li :class="{active:(currentStep>=4)}">
+            Охват рекламы
+          </li>
+          <li :class="{active:(currentStep>=5)}">
+            Привязка аккаунта
+          </li>
+        </ul>
+        </aside>
+        </b-col>
+      </b-row>
         </div>
       </div>
     </div>
@@ -403,11 +404,24 @@ export default {
   @import '@/../../assets/vars.scss';
 
 .app-new-progress-text li {
-  color: #767676;
-  &.active {
-    color: #000000;
+  color: $gray;
+
+  &::before {
+    color: $gray;
   }
+  
+  &.active {
+    color: $black;
+     &::before {
+    color: $lime;
+  }
+  }
+ 
 }
+
+
+
+
 #icon-div-image{
     position: absolute;
     margin-left: 140px;

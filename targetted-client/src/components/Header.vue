@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div class="container">
     <a
       href="https://targetted.ru/"
       target="_blank"
@@ -69,6 +69,14 @@
       </button>
       &nbsp;
       <button
+         variant="primary"
+        class="app-new-button-sm d-none d-md-block d-lg-block d-xl-block"
+        @click="register"
+      >
+        Зарегистрироваться
+      </button>
+      &nbsp;
+      <button
         variant="primary"
         class="app-new-button-sm"
         v-if="isLoggedIn"
@@ -76,6 +84,7 @@
       >
         Выход
       </button>
+      &nbsp;
        <button
          variant="primary"
         class="app-new-button-sm"
@@ -109,6 +118,9 @@ export default {
     showPopupInfo () {
       this.isInfoPopupVisible = true
     },
+    register(){
+      this.$router.push('/register')
+    },
     logout: function () {
       store.dispatch('logout')
         .then(() => {
@@ -118,7 +130,10 @@ export default {
   }
 }
 </script>
-<style>
+
+<style lang="scss">
+  @import '@/assets/vars.scss';
+
 #social-link{
   margin: 30px;
   color: #6C1BD2
@@ -126,30 +141,18 @@ export default {
 .p-wrapper{
   padding: 80px 100px 80px 100px
 }
+.logo {
+  margin-left: 6%;
+  margin-top: 18px;
+}
 .logo-bg {
     background: #E2FF12;
     filter: blur(9px);
     position: absolute;
-    width: 90px;
+    width: 100px;
     height: 20px;
     z-index: -1;
-    left: 8%;
     top: 18px;
-    /* font-family: Monument Extended;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 1.3em;
-    line-height: 50px;
-
-    letter-spacing: 0.8em;
-    text-transform: uppercase;
-
-    background: -webkit-linear-gradient(left, #0704FD, #F498AD, #BB44CB);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    width: 50%; */
 }
 @media (max-width: 465px){
   #l-im{
@@ -167,21 +170,36 @@ export default {
     font-weight: normal;
     font-size: 1em;
     text-align: center;
-
-    color:white !important;
-
+    color: $white;
     width: 25%;
 }
 
-#container {
+.container {
   height: 50px;
   max-width: 1220px;
-  text-align: center;
+  display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: stretch;
+	align-content: stretch;
   margin: 0 auto
 }
 #left, #middle {display: inline-block;}
 #left {width: 25%; padding-top: 40px;}
 #middle {width: 50%;}
-#right {width: 25%;display: inline;}
+#right {
+  width: 25%;
+  display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	align-items: stretch;
+	align-content: stretch;
+
+  button {
+    margin-right: 10px;
+  }
+}
 
 </style>
