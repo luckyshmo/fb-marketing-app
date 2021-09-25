@@ -132,7 +132,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '@/assets/vars.scss';
+  @import '@/assets/styles/vars.scss';
 
 #social-link{
   margin: 30px;
@@ -145,6 +145,11 @@ export default {
   margin-left: 6%;
   margin-top: 18px;
 }
+@media (min-width: 768px){
+  .logo {
+    margin-left: 0;
+  }
+}
 .logo-bg {
     background: #E2FF12;
     filter: blur(9px);
@@ -152,7 +157,7 @@ export default {
     width: 100px;
     height: 20px;
     z-index: -1;
-    top: 18px;
+    top: 38px;
 }
 @media (max-width: 465px){
   #l-im{
@@ -183,7 +188,8 @@ export default {
 	justify-content: space-between;
 	align-items: stretch;
 	align-content: stretch;
-  margin: 0 auto
+  margin: 0 auto;
+  margin-top: 20px;
 }
 #left, #middle {display: inline-block;}
 #left {width: 25%; padding-top: 40px;}

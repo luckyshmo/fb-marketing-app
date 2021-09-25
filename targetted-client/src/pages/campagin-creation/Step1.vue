@@ -1,6 +1,7 @@
 <template>
   <div>
     <slot name="header"></slot>
+    <br>
     <b-form>
       <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
         <p>Раздайте доступ к вашей Facebook и Instagram странице<br>для запуска и управления рекламой от имени ваших
@@ -109,8 +110,6 @@ import store from '@/../store/store'
 import router from '@/../router/router'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
 import popup from '@/components/BigPopup.vue'
-import accountService from '@/_services/account.service'
-
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
@@ -150,9 +149,7 @@ export default {
             company: this.company
           })
         },
-        loginFB() {
-          accountService.login()
-        },
+  
         validateState(name) {
           const {
             $dirty,

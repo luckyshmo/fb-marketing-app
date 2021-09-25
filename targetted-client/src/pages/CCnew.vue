@@ -4,17 +4,20 @@
       <div id="content-wrapper">
         <div id="content">
           <b-row>
-            <b-col cols="4">
-              <router-link :to="{name: 'mainPage'}"><p class="text-muted" style="margin:0;">← Назад</p></router-link>
+            <b-col cols="4" sm="1" md="2" lg="2" xl="1">
+              <router-link v-if="currentStep === 1" :to="{name: 'mainPage'}">
+                <p class="text-muted" style="margin:0;">← Назад</p>
+              </router-link>
+              <p class="text-muted clickable" v-else @click="goStepBack" style="margin:0;">← Назад</p>
             </b-col>
-            <b-col cols="8">
+            <b-col cols="8" sm="8" md="6" lg="3" xl="3">
                 <div class="text-muted d-block d-md-none d-lg-none d-xl-none">&nbsp;∙&nbsp;Шаг {{currentStep}} из {{totalSteps}}</div>
             </b-col>
           </b-row>
         
           <!-- <h1>{{isEdit ? "Редактирование":"Создание"}} кампании</h1> -->
             <b-row>
-            <b-col cols="9" class="app-new-main-content"> 
+            <b-col sm="12" md="9" lg="9" xl="9" class="app-new-main-content"> 
 
             <Step1 :label_cols="label_cols"
                     :content_cols="content_cols"
@@ -39,7 +42,6 @@
                      </template>
             </Step2>
 
-
             <Step3 :label_cols="label_cols"
                     :content_cols="content_cols"
                     :isEdit="isEdit"
@@ -62,7 +64,6 @@
                      </template>
             </Step4>
 
-
             <Step5 :label_cols="label_cols"
                     :content_cols="content_cols"
                     :isEdit="isEdit"
@@ -75,28 +76,28 @@
             </Step5>
 
           </b-col>
-            <b-col cols="3" class=" d-none d-md-block d-lg-block d-xl-block">
+          <b-col cols="3" class=" d-none d-md-block d-lg-block d-xl-block">
           <aside>
-       <h3 class="app-new-header">
-         Заполнено {{(currentStep/totalSteps)*100}}%
-         </h3>
-        <ul class="app-new-progress-text">
-          <li :class="{active:(currentStep>=1)}">
-            О бизнесе
-          </li>
-          <li :class="{active:(currentStep>=2)}">
-            Изображения
-          </li>
-          <li :class="{active:(currentStep>=3)}">
-            Аудитория
-          </li>
-          <li :class="{active:(currentStep>=4)}">
-            Охват рекламы
-          </li>
-          <li :class="{active:(currentStep>=5)}">
-            Привязка аккаунта
-          </li>
-        </ul>
+            <h3 class="app-new-header">
+              Заполнено {{(currentStep/totalSteps)*100}}%
+              </h3>
+              <ul class="app-new-progress-text">
+                <li :class="{active:(currentStep>=1)}">
+                  О бизнесе
+                </li>
+                <li :class="{active:(currentStep>=2)}">
+                  Изображения
+                </li>
+                <li :class="{active:(currentStep>=3)}">
+                  Аудитория
+                </li>
+                <li :class="{active:(currentStep>=4)}">
+                  Охват рекламы
+                </li>
+                <li :class="{active:(currentStep>=5)}">
+                  Привязка аккаунта
+                </li>
+              </ul>
         </aside>
         </b-col>
       </b-row>
@@ -240,7 +241,17 @@ export default {
       }
     }
   },
+  created() {
+      window.addEventListener('resize', this.getWidth);
+      this.getWidth();
+  },
+  destroyed() {
+      window.removeEventListener('resize', this.getWidth);
+  },
   methods: {
+    goStepBack(){
+      this.currentStep--;
+    },
     saveAndNext(data){
         // console.log(data.company)
 
@@ -401,22 +412,32 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import '@/../../assets/vars.scss';
+  @import '@/../../assets/styles/vars.scss';
 
+.app-new-progress-text  {
+  list-style: none;
+  margin-left: -20px;
+  padding-left: 0px;
+}
 .app-new-progress-text li {
   color: $gray;
+  font-size: 16px;
+  line-height: 24px;
 
   &::before {
+    margin-right: 10px;
     color: $gray;
+    content: "•";
   }
   
   &.active {
     color: $black;
-     &::before {
-    color: $lime;
+    
+    &::before {
+      color: $lime;
+      content: "•";
+    }
   }
-  }
- 
 }
 
 
@@ -443,6 +464,10 @@ export default {
         height: auto!important;
         padding: 25px!important;
     }
+}
+
+aside {
+  margin-top: 50px;
 }
 
 .custom-control-input{

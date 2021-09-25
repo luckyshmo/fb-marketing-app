@@ -94,6 +94,7 @@
 
 <script>
 import store from '@/../store/store'
+import accountService from '@/_services/account.service'
 
 export default {
   name: 'Step4',
@@ -105,6 +106,9 @@ export default {
         }
       },
     methods: {
+        loginFB() {
+          accountService.login()
+        },
         sendData(){
             //todo
             this.$emit('next');
@@ -120,7 +124,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '@/../../../assets/vars.scss';
+  @import '@/../../../assets/styles/vars.scss';
 .num-wrapper{
     display: flex;
     align-items: stretch;

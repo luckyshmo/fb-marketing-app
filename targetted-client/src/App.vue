@@ -226,8 +226,8 @@ p {
   color: #000000;
 }
 #h2 {
-  margin-top: 60px;
-  margin-bottom: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
   font-family: Montserrat;
   font-style: normal;
   font-weight: 900;
@@ -273,8 +273,8 @@ p {
     #h2 {
       font-size: 24px;
       line-height: 32px;
-      margin-top: 24px;
-      margin-bottom: 20px;
+      margin-top: 0px;
+      margin-bottom: 0px;
     }
 }
 .form-input{
