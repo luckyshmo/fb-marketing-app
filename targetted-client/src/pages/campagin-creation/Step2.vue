@@ -1,6 +1,9 @@
 <template>
   <div>
     <slot name="header"></slot>
+    <p>
+      Загрузите картинки, которые будут отображаться в рекламе.
+    </p>
     <b-form>
       <div v-if="isEdit">
         <b-form-group v-if="imageNames.length > 0" label="Уже имеющиеся креативы" :label-cols="label_cols"
@@ -26,6 +29,11 @@
 
         <div class="creative-message">
           Советы по самостоятельному созданию креативов
+              <b-icon
+          icon="arrow-right"
+        >
+          huw
+        </b-icon>
           <!-- <div v-if="isCreative()">
             Для создания рекламных креативов загрузите картинки и напишите текст, который будет на них отображаться. <a
               href="https://docs.google.com/document/d/1gqOkpxDJ1wNt-AYlt5Q1Et1kF8NRLRYdG-dXK7WdT1k/edit?usp=sharing"
@@ -132,7 +140,7 @@
           Как будет выглядеть реклама
         </div>
 
-       <b-row align-h="between">
+       <b-row align-h="between" class="mt-5">
         <b-col cols="6">
           <b-button  type="button"
                     class="app-new-submit-button"
@@ -150,7 +158,7 @@
 </template>
 
 <script>
-import store from '@/../store/store'
+import store from '@/store/store'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
 import {APP_UI_URL} from '@/constants'
 
@@ -281,10 +289,15 @@ export default {
 .creative-message{
     margin: 28px 0px 40px 0px;
     padding: 40px;
-    width: 800px;
+    width: 90%;;
     height: 128px;
     background: $light;
     border-radius: 20px;
+}
+@media (max-width: 722px) {
+  .creative-message{
+    height: 2em;
+  }
 }
 #preview{
     width: 160px;

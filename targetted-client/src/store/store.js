@@ -3,14 +3,18 @@ import Vuex from 'vuex'
 import axios from 'axios'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 const timeout = 10000
-// import router from '../router/router'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
     token: localStorage.getItem('token') || '',
-    adCompanyList: localStorage.getItem('user_company') || [],
+    adCompanyList: localStorage.getItem('user_company') || [{
+      Id: 'test-url',
+      CompanyName: 'Test url',
+      FbPageId: 2345678,
+      Date: '10 Сентября'
+    }],
     user: localStorage.getItem('user') || '',
     email: localStorage.getItem('email') || '',
     account: localStorage.getItem('account') || {},

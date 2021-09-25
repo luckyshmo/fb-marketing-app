@@ -5,11 +5,10 @@
         Главная
       </h1>
       <div>
-        <h2 id="h2">
+        <!-- <h2 id="h2">
           Общий баланс
-        </h2>
-
-        <b-form-group
+        </h2> -->
+        <!-- <b-form-group
           id="input-group-main"
           label="Всего на счету"
           :label-cols="3"
@@ -19,20 +18,22 @@
           <p id="balance">
             {{ user.amount }} ₽
           </p>
-        </b-form-group>
+        </b-form-group> -->
 
         <b-button
           variant="primary"
-          class="main-button-grey"
-          style="margint-top: 20px"
+          class="main-button-grey mt-2"
           @click="push"
         >
           Пополнить баланс
         </b-button>
       </div>
-      <h2 id="h2">
+      <h2 id="h2" class="mt-4">
         Ваши рекламные кампании
       </h2>
+
+         <p>Здесь вы можете ознакомиться со своими рекламными кампаниями.</p>
+
       <div>
         <div>
           <div
@@ -42,6 +43,7 @@
             <router-link :to="{path: '/company-balance/'+ company.Id, query: { isEdit: true }}">
               <div class="c-div">
                 <div class="l">
+                  <p class="c-date">{{company.Date}}</p>
                   <p class="c-name">
                     {{ company.CompanyName }}
                   </p>
@@ -84,27 +86,27 @@
       </p>
     </div>
 
-    <div style="margin-top: 16px">
+    <div class="mt-5">
       <router-link
         v-if="store.getters.GET_COMPANY_LIST.length < 3"
         :to="{path: '/company'}"
       >
         <b-button
           class="app-new-submit-button"
-          style="margin-right: 12px; margin-top: 12px"
         >
           Запустить рекламу
         </b-button>
       </router-link>
       <b-button
         variant="primary"
-        class="main-button-grey"
-        style="margin-top: 12px"
+        class="main-button-grey mt-2"
         @click="showVideo"
       >
+        <b-icon icon="play-circle-fill"/>
          Инструкция
       </b-button>
     </div>
+
     <div v-if="isVideo">
       <iframe
         id="ytplayer"
@@ -125,7 +127,7 @@
   </div>
 </template>
 <script>
-import store from '@/../store/store'
+import store from '@/store/store'
 import axios from 'axios'
 import router from '../../router/router'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL // TODO GLOABL APP CONST
@@ -194,7 +196,27 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
+  @import '@/assets/styles/vars.scss';
+
+.campagin-item {
+  & .date {
+    font-size: 14px;
+    line-height: 18px;
+    color: $gray;
+  }
+  & .link {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  & .status {
+    font-size: 14px;
+    line-height: 18px;
+    color: $white;
+    border-radius: 6px;
+  }
+}
 #ytplayer{
     margin-top: 30px;
     width: 640px;
@@ -205,10 +227,15 @@ export default {
     margin-left: 620px;
     margin-top: -385px;
 }
+.c-date {
+    font-size: 14px;
+    line-height: 18px;
+    color: $gray;
+}
 .c-div{
     cursor: pointer;
     margin-top: 40px;
-    background: #F3F3F3;
+    background: $light;
     border-radius: 20px;
     height: 112px;
     width: 100%;
@@ -296,11 +323,13 @@ a {
     .c-status{
        height: auto;
        padding-bottom: 4px;
+       display: inline-block;
+    padding: 0;
     }
     .c-status-text{
-        margin-left: 15px;
-        margin-right: 10px;
-        margin-bottom: 10px;
+           margin-left: 25px;
+    margin-right: 10px;
+    margin-bottom: 3px;
     }
     .c-div{
         margin-top: 15px;

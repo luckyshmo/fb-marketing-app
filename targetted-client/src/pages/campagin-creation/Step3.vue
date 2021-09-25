@@ -7,21 +7,19 @@
             </p>
 
             <b-row align-h="between" no-gutters>
-                <b-col cols="5">
+                <b-col cols="10">
                     <b-button type="button"
-                            style="margin: 0;padding: 10px;"
                             class="app-new-submit-button"
                             v-if="!showAdvancedClicked"
                             @click="sendData">
                     {{isEdit ? "Назад":"Продолжить"}}
                 </b-button>
-                </b-col>
-        
-                <b-col cols="7">
-                    <p
-                    class="app-new-action-text" 
-                    style="margin-bottom: 0px;"
-                    @click="showAdvanced = true; showAdvancedClicked = true"           v-if="!showAdvancedClicked">Уточнить настройки</p>
+         
+                    <b-button
+                    type="button"
+                    class="main-button-grey mt-2"
+                    @click="showAdvanced = true; showAdvancedClicked = true"
+                    v-if="!showAdvancedClicked">Уточнить настройки</b-button>
                 </b-col>
             </b-row>
       
@@ -93,7 +91,7 @@
            </b-form-group>
             
             <b-button type="button"
-                        class="app-new-submit-button"
+                        class="app-new-submit-button mt-5"
                         @click="sendData">
                 {{isEdit ? "Назад":"Продолжить"}}
             </b-button>
@@ -103,7 +101,7 @@
 </template>
 
 <script>
-import store from '@/../store/store'
+import store from '@/store/store'
 
 export default {
   name: 'Step3',

@@ -7,7 +7,7 @@
           <p>
             Выберите желаемый охват аудитории вашей рекламной кампании.</p>
 
-        <CampaginStats/>
+        <CampaginStats :data="stats"/>
 
       <b-form-group
                     class="input-group input-group-range"
@@ -19,17 +19,13 @@
      
 
            </b-form-group>
-                 <b-form-group
-                    class="input-group input-group-range"
-                    label="Продолжительность"
-                >
-                <p class="app-label-right">{{campaginData.timeLength}} д</p>
-                    <b-form-input id="range-2" v-model="campaginData.timeLength" type="range" min="1" max="31" step="1"></b-form-input>
-
-    
+            <b-form-group
+              class="input-group input-group-range"
+              label="Продолжительность"
+          >
+          <p class="app-label-right">{{campaginData.timeLength}} д</p>
+              <b-form-input id="range-2" v-model="campaginData.timeLength" type="range" min="1" max="31" step="1"></b-form-input>
            </b-form-group>
-
-
 
       <section v-if="!isRegistered">
         <h1 id="h2">Зарегистрируйтесь</h1>
@@ -98,7 +94,6 @@
         </p>
       </section>
 
-
         <b-button type="button"
                          v-if="isRegistered"
                         class="app-new-submit-button"
@@ -110,8 +105,15 @@
 </template>
 
 <script>
-import store from '@/../store/store'
+import store from '@/store/store'
 import CampaginStats from '@/components/CampaginStats'
+
+//todo: load from backend
+const stats = {
+  seen: {min: 5, max: 5000},
+  clicks: {min: 67, max: 1300},
+  costs: 5000,
+}
 
 export default {
   name: 'Step5',
@@ -121,6 +123,7 @@ export default {
     },
     data: function () {
         return {
+          stats,
           store, //fixme
           isRegistered: false,
           campaginData: {
@@ -147,6 +150,7 @@ export default {
 
 <style lang="scss">
   @import '@/../../../assets/styles/vars.scss';
+  
   .app-label-right {
     font-family: IBM Plex Sans;
     font-style: normal;

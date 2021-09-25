@@ -44,7 +44,7 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap');
 /* @import url('') format("opentype"); */
 @font-face {
     font-family: Monument Extended;
@@ -76,9 +76,9 @@ body {
     border-radius: 8px !important;
     padding: 12px 28px !important;
     border:none !important;
-    font-family: Montserrat !important;
+    font-family: 'IBM Plex Sans', sans-serif !important;
     font-style: normal !important;
-    font-weight: 600 !important;
+    font-weight: 400 !important;
     line-height: 24px;
     height: 48px;
 }
@@ -192,15 +192,14 @@ body {
 
 h1 {
   margin: 0px;
-  font-family: Montserrat !important;
-  font-style: normal !important;
+  font-family: IBM Plex Sans !important;
   font-weight: 900 !important;
   line-height: 72px !important;
   font-size: 72px !important;
   color: black;
 }
 #h1-centered {
-  font-family: Montserrat;
+  font-family: IBM Plex Sans;
   font-style: normal;
   font-weight: 900;
   font-size: 72px;
@@ -228,7 +227,7 @@ p {
 #h2 {
   margin-top: 0px;
   margin-bottom: 0px;
-  font-family: Montserrat;
+  font-family: IBM Plex Sans;
   font-style: normal;
   font-weight: 900;
   /* font-size: 2.3em; */
@@ -292,9 +291,6 @@ p {
 @media (max-width: 600px) {
     .main-button {
       padding: 12px 10px !important;
-    }
-    .main-button-grey{
-      background: #F3F3F3; color: black; margin-top: 15px
     }
     .submit-button{
       margin-top: 75px;

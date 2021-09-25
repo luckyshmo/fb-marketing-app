@@ -98,7 +98,7 @@
 </template>
 <script>
 import popup from '@/components/popup.vue'
-import store from '@/../store/store'
+import store from '@/store/store'
 export default {
   components: {
     popup

@@ -3,7 +3,7 @@
       <loading v-if="isLoading" />
       <div id="content-wrapper">
         <div id="content">
-          <b-row>
+          <b-row class="app-new-steps-header">
             <b-col cols="4" sm="1" md="2" lg="2" xl="1">
               <router-link v-if="currentStep === 1" :to="{name: 'mainPage'}">
                 <p class="text-muted" style="margin:0;">← Назад</p>
@@ -60,7 +60,7 @@
                     :company="company"
                     @next="saveAndNext">
                     <template v-slot:header>
-                      <h1 id="h2">Привязка аккаунта</h1>
+                      <h1 id="h2">Привязка страницы</h1>
                      </template>
             </Step4>
 
@@ -108,7 +108,7 @@
 </template>
 <script>
 import accountService from '@/_services/account.service'
-import store from '@/../store/store'
+import store from '@/store/store'
 import router from '@/../router/router'
 import {instance as axios} from '@/_services/index';
 import popup from '@/components/BigPopup.vue'
@@ -440,8 +440,12 @@ export default {
   }
 }
 
-
-
+.app-new-steps-header {
+  font-size: 14px;
+  & p {
+    font-size: 14px;
+  }
+}
 
 #icon-div-image{
     position: absolute;

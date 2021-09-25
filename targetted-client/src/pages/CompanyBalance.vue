@@ -236,7 +236,7 @@
   </div>
 </template>
 <script>
-import store from '@/../store/store'
+import store from '@/store/store'
 import router from '@/../router/router'
 import axios from 'axios'
 import popup from '@/components/popup.vue'

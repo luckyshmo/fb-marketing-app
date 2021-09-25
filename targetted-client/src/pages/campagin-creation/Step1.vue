@@ -85,7 +85,7 @@
           </b-form-input>
       </b-form-group> 
     
-      <b-form-group class="mt-6">
+      <b-form-group class="mt-5">
 
           <b-row align-h="between">
                 <b-col cols="6">
@@ -106,7 +106,7 @@
 </template>
 
 <script>
-import store from '@/../store/store'
+import store from '@/store/store'
 import router from '@/../router/router'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
 import popup from '@/components/BigPopup.vue'

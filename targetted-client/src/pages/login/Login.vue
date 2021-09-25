@@ -83,7 +83,7 @@
 import router from '@/../router/router'
 import { validationMixin } from 'vuelidate'
 import { required, minLength, email } from 'vuelidate/lib/validators'
-import store from '@/../store/store'
+import store from '@/store/store'
 export default {
   mixins: [validationMixin],
   data () {

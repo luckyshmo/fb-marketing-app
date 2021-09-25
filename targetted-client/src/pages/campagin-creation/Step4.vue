@@ -6,15 +6,25 @@
             Привяжите страницу Facebook к targetted, чтобы настроить и запустить рекламную кампанию от имени вашего бизнеса.
         </p>
 
-        <b-row align-h="between" no-gutters>
+        <b-button type="button"
+                 v-if="!isConnectStarted"
+                class="app-new-submit-button mt-5"
+                @click="startConnecting">
+        Начать привязку
+      </b-button>
+
+
+        <b-row align-h="between" no-gutters v-if="isConnectStarted">
+          <h2>Наличие бизнес-аккаунта Instagram</h2>
+          <p>Укажите, есть ли у вас бизнес-аккаунт в Instagram.</p>
             <b-col cols="6">
-                <b-button v-if="!(store.getters.GET_FB_PAGES.length > 0)"    class="app-new-submit-button"
+                <b-button v-if="!(store.getters.GET_FB_PAGES.length > 0)"    class="app-new-submit-button less-padding"
                   @click="loginFB">
                 Есть аккаунт
               </b-button>
             </b-col>
             <b-col cols="6">
-                <b-button v-if="!(store.getters.GET_FB_PAGES.length > 0)"    class="app-new-submit-button"
+                <b-button v-if="!(store.getters.GET_FB_PAGES.length > 0)"    class="app-new-submit-button less-padding"
                 @click="showPopupInfo">
                 Нет аккаунта
               </b-button>
@@ -83,29 +93,54 @@
           </div>
         </popup>
 
+
+        <div class="mt-5 mb-5" v-if="isConnectStarted">
+          <h2>Возникли сложности?</h2>
+          <p>Посмотрите видео-инструкцию или пропустите этот шаг и мы поможем вам привязать аккаунт позже.</p>
+           <b-button
+        variant="primary"
+        class="main-button-grey"
+        @click="showHelpVideo"
+      >
+        <b-icon icon="play-circle-fill"/>
+         Инструкция
+      </b-button>
+        </div>
+
         <b-button type="button"
-                class="app-new-submit-button"
+                class="main-button-grey mt-1"
                 @click="sendData">
-        {{isEdit ? "Назад":"Продолжить"}}
+        {{isEdit ? "Назад":"Привязать позже"}}
       </b-button>
     </b-form>
   </div>
 </template>
 
 <script>
-import store from '@/../store/store'
+import store from '@/store/store'
 import accountService from '@/_services/account.service'
+import popup from '@/components/BigPopup.vue'
 
 export default {
   name: 'Step4',
     props: ['label_cols', 'content_cols', 'company', 'isEdit'],
+    components: {
+      popup
+    },
     data: function () {
         return {
           store, //fixme
           isInfoPopupVisible: false,
+          isConnectStarted: false,
         }
       },
     methods: {
+      startConnecting(){
+        this.isConnectStarted = true;
+      },
+        showHelpVideo(){
+
+        },
         loginFB() {
           accountService.login()
         },

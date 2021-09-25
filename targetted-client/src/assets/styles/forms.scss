@@ -2,9 +2,10 @@
 @import 'generic';
 
 .app-new-button-main {
+    font-family: 'IBM Plex Sans', sans-serif !important;
     flex-direction: row;
     align-items: flex-start;
-    padding: 9px 24px 11px;
+    padding: 12px 28px !important;
     height: 44px;
     background: $lime;
     border-radius: 6px;
@@ -32,14 +33,15 @@ h3.app-new-header {
     border-radius: 8px !important;
 }
 .app-new-submit-button {
-    margin-top: 20px;
     background: $lime;
     border-radius: 6px;
     border: none;
     color: $black;
     padding: 9px 24px 11px;
     height: 44px;
-    margin-bottom: 20px;
+    &.less-padding {
+        padding: 9px 8px 11px;
+    }
 }
 .col-form-label {
     font-style: normal;
