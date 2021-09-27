@@ -196,4 +196,4 @@ const actions = {
     }
   }
 
-export default acitons;
+export default actions;

@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import Footer from './components/Footer.vue'
-import Header from './components/Header.vue'
-import store from '../store/store'
-import router from '../router/router'
+import Footer from '@/components/Footer.vue'
+import Header from '@/components/Header.vue'
+import store from '@/store/store'
+import router from '@/router/router'
 export default {
   name: 'App',
   components: {

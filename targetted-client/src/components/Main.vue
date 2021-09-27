@@ -128,8 +128,8 @@
 </template>
 <script>
 import store from '@/store/store'
-import axios from 'axios'
-import router from '../../router/router'
+import {instance as axios} from '@/_services/index';
+import router from '@/router/router'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL // TODO GLOABL APP CONST
 export default {
   name: 'MainPage',

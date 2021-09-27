@@ -459,7 +459,7 @@
 import accountService from '@/_services/account.service'
 import store from '../../../store/store'
 import router from '../../../router/router'
-import axios from 'axios'
+import {instance as axios} from '@/_services/index';
 import popup from '@/components/BigPopup.vue'
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'

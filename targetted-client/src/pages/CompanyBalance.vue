@@ -237,8 +237,8 @@
 </template>
 <script>
 import store from '@/store/store'
-import router from '@/../router/router'
-import axios from 'axios'
+import router from '@/router/router'
+import {instance as axios} from '@/_services/index';
 import popup from '@/components/popup.vue'
 import { validationMixin } from 'vuelidate'
 import { required, minValue } from 'vuelidate/lib/validators'

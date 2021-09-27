@@ -140,8 +140,8 @@
   </div>
 </template>
 <script>
-import router from '../../../router/router'
-import axios from 'axios'
+import router from '@/router/router'
+import {instance as axios} from '@/_services/index';
 import { validationMixin } from 'vuelidate'
 import { required, minLength, email } from 'vuelidate/lib/validators'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL

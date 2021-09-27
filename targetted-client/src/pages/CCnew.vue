@@ -109,7 +109,7 @@
 <script>
 import accountService from '@/_services/account.service'
 import store from '@/store/store'
-import router from '@/../router/router'
+import router from '@/router/router'
 import {instance as axios} from '@/_services/index';
 import popup from '@/components/BigPopup.vue'
 import { validationMixin } from 'vuelidate'
