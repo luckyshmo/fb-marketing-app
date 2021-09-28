@@ -17,30 +17,32 @@ function buildFormData(formData, data, parentKey) {
   }
 }
 
-const jsonToFormData = (data) => {
+const jsonToFormData = (data, isEdit) => {
+    console.log(data, isEdit)
     //todo, from SO
     const companyData = new FormData()
+    buildFormData(companyData, data);
   
-    companyData.append('FbPageId', data.FbPageId)
-    if (this.isEdit) {
-      companyData.append('Id', data.Id)
-    }
-    companyData.append('CompanyName', data.CompanyName)
-    companyData.append('CompnayPurpose', data.CompnayPurpose)
-    companyData.append('CompanyField', data.CompanyField)
-    companyData.append('BusinessAddress', data.BusinessAddress)
-    companyData.append('ImagesDescription', data.ImagesDescription)
-    companyData.append('ImagesSmallDescription', data.ImagesSmallDescription)
-    companyData.append('CreativeStatus', data.CreativeStatus)
-    companyData.append('PostDescription', data.PostDescription)
-    companyData.append('DailyAmount', data.DailyAmount)
-    companyData.append('Days', data.Days)
-    Array.from(data.ImagesSmall).forEach(Image => {
-      companyData.append('ImageSmall', Image)
-    })
-    Array.from(data.Images).forEach(Image => {
-      companyData.append('Image', Image)
-    })
+    // companyData.append('FbPageId', data.FbPageId)
+    // if (isEdit) {
+    //   companyData.append('Id', data.Id)
+    // }
+    // companyData.append('CompanyName', data.CompanyName)
+    // companyData.append('CompnayPurpose', data.CompnayPurpose)
+    // companyData.append('CompanyField', data.CompanyField)
+    // companyData.append('BusinessAddress', data.BusinessAddress)
+    // companyData.append('ImagesDescription', data.ImagesDescription)
+    // companyData.append('ImagesSmallDescription', data.ImagesSmallDescription)
+    // companyData.append('CreativeStatus', data.CreativeStatus)
+    // companyData.append('PostDescription', data.PostDescription)
+    // companyData.append('DailyAmount', data.DailyAmount)
+    // companyData.append('Days', data.Days)
+    // Array.from(data.ImagesSmall).forEach(Image => {
+    //   companyData.append('ImageSmall', Image)
+    // })
+    // Array.from(data.Images).forEach(Image => {
+    //   companyData.append('Image', Image)
+    // })
   
     return companyData;
   }
@@ -79,11 +81,12 @@ const actions = {
     },
     updateCompany ({ commit }, companyData) {
       
-      const companyDataFD = jsonToFormData(companyData);
+      const companyDataFD = jsonToFormData(companyData, true);
 
       const id = ''
       return new Promise((resolve, reject) => {
         commit('save_request') // TOdo
+        debugger
         axios.put({ url: `${VUE_APP_API_URL}/api/company/${id}`, data: companyDataFD, timeout })
           .then(resp => {
             resolve(resp)

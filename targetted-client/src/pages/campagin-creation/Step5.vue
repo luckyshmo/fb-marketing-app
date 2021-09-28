@@ -90,7 +90,7 @@
                       Имя не указанно
                     </small>
                              <small
-                  v-if="$v.userData.phone.$dirty && !$v.userData.phone.alpha"
+                  v-if="$v.userData.name.$dirty && !$v.userData.name.alpha"
                   class="error-message"
                 >
                   Только буквы в имени
@@ -234,6 +234,7 @@ export default {
         sendData(){
             this.$v.userData.$touch()
             if (this.$v.userData.$anyError) {
+              window.scrollTo(0, 100)
               return
             }
             

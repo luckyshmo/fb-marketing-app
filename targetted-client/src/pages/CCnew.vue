@@ -207,8 +207,8 @@ export default {
   },
   beforeMount () {
 
-    console.log('BM ', store.getters.GET_EMAIL)
-    if (!(typeof this.$router.history.current.params.id === 'undefined')) {
+    console.log('BM ', store.getters.GET_EMAIL, 'campId:', this.$router.history.current?.params?.id )
+    if (!this.$router.history.current?.params?.id === 'undefined') {
       axios.get({ url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`})
         .then(resp => {
           this.company = resp.data
@@ -269,8 +269,11 @@ export default {
         }
 
         this.currentStep = this.currentStep + 1;
-        if(this.currentStep > this.totalSteps) {
+
+        if(!this.isEdit && this.currentStep === 2) {
             this.createCompany();
+        } else {
+            this.updateCompany();
         }
     },
     reset () {
@@ -326,19 +329,23 @@ export default {
       }
     },
 
+    updateCompany(){
+      store.dispatch('saveCompany', this.company)
+    },
+
     createCompany () {
       if (!this.isEdit) { // TODO isEdit = isInView for some time
-        this.$v.$touch()
-        if (this.$v.$anyError) {
-          window.scrollTo(0, 100)
-          return
-        }
+        // this.$v.$touch()
+        // if (this.$v.$anyError) {
+        //   window.scrollTo(0, 100)
+        //   return
+        // }
         
         this.isLoading = true
         
         if (!this.isEdit) {
           console.log('dispatch')
-          store.dispatch('saveCompany', companyData)
+          store.dispatch('saveCompany', this.company)
             .then((resp) => {
               this.reset()
               router.push({ path: `/company-balance/${resp.data}`, query: {} }) // TODO QUERY

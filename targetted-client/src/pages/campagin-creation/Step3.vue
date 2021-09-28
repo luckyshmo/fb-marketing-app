@@ -56,6 +56,12 @@
                             class="form-input app-new-form-input-small"
                             v-model="$v.companyData.auditory.age.from.$model"
                             placeholder="От"></b-form-input>
+                                 <small
+              v-if="$v.companyData.auditory.age.from.$dirty && !$v.companyData.auditory.age.from.required"
+              class="error-message"
+            >
+              Пустое поле 
+            </small>
                     </b-col>
             
                     <b-col cols="6">
@@ -63,6 +69,12 @@
                             class="form-input app-new-form-input-small"
                             v-model="$v.companyData.auditory.age.to.$model"
                             placeholder="До"></b-form-input>
+                             <small
+              v-if="$v.companyData.auditory.age.to.$dirty && !$v.companyData.auditory.age.to.required"
+              class="error-message"
+            >
+              Пустое поле 
+            </small>
                     </b-col>
                 </b-row>
           </b-form-group>
@@ -76,6 +88,12 @@
                     class="form-input"
                     placeholder="Введите адрес"
                     />
+                    <small
+              v-if="$v.companyData.auditory.location.$dirty && !$v.companyData.auditory.location.required"
+              class="error-message"
+            >
+              Пустое поле 
+            </small>
            </b-form-group>
            <b-form-group
                     class="input-group"
@@ -91,6 +109,12 @@
                         rows="3"
                         max-rows="6"
                         ></b-form-textarea>
+                           <small
+              v-if="$v.companyData.auditory.interests.$dirty && !$v.companyData.auditory.interests.required"
+              class="error-message"
+            >
+              Пустое поле 
+            </small>
            </b-form-group>
             
             <b-button type="button"
@@ -166,7 +190,8 @@ export default {
         sendData(){
             this.$v.companyData.auditory.$touch()
             if (this.$v.companyData.auditory.$anyError) {
-              return
+                window.scrollTo(0, 100)
+                return
             }
 
             this.$emit('next', this.companyData);

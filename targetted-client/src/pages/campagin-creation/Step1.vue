@@ -178,6 +178,7 @@ export default {
         sendData() {
           this.$v.company.$touch()
           if (this.$v.company.$anyError) {
+            window.scrollTo(0, 100)
             return
           }
 
