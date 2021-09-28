@@ -45,7 +45,31 @@
 
 
 
-      <h2 id="h2">Основное</h2>
+      <p>Заполните информацию о своём бизнесе.</p>
+    <b-form-group label="Что рекламируете" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
+      label-for="input-horizontal">
+      <b-form-radio-group 
+          v-model="company.CompnayTarget"
+       
+          :disabled="isEdit"
+          class="app-new-radio"
+          :options="[
+                      'Аккаунт в Instagram или Facebook',
+                      'Сайт'
+                  ]"></b-form-radio-group>
+      </b-form-group>
+
+         <b-form-group label="Ссылка на аккаунт" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
+          label-for="input-horizontal">
+          <b-form-input class="form-input" :disabled="isEdit" v-model="$v.company.AccountURL.$model" placeholder="Введите ссылку">
+          </b-form-input>
+             <small
+              v-if="$v.company.AccountURL.$dirty && !$v.company.AccountURL.required"
+              class="error-message"
+            >
+              Укажите URL
+            </small>
+      </b-form-group> 
 
       <b-form-group label="Название кампании" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
       label-for="input-horizontal">
@@ -59,7 +83,7 @@
                Название должно быть между 3 и 30 символами
             </small>
       <small v-if="isCompanyExist" class="error-message">
-          Кампания с таким иминем уже создана
+          Кампания с таким именем уже создана
       </small>
       </b-form-group>
 
@@ -70,17 +94,20 @@
           :disabled="isEdit"
           class="app-new-radio"
           :options="[
-                      'Сообщения в директ',
-                      'Подписки в instagram',
-                      'Заявки через форму обратной связи',
-                      'Целевое действие на сайте'
+                      'Заявки в директ',
+                      'Новые подписчики',
+                      'Заявки через лид-форму'
                   ]"></b-form-radio-group>
       </b-form-group>
 
-      <b-form-group label="Сфера деятельности" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
+      <b-form-group label="Какие услуги оказываете" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
       label-for="input-horizontal">
-      <b-form-input class="form-input" :disabled="isEdit" v-model="$v.company.CompanyField.$model"
-          placeholder="Вставьте ссылку"></b-form-input>
+      <b-form-textarea class="form-input"
+                      :disabled="isEdit"
+                      v-model="$v.company.CompanyField.$model"
+                      rows="3"
+                      max-rows="6"
+          placeholder="Вставьте ссылку"></b-form-textarea>
            <small
               v-if="$v.company.CompanyField.$dirty && !$v.company.CompanyField.required"
               class="error-message"
@@ -89,8 +116,8 @@
             </small>
       </b-form-group>
 
-          <b-form-group label="Адрес бизнеса" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
-          label-for="input-horizontal" description="Нужен только для офлайн бизнеса">
+          <b-form-group label="Где оказываете услуги" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
+          label-for="input-horizontal">
           <b-form-input class="form-input" :disabled="isEdit" v-model="$v.company.BusinessAddress.$model" placeholder="Точный адрес">
           </b-form-input>
              <small
@@ -148,7 +175,14 @@ export default {
           BusinessAddress: {
             required
           },
+          AccountURL: {
+            required,
+            minLength: minLength(10)
+          },
           CompanyField: {
+            required
+          },
+          CompnayTarget: {
             required
           }
         }
@@ -162,12 +196,14 @@ export default {
           isCompanyExist: false,
           company: {
             FbPageId: '',
+            CompnayTarget: '',
             UserId: '',
             Id: '',
             CompanyName: '',
             CompnayPurpose: 'Сообщения в директ',
             CompanyField: '',
             BusinessAddress: '',
+            AccountURL: '',
             ImagesDescription: [],
             ImagesSmallDescription: [],
             CreativeStatus: 'Есть рекламные креативы',

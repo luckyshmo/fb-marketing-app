@@ -3,7 +3,7 @@
       <div id="content-wrapper">
         <div id="content">
           <b-row class="app-new-steps-header">
-              <b-coll>
+              <b-col>
                 <h2>Реклама в сториз</h2>
 
                 <br><br><br>...<br><br><br><br>
@@ -125,7 +125,7 @@
                     @click="$router.back();">
                   Назад
             </b-button>
-            </b-coll>
+            </b-col>
           </b-row>
         </div>
     </div>

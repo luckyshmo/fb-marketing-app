@@ -66,7 +66,7 @@
               <Step5 :label_cols="label_cols"
                       :content_cols="content_cols"
                       :isEdit="isEdit"
-                      v-if="currentStep ===  5"
+                      v-if="currentStep ===  4"
                       :company="company"
                       @next="saveAndNext">
                       <template v-slot:header>

@@ -101,28 +101,33 @@ h1 {
 }
 
 .app-new-radio {
+    .custom-control.custom-control-inline.custom-radio {
+        min-height: 35px;
+    }
     .custom-control-input {
         display: none;
     }
     .custom-control-input + label {
         -webkit-appearance: none;
-        background-color: #F3F3F3;
-        border: 5px solid #F3F3F3;
-        border-radius: 30px;
+        background-color: $light;
+        border: 5px solid $light;
+        border-radius: 26px;
         width: 100%;
         display: inline-block;
         position: relative;
-        width: 30px;
-        height: 30px;
+        width: 26px;
+        height: 26px;
     }
     
     .custom-control-input:checked + label {
-        background: black;
-        border: 5px solid #F3F3F3;
+        background: $black;
+        border: 5px solid $light;
     }
 
     .custom-control-input + label span {
-        margin-left: 30px;
+        margin-left: 26px;
+        min-width: 270px;
+        display: inline-block;
     }
 }
 

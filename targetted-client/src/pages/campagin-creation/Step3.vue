@@ -18,7 +18,7 @@
          
                     <b-button
                     type="button"
-                       class="main-button-grey mr-0 mr-sm-2 mr-lg-2 mr-md-2 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
+                       class="main-button-grey ml-0 ml-sm-2 ml-lg-2 ml-md-2 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
                     @click="showAdvanced = true; showAdvancedClicked = true"
                     v-if="!showAdvancedClicked">Уточнить настройки</b-button>
                 </b-col>
@@ -189,10 +189,12 @@ export default {
       },
     methods: {
         sendData(){
-            this.$v.companyData.auditory.$touch()
-            if (this.$v.companyData.auditory.$anyError) {
-                window.scrollTo(0, 100)
-                return
+            if(this.showAdvancedClicked) {
+                this.$v.companyData.auditory.$touch()
+                if (this.$v.companyData.auditory.$anyError) {
+                    window.scrollTo(0, 100)
+                    return
+                }
             }
 
             this.$emit('next', this.companyData);

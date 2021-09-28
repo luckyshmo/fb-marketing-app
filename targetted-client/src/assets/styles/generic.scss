@@ -7,3 +7,29 @@ p, label, button, .app-header, .error-message {
 .clickable {
     cursor: pointer;
 }
+
+.ml-2 {
+    margin-left: 2em;
+}
+.ml-0 {
+    margin-left: 0;
+}
+@media (min-width: 576px) { 
+    .ml-lg-2 {
+        margin-left: 2em;
+    }
+ }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+    .ml-lg-2 {
+        margin-left: 2em;
+    }
+ }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+    .ml-lg-2 {
+        margin-left: 2em;
+    }
+ }

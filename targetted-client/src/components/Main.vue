@@ -99,7 +99,7 @@
       </router-link>
       <b-button
         variant="primary"
-        class="main-button-grey mr-0 mr-sm-2 mr-lg-2 mr-md-2 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
+        class="main-button-grey ml-0 ml-sm-2 ml-lg-2 ml-md-2 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
         @click="showVideo"
       >
         <b-icon icon="play-circle-fill"/>
@@ -244,7 +244,6 @@ export default {
 }
 .l {
   position: absolute;
-  text-align: center;
   margin-top: 46px;
   margin-left: 35px;
   height: 25%;

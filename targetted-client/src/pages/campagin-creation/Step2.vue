@@ -50,6 +50,7 @@
       <p class="app-new-info">В одном рекламном объявлении может быть до 5 слайдов</p>
 
         <b-form-group :label-cols="label_cols" :state="validateImages()" id="input-group-main"
+         class="app-new-creative-uploads"
           label-for="input-horizontal" description="До 5 слайдов в сториз">
           <div id="image-block">
             <div v-if="Images.length < 5" key="s0">
@@ -94,7 +95,7 @@
         <h2>{{getPostLabel()}}</h2>
         <p class="app-new-info">В одном рекламном объявлении может быть до 5 слайдов</p>
 
-        <b-form-group :label-cols="label_cols" :state="validateImagesSmall()"
+        <b-form-group class="app-new-creative-uploads" :label-cols="label_cols" :state="validateImagesSmall()"
           id="input-group-main" label-for="input-horizontal" description="До 5 слайдов в посте">
 
           <div id="image-block">
@@ -121,7 +122,7 @@
             Необходим минимум один файл
           </b-form-invalid-feedback>
         </b-form-group>
-        <div v-if="isCreative()">
+        <div v-if="isCreative()" class="app-new-creative-uploads">
           <div v-for="(Image, index) in ImagesSmall" :key="Image.name">
             <b-form-group :label="textOnImage(index)" :label-cols="label_cols" :content-cols="content_cols"
               id="input-group-main" label-for="input-horizontal">
@@ -164,7 +165,6 @@
 
 <script>
 import store from '@/store/store'
-import { required, maxLength, minLength } from 'vuelidate/lib/validators'
 import {APP_UI_URL} from '@/constants'
 
 export default {
@@ -291,6 +291,11 @@ export default {
 <style lang="scss">
   @import '@/assets/styles/vars.scss';
 
+.app-new-creative-uploads {
+  label[for=input-horizontal] {
+    display: none;
+  }
+}
 #preview{
     width: 160px;
     height: 280px;

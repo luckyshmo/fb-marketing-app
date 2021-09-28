@@ -3,7 +3,7 @@
       <div id="content-wrapper">
         <div id="content">
           <b-row class="app-new-steps-header">
-              <b-coll>
+              <b-col>
                 <h2>Оплата</h2>
 
                  <b-button type="button"
@@ -11,7 +11,7 @@
                     @click="$router.back();">
                   Назад
             </b-button>
-              </b-coll>
+              </b-col>
           </b-row>
         </div>
       </div>
