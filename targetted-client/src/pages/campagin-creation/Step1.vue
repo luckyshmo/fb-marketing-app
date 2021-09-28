@@ -3,15 +3,14 @@
     <slot name="header"></slot>
     <br>
     <b-form>
-      <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
+      <!-- <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
         <p>Раздайте доступ к вашей Facebook и Instagram странице<br>для запуска и управления рекламой от имени ваших
           страниц. </p>
    
-      </div>
-      <div v-if="store.getters.GET_FB_PAGES.length > 0 && !isRequestSent && !pageSubmitted">
+      </div> -->
+      <!-- <div v-if="store.getters.GET_FB_PAGES.length > 0 && !isRequestSent && !pageSubmitted">
         <div>
           <p>Выберите страницу которую хотите привязать</p>
-          <!-- //TODO SELECT -->
           <b-form-group label="Выберите страницу" :label-cols="label_cols" :content-cols="content_cols"
             id="input-group-main" label-for="input-horizontal">
             <b-form-radio-group v-model="company.FbPageId" :options="store.getters.GET_FB_PAGES"></b-form-radio-group>
@@ -20,8 +19,8 @@
         <b-button class="main-button" @click="sendFbRequest()">
           Привязать
         </b-button>
-      </div>
-      <div v-if="isRequestSent && !pageSubmitted">
+      </div> -->
+      <!-- <div v-if="isRequestSent && !pageSubmitted">
         <p>Зайди в аккаунт на Facebook и подтверди привязку страницы в сообщениях</p>
         <b-button class="main-button" target="_blank" rel="noopener noreferrer" :href=getFBRedirect()>
           Перейти в facebook
@@ -29,8 +28,8 @@
         <b-button class="main-button" id="primary-under" @click="checkPageSubmitted()">
           Я подтвердил в сообщениях
         </b-button>
-      </div>
-      <div v-if="pageSubmitted">
+      </div> -->
+      <!-- <div v-if="pageSubmitted">
         <div class="c-status" style="margin-top: 30px; max-width: 800px">
           <div class="elipse" id="green"></div>
           <p class="c-status-text" id="c-status-text-u" style="text-align: left;">Страница {{company.FbPageId}} привязана
@@ -42,7 +41,7 @@
               (store.getters.GET_FB_PAGES.length == 0 || isRequestSent)" class="main-button-grey"
         style="margin-top: 30px; background: #F3F3F3; color: black" @click="this.$emit('logout')">
         Привязать другой аккаунт
-      </b-button>
+      </b-button> -->
 
 
 
@@ -66,7 +65,11 @@
 
       <b-form-group label="Цель кампании" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
       label-for="input-horizontal">
-      <b-form-radio-group v-model="company.CompnayPurpose" :disabled="isEdit" :options="[
+      <b-form-radio-group 
+          v-model="company.CompnayPurpose"
+          :disabled="isEdit"
+          class="app-new-radio"
+          :options="[
                       'Сообщения в директ',
                       'Подписки в instagram',
                       'Заявки через форму обратной связи',

@@ -21,7 +21,10 @@
       <div v-if="!isEdit">
         <b-form-group label="Наличие креативов" :label-cols="label_cols" :content-cols="content_cols"
           id="input-group-main" label-for="input-horizontal">
-          <b-form-radio-group v-model="company.CreativeStatus" :options="[
+          <b-form-radio-group
+          v-model="company.CreativeStatus"
+          class="app-new-radio"
+          :options="[
                                   'Есть рекламные креативы',
                                   'Создать рекламные креативы'
                               ]"></b-form-radio-group>
@@ -286,7 +289,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '@/../../../assets/styles/vars.scss';
+  @import '@/assets/styles/vars.scss';
 
 #preview{
     width: 160px;

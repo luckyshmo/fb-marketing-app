@@ -51,7 +51,7 @@
                         <h1 id="h2">Аудитория</h1>
                       </template>
               </Step3>
-
+<!-- 
               <Step4 :label_cols="label_cols"
                       :content_cols="content_cols"
                       :isEdit="isEdit"
@@ -61,7 +61,7 @@
                       <template v-slot:header>
                         <h1 id="h2">Привязка страницы</h1>
                       </template>
-              </Step4>
+              </Step4> -->
 
               <Step5 :label_cols="label_cols"
                       :content_cols="content_cols"
@@ -87,14 +87,14 @@
                 <li :class="{active:(currentStep>=2)}">
                   Изображения
                 </li>
+                <!-- <li :class="{active:(currentStep>=3)}">
+                  Привязка аккаунта
+                </li> -->
                 <li :class="{active:(currentStep>=3)}">
-                  Аудитория
-                </li>
-                <li :class="{active:(currentStep>=4)}">
                   Охват рекламы
                 </li>
-                <li :class="{active:(currentStep>=5)}">
-                  Привязка аккаунта
+                <li :class="{active:(currentStep>=4)}">
+                  Аудитория
                 </li>
               </ul>
         </aside>
@@ -154,7 +154,7 @@ export default {
   data () {
     return {
       currentStep: 1,
-      totalSteps: 5,
+      totalSteps: 4,
       store,
       isLoading: false,
       isCompanyExist: false,

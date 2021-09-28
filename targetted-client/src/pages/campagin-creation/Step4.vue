@@ -161,7 +161,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '@/../../../assets/styles/vars.scss';
+  @import '@/assets/styles/vars.scss';
 .num-wrapper{
     display: flex;
     align-items: stretch;

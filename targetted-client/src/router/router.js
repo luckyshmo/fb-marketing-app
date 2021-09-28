@@ -6,6 +6,7 @@ import questions from '@/pages/Questions.vue'
 import register from '@/pages/login/Register.vue'
 import createCompany from '@/pages/CCnew.vue'
 import imagesPreview from '@/pages/CreativesPreview.vue'
+import paymentPage from '@/pages/Payment.vue'
 //import createCompany from '../src/components/pages/CreateCompany.vue'
 import store from '../store/store'
 import CompanyBalance from '@/pages/CompanyBalance.vue'
@@ -59,6 +60,14 @@ const router = new Router({
       path: '/company',
       name: 'create-company',
       component: createCompany,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/payment',
+      name: 'campagin-payment',
+      component: paymentPage,
       meta: {
         requiresAuth: true
       }

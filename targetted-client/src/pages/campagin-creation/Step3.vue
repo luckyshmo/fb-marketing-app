@@ -40,6 +40,7 @@
                 label-for="input-horizontal"
                 >
                     <b-form-radio-group
+                        class="app-new-radio"
                         v-model="$v.companyData.auditory.gender.$model"
                         :options="auditory.gender"
                     ></b-form-radio-group>
