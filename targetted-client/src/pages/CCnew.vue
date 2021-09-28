@@ -15,65 +15,64 @@
             </b-col>
           </b-row>
         
-          <!-- <h1>{{isEdit ? "Редактирование":"Создание"}} кампании</h1> -->
             <b-row>
-            <b-col sm="12" md="9" lg="9" xl="9" class="app-new-main-content"> 
+              <b-col sm="12" md="9" lg="9" xl="9" class="app-new-main-content"> 
 
-            <Step1 :label_cols="label_cols"
-                    :content_cols="content_cols"
-                    :isEdit="isEdit"
-                    @logout="logout"
-                    v-if="currentStep ===  1"
-                    @next="saveAndNext">
+              <Step1 :label_cols="label_cols"
+                      :content_cols="content_cols"
+                      :isEdit="isEdit"
+                      @logout="logout"
+                      v-if="currentStep ===  1"
+                      @next="saveAndNext">
 
-                     <template v-slot:header>
-                       <h1 id="h2">О бизнесе</h1>
-                     </template>
-            </Step1>
+                      <template v-slot:header>
+                        <h1 id="h2">О бизнесе</h1>
+                      </template>
+              </Step1>
 
-            <Step2 :label_cols="label_cols"
-                    :content_cols="content_cols"
-                    :isEdit="isEdit"
-                    v-if="currentStep ===  2"
-                    :company="company"
-                    @next="saveAndNext">
-                    <template v-slot:header>
-                      <h1 id="h2">Изображения </h1>
-                     </template>
-            </Step2>
+              <Step2 :label_cols="label_cols"
+                      :content_cols="content_cols"
+                      :isEdit="isEdit"
+                      v-if="currentStep ===  2"
+                      :company="company"
+                      @next="saveAndNext">
+                      <template v-slot:header>
+                        <h1 id="h2">Изображения </h1>
+                      </template>
+              </Step2>
 
-            <Step3 :label_cols="label_cols"
-                    :content_cols="content_cols"
-                    :isEdit="isEdit"
-                    v-if="currentStep ===  3"
-                    :company="company"
-                    @next="saveAndNext">
-                    <template v-slot:header>
-                      <h1 id="h2">Аудитория</h1>
-                     </template>
-            </Step3>
+              <Step3 :label_cols="label_cols"
+                      :content_cols="content_cols"
+                      :isEdit="isEdit"
+                      v-if="currentStep ===  3"
+                      :company="company"
+                      @next="saveAndNext">
+                      <template v-slot:header>
+                        <h1 id="h2">Аудитория</h1>
+                      </template>
+              </Step3>
 
-            <Step4 :label_cols="label_cols"
-                    :content_cols="content_cols"
-                    :isEdit="isEdit"
-                    v-if="currentStep ===  4"
-                    :company="company"
-                    @next="saveAndNext">
-                    <template v-slot:header>
-                      <h1 id="h2">Привязка страницы</h1>
-                     </template>
-            </Step4>
+              <Step4 :label_cols="label_cols"
+                      :content_cols="content_cols"
+                      :isEdit="isEdit"
+                      v-if="currentStep ===  4"
+                      :company="company"
+                      @next="saveAndNext">
+                      <template v-slot:header>
+                        <h1 id="h2">Привязка страницы</h1>
+                      </template>
+              </Step4>
 
-            <Step5 :label_cols="label_cols"
-                    :content_cols="content_cols"
-                    :isEdit="isEdit"
-                    v-if="currentStep ===  5"
-                    :company="company"
-                    @next="saveAndNext">
-                    <template v-slot:header>
-                      <h1 id="h2">Охват рекламы</h1>
-                     </template>
-            </Step5>
+              <Step5 :label_cols="label_cols"
+                      :content_cols="content_cols"
+                      :isEdit="isEdit"
+                      v-if="currentStep ===  5"
+                      :company="company"
+                      @next="saveAndNext">
+                      <template v-slot:header>
+                        <h1 id="h2">Охват рекламы</h1>
+                      </template>
+              </Step5>
 
           </b-col>
           <b-col cols="3" class=" d-none d-md-block d-lg-block d-xl-block">

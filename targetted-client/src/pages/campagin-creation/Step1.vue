@@ -50,11 +50,15 @@
 
       <b-form-group label="Название кампании" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
       label-for="input-horizontal">
-      <b-form-input class="form-input" id="c-name" v-model="company.CompanyName" :disabled="isEdit"
-          :state="validateState('CompanyName')" placeholder="Введите название" @click="resetNameErr()"></b-form-input>
-      <b-form-invalid-feedback class="error-message" id="c-name">
-          Название должно быть между 3 и 30 символами
-      </b-form-invalid-feedback>
+      <b-form-input class="form-input" v-model="$v.company.CompanyName.$model" :disabled="isEdit"
+          placeholder="Введите название"
+          @click="resetNameErr()"></b-form-input>
+          <small
+              v-if="$v.company.CompanyName.$dirty && !$v.company.CompanyName.required"
+              class="error-message"
+            >
+               Название должно быть между 3 и 30 символами
+            </small>
       <small v-if="isCompanyExist" class="error-message">
           Кампания с таким иминем уже создана
       </small>
@@ -72,17 +76,26 @@
 
       <b-form-group label="Сфера деятельности" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
       label-for="input-horizontal">
-      <b-form-input class="form-input" :disabled="isEdit" v-model="company.CompanyField"
-          :state="validateState('CompanyField')" placeholder="Вставьте ссылку"></b-form-input>
-      <b-form-invalid-feedback class="error-message">
-          Обязательное поле
-      </b-form-invalid-feedback>
+      <b-form-input class="form-input" :disabled="isEdit" v-model="$v.company.CompanyField.$model"
+          placeholder="Вставьте ссылку"></b-form-input>
+           <small
+              v-if="$v.company.CompanyField.$dirty && !$v.company.CompanyField.required"
+              class="error-message"
+            >
+              Пустое поле 
+            </small>
       </b-form-group>
 
           <b-form-group label="Адрес бизнеса" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
           label-for="input-horizontal" description="Нужен только для офлайн бизнеса">
-          <b-form-input class="form-input" :disabled="isEdit" v-model="company.BusinessAddress" placeholder="Точный адрес">
+          <b-form-input class="form-input" :disabled="isEdit" v-model="$v.company.BusinessAddress.$model" placeholder="Точный адрес">
           </b-form-input>
+             <small
+              v-if="$v.company.BusinessAddress.$dirty && !$v.company.BusinessAddress.required"
+              class="error-message"
+            >
+              Укажите адрес
+            </small>
       </b-form-group> 
     
       <b-form-group class="mt-5">
@@ -108,16 +121,34 @@
 <script>
 import store from '@/store/store'
 import router from '@/router/router'
-import { required, maxLength, minLength } from 'vuelidate/lib/validators'
 import popup from '@/components/BigPopup.vue'
+
+import { validationMixin } from 'vuelidate'
+import { required, maxLength, minLength } from 'vuelidate/lib/validators'
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
     name: 'Step1',
       props: ['label_cols', 'content_cols', 'isEdit'],
+      mixins: [validationMixin],
       components: {
         popup
+      },
+      validations: {
+        company: {
+          CompanyName: {
+            required,
+            maxLength: maxLength(30),
+            minLength: minLength(3)
+          },
+          BusinessAddress: {
+            required
+          },
+          CompanyField: {
+            required
+          }
+        }
       },
       data: function () {
         return {
@@ -145,16 +176,21 @@ export default {
       },
       methods: {
         sendData() {
+          this.$v.company.$touch()
+          if (this.$v.company.$anyError) {
+            return
+          }
+
           this.$emit('next', this.company)
         },
   
-        validateState(name) {
-          const {
-            $dirty,
-            $error
-          } = this.$v.company[name]
-          return $dirty ? !$error : null
-        },
+        // validateState(name) {
+        //   const {
+        //     $dirty,
+        //     $error
+        //   } = this.$v.company[name]
+        //   return $dirty ? !$error : null
+        // },
         resetNameErr() {
           this.isCompanyExist = false
         },
@@ -214,19 +250,7 @@ export default {
               }
             })
         }
-      },
-      validations: {
-        company: {
-          CompanyName: {
-            required,
-            maxLength: maxLength(30),
-            minLength: minLength(3)
-          },
-          CompanyField: {
-            required
-          }
-        }
-      },
+      }
 }
 </script>
 

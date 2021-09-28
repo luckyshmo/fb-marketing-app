@@ -16,7 +16,6 @@
                 <p class="app-label-right">{{campaginData.budget}} ₽ </p>
                     <b-form-input id="range-1" v-model="campaginData.budget" type="range" min="5" max="5000" step="5"></b-form-input>
 
-     
 
            </b-form-group>
             <b-form-group
@@ -36,52 +35,112 @@
                     label="Номер телефона"
                 >
                     <b-form-input
-                    v-model="userData.phone"
+                    v-model="$v.userData.phone.$model"
                     class="form-input"
                     placeholder="Введите телефон"
                     />
+                        <small
+                  v-if="$v.userData.phone.$dirty && !$v.userData.phone.required"
+                  class="error-message"
+                >
+                  Телефон на указан
+                </small>
+                        <small
+                  v-if="$v.userData.phone.$dirty && !$v.userData.phone.numeric"
+                  class="error-message"
+                >
+                  Только цифры в телефоне
+                </small>
            </b-form-group>
                <b-form-group
                     class="input-group"
                     label="Электронная почта"
                 >
                     <b-form-input
-                    v-model="userData.email"
+                    v-model="$v.userData.email.$model"
                     class="form-input"
                     placeholder="Введите вашу почту"
                     />
+                    <small
+                  v-if="$v.userData.email.$dirty && !$v.userData.email.required"
+                  class="error-message"
+                >
+                  Пустое поле email
+                </small>
+                <small
+                  v-if="$v.userData.email.$dirty && !$v.userData.email.email"
+                  class="error-message"
+                >
+                  Некорректный email
+                </small>
            </b-form-group>
                 <b-form-group
                     class="input-group"
                     label="Имя"
                 >
                     <b-form-input
-                    v-model="userData.name"
+                    v-model="$v.userData.name.$model"
                     class="form-input"
                     placeholder="Введите ваше имя"
                     />
+                     <small
+                      v-if="$v.userData.name.$dirty && !$v.userData.name.required"
+                      class="error-message"
+                    >
+                      Имя не указанно
+                    </small>
+                             <small
+                  v-if="$v.userData.phone.$dirty && !$v.userData.phone.alpha"
+                  class="error-message"
+                >
+                  Только буквы в имени
+                </small>
            </b-form-group>
-    <b-form-group
+          <b-form-group
                     class="input-group"
                     label="Пароль"
                 >
                     <b-form-input
-                    v-model="userData.password"
+                    v-model="$v.userData.password.$model"
                     class="form-input"
                     type="password"
                     placeholder=""
                     />
+                      <small
+                      v-if="$v.userData.password.$dirty && !$v.userData.password.required"
+                      class="error-message"
+                    >
+                      Пароль не указан
+                    </small>
+                      <small
+                      v-if="$v.userData.password.$dirty && !$v.userData.password.minLength"
+                      class="error-message"
+                    >
+                      Пароль менее 8 символов
+                    </small>
            </b-form-group>
-               <b-form-group
+            <b-form-group
                     class="input-group"
                     label="Введите пароль повторно"
                 >
                     <b-form-input
-                    v-model="userData.passwordCheck"
+                    v-model="$v.userData.passwordCheck.$model"
                     class="form-input"
                     type="password"
                     placeholder=""
                     />
+                    <small
+                      v-if="$v.userData.passwordCheck.$dirty && !$v.userData.passwordCheck.required"
+                      class="error-message"
+                    >
+                      Пароль не указан
+                    </small>
+                      <small
+                      v-if="$v.userData.passwordCheck.$dirty && !$v.userData.passwordCheck.minLength"
+                      class="error-message"
+                    >
+                      Пароль менее 8 символов
+                    </small>
            </b-form-group>
             <b-button type="button"
                          v-if="!isRegistered"
@@ -108,6 +167,9 @@
 import store from '@/store/store'
 import CampaginStats from '@/components/CampaginStats'
 
+import { required, email, minLength, numeric, alpha } from 'vuelidate/lib/validators'
+import { validationMixin } from 'vuelidate'
+
 //todo: load from backend
 const stats = {
   seen: {min: 5, max: 5000},
@@ -120,6 +182,34 @@ export default {
     props: ['label_cols', 'content_cols', 'company', 'isEdit'],
     components: {
       CampaginStats
+    },
+    mixins: [validationMixin],
+     validations: {
+      userData: {
+        email: {
+          email,
+          required
+        },
+        password: {
+          required,
+          minLength: minLength(8)
+        },
+         passwordCheck: {
+          required,
+          minLength: minLength(8)
+        },
+         name: {
+          required,
+          alpha,
+          minLength: minLength(2)
+        },
+         phone: {
+          required,
+          numeric,
+          minLength: minLength(9)
+        }
+      }
+      
     },
     data: function () {
         return {
@@ -142,7 +232,12 @@ export default {
       },
     methods: {
         sendData(){
-            this.$emit('next', campaginData);
+            this.$v.userData.$touch()
+            if (this.$v.userData.$anyError) {
+              return
+            }
+            
+            this.$emit('next', this.campaginData);
         }
     }
 }

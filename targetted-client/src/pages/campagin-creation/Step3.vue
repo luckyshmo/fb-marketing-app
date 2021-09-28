@@ -40,7 +40,7 @@
                 label-for="input-horizontal"
                 >
                     <b-form-radio-group
-                        v-model="companyData.auditory.gender"
+                        v-model="$v.companyData.auditory.gender.$model"
                         :options="auditory.gender"
                     ></b-form-radio-group>
                 </b-form-group>
@@ -54,13 +54,15 @@
                     <b-col cols="6">
                         <b-form-input
                             class="form-input app-new-form-input-small"
-                            v-model="companyData.auditory.age.from" placeholder="От"></b-form-input>
+                            v-model="$v.companyData.auditory.age.from.$model"
+                            placeholder="От"></b-form-input>
                     </b-col>
             
                     <b-col cols="6">
                         <b-form-input
                             class="form-input app-new-form-input-small"
-                            v-model="companyData.auditory.age.to" placeholder="До"></b-form-input>
+                            v-model="$v.companyData.auditory.age.to.$model"
+                            placeholder="До"></b-form-input>
                     </b-col>
                 </b-row>
           </b-form-group>
@@ -70,7 +72,7 @@
                 >
                     <b-form-input
                     id="tel"
-                    v-model="companyData.auditory.location"
+                    v-model="$v.companyData.auditory.location.$model"
                     class="form-input"
                     placeholder="Введите адрес"
                     />
@@ -85,7 +87,7 @@
                       <b-form-textarea
                         id="textarea"
                         class="form-input"
-                        v-model="companyData.auditory.interests"
+                        v-model="$v.companyData.auditory.interests.$model"
                         rows="3"
                         max-rows="6"
                         ></b-form-textarea>
@@ -103,10 +105,38 @@
 
 <script>
 import store from '@/store/store'
+import { validationMixin } from 'vuelidate'
+import { required, minValue, maxValue } from 'vuelidate/lib/validators'
 
 export default {
   name: 'Step3',
     props: ['label_cols', 'content_cols', 'company', 'isEdit'],
+    mixins: [validationMixin],
+    validations: {
+         companyData: {
+              auditory: {
+                  gender: {
+                      required
+                  },
+                  location: {
+                      required
+                  },
+                  interests: {
+                      required
+                  },
+                  age: {
+                      from: {
+                          required,
+                          minValue: minValue(0)
+                      },
+                      to: {
+                          required,
+                          maxValue: maxValue(99)
+                      }
+                  }
+              }
+          },
+    },
     data: function () {
         return {
           store, //fixme
@@ -117,7 +147,10 @@ export default {
                   gender: '',
                   location: '',
                   interests: '',
-                  age: {}
+                  age: {
+                      from: '',
+                      to: ''
+                  }
               }
           },
           auditory: {
@@ -131,7 +164,11 @@ export default {
       },
     methods: {
         sendData(){
-            //todo
+            this.$v.companyData.auditory.$touch()
+            if (this.$v.companyData.auditory.$anyError) {
+              return
+            }
+
             this.$emit('next', this.companyData);
         }
     }
