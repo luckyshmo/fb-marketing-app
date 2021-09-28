@@ -69,18 +69,17 @@ body {
 }
 /* Global styles */
 
-.main-button-grey{
+.btn.main-button-grey{
     background: #F3F3F3 !important;
     color: black !important;
     outline: none !important;
-    border-radius: 8px !important;
-    padding: 12px 28px !important;
+    border-radius: 6px;
+    padding: 9px 24px 11px;
     border:none !important;
     font-family: 'IBM Plex Sans', sans-serif !important;
     font-style: normal !important;
     font-weight: 400 !important;
     line-height: 24px;
-    height: 48px;
 }
 
 .main-button-big{

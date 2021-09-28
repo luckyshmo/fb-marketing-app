@@ -8,9 +8,14 @@
 
         <b-button type="button"
                  v-if="!isConnectStarted"
-                class="app-new-submit-button mt-5"
+                class="app-new-submit-button"
                 @click="startConnecting">
         Начать привязку
+      </b-button>
+       <b-button type="button"
+                class="main-button-grey mr-0 mr-sm-2 mr-lg-2 mr-md-2 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
+                @click="sendData">
+        {{isEdit ? "Назад":"Привязать позже"}}
       </b-button>
 
 
@@ -107,11 +112,7 @@
       </b-button>
         </div>
 
-        <b-button type="button"
-                class="main-button-grey mt-1"
-                @click="sendData">
-        {{isEdit ? "Назад":"Привязать позже"}}
-      </b-button>
+       
     </b-form>
   </div>
 </template>
@@ -135,9 +136,9 @@ export default {
         }
       },
     methods: {
-      startConnecting(){
-        this.isConnectStarted = true;
-      },
+        startConnecting(){
+          this.isConnectStarted = true;
+        },
         showHelpVideo(){
 
         },
@@ -167,7 +168,7 @@ export default {
     margin-bottom: 16px;
 }
 .num{
-    background: #F3F3F3;
+    background: $light;
     width: 48px;
     height: 48px;
     border-radius: 24px;

@@ -7,6 +7,7 @@
             </p>
 
             <b-row align-h="between" no-gutters>
+
                 <b-col cols="10">
                     <b-button type="button"
                             class="app-new-submit-button"
@@ -17,7 +18,7 @@
          
                     <b-button
                     type="button"
-                    class="main-button-grey mt-2"
+                       class="main-button-grey mr-0 mr-sm-2 mr-lg-2 mr-md-2 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
                     @click="showAdvanced = true; showAdvancedClicked = true"
                     v-if="!showAdvancedClicked">Уточнить настройки</b-button>
                 </b-col>
@@ -131,7 +132,7 @@ export default {
     methods: {
         sendData(){
             //todo
-            this.$emit('next', companyData);
+            this.$emit('next', this.companyData);
         }
     }
 }

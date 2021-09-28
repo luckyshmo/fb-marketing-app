@@ -885,14 +885,6 @@ export default {
     margin-left: 16px;
     max-width: 600px;
 }
-.creative-message{
-    margin: 28px 0px 40px 0px;
-    padding: 40px;
-    width: 800px;
-    height: 128px;
-    background: #F3F3F3;
-    border-radius: 20px;
-}
 
 
 #primary-under{
@@ -905,11 +897,6 @@ export default {
     #primary-under{
         margin-left: 0px;
         margin-top: 20px;
-    }
-    .creative-message{
-        width: auto!important;
-        height: auto!important;
-        padding: 25px!important;
     }
 }
 .custom-radio{

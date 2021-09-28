@@ -5,6 +5,18 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 const timeout = 10000
 //!!
 
+function buildFormData(formData, data, parentKey) {
+  if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File)) {
+    Object.keys(data).forEach(key => {
+      buildFormData(formData, data[key], parentKey ? `${parentKey}[${key}]` : key);
+    });
+  } else {
+    const value = data == null ? '' : data;
+
+    formData.append(parentKey, value);
+  }
+}
+
 const jsonToFormData = (data) => {
     //todo, from SO
     const companyData = new FormData()

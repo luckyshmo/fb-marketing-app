@@ -449,11 +449,6 @@ export default {
         margin-left: 0px;
         margin-top: 20px;
     }
-    .creative-message{
-        width: auto!important;
-        height: auto!important;
-        padding: 25px!important;
-    }
 }
 
 aside {
