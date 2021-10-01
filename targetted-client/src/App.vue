@@ -180,7 +180,7 @@ body {
 }
 
 #navigation-text {
-    font-family: Montserrat;
+    
     font-style: normal;
     font-weight: normal;
     font-size: 1em;
@@ -206,7 +206,7 @@ h1 {
   text-align: center;
 }
 p {
-  font-family: Montserrat;
+  
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
@@ -215,7 +215,7 @@ p {
 }
 
 #h2-n {
-  font-family: Montserrat;
+  
   font-style: normal;
   font-weight: 900;
   /* font-size: 2.3em; */
@@ -242,11 +242,19 @@ p {
   margin-top: 32px;
   color: black;
   display: flex;
-  font-family: Montserrat;
+  
   font-style: normal;
   font-weight: normal;
   font-weight: 400;
   font-size: 1em;
+}
+.md-button{
+  height: 24px;
+  width: 24px;
+  color: black;
+  background: #f3f3f3;
+  border-radius: 20px;
+  cursor: pointer;
 }
 .x-button{
   height: 40px;
@@ -256,25 +264,7 @@ p {
   border-radius: 20px;
   cursor: pointer;
 }
-@media (max-width: 600px) {
-    #input-group-main{
-        display:grid;
-    }
-    #h1-centered {
-      font-size: 36px;
-      line-height: 44px;
-    }
-    h1 {
-      font-size: 32px !important;
-      line-height: 44px !important;
-    }
-    #h2 {
-      font-size: 24px;
-      line-height: 32px;
-      margin-top: 0px;
-      margin-bottom: 0px;
-    }
-}
+
 .form-input{
     height: 48px;
     border-radius: 8px !important;
@@ -296,7 +286,7 @@ p {
       padding: 12px 10px !important;
     }
     #content{
-      padding: 40px;
+      padding: 30px;
     }
 }
 </style>

@@ -7,7 +7,7 @@
           id="navigation-text"
           style="margin:0;"
         >
-          ← К списку кампаний
+          ← Назад
         </p>
       </router-link>
       <div
@@ -18,7 +18,7 @@
           id="h1"
           style="max-width: 700px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"
         >
-          {{ company.CompanyName }}
+          Реклама от 9 сентября
         </h1>
         <div
           id="c-status"
@@ -210,7 +210,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
       </b-form>
-      <div>
+      <!-- <div>
         <h2 id="h2">
           Настройки кампании
         </h2>
@@ -224,14 +224,14 @@
             К настройкам кампании
           </b-button>
         </router-link>
-      </div>
-      <b-button
+      </div> -->
+      <!-- <b-button
         class="submit-button"
         type="submit"
         @click="updateCompany()"
       >
         {{ isEdit ? "Обновить":"Запустить" }} кампанию
-      </b-button>
+      </b-button> -->
     </div>
   </div>
 </template>
@@ -400,7 +400,7 @@ export default {
       if (!company.IsStarted) {
         return 'настраивается'
       }
-      return 'работает'
+      return 'в работе'
     },
     isFb (company) {
       return company.FbPageId.length > 0
@@ -477,7 +477,6 @@ export default {
     align-items: stretch;
 }
 #balance{
-    font-family: Montserrat;
     font-style: normal;
     font-weight: 600;
     font-size: 16px;

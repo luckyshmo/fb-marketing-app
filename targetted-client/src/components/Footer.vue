@@ -28,7 +28,6 @@ export default {
 }
 .footer {
     height: 100px;
-    font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
     font-size: $baseFont;

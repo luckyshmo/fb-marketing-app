@@ -20,13 +20,13 @@
           </p>
         </b-form-group> -->
 
-        <b-button
+        <!-- <b-button
           variant="primary"
           class="main-button-grey mt-2"
           @click="push"
         >
           Пополнить баланс
-        </b-button>
+        </b-button> -->
       </div>
       <h2 id="h2" class="mt-4">
         Ваши рекламные кампании
@@ -47,6 +47,11 @@
                   <p class="c-name">
                     {{ company.CompanyName }}
                   </p>
+                    <b-icon
+                      class="md-button app-block-icon"
+                      icon="chevron-right"
+                      @click="openCompanyDetails"
+                    />
                 </div>
                 <div class="r">
                   <div class="c-status">
@@ -70,6 +75,8 @@
                     </p>
                   </div>
                 </div>
+               
+                
               </div>
             </router-link>
           </div>
@@ -163,6 +170,9 @@ export default {
     this.getAdCompanyList()
   },
   methods: {
+    openCompanyDetails(){
+
+    },
     showVideo () {
       this.isVideo = true
     },
@@ -230,6 +240,7 @@ export default {
 .c-date {
     font-size: 14px;
     line-height: 18px;
+    margin-bottom: 0;
     color: $gray;
 }
 .c-div{
@@ -264,8 +275,8 @@ a {
     margin-left: 30px;
     margin-right: 20px;
     margin-top: 2px;
-    font-family: Montserrat;
     font-style: normal;
+    font-size: 14px;
     padding: 0px !important;
 }
 #white{
@@ -292,10 +303,9 @@ a {
     height: 55px;
     padding-bottom: 1px;
     background: #000000;
-    border-radius: 16px;
+    border-radius: 6px;
 }
 .c-name{
-    font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
     font-size: 1.3em;
@@ -323,12 +333,12 @@ a {
        height: auto;
        padding-bottom: 4px;
        display: inline-block;
-    padding: 0;
+        padding: 0;
     }
     .c-status-text{
-           margin-left: 25px;
-    margin-right: 10px;
-    margin-bottom: 3px;
+        margin-left: 25px;
+        margin-right: 10px;
+        margin-bottom: 3px;
     }
     .c-div{
         margin-top: 15px;

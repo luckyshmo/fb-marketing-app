@@ -8,6 +8,15 @@ p, label, button, .app-header, .error-message {
     cursor: pointer;
 }
 
+.app-header-bold {
+    font-weight: bold;
+}
+
+.app-block-icon {
+    float: right;
+    padding-right: 40px;
+}
+
 .ml-2 {
     margin-left: 2em;
 }

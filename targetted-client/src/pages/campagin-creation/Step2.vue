@@ -32,7 +32,7 @@
 
         <div class="creative-message">
           Советы по самостоятельному созданию креативов
-              <b-icon icon="arrow-right">huw</b-icon>
+              <b-icon icon="chevron-right"/>
           <!-- <div v-if="isCreative()">
             Для создания рекламных креативов загрузите картинки и напишите текст, который будет на них отображаться. <a
               href="https://docs.google.com/document/d/1gqOkpxDJ1wNt-AYlt5Q1Et1kF8NRLRYdG-dXK7WdT1k/edit?usp=sharing"
@@ -45,7 +45,7 @@
             чтобы увеличить эффективность рекламной кампании.
           </div> -->
         </div>
-      <h2>{{getStoriesLabel()}}</h2>
+      <h2 class="app-header-bold">{{getStoriesLabel()}}</h2>
       
       <p class="app-new-info">В одном рекламном объявлении может быть до 5 слайдов</p>
 
@@ -92,7 +92,7 @@
         </div>
         
         <br><br>
-        <h2>{{getPostLabel()}}</h2>
+        <h2 class="app-header-bold">{{getPostLabel()}}</h2>
         <p class="app-new-info">В одном рекламном объявлении может быть до 5 слайдов</p>
 
         <b-form-group class="app-new-creative-uploads" :label-cols="label_cols" :state="validateImagesSmall()"
@@ -143,7 +143,7 @@
         <h2>Предпросмотр</h2>
         <div class="creative-message" @click="$router.push('/preview')">
           Как будет выглядеть реклама
-          <b-icon icon="arrow-right">huw</b-icon>
+          <b-icon icon="chevron-right"/>
         </div>
 
        <b-row class="mt-5">
@@ -336,7 +336,6 @@ export default {
     color: $gray;
 }
 #file-size {
-    font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
     font-size: 12px;

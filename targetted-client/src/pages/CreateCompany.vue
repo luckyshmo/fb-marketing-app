@@ -954,7 +954,7 @@ export default {
     background: #F3F3F3;
 }
 #load-file {
-    font-family: Montserrat;
+    
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
@@ -964,7 +964,7 @@ export default {
     color: #000000;
 }
 #file-size-big {
-    font-family: Montserrat;
+    
     font-style: normal;
     font-weight: normal;
     font-size: 12px;
@@ -975,7 +975,7 @@ export default {
     color: #767676;
 }
 #file-size {
-    font-family: Montserrat;
+    
     font-style: normal;
     font-weight: normal;
     font-size: 12px;
@@ -985,7 +985,7 @@ export default {
     color: #767676;
 }
 #list {
-  font-family: Montserrat;
+  
   font-style: normal;
   font-weight: normal;
   font-size: 20px;

@@ -14,6 +14,13 @@ const store = new Vuex.Store({
       CompanyName: 'Test url',
       FbPageId: 2345678,
       Date: '10 Сентября'
+    },
+    {
+      Id: 'test-3456789',
+      CompanyName: 'https://www.figma.com/',
+      FbPageId: 2345678,
+      IsStarted: true,
+      Date: '1 Мая'
     }],
     user: localStorage.getItem('user') || '',
     email: localStorage.getItem('email') || '',

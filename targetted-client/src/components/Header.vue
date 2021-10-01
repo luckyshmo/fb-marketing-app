@@ -170,7 +170,6 @@ export default {
 }
 .nav {
     cursor: pointer;
-    font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
     font-size: 1em;

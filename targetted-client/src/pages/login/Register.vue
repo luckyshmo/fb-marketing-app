@@ -237,7 +237,6 @@ export default {
 .error-message{
   position: absolute;
   color: red;
-  font-family: Montserrat;
   font-style: normal;
 }
 .form-control{

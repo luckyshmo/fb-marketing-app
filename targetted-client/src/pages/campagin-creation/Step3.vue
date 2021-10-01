@@ -123,7 +123,14 @@
                         @click="sendData">
                 {{isEdit ? "Назад":"Продолжить"}}
             </b-button>
+
+        <b-button
+            type="button"
+                class="main-button-grey ml-0 ml-sm-2 ml-lg-2 ml-md-2 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
+            @click="noValidate = true; sendData()"
+            >Продолжить без уточнения</b-button>
       </div>
+      {{noValidate}}
     </b-form>
   </div>
 </template>
@@ -166,10 +173,11 @@ export default {
         return {
           store, //fixme
           showAdvanced: false,
+          noValidate: false,
           showAdvancedClicked: false,
           companyData: {
               auditory: {
-                  gender: '',
+                  gender: 'any',
                   location: '',
                   interests: '',
                   age: {
@@ -180,16 +188,16 @@ export default {
           },
           auditory: {
               gender: [
-                    { text: 'Мужской', value: 'male' },
-                    { text: 'Женский', value: 'female' },
                     { text: 'Любой', value: 'any' },
+                    { text: 'Мужской', value: 'male' },
+                    { text: 'Женский', value: 'female' }
               ]
           }
         }
       },
     methods: {
         sendData(){
-            if(this.showAdvancedClicked) {
+            if(this.showAdvancedClicked || !this.noValidate) {
                 this.$v.companyData.auditory.$touch()
                 if (this.$v.companyData.auditory.$anyError) {
                     window.scrollTo(0, 100)

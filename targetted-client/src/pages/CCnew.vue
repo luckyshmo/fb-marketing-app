@@ -4,7 +4,7 @@
       <div id="content-wrapper">
         <div id="content">
           <b-row class="app-new-steps-header">
-            <b-col cols="4" sm="1" md="2" lg="2" xl="1">
+            <b-col cols="3" sm="1" md="2" lg="2" xl="1">
               <router-link v-if="currentStep === 1" :to="{name: 'mainPage'}">
                 <p class="text-muted" style="margin:0;">← Назад</p>
               </router-link>

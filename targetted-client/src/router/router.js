@@ -1,6 +1,6 @@
 import Router from 'vue-router'
 import Vue from 'vue'
-import mainPage from '@/components/Main.vue'
+import mainPage from '@/pages/Main.vue'
 import login from '@/pages/login/Login.vue'
 import questions from '@/pages/Questions.vue'
 import register from '@/pages/login/Register.vue'
