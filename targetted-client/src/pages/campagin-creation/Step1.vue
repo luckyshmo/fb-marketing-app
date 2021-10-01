@@ -71,6 +71,22 @@
             </small>
       </b-form-group> 
 
+
+
+    <b-form-group label="Сфера деятельности" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
+          label-for="input-horizontal">
+
+          <b-form-select class="form-input"
+             :disabled="isEdit"
+             v-model="$v.company.CompanyFieldArea.$model"
+             :options="['Интернет-реклама', 'Прочее']"
+             placeholder="Точный адрес">
+          </b-form-select>
+
+          <p class="app-new-info">Стоимость перехода по рекламе ~ 10–30 ₽</p>
+        
+      </b-form-group> 
+
       <b-form-group label="Название кампании" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
       label-for="input-horizontal">
       <b-form-input class="form-input" v-model="$v.company.CompanyName.$model" :disabled="isEdit"
@@ -102,6 +118,7 @@
 
       <b-form-group label="Какие услуги оказываете" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
       label-for="input-horizontal">
+
       <b-form-textarea class="form-input"
                       :disabled="isEdit"
                       v-model="$v.company.CompanyField.$model"
@@ -118,6 +135,10 @@
 
           <b-form-group label="Где оказываете услуги" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
           label-for="input-horizontal">
+
+             <p class="app-new-info">Если у вас офлайн бизнес, то укажите 
+точный адрес оказания услуг</p>
+
           <b-form-input class="form-input" :disabled="isEdit" v-model="$v.company.BusinessAddress.$model" placeholder="Точный адрес">
           </b-form-input>
              <small
@@ -127,6 +148,30 @@
               Укажите адрес
             </small>
       </b-form-group> 
+
+       <b-form-group
+                    class="input-group"
+                    label="Номер телефона"
+                >
+                <p class="app-new-info">Мы не покажем его в рекламе</p>
+                    <b-form-input
+                    v-model="$v.userData.phone.$model"
+                    class="form-input"
+                    placeholder="Введите телефон"
+                    />
+                        <small
+                  v-if="$v.userData.phone.$dirty && !$v.userData.phone.required"
+                  class="error-message"
+                >
+                  Телефон на указан
+                </small>
+                        <small
+                  v-if="$v.userData.phone.$dirty && !$v.userData.phone.numeric"
+                  class="error-message"
+                >
+                  Только цифры в телефоне
+                </small>
+           </b-form-group>
     
       <b-form-group class="mt-5">
 
@@ -166,6 +211,12 @@ export default {
         popup
       },
       validations: {
+        userData: {
+          phone: {
+            required,
+            minLength: minLength(7)
+          }
+        },
         company: {
           CompanyName: {
             required,
@@ -184,11 +235,17 @@ export default {
           },
           CompnayTarget: {
             required
+          },
+          CompanyFieldArea: {
+            required
           }
         }
       },
       data: function () {
         return {
+          userData: {
+            phone: ''
+          },
           store, //fixme
           isLoading: false,
           isRequestSent: false,
@@ -204,6 +261,7 @@ export default {
             CompanyField: '',
             BusinessAddress: '',
             AccountURL: '',
+            CompanyFieldArea: '',
             ImagesDescription: [],
             ImagesSmallDescription: [],
             CreativeStatus: 'Есть рекламные креативы',
@@ -295,5 +353,8 @@ export default {
 </script>
 
 <style>
-
+select.form-input.custom-select {
+    width: 90%;
+    padding: 10px;
+}
 </style>

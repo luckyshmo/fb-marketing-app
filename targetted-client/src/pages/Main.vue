@@ -283,10 +283,11 @@ a {
     background: white;
 }
 #yellow{
-    background: yellow;
+    background: $lime;
 }
 #green{
-    background: lightgreen;
+    background:$orange;
+
 }
 .elipse{
     position: absolute;
@@ -302,7 +303,7 @@ a {
     padding-left: 10px;
     height: 55px;
     padding-bottom: 1px;
-    background: #000000;
+    background: $black;
     border-radius: 6px;
 }
 .c-name{

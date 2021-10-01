@@ -10,16 +10,21 @@
           ← Назад
         </p>
       </router-link>
+         
+    <h1>Реклама от 9 сентября</h1>
+
       <div
         v-if="getWidthPx() > 600"
         id="company-status-wrapper"
       >
-        <h1
+
+      
+        <!-- <h1
           id="h1"
           style="max-width: 700px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"
         >
           Реклама от 9 сентября
-        </h1>
+        </h1> -->
         <div
           id="c-status"
           class="c-status"
@@ -44,6 +49,8 @@
           </p>
         </div>
       </div>
+
+
       <div v-if="!(getWidthPx() > 600)">
         <h1
           id="h1"
@@ -76,11 +83,21 @@
         </div>
       </div>
 
-      <h2 id="h2">
-        Общий баланс
-      </h2>
+  <br>
 
-      <b-form-group
+   <section class="app-new-stats">
+            <div class="app-new-stats-type">instagram.com/targetted</div>
+            <div class="app-new-stats-details">Аккаунт в Instagram или Facebook</div>
+            
+            <div class="app-new-stats-type">Заявки в директ</div>
+            <div class="app-new-stats-details">Цель рекламной кампании</div>
+            
+            <div class="app-new-stats-type">1 498 ₽ за 7 дней</div>
+            <div class="app-new-stats-details">Общие затраты</div>
+      </section>
+
+
+      <!-- <b-form-group
         id="input-group-main"
         label="Всего на счету"
         :label-cols="label_cols"
@@ -209,7 +226,7 @@
             Минимально один день
           </b-form-invalid-feedback>
         </b-form-group>
-      </b-form>
+      </b-form> -->
       <!-- <div>
         <h2 id="h2">
           Настройки кампании
@@ -469,9 +486,6 @@ export default {
 }
 </script>
 <style>
-#c-status{
-    margin: 12px;
-}
 #company-status-wrapper{
     display: flex;
     align-items: stretch;

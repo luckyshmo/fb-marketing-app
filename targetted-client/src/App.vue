@@ -266,8 +266,8 @@ p {
 }
 
 .form-input{
-    height: 48px;
-    border-radius: 8px !important;
+    height: 44px;
+    border-radius: 6px !important;
     border: none !important;
     background-color: #F3F3F3 !important;
     color: black !important;
