@@ -1,7 +1,7 @@
 <template>
   <div id="content-login">
     <h1 class="app-header">
-      Остались воросы?
+      Остались вопросы?
     </h1>
 
     <b-form
@@ -15,11 +15,17 @@
           Оставьте свой номер телефона, если у вас возникли вопросы или предложения :)
       </p>
         <b-form-input
-          v-model="phone"
+          v-model="$v.form.phoneNumber.$model"
           class="form-input"
-        :state="validateState('phoneNumber')"
           placeholder="Телефон"
         />
+
+            <small
+                  v-if="$v.form.phoneNumber.$dirty && !$v.form.phoneNumber.required"
+                  class="error-message"
+                >
+                  Телефон на указан
+                </small>
         
       </b-form-group>
 
@@ -55,18 +61,14 @@ export default {
     }
   },
     validations: {
-    form: {
-      phoneNumber: {
-        required,
-        minLength: minLength(10)
-      },
-    }
+      form: {
+        phoneNumber: {
+          required,
+          minLength: minLength(10)
+        },
+      }
     },
   methods: {
-    validateState (name) {
-    //   const { $dirty, $error } = this.$v[name]
-    //   return $dirty ? !$error : null
-    },
     sendRequest: function () {
       this.$v.$touch()
       if (this.$v.$anyError) {

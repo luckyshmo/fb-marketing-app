@@ -30,8 +30,8 @@ export default {
     height: 100px;
     font-style: normal;
     font-weight: normal;
-    font-size: $baseFont;
-    line-height: $baseLH;
+    font-size: 14px;
+    line-height: 18px;
     /* identical to box height, or 150% */
     text-align: center;
     color: $gray;

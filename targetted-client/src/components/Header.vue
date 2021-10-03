@@ -63,7 +63,7 @@
      <button
         variant="primary"
         class="app-new-button-sm"
-        @click="showPopupInfo"
+        @click="$router.push('/questions')"
       >
         <img src="@/assets/q-icon.svg"/>
       </button>

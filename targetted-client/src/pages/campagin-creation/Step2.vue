@@ -32,7 +32,7 @@
 
         <div class="creative-message">
           Советы по самостоятельному созданию креативов
-              <b-icon icon="chevron-right"/>
+              <b-icon icon="chevron-right" class="app-block-icon"/>
           <!-- <div v-if="isCreative()">
             Для создания рекламных креативов загрузите картинки и напишите текст, который будет на них отображаться. <a
               href="https://docs.google.com/document/d/1gqOkpxDJ1wNt-AYlt5Q1Et1kF8NRLRYdG-dXK7WdT1k/edit?usp=sharing"
@@ -143,7 +143,7 @@
         <h2>Предпросмотр</h2>
         <div class="creative-message" @click="$router.push('/preview')">
           Как будет выглядеть реклама
-          <b-icon icon="chevron-right"/>
+          <b-icon icon="chevron-right" class="app-block-icon"/>
         </div>
 
        <b-row class="mt-5">

@@ -238,16 +238,7 @@ p {
 #form-centred{
     text-align: center !important;
 }
-#input-group-main{
-  margin-top: 32px;
-  color: black;
-  display: flex;
-  
-  font-style: normal;
-  font-weight: normal;
-  font-weight: 400;
-  font-size: 1em;
-}
+
 .md-button{
   height: 24px;
   width: 24px;

@@ -244,7 +244,7 @@ export default {
 }
 @media(max-width: 600px){
   .form-control{
-    width: 265px !important;
+    width: 100% !important;
   }
 }
 .input-group{

@@ -124,7 +124,7 @@
                       v-model="$v.company.CompanyField.$model"
                       rows="3"
                       max-rows="6"
-          placeholder="Вставьте ссылку"></b-form-textarea>
+          placeholder="Введите описание"></b-form-textarea>
            <small
               v-if="$v.company.CompanyField.$dirty && !$v.company.CompanyField.required"
               class="error-message"
@@ -139,7 +139,7 @@
              <p class="app-new-info">Если у вас офлайн бизнес, то укажите 
 точный адрес оказания услуг</p>
 
-          <b-form-input class="form-input" :disabled="isEdit" v-model="$v.company.BusinessAddress.$model" placeholder="Точный адрес">
+          <b-form-input class="form-input" :disabled="isEdit" v-model="$v.company.BusinessAddress.$model" placeholder="Город или улица">
           </b-form-input>
              <small
               v-if="$v.company.BusinessAddress.$dirty && !$v.company.BusinessAddress.required"
@@ -152,13 +152,14 @@
        <b-form-group
                     class="input-group"
                     label="Номер телефона"
+                    id="input-group-main"
                 >
                 <p class="app-new-info">Мы не покажем его в рекламе</p>
                     <b-form-input
                     v-model="$v.userData.phone.$model"
                     class="form-input"
                     placeholder="Введите телефон"
-                    />
+                    ></b-form-input>
                         <small
                   v-if="$v.userData.phone.$dirty && !$v.userData.phone.required"
                   class="error-message"
@@ -199,7 +200,7 @@ import router from '@/router/router'
 import popup from '@/components/BigPopup.vue'
 
 import { validationMixin } from 'vuelidate'
-import { required, maxLength, minLength } from 'vuelidate/lib/validators'
+import { required, maxLength, minLength, numeric } from 'vuelidate/lib/validators'
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
@@ -214,6 +215,7 @@ export default {
         userData: {
           phone: {
             required,
+            numeric,
             minLength: minLength(7)
           }
         },
@@ -354,7 +356,8 @@ export default {
 
 <style>
 select.form-input.custom-select {
-    width: 90%;
+    width: 99%;
     padding: 10px;
+    margin-bottom: 12px;
 }
 </style>
