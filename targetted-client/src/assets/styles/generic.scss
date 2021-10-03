@@ -15,7 +15,18 @@ p, label, button, .app-header, .error-message {
 .app-block-icon {
     float: right;
     padding-right: 40px;
+    margin-top: -20px;
 }
+.app-mid-size {
+    margin-bottom: 2px;
+}
+
+.app-modal-white { 
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background: #fff;}
 
 .ml-2 {
     margin-left: 2em;

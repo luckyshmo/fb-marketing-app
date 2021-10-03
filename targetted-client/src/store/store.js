@@ -12,13 +12,13 @@ const store = new Vuex.Store({
     adCompanyList: localStorage.getItem('user_company') || [{
       Id: 'test-url',
       CompanyName: 'Test url',
-      FbPageId: 2345678,
+      FbPageId: '',
       Date: '10 Сентября'
     },
     {
       Id: 'test-3456789',
       CompanyName: 'https://www.figma.com/',
-      FbPageId: 2345678,
+      FbPageId: '2345678',
       IsStarted: true,
       Date: '1 Мая'
     }],

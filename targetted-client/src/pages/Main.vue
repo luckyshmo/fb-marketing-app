@@ -1,8 +1,27 @@
 <template>
   <div id="content">
+
+    <div v-if="isVideo" class="app-modal-white">
+      <iframe
+        id="ytplayer"
+        type="text/html"
+        src="https://www.youtube.com/embed/EgpUx9_4ZIQ?autoplay=1&origin=https://youtu.be/EgpUx9_4ZIQ"
+        frameborder="0"
+      />
+      <div
+        id="ytcloser"
+      >
+        <b-icon
+          class="x-button"
+          icon="x"
+          @click="closeVideo"
+        />
+      </div>
+    </div>
+
     <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
       <h1 id="h1">
-        Главная
+        Александр, добро пожаловать!
       </h1>
       <div>
         <!-- <h2 id="h2">
@@ -28,11 +47,8 @@
           Пополнить баланс
         </b-button> -->
       </div>
-      <h2 id="h2" class="mt-4">
-        Ваши рекламные кампании
-      </h2>
 
-         <p>Здесь вы можете ознакомиться со своими рекламными кампаниями.</p>
+         <p>Здесь вы можете ознакомиться со&nbsp;своими рекламными кампаниями.</p>
 
       <div>
         <div>
@@ -43,7 +59,7 @@
             <router-link :to="{path: '/company-balance/'+ company.Id, query: { isEdit: true }}">
               <div class="c-div">
                 <div class="l">
-                  <p class="c-date">{{company.Date}}</p>
+                  <p class="c-date">Создана {{company.Date}}</p>
                   <p class="c-name">
                     {{ company.CompanyName }}
                   </p>
@@ -101,7 +117,7 @@
         <b-button
           class="app-new-submit-button"
         >
-          Запустить рекламу
+          Создать новую
         </b-button>
       </router-link>
       <b-button
@@ -109,28 +125,11 @@
         class="main-button-grey ml-0 ml-sm-2 ml-lg-2 ml-md-2 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
         @click="showVideo"
       >
-        <b-icon icon="play-circle-fill"/>
+        <b-icon font-scale=".98" class="app-mid-size" icon="play-circle-fill"/>
          Инструкция
       </b-button>
     </div>
 
-    <div v-if="isVideo">
-      <iframe
-        id="ytplayer"
-        type="text/html"
-        src="https://www.youtube.com/embed/EgpUx9_4ZIQ?autoplay=1&origin=https://youtu.be/EgpUx9_4ZIQ"
-        frameborder="0"
-      />
-      <div
-        id="ytcloser"
-      >
-        <b-icon
-          class="x-button"
-          icon="x"
-          @click="closeVideo"
-        />
-      </div>
-    </div>
   </div>
 </template>
 <script>
@@ -183,7 +182,8 @@ export default {
       router.push({ path: '/company-balance/' + store.getters.GET_COMPANY_LIST[0].Id, query: { isEdit: true } })
     },
     isMoney () {
-      return this.user.Amount > 0
+      return true
+      //return this.user.Amount > 0
     },
     isFb (company) {
       return company.FbPageId.length > 0
@@ -193,12 +193,12 @@ export default {
       //     return "facebook не подключен"
       // }
       if (this.user.Amount === 0) {
-        return 'закончился рекламный бюджет'
+        return 'ожидает оплаты'
       }
       if (!company.IsStarted) {
-        return 'настраивается'
+        return 'черновик'
       }
-      return 'работает'
+      return 'в работе'
     },
     getAdCompanyList () {
       store.dispatch('getCompanyList')
@@ -286,15 +286,14 @@ a {
     background: $lime;
 }
 #green{
-    background:$orange;
-
+    background:#E2FF12;
 }
 .elipse{
     position: absolute;
-    width: 10px;
+    width: 8px;
+    height: 8px;
     margin-top: 9px;
     margin-left: 9px;
-    height: 10px;
     border-radius: 5px;
 }
 .c-status{
@@ -309,7 +308,8 @@ a {
 .c-name{
     font-style: normal;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 16px;
+    line-height: 24px;
     color: #000000;
     text-align: left;
     width: 600px;
@@ -348,8 +348,8 @@ a {
     .l {
         position: relative;
         text-align: left;
-        margin-top: 20px;
-        margin-left: 20px;
+        margin-top: 14px;
+        margin-left: 16px;
         height: auto;
     }
     .r {
@@ -359,7 +359,7 @@ a {
         margin-right: auto;
         margin-top: auto;
         height: auto;
-        margin: 20px;
+        margin: 16px;
 
     }
 }

@@ -143,7 +143,7 @@ export default {
 }
 .logo {
   margin-left: 6%;
-  margin-top: 18px;
+  margin-top: 4px;
 }
 @media (min-width: 768px){
   .logo {
@@ -157,7 +157,7 @@ export default {
     width: 100px;
     height: 20px;
     z-index: -1;
-    top: 38px;
+    top: 28px;
 }
 @media (max-width: 465px){
   #l-im{

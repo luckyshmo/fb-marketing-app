@@ -206,12 +206,12 @@ h1 {
   text-align: center;
 }
 p {
-  
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
   color: black;
+  margin-bottom: 20px;
 }
 
 #h2-n {
@@ -286,7 +286,7 @@ p {
       padding: 12px 10px !important;
     }
     #content{
-      padding: 30px;
+      padding: 24px;
     }
 }
 </style>
