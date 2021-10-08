@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot name="header"></slot>
-    <br>
+    <p>Заполните информацию о своём бизнесе.</p>
     <b-form>
       <!-- <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
         <p>Раздайте доступ к вашей Facebook и Instagram странице<br>для запуска и управления рекламой от имени ваших
@@ -43,9 +43,6 @@
         Привязать другой аккаунт
       </b-button> -->
 
-
-
-      <p>Заполните информацию о своём бизнесе.</p>
     <b-form-group label="Что рекламируете" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
       label-for="input-horizontal">
       <b-form-radio-group 
@@ -103,18 +100,7 @@
       </small>
       </b-form-group>
 
-      <b-form-group label="Цель кампании" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
-      label-for="input-horizontal">
-      <b-form-radio-group 
-          v-model="company.CompnayPurpose"
-          :disabled="isEdit"
-          class="app-new-radio"
-          :options="[
-                      'Заявки в директ',
-                      'Новые подписчики',
-                      'Заявки через лид-форму'
-                  ]"></b-form-radio-group>
-      </b-form-group>
+    
 
       <b-form-group label="Какие услуги оказываете" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
       label-for="input-horizontal">
@@ -122,8 +108,8 @@
       <b-form-textarea class="form-input"
                       :disabled="isEdit"
                       v-model="$v.company.CompanyField.$model"
-                      rows="3"
-                      max-rows="6"
+                      rows="6"
+                      max-rows="9"
           placeholder="Введите описание"></b-form-textarea>
            <small
               v-if="$v.company.CompanyField.$dirty && !$v.company.CompanyField.required"
@@ -148,6 +134,20 @@
               Укажите адрес
             </small>
       </b-form-group> 
+
+
+        <b-form-group label="Цель кампании" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
+      label-for="input-horizontal">
+      <b-form-radio-group 
+          v-model="company.CompnayPurpose"
+          :disabled="isEdit"
+          class="app-new-radio"
+          :options="[
+                      'Заявки в директ',
+                      'Новые подписчики',
+                      'Заявки через лид-форму'
+                  ]"></b-form-radio-group>
+      </b-form-group>
 
        <b-form-group
                     class="input-group"

@@ -19,7 +19,7 @@
       </div>
 
       <div v-if="!isEdit">
-        <b-form-group label="Наличие креативов" :label-cols="label_cols" :content-cols="content_cols"
+        <!-- <b-form-group label="Наличие креативов" :label-cols="label_cols" :content-cols="content_cols"
           id="input-group-main" label-for="input-horizontal">
           <b-form-radio-group
           v-model="company.CreativeStatus"
@@ -28,7 +28,7 @@
                                   'Есть рекламные креативы',
                                   'Создать рекламные креативы'
                               ]"></b-form-radio-group>
-        </b-form-group>
+        </b-form-group> -->
 
         <div class="creative-message">
           Советы по самостоятельному созданию креативов

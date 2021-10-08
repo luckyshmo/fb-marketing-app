@@ -4,6 +4,9 @@ p, label, button, .app-header, .error-message {
     // font-style: normal;
     // font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
 }
+p {
+    line-height: 172%;
+}
 .clickable {
     cursor: pointer;
 }

@@ -130,7 +130,7 @@
             @click="noValidate = true; sendData()"
             >Продолжить без уточнения</b-button>
       </div>
-      {{noValidate}}
+      
     </b-form>
   </div>
 </template>

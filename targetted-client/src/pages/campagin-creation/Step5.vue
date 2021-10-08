@@ -262,6 +262,7 @@ export default {
         font-size: $baseFont;
         line-height: $baseLH;
         color: $gray;
+        margin-bottom: 27px;
       }
       &-type {
         font-weight: bold;
