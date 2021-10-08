@@ -157,7 +157,7 @@ body {
   border-radius: 25px !important;
 }
 #content-wrapper {
-  width: 1220px;
+  max-width: 1060px;
   margin: 0% auto 0% auto !important;
   border-radius: 25px !important;
   padding-bottom: 45px;
@@ -191,11 +191,13 @@ body {
 
 h1 {
   margin: 0px;
-  font-family: IBM Plex Sans !important;
-  font-weight: 900 !important;
-  /* line-height: 72px !important;
-  font-size: 72px !important; */
+  font-weight: bold !important;
+  line-height: 56px !important;
+  font-size: 60px !important;
   color: black;
+}
+@media (max-width: 600px) {
+
 }
 #h1-centered {
   font-family: IBM Plex Sans;
@@ -266,6 +268,11 @@ p {
 
 .form-input.width-1-2 {
   max-width: 45%;
+}
+@media (max-width: 450px) {
+  .form-input.width-1-2 {
+    max-width: 99%;
+  }
 }
 
 ::-webkit-scrollbar {

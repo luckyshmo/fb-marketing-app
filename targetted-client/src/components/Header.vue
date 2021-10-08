@@ -1,69 +1,32 @@
 <template>
-  <div class="container">
-    <a
+<section>
+   <popup
+        v-if="isInfoPopupVisible"
+        @closePopup="closeInfoPopup"
+      >
+       <Questions/>
+      </popup>
+
+ <b-row id="content-header">
+        <b-col cols="3" class="app-new-nav-left">
+      <a
       href="https://targetted.ru/"
-      target="_blank"
-      class="logo"
-    >
+      class="logo">
         <img
           id="l-im"
           src="@/assets/logo-new.png"
         >
         <div class="logo-bg"></div>
     </a>
-    <div
-      id="left"
-      class="nav"
-    >
-      <popup
-        v-if="isInfoPopupVisible"
-        @closePopup="closeInfoPopup"
-      >
-        <div class="p-wrapper">
-          <h1>Напишите нам</h1>
-          <p
-            id="p1"
-            style="margin-top: 20px"
-          >
-            Свяжитесь с нами, если у вас возникли вопросы или проблемы
-          </p>
-          <div>
-            <a
-              id="social-link"
-              href="https://wa.me/79952335503"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Whatsapp
-            </a>
-            <a
-              id="social-link"
-              href="http://t.me/targetted"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Telegram
-            </a>
-          </div>
-        </div>
-      </popup>
-      <div
-        v-if="isLoggedIn"
-        id="write-us-text"
-        @click="showPopupInfo"
-      >
-        Написать нам
-      </div>
-    </div>
 
-    <div
-      id="right"
-      class="nav"
-    >
+        </b-col>
+       <b-col cols="9" class="app-new-nav-right">
+
+     
      <button
         variant="primary"
         class="app-new-button-sm"
-        @click="$router.push('/questions')"
+        @click="showPopupInfo"
       >
         <img src="@/assets/q-icon.svg"/>
       </button>
@@ -93,15 +56,44 @@
       >
         Вход
       </button>
+
+       </b-col>
+ </b-row>
+  
+  </section>
+  <!-- <div class="container">
+    
+    <div
+      id="left"
+      class="nav"
+    >
+     
+      <div
+        v-if="isLoggedIn"
+        id="write-us-text"
+        @click="showPopupInfo"
+      >
+        Написать нам
+      </div>
     </div>
-  </div>
+
+    <div
+      id="right"
+      class="nav"
+    >
+     
+    </div>
+  </div> -->
 </template>
 <script>
 import popup from '@/components/popup.vue'
 import store from '@/store/store'
+import Questions from '@/pages/Questions.vue'
+
 export default {
   components: {
-    popup
+    popup,
+    Questions
   },
   data () {
     return {
@@ -134,6 +126,34 @@ export default {
 <style lang="scss">
   @import '@/assets/styles/vars.scss';
 
+#content-header {
+  max-width: 1060px;
+  padding: 24px;
+  margin: 0% auto 0% auto !important;
+  border-radius: 25px !important;
+}
+
+@media (max-width: 600px) {
+    #content-header{
+      padding: 24px;
+    }
+}
+
+#content-header {
+  & .app-new-nav-right {
+    padding: 0;
+  }
+  & .app-new-nav-left  {
+     padding: 0;
+  }
+  & .app-new-nav-right {
+    display: flex;
+    justify-content: flex-end;
+    button {
+        margin-left: 10px;
+    }
+  }
+}
 #social-link{
   margin: 30px;
   color: #6C1BD2
@@ -201,9 +221,13 @@ export default {
 	justify-content: flex-end;
 	align-items: stretch;
 	align-content: stretch;
-
   button {
     margin-right: 10px;
+  }
+}
+@media (min-width: 465px){
+  #right {
+        justify-content: space-between;
   }
 }
 

@@ -4,13 +4,12 @@
       <div id="content-wrapper">
         <div id="content">
           <b-row class="app-new-steps-header">
-            <b-col cols="3" sm="1" md="2" lg="2" xl="1">
-              <router-link v-if="currentStep === 1" :to="{name: 'mainPage'}">
-                <p class="text-muted" style="margin:0;">← Назад</p>
+            <b-col cols="8">
+              <router-link id="app-link-back" v-if="currentStep === 1" :to="{name: 'mainPage'}">
+                <p class="text-muted" style="float:right;line-height:20px">← Назад</p>
               </router-link>
-              <p class="text-muted clickable" v-else @click="goStepBack" style="margin:0;">← Назад</p>
-            </b-col>
-            <b-col cols="8" sm="8" md="6" lg="3" xl="3">
+              <p class="text-muted clickable" v-else @click="goStepBack" style="float:left;margin-right: 4px;line-height: 20px;">← Назад</p>
+         
                 <div class="text-muted d-block d-md-none d-lg-none d-xl-none">&nbsp;∙&nbsp;Шаг {{currentStep}} из {{totalSteps}}</div>
             </b-col>
           </b-row>
@@ -409,6 +408,11 @@ export default {
 </script>
 <style lang="scss">
   @import '@/assets/styles/vars.scss';
+
+#app-link-back {
+  float: left;
+  margin-right: 5px;
+}
 
 .app-new-progress-text  {
   list-style: none;

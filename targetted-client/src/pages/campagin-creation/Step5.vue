@@ -150,6 +150,7 @@
            </b-form-group>
             <b-button type="button"
                          v-if="!isRegistered"
+                         :class="{'disabled': !$v.$anyDirty || $v.$anyError}"
                         class="app-new-submit-button"
                         @click="sendData">
         Зарегистрироваться
@@ -160,6 +161,7 @@
       </section>
 
         <b-button type="button"
+        :class="{'disabled': !$v.$anyDirty || $v.$anyError}"
                          v-if="isRegistered"
                         class="app-new-submit-button"
                         @click="sendData">

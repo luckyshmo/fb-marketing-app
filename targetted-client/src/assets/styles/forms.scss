@@ -52,6 +52,10 @@ h3.app-new-header {
     &.less-padding {
         padding: 9px 8px 11px;
     }
+    &.disabled {
+        background: #F0FF87;
+        color: #777;
+    }
 }
 .col-form-label {
     font-style: normal;

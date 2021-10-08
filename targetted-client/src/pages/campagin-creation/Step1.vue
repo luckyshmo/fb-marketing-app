@@ -197,8 +197,10 @@
       <b-form-group class="mt-5">
 
           <b-row>
+            
                 <b-col cols="6" sm="8" md="3" lg="3" xl="3">
               <b-button type="button"
+              :class="{'disabled': !$v.$anyDirty || $v.$anyError}"
                         class="app-new-submit-button"
                         @click="sendData">
                   {{isEdit ? "Назад":"Продолжить"}}

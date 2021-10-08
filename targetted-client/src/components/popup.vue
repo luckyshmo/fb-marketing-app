@@ -67,7 +67,7 @@ export default {
     cursor: grab;
     position: fixed;
     z-index: 1;
-    background: rgba(0, 0, 0, 0.9);
+    background: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,7 +80,6 @@ export default {
   .popup {
     padding: 20px;
     align-content: center;
-    text-align: center;
     position:absolute;
     top:50%;
     left:50%;

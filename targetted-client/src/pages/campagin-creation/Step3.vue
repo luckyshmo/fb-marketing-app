@@ -84,7 +84,7 @@
            <b-form-group
                     class="input-group"
                     label="Местоположение"
-                >
+                     id="input-group-main">
                     <b-form-input
                     id="tel"
                     v-model="$v.companyData.auditory.location.$model"
@@ -124,6 +124,7 @@
                 <b-col cols="6" sm="8" md="3" lg="3" xl="3">
             <b-button type="button"
                         class="app-new-submit-button"
+                        :class="{'disabled': !$v.$anyDirty || $v.$anyError}"
                         @click="sendData">
                 {{isEdit ? "Назад":"Продолжить"}}
             </b-button>
@@ -132,7 +133,7 @@
             <b-button
                 type="button"
                     class="main-button-grey mt-md-0 mt-sm-0 mt-2"
-                @click="noValidate = true; sendData()"
+                @click="sendDataNoValidate"
                 >Продолжить без уточнения</b-button>
 
                     </b-col>
@@ -204,8 +205,12 @@ export default {
         }
       },
     methods: {
+        sendDataNoValidate(){
+            this.noValidate = true;
+            this.sendData();
+        },
         sendData(){
-            if(this.showAdvancedClicked || !this.noValidate) {
+            if(this.showAdvancedClicked && !this.noValidate) {
                 this.$v.companyData.auditory.$touch()
                 if (this.$v.companyData.auditory.$anyError) {
                     window.scrollTo(0, 100)

@@ -1,5 +1,5 @@
 <template>
-  <div id="content-login">
+  <div>
     <h1 class="app-header">
       Остались вопросы?
     </h1>

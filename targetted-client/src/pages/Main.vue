@@ -1,7 +1,7 @@
 <template>
   <div id="content">
 
-    <div v-if="isVideo" class="app-modal-white">
+    <template v-if="isVideo" class="app-modal-white">
       <iframe
         id="ytplayer"
         type="text/html"
@@ -17,9 +17,9 @@
           @click="closeVideo"
         />
       </div>
-    </div>
+    </template>
 
-    <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
+    <template v-if="store.getters.GET_COMPANY_LIST.length > 0">
       <h1 id="h1">
         Александр, добро пожаловать!
       </h1>
@@ -52,6 +52,12 @@
 
       <div>
         <div>
+
+<!-- 
+ <b-row class="mt-5">
+        <b-col cols="6" sm="8" md="3" lg="3" xl="3"> -->
+
+
           <div
             v-for="company in store.getters.GET_COMPANY_LIST"
             :key="company.Id"
@@ -98,16 +104,16 @@
           </div>
         </div>
       </div>
-    </div>
+    </template>
 
-    <div v-if="!(store.getters.GET_COMPANY_LIST.length > 0)">
+    <template v-if="!(store.getters.GET_COMPANY_LIST.length > 0)">
       <h1 id="h1">
         Добро<br>пожаловать!
       </h1>
       <p id="p1">
         Для привлечения новых клиентов осталось<br>совсем немного. Создайте свою рекламную кампанию<br>или посмотрите видео-инструкцию, если возникли вопросы :)
       </p>
-    </div>
+    </template>
 
     <div class="mt-5">
       <router-link
@@ -120,6 +126,7 @@
           Создать новую
         </b-button>
       </router-link>
+      <br class="d-block d-sm-none d-md-none d-lg-none">
       <b-button
         variant="primary"
         class="main-button-grey ml-0 ml-sm-2 ml-lg-2 ml-md-2 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
@@ -136,6 +143,7 @@
 import store from '@/store/store'
 import {instance as axios} from '@/_services/index';
 import router from '@/router/router'
+
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL // TODO GLOABL APP CONST
 export default {
   name: 'MainPage',
