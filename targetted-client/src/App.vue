@@ -150,7 +150,7 @@ body {
 }
 
 #content {
-  padding: 80px;
+  padding: 80px 0;
   width: 1220px;
   margin: 0% auto 0% auto !important;
   background-color: white !important;

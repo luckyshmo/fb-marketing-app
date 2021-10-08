@@ -1,11 +1,9 @@
 <template>
-  <div>
     <div class="footer">
       <div class="footer-t">
         © targetted.ru, 2020–2021. <a href="#">Оферта</a>.
       </div>
     </div>
-  </div>
 </template>
 <script>
 export default {
@@ -21,6 +19,12 @@ export default {
     margin: 0 auto;
     text-align: left;
     margin-left: 10%;
+    max-width: 1060px;
+}
+@media (max-width: 600px) {
+  .footer-t{
+    margin-left: 24px;
+  }
 }
 .footer-t a {
   color: $gray !important;
@@ -28,6 +32,7 @@ export default {
 }
 .footer {
     height: 100px;
+
     font-style: normal;
     font-weight: normal;
     font-size: 14px;

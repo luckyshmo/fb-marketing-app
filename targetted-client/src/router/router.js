@@ -28,17 +28,26 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: login
+      component: login,
+      meta: {
+        hideHeader: true
+      }
     },
     {
       path: '/questions',
       name: 'questions',
-      component: questions
+      component: questions,
+      meta: {
+        hideHeader: true
+      }
     },
     {
       path: '/register',
       name: 'register',
-      component: register
+      component: register,
+      meta: {
+        hideHeader: true
+      }
     },
     {
       path: '/main',

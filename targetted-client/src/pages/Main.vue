@@ -63,20 +63,15 @@
             :key="company.Id"
           >
             <router-link :to="{path: '/company-balance/'+ company.Id, query: { isEdit: true }}">
-              <div class="c-div">
-                <div class="l">
+
+
+ <b-row>
+              <b-col cols="10">
                   <p class="c-date">Создана {{company.Date}}</p>
                   <p class="c-name">
                     {{ company.CompanyName }}
                   </p>
-                    <b-icon
-                      class="md-button app-block-icon"
-                      icon="chevron-right"
-                      @click="openCompanyDetails"
-                    />
-                </div>
-                <div class="r">
-                  <div class="c-status">
+               <div class="c-status">
                     <div
                       v-if="!isFb(company)"
                       id="white"
@@ -96,10 +91,11 @@
                       {{ getStatus(company) }}
                     </p>
                   </div>
-                </div>
-               
-                
-              </div>
+              </b-col>
+              <b-col cols="2" class="right-pointer">
+                <b-icon icon="chevron-right" @click="openCompanyDetails"/>
+              </b-col>
+           </b-row>
             </router-link>
           </div>
         </div>

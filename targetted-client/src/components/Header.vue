@@ -2,8 +2,12 @@
 <section>
    <popup
         v-if="isInfoPopupVisible"
-        @closePopup="closeInfoPopup"
       >
+          <b-icon
+          class="x-button"
+          icon="x"
+          @click="closeInfoPopup"
+        />      
        <Questions/>
       </popup>
 
@@ -89,21 +93,28 @@
 import popup from '@/components/popup.vue'
 import store from '@/store/store'
 import Questions from '@/pages/Questions.vue'
+import Login from '@/pages/login/Login.vue'
 
 export default {
   components: {
     popup,
-    Questions
+    Questions,
+    Login
   },
   data () {
     return {
-      isInfoPopupVisible: false
+      isInfoPopupVisible: false,
+      popupComponent: undefined
     }
   },
   computed: {
     isLoggedIn: function () { return store.getters.isLoggedIn }
   },
   methods: {
+    showPopupComponent(name){
+      this.isInfoPopupVisible = true
+      this.popupComponent = name
+    },
     closeInfoPopup () {
       this.isInfoPopupVisible = false
     },
@@ -128,7 +139,7 @@ export default {
 
 #content-header {
   max-width: 1060px;
-  padding: 24px;
+  padding: 24px 24px 24px 0;
   margin: 0% auto 0% auto !important;
   border-radius: 25px !important;
 }
