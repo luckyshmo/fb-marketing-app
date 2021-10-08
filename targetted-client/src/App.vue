@@ -193,8 +193,8 @@ h1 {
   margin: 0px;
   font-family: IBM Plex Sans !important;
   font-weight: 900 !important;
-  line-height: 72px !important;
-  font-size: 72px !important;
+  /* line-height: 72px !important;
+  font-size: 72px !important; */
   color: black;
 }
 #h1-centered {
@@ -262,6 +262,10 @@ p {
     border: none !important;
     background-color: #F3F3F3 !important;
     color: black !important;
+}
+
+.form-input.width-1-2 {
+  max-width: 45%;
 }
 
 ::-webkit-scrollbar {

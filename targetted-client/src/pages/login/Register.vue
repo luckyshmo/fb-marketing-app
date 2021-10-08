@@ -240,7 +240,7 @@ export default {
   font-style: normal;
 }
 .form-control{
-  width: 520px !important;
+  width: 640px !important;
 }
 @media(max-width: 600px){
   .form-control{

@@ -2,6 +2,10 @@
   <div>
     <slot name="header"></slot>
     <p>Заполните информацию о своём бизнесе.</p>
+    
+      <br class="d-none d-sm-block">
+      <br class="d-none d-sm-block">
+
     <b-form>
       <!-- <div v-if="!(store.getters.GET_FB_PAGES.length > 0) && !isRequestSent && !pageSubmitted">
         <p>Раздайте доступ к вашей Facebook и Instagram странице<br>для запуска и управления рекламой от имени ваших
@@ -46,7 +50,7 @@
     <b-form-group label="Что рекламируете" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
       label-for="input-horizontal">
       <b-form-radio-group 
-          v-model="company.CompnayTarget"
+          v-model="$v.company.CompnayTarget.$model"
        
           :disabled="isEdit"
           class="app-new-radio"
@@ -54,6 +58,13 @@
                       'Аккаунт в Instagram или Facebook',
                       'Сайт'
                   ]"></b-form-radio-group>
+
+                          <small
+                  v-if="$v.company.CompnayTarget.$dirty && !$v.company.CompnayTarget.required"
+                  class="error-message"
+                >
+                  Не указана цель рекламы
+                </small>
       </b-form-group>
 
          <b-form-group label="Ссылка на аккаунт" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
@@ -80,9 +91,33 @@
              placeholder="Точный адрес">
           </b-form-select>
 
-          <p class="app-new-info">Стоимость перехода по рекламе ~ 10–30 ₽</p>
+          <p v-if="$v.company.CompanyFieldArea.$dirty" class="app-new-info">Стоимость перехода по рекламе ~ 10–30 ₽</p>
+
+                        <small
+                  v-if="$v.company.CompanyFieldArea.$dirty && !$v.company.CompanyFieldArea.required"
+                  class="error-message"
+                >
+                  Не указана cфера деятельности
+                </small>
         
       </b-form-group> 
+
+        <b-form-group label="Какие услуги оказываете" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
+      label-for="input-horizontal">
+
+      <b-form-textarea class="form-input"
+                      :disabled="isEdit"
+                      v-model="$v.company.CompanyField.$model"
+                      rows="6"
+                      max-rows="9"
+          placeholder="Введите описание"></b-form-textarea>
+           <small
+              v-if="$v.company.CompanyField.$dirty && !$v.company.CompanyField.required"
+              class="error-message"
+            >
+              Пустое поле 
+            </small>
+      </b-form-group>
 
       <b-form-group label="Название кампании" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
       label-for="input-horizontal">
@@ -102,22 +137,7 @@
 
     
 
-      <b-form-group label="Какие услуги оказываете" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
-      label-for="input-horizontal">
-
-      <b-form-textarea class="form-input"
-                      :disabled="isEdit"
-                      v-model="$v.company.CompanyField.$model"
-                      rows="6"
-                      max-rows="9"
-          placeholder="Введите описание"></b-form-textarea>
-           <small
-              v-if="$v.company.CompanyField.$dirty && !$v.company.CompanyField.required"
-              class="error-message"
-            >
-              Пустое поле 
-            </small>
-      </b-form-group>
+    
 
           <b-form-group label="Где оказываете услуги" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
           label-for="input-horizontal">
@@ -157,7 +177,7 @@
                 <p class="app-new-info">Мы не покажем его в рекламе</p>
                     <b-form-input
                     v-model="$v.userData.phone.$model"
-                    class="form-input"
+                    class="form-input width-1-2"
                     placeholder="Введите телефон"
                     ></b-form-input>
                         <small
@@ -185,7 +205,7 @@
               </b-button>
                 </b-col>
                 <b-col cols="6" sm="8" md="6" lg="6" xl="6" class="app-new-small-text-fit">
-                  <p class="text-muted">Заполните все данные, чтобы продолжить</p>
+                  <p class="text-muted">Заполните все данные,<br>чтобы продолжить</p>
                 </b-col>
           </b-row>
       </b-form-group>
@@ -356,8 +376,13 @@ export default {
 
 <style>
 select.form-input.custom-select {
-    width: 99%;
+    width: 640px;
     padding: 10px;
     margin-bottom: 12px;
+}
+@media(max-width: 550px) {
+  select.form-input.custom-select {
+    width: 99%;
+  }
 }
 </style>

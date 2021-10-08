@@ -310,23 +310,27 @@ export default {
 
     //TODO: extract
     getWidth () {
-      const width = Math.max(
-        document.body.scrollWidth,
-        document.documentElement.scrollWidth,
-        document.body.offsetWidth,
-        document.documentElement.offsetWidth,
-        document.documentElement.clientWidth
-      )
-      if (width < 570) {
+      // const width = Math.max(
+      //   document.body.scrollWidth,
+      //   document.documentElement.scrollWidth,
+      //   document.body.offsetWidth,
+      //   document.documentElement.offsetWidth,
+      //   document.documentElement.clientWidth
+      // )
+      // if (width < 570) {
+      //   return {
+      //     label: 12,
+      //     content: 12
+      //   }
+      // }
+      // return {
+      //   label: 3,
+      //   content: 9
+      // }
         return {
           label: 12,
           content: 12
         }
-      }
-      return {
-        label: 3,
-        content: 9
-      }
     },
 
     updateCompany(){
@@ -414,7 +418,7 @@ export default {
 .app-new-progress-text li {
   color: $gray;
   font-size: $baseFont;
-  line-height: $baseLH;
+  line-height: 46px;
 
   &::before {
     margin-right: 10px;

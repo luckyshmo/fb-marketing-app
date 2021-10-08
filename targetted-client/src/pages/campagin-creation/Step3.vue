@@ -28,9 +28,11 @@
 
       <div v-if="showAdvanced">
 
-          <p>
+          <h3> Уточнение аудитории</h3>
+
+          <!-- <p>
               Укажите характеристики вашей аудитории, наши алгоритмы будут учитывать их при настройке рекламной кампании. 
-          </p>
+          </p> -->
 
            <b-form-group
                 label="Пол"
@@ -51,12 +53,12 @@
                         :content-cols="content_cols"
                     id="input-group-main" label-for="input-horizontal">
 
-                <b-row align-h="between">
-                    <b-col cols="6">
+                <b-row >
+                    <b-col cols="6" sm="5" md="6" lg="3" xl="3">
                         <b-form-input
-                            class="form-input app-new-form-input-small"
+                            class="form-input app-new-form-input-small "
                             v-model="$v.companyData.auditory.age.from.$model"
-                            placeholder="От"></b-form-input>
+                            placeholder="от"></b-form-input>
                                  <small
               v-if="$v.companyData.auditory.age.from.$dirty && !$v.companyData.auditory.age.from.required"
               class="error-message"
@@ -65,11 +67,11 @@
             </small>
                     </b-col>
             
-                    <b-col cols="6">
+                    <b-col cols="6" sm="5" md="6" lg="3" xl="3">
                         <b-form-input
                             class="form-input app-new-form-input-small"
                             v-model="$v.companyData.auditory.age.to.$model"
-                            placeholder="До"></b-form-input>
+                            placeholder="до"></b-form-input>
                              <small
               v-if="$v.companyData.auditory.age.to.$dirty && !$v.companyData.auditory.age.to.required"
               class="error-message"
@@ -117,18 +119,24 @@
               Пустое поле 
             </small>
            </b-form-group>
-            
+
+                      <b-row>
+                <b-col cols="6" sm="8" md="3" lg="3" xl="3">
             <b-button type="button"
-                        class="app-new-submit-button mt-5"
+                        class="app-new-submit-button"
                         @click="sendData">
                 {{isEdit ? "Назад":"Продолжить"}}
             </b-button>
+ </b-col>
+                <b-col cols="10" sm="8" md="6" lg="6" xl="6" >
+            <b-button
+                type="button"
+                    class="main-button-grey mt-md-0 mt-sm-0 mt-2"
+                @click="noValidate = true; sendData()"
+                >Продолжить без уточнения</b-button>
 
-        <b-button
-            type="button"
-                class="main-button-grey ml-0 ml-sm-2 ml-lg-2 ml-md-2 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
-            @click="noValidate = true; sendData()"
-            >Продолжить без уточнения</b-button>
+                    </b-col>
+          </b-row>
       </div>
       
     </b-form>

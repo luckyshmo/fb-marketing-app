@@ -1,39 +1,44 @@
 <template>
    <div>
         <slot name="header"></slot>
-        <br><br>
-        <b-form>
-          
-          <p>
-            Выберите желаемый охват аудитории вашей рекламной кампании.</p>
+     
+     <p>Выберите желаемый охват аудитории вашей рекламной кампании.</p>
+      
+      <br class="d-none d-sm-block">
+      <br class="d-none d-sm-block">
 
+        <b-form>
+               
         <CampaginStats :data="stats"/>
 
+    <b-row>
+      <b-col cols="12" sm="6">
       <b-form-group
-                    class="input-group input-group-range"
-                    label="Бюджет в день"
-                >
-                <p class="app-label-right">{{campaginData.budget}} ₽ </p>
-                    <b-form-input id="range-1" v-model="campaginData.budget" type="range" min="5" max="5000" step="5"></b-form-input>
-
+            class="input-group input-group-range"
+            label="Бюджет в день">
+        <p class="app-label-right">{{campaginData.budget}} ₽ </p>
+            <b-form-input id="range-1" v-model="campaginData.budget" type="range" min="5" max="5000" step="5"></b-form-input>
 
            </b-form-group>
+      </b-col>
+      <b-col cols="12" sm="6">
             <b-form-group
               class="input-group input-group-range"
-              label="Продолжительность"
-          >
+              label="Продолжительность">
           <p class="app-label-right">{{campaginData.timeLength}} д</p>
               <b-form-input id="range-2" v-model="campaginData.timeLength" type="range" min="1" max="31" step="1"></b-form-input>
            </b-form-group>
+      </b-col>
+    </b-row>
 
       <section v-if="!isRegistered">
-        <h1 id="h2">Зарегистрируйтесь</h1>
+        <h3>Зарегистрируйтесь</h3>
         <p>Осталось только зарегистрироваться, чтобы запустить рекламу.</p>
 
             <b-form-group
+             id="input-group-main"
                     class="input-group"
-                    label="Номер телефона"
-                >
+                    label="Номер телефона">
                     <b-form-input
                     v-model="$v.userData.phone.$model"
                     class="form-input"
@@ -53,9 +58,9 @@
                 </small>
            </b-form-group>
                <b-form-group
+                id="input-group-main"
                     class="input-group"
-                    label="Электронная почта"
-                >
+                    label="Электронная почта">
                     <b-form-input
                     v-model="$v.userData.email.$model"
                     class="form-input"
@@ -75,9 +80,9 @@
                 </small>
            </b-form-group>
                 <b-form-group
+                 id="input-group-main"
                     class="input-group"
-                    label="Имя"
-                >
+                    label="Имя">
                     <b-form-input
                     v-model="$v.userData.name.$model"
                     class="form-input"
@@ -97,9 +102,9 @@
                 </small>
            </b-form-group>
           <b-form-group
+           id="input-group-main"
                     class="input-group"
-                    label="Пароль"
-                >
+                    label="Пароль">
                     <b-form-input
                     v-model="$v.userData.password.$model"
                     class="form-input"
@@ -122,6 +127,7 @@
             <b-form-group
                     class="input-group"
                     label="Введите пароль повторно"
+                     id="input-group-main"
                 >
                     <b-form-input
                     v-model="$v.userData.passwordCheck.$model"
@@ -148,7 +154,7 @@
                         @click="sendData">
         Зарегистрироваться
       </b-button>
-         <p class="app-new-info">
+         <p class="app-new-info mt-5 mt-sm-2">
           Нажимая кнопку “Зарегистрироваться” вы соглашаетесь с условиями <a href="#">оферты</a> и <a href="#">политикой конфиденциальности</a>.
         </p>
       </section>
