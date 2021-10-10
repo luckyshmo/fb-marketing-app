@@ -252,7 +252,7 @@ export default {
           },
           AccountURL: {
             required,
-            minLength: minLength(10)
+            //minLength: minLength(10)
           },
           CompanyField: {
             required

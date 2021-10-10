@@ -67,7 +67,7 @@
               <div @click="$refs.fileInput.click()" id="load-frame">
                 <!-- Обводка у кнопок -->
                 <!-- ПОехал размер -->
-                <p id="load-file">Загрузить<br>файл</p>
+                <p id="load-file">Загрузить<br>фото или видео</p>
                 <p id="file-size-big">Размер<br>1920х1080рх</p>
                 <!-- TODO FILL -->
               </div>
@@ -111,7 +111,7 @@
               <input style="display: none" type="file" multiple accept="Image/gif, Image/jpeg, Image/png, Image/jpg"
                 @change="onSmallFileSelected" ref="smallFileInput">
               <div @click="$refs.smallFileInput.click()" id="load-frame-small">
-                <p id="load-file">Загрузить<br>файл</p>
+                <p id="load-file">Загрузить<br>фото или видео</p>
                 <p id="file-size">Размер<br>1080х1080рх</p>
               </div>
             </div>
@@ -315,7 +315,7 @@ export default {
     width: 160px;
     height: 280px;
     object-fit: cover;
-    border-radius: 20px;
+    border-radius: 12px;
 }
 #preview-small{
     width: 160px;
@@ -340,6 +340,7 @@ export default {
     text-align: center;
     color: $black;
 }
+
 #file-size-big {
     font-style: normal;
     font-weight: normal;
@@ -367,8 +368,14 @@ export default {
 #load-frame {
     border: 2px dashed #CCCCCC;
     border-radius: 20px;
-    width: 160px;
+    width: 174px;
     height: 280px;
+}
+@media (min-width: 650px) {
+  #load-frame {
+    width: 201px;
+    height: 348px;
+  }
 }
 #load-frame-small {
     border: 2px dashed #CCCCCC;
@@ -394,14 +401,15 @@ export default {
     margin-top: 15px;
 }
 .icon-div-number {
-  bottom: -280px;
+  bottom: -270px;
   position: relative;
   background-color: $black;
-  border-radius: 6px;
+  border-radius: 12px;
   color: $light;
   width: 34px;
   margin-bottom: 0px;
   padding: 6px 13px;
+  left: 10px;
 }
 .post-image-wrapper {
   margin-top: -30px;

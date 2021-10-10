@@ -1,5 +1,6 @@
 <template>
-  <div id="content-login">
+<div id="content-wrapper">
+  <div id="content">
     <h1 class="app-header">
       Регистрация
     </h1>
@@ -12,6 +13,7 @@
       <b-form-group
         class="input-group"
         label="Номер телефона"
+         id="input-group-main"
       >
         <b-form-input
           id="tel"
@@ -25,13 +27,14 @@
           id="tel"
           class="error-message"
         >
-          Номер телефона должен содержать как минимум 10 символов
+          Минимум 10 символов
         </b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group
         class="input-group"
         label="Электронная почта"
+         id="input-group-main"
       >
         <b-form-input
           v-model.trim="form.email"
@@ -63,6 +66,7 @@
        <b-form-group
         class="input-group"
         label="Имя"
+         id="input-group-main"
       >
         <b-form-input
           v-model="form.name"
@@ -81,6 +85,7 @@
       <b-form-group
         class="input-group"
         label="Пароль"
+         id="input-group-main"
       >
         <b-form-input
           id="pas"
@@ -99,6 +104,7 @@
       </b-form-group>
       <b-form-group
         class="input-group"
+         id="input-group-main"
         label="Введите пароль повторно"
       >
         <b-form-input
@@ -118,9 +124,10 @@
       </b-form-group>
 
       <b-form-group class="app-new-form-footer">
-
+<br class="d-none d-sm-block">
         <b-button
-          class="app-new-button-main"
+          class="app-new-submit-button"
+          :class="{'disabled': !$v.$anyDirty || $v.$anyError}"
           @click="register()"
         >
           Зарегистрироваться
@@ -137,6 +144,7 @@
         </p>
       </b-form-group>
     </b-form>
+  </div>
   </div>
 </template>
 <script>
@@ -193,7 +201,7 @@ export default {
     },
     validatePassword (name) {
       const { $dirty, $error } = this.$v.form[name]
-      console.log($dirty, $error, this.form.password === this.form.passwordRepeat)
+      // console.log($dirty, $error, this.form.password === this.form.passwordRepeat)
       if ($dirty ? !$error : null) {
         return this.form.password === this.form.passwordRepeat
       } else {

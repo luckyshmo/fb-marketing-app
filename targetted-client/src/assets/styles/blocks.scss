@@ -1,17 +1,22 @@
 @import 'vars';
 
 .creative-message {
-    margin: 28px 0px 40px 0px;
-    padding: 40px;
-    width: 90%;
-    height: 128px;
+    margin: 28px 0px 54px 0px;
+    padding: 20px;
+    width: 92%;
     background: $light;
     border-radius: 20px;
+
+    & .right-pointer {
+        justify-content: flex-end;
+        display: flex;
+        align-items: center;
+    }
 }
 @media (max-width: 722px) {
     .creative-message{
         width: auto!important;
         height: auto!important;
-        padding: 25px!important;
+        padding: 15px!important;
     }
 }

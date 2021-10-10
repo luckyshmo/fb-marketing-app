@@ -3,13 +3,14 @@
     ref="popup_wrapper"
     class="popup_wrapper"
   >
+   <b-icon
+          class="x-button"
+          icon="x"
+          @click="closePopup"
+        />
     <div class="popup">
-      <div
-        style="position: absolute;
-      margin-left: 570px;
-      margin-top: -5px;"
-      >
-        <b-icon
+      <div style="position: fixed;right: 20px;top: 35px;">
+          <b-icon
           class="x-button"
           icon="x"
           @click="closePopup"

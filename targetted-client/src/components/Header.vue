@@ -2,12 +2,9 @@
 <section>
    <popup
         v-if="isInfoPopupVisible"
+        @closePopup="closeInfoPopup"
       >
-          <b-icon
-          class="x-button"
-          icon="x"
-          @click="closeInfoPopup"
-        />      
+ 
        <Questions/>
       </popup>
 
@@ -56,9 +53,9 @@
          variant="primary"
         class="app-new-button-sm"
         v-if="!isLoggedIn"
-        @click="isLoggedIn = true"
+        @click="$router.push('/login')"
       >
-        Вход
+        Войти
       </button>
 
        </b-col>
@@ -192,8 +189,8 @@ export default {
 }
 @media (max-width: 465px){
   #l-im{
-    /* width: 153px; */
     padding-bottom: 15px;
+    width: 135px;
   }
   .p-wrapper{
     padding: 20px 25px 20px 25px
@@ -211,7 +208,7 @@ export default {
 
 .container {
   height: 50px;
-  max-width: 1220px;
+  max-width: 1060px;
   display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;

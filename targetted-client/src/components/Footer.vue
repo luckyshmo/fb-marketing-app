@@ -18,7 +18,7 @@ export default {
     bottom: -38px;
     margin: 0 auto;
     text-align: left;
-    margin-left: 10%;
+
     max-width: 1060px;
 }
 @media (max-width: 600px) {

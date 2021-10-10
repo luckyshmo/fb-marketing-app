@@ -56,7 +56,7 @@ export default {
    /* -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important; */
   /* text-align: center; */
-  overflow: hidden;
+  /* overflow: hidden; */
 
 }
 html {
@@ -150,8 +150,7 @@ body {
 }
 
 #content {
-  padding: 80px 0;
-  width: 1220px;
+  padding: 66px 0;
   margin: 0% auto 0% auto !important;
   background-color: white !important;
   border-radius: 25px !important;
@@ -164,7 +163,7 @@ body {
 }
 @media (max-width: 600px) {
   #content{
-    width: 375px;
+    width: calc(100vw - 48px);
   }
   #content-wrapper{
     width: 375px;
@@ -288,7 +287,7 @@ p {
       padding: 12px 10px !important;
     }
     #content{
-      padding: 24px;
+      padding: 24px 0;
     }
 }
 </style>

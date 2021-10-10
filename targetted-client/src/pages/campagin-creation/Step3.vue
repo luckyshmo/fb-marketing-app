@@ -3,7 +3,7 @@
         <slot name="header"></slot>
         <b-form>
             <p>
-                Мы самостоятельно подберем наиболее подходящие настройки целевой аудитории на основе анализа большого количество рекламных кампаний из вашей ниши. Но вы можете уточнить настройки, если считаете это важным.
+             Наш сервис проанализирует рекламные кампании похожих бизнесов из вашей ниши и автоматически подберет оптимальные настройки целевой аудитории. Или вы можете самостоятельно указать настройки аудитории, если считаете это важным.
             </p>
 
             <b-row align-h="between" no-gutters>
@@ -18,7 +18,7 @@
          
                     <b-button
                     type="button"
-                       class="main-button-grey ml-0 ml-sm-2 ml-lg-2 ml-md-2 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
+                       class="main-button-grey ml-0 ml-sm-1 ml-lg-1 ml-md-1 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
                     @click="showAdvanced = true; showAdvancedClicked = true"
                     v-if="!showAdvancedClicked">Уточнить настройки</b-button>
                 </b-col>

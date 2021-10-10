@@ -13,6 +13,8 @@ p {
 
 .app-header-bold {
     font-weight: bold;
+    font-size: 24px;
+    list-style: 30px;
 }
 
 .app-block-icon {
@@ -34,6 +36,9 @@ p {
 .ml-2 {
     margin-left: 2em;
 }
+.ml-1 {
+    margin-left: 1em;
+}
 .ml-0 {
     margin-left: 0;
 }
@@ -41,18 +46,27 @@ p {
     .ml-lg-2 {
         margin-left: 2em;
     }
+    .ml-lg-1 {
+        margin-left: 1em;
+    }
  }
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) { 
-    .ml-lg-2 {
+    .ml-md-2 {
         margin-left: 2em;
+    }
+    .ml-md-1 {
+        margin-left: 1em;
     }
  }
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) { 
-    .ml-lg-2 {
+    .ml-xl-2 {
         margin-left: 2em;
+    }
+    .ml-xl-1 {
+        margin-left: 1em;
     }
  }

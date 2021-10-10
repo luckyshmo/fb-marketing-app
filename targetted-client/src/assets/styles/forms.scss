@@ -57,12 +57,19 @@ h3.app-new-header {
         color: #777;
     }
 }
+@media (min-width: 600px) {
+    .app-new-submit-button, .btn.main-button-grey {
+        padding: 9px 32px 11px;
+        height: 48px;
+    }
+}
+
 .col-form-label {
     font-style: normal;
     font-weight: bold;
     font-size: $baseFont;
     line-height: 14px;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 .app-new-action-text {
@@ -72,6 +79,8 @@ h3.app-new-header {
 .app-new-info {
     color: $gray;
     text-align: left;
+    line-height: 18px;
+    font-size: 14px;
     a {
         color: $gray;
         text-decoration: underline !important;

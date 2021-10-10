@@ -58,14 +58,6 @@ const router = new Router({
       }
     },
     {
-      path: '/questions',
-      name: 'questions',
-      component: questions,
-      meta: {
-        requiresAuth: false
-      }
-    },
-    {
       path: '/adminka',
       name: 'adminka',
       component: adminka,

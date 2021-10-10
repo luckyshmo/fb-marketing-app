@@ -388,7 +388,7 @@
                                 <div
                                 @click="$refs.smallFileInput.click()"
                                 id="load-frame-small">
-                                    <p id="load-file">Загрузить<br>файл</p>
+                                    <p id="load-file">Загрузить<br>фото или видео</p>
                                     <p id="file-size">Размер<br>1080х1080рх</p>
                                 </div>
                             </div>

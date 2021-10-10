@@ -15,7 +15,7 @@
           </b-row>
         
             <b-row>
-              <b-col sm="12" md="9" lg="9" xl="9" class="app-new-main-content"> 
+              <b-col sm="12" md="8" lg="8" xl="8" class="app-new-main-content"> 
 
               <Step1 :label_cols="label_cols"
                       :content_cols="content_cols"
@@ -442,6 +442,7 @@ export default {
 
 .app-new-steps-header {
   font-size: 14px;
+  margin-bottom: -10px;
   & p {
     font-size: 14px;
   }
@@ -466,7 +467,7 @@ export default {
 }
 
 aside {
-  margin-top: 50px;
+  margin-top: 35px;
 }
 
 .custom-control-input{

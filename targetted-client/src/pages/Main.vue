@@ -1,7 +1,9 @@
 <template>
+<div id="content-wrapper">
   <div id="content">
 
     <template v-if="isVideo" class="app-modal-white">
+      <div class="video-pp-wrapper">
       <iframe
         id="ytplayer"
         type="text/html"
@@ -16,6 +18,7 @@
           icon="x"
           @click="closeVideo"
         />
+      </div>
       </div>
     </template>
 
@@ -134,6 +137,7 @@
     </div>
 
   </div>
+  </div>
 </template>
 <script>
 import store from '@/store/store'
@@ -213,6 +217,15 @@ export default {
 <style lang="scss">
   @import '@/assets/styles/vars.scss';
 
+.video-pp-wrapper {
+      background: #fff;
+    z-index: 1000;
+    position: absolute;
+    width: 100vh;
+    left: 0px;
+    padding: 10%;
+    height: 100vw;
+}
 .campagin-item {
   & .date {
     font-size: 14px;
