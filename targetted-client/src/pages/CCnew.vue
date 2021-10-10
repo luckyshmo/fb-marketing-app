@@ -152,7 +152,7 @@ export default {
   },
   data () {
     return {
-      currentStep: 1,
+      currentStep: parseInt(localStorage.getItem('campagin_step')) || 1,
       totalSteps: 4,
       store,
       isLoading: false,
@@ -248,7 +248,8 @@ export default {
   },
   methods: {
     goStepBack(){
-      this.currentStep--;
+      this.currentStep = this.currentStep - 1;
+      localStorage.setItem('campagin_step', this.currentStep)
     },
     saveAndNext(data){
         // console.log(data.company)
@@ -268,6 +269,8 @@ export default {
         }
 
         this.currentStep = this.currentStep + 1;
+
+        localStorage.setItem('campagin_step', this.currentStep)
 
         if(!this.isEdit && this.currentStep === 2) {
             this.createCompany();
@@ -309,23 +312,6 @@ export default {
 
     //TODO: extract
     getWidth () {
-      // const width = Math.max(
-      //   document.body.scrollWidth,
-      //   document.documentElement.scrollWidth,
-      //   document.body.offsetWidth,
-      //   document.documentElement.offsetWidth,
-      //   document.documentElement.clientWidth
-      // )
-      // if (width < 570) {
-      //   return {
-      //     label: 12,
-      //     content: 12
-      //   }
-      // }
-      // return {
-      //   label: 3,
-      //   content: 9
-      // }
         return {
           label: 12,
           content: 12

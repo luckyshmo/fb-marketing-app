@@ -23,7 +23,7 @@
     </template>
 
     <template v-if="store.getters.GET_COMPANY_LIST.length > 0">
-      <h1 id="h1">
+      <h1 id="h1" style="margin-top: 24px;">
         Александр, добро пожаловать!
       </h1>
       <div>
@@ -64,11 +64,12 @@
           <div
             v-for="company in store.getters.GET_COMPANY_LIST"
             :key="company.Id"
+            class="campagin-item"
           >
             <router-link :to="{path: '/company-balance/'+ company.Id, query: { isEdit: true }}">
 
 
- <b-row>
+              <b-row>
               <b-col cols="10">
                   <p class="c-date">Создана {{company.Date}}</p>
                   <p class="c-name">
@@ -226,7 +227,26 @@ export default {
     padding: 10%;
     height: 100vw;
 }
+.right-pointer {
+      justify-content: flex-end;
+      display: flex;
+      align-items: center;
+      color: #000;
+  }
+
+@media (min-width: 600px){
+  .campagin-item {
+    max-width: 50%;
+  }
+}
+
 .campagin-item {
+  background: $light;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 22px;
+ 
+
   & .date {
     font-size: 14px;
     line-height: 18px;
@@ -254,6 +274,7 @@ export default {
     margin-left: 620px;
     margin-top: -385px;
 }
+
 .c-date {
     font-size: 14px;
     line-height: 18px;
@@ -309,18 +330,19 @@ a {
     position: absolute;
     width: 8px;
     height: 8px;
-    margin-top: 9px;
-    margin-left: 9px;
+    margin-top: 12px;
+    margin-left: 12px;
     border-radius: 5px;
 }
 .c-status{
     text-align: center;
-    padding-top: 13px;
-    padding-left: 10px;
-    height: 55px;
+    // padding-top: 13px;
+    // padding-left: 10px;
+    height: 32px;
     padding-bottom: 1px;
     background: $black;
     border-radius: 6px;
+    display: inline-block;
 }
 .c-name{
     font-style: normal;
@@ -345,16 +367,20 @@ a {
         height: 170px;
     }
     .c-name{
-        max-width: 260px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
+        max-width: 260px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        margin-top: 3px;
+        margin-bottom: 7px;
     }
     .c-status{
-       height: auto;
        padding-bottom: 4px;
        display: inline-block;
-        padding: 0;
+       padding: 0;
     }
     .c-status-text{
-        margin-left: 25px;
+        margin-left: 27px;
         margin-right: 10px;
         margin-bottom: 3px;
     }

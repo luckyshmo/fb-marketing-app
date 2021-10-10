@@ -51,14 +51,14 @@ const jsonToFormData = (data, isEdit) => {
 const actions = {
     saveCompany ({ commit }, companyData) {
 
-      const companyDataFD = jsonToFormData(companyData);
+      const data = jsonToFormData(companyData);
       const url = `${VUE_APP_API_URL}/api/company/`;
 
       return new Promise((resolve, reject) => {
         commit('save_request') // TOdo
-        axios.post({ url, data: companyDataFD, timeout })
+        axios.post(url, data)
           .then(resp => {
-            axios.get({ url, timeout })
+            axios.get(`${VUE_APP_API_URL}/api/company/`)
               .then(resp => {
                 console.log('user companies resp', resp)
                 localStorage.setItem('user_company', resp.data)
@@ -81,13 +81,14 @@ const actions = {
     },
     updateCompany ({ commit }, companyData) {
       
-      const companyDataFD = jsonToFormData(companyData, true);
+      const data = jsonToFormData(companyData, true);
 
       const id = ''
       return new Promise((resolve, reject) => {
         commit('save_request') // TOdo
         debugger
-        axios.put({ url: `${VUE_APP_API_URL}/api/company/${id}`, data: companyDataFD, timeout })
+        const url = `${VUE_APP_API_URL}/api/company/${id}`
+        axios.put(url, {data })
           .then(resp => {
             resolve(resp)
           })
@@ -99,7 +100,8 @@ const actions = {
     },
     getCompanyList ({ commit }) {
       return new Promise((resolve, reject) => {
-        axios.get({ url: `${VUE_APP_API_URL}/api/company/`, timeout })
+        const url = `${VUE_APP_API_URL}/api/company/`;
+        axios.get(url)
           .then(resp => {
             localStorage.setItem('user_company', resp.data)
             commit('set_user_company', resp.data)
@@ -113,7 +115,8 @@ const actions = {
     },
     getCompanyByID ({ commit }, id) {
       function getCompany (id) {
-        return axios.get({ url: `${VUE_APP_API_URL}/api/company/${id}`, timeout })
+        const url = `${VUE_APP_API_URL}/api/company/${id}`;
+        return axios.get(url)
           .then(resp => {
             return resp.data
           })
@@ -143,7 +146,8 @@ const actions = {
     login ({ commit }, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios.post({ url: `${VUE_APP_API_URL}/auth/sign-in`, data: user, timeout })
+        const url = `${VUE_APP_API_URL}/auth/sign-in`;
+        axios.post(url, { data: user, timeout })
           .then(resp => {
             console.log('usr + resp: ', resp.data)
             const token = resp.data.token

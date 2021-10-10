@@ -19,8 +19,8 @@ server.on('request', (request, response) => {
         body = Buffer.concat(body).toString();
 
 	console.log(`==== ${request.method} ${request.url}`);
-	console.log('> Headers');
-        console.log(request.headers);
+	// console.log('> Headers');
+    //     console.log(request.headers);
 
 	console.log('> Body');
 	console.log(body);

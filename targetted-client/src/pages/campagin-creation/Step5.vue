@@ -32,7 +32,7 @@
     </b-row>
 
       <section v-if="!isRegistered">
-        <h3>Зарегистрируйтесь</h3>
+        <h3 style="font-weight: bold;">Зарегистрируйтесь</h3>
         <p>Осталось только зарегистрироваться, чтобы запустить рекламу.</p>
 
             <b-form-group
@@ -40,8 +40,9 @@
                     class="input-group"
                     label="Номер телефона">
                     <b-form-input
+                    
                     v-model="$v.userData.phone.$model"
-                    class="form-input"
+                    class="form-input width-1-2"
                     placeholder="Введите телефон"
                     />
                         <small
@@ -57,6 +58,30 @@
                   Только цифры в телефоне
                 </small>
            </b-form-group>
+
+  <b-form-group
+                 id="input-group-main"
+                    class="input-group"
+                    label="Имя">
+                    <b-form-input
+                    v-model="$v.userData.name.$model"
+                    class="form-input"
+                    placeholder="Введите ваше имя"
+                    />
+                     <small
+                      v-if="$v.userData.name.$dirty && !$v.userData.name.required"
+                      class="error-message"
+                    >
+                      Имя не указанно
+                    </small>
+                             <small
+                  v-if="$v.userData.name.$dirty && !$v.userData.name.alpha"
+                  class="error-message"
+                >
+                  Только буквы в имени
+                </small>
+           </b-form-group>
+
                <b-form-group
                 id="input-group-main"
                     class="input-group"
@@ -79,35 +104,14 @@
                   Некорректный email
                 </small>
            </b-form-group>
-                <b-form-group
-                 id="input-group-main"
-                    class="input-group"
-                    label="Имя">
-                    <b-form-input
-                    v-model="$v.userData.name.$model"
-                    class="form-input"
-                    placeholder="Введите ваше имя"
-                    />
-                     <small
-                      v-if="$v.userData.name.$dirty && !$v.userData.name.required"
-                      class="error-message"
-                    >
-                      Имя не указанно
-                    </small>
-                             <small
-                  v-if="$v.userData.name.$dirty && !$v.userData.name.alpha"
-                  class="error-message"
-                >
-                  Только буквы в имени
-                </small>
-           </b-form-group>
+              
           <b-form-group
            id="input-group-main"
                     class="input-group"
                     label="Пароль">
                     <b-form-input
                     v-model="$v.userData.password.$model"
-                    class="form-input"
+                    class="form-input width-1-2"
                     type="password"
                     placeholder=""
                     />
@@ -131,7 +135,7 @@
                 >
                     <b-form-input
                     v-model="$v.userData.passwordCheck.$model"
-                    class="form-input"
+                    class="form-input width-1-2"
                     type="password"
                     placeholder=""
                     />
@@ -287,6 +291,18 @@ export default {
     }
   }
 
+@media (min-width: 550px) {
+  .input-group.input-group-range {
+    margin-top: 14px !important;
+  }
+  .app-label-right {
+    display: inline-block;
+  }
+  legend {
+    width: auto;
+  }
+}
+
   input[type=range] {
   height: 28px;
   -webkit-appearance: none;
@@ -309,13 +325,13 @@ input[type=range]::-webkit-slider-runnable-track {
 input[type=range]::-webkit-slider-thumb {
   box-shadow: 0px 0px 0px $white;
   border: 1px solid $light;
-  height: 21px;
-  width: 21px;
+  height: 32px;
+  width: 32px;
   border-radius: 25px;
   background: $black;
   cursor: pointer;
   -webkit-appearance: none;
-  margin-top: -8.5px;
+  margin-top: -13px;
 }
 input[type=range]:focus::-webkit-slider-runnable-track {
   background: $light;
@@ -333,9 +349,9 @@ input[type=range]::-moz-range-track {
 input[type=range]::-moz-range-thumb {
   box-shadow: 0px 0px 0px $white;
   border: 1px solid $light;
-  height: 21px;
-  width: 21px;
-  border-radius: 25px;
+  height: 32px;
+  width: 32px;
+  border-radius: 32px;
   background: $black;
   cursor: pointer;
 }
@@ -364,9 +380,9 @@ input[type=range]::-ms-thumb {
   margin-top: 1px;
   box-shadow: 0px 0px 0px $white;
   border: 1px solid #E3E3E3;
-  height: 21px;
-  width: 21px;
-  border-radius: 25px;
+  height: 32px;
+  width: 32px;
+  border-radius: 32px;
   background: $black;
   cursor: pointer;
 }

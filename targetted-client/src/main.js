@@ -49,7 +49,7 @@ const responseSuccessHandler = response => {
 }
 
 const responseErrorHandler = error => {
-  if (error.response.status === 401) {
+  if (error?.response?.status === 401) {
     store.dispatch('logout')
       .then(() => {
         router.push('/login')

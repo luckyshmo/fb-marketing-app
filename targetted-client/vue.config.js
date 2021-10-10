@@ -5,7 +5,8 @@ const vueSrc = "./src";
 module.exports = {
   lintOnSave: false,
   devServer: {
-    host: 'localhost'
+    host: 'localhost',
+    proxy: 'http://localhost:8087',
   },
   configureWebpack: {
     resolve: {
