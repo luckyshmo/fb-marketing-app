@@ -65,6 +65,12 @@
             >
               Пустое поле 
             </small>
+                      <small
+                  v-if="$v.companyData.auditory.age.from.$dirty && !$v.companyData.auditory.age.from.numeric"
+                  class="error-message"
+                >
+                  Только цифры
+                </small>
                     </b-col>
             
                     <b-col cols="6" sm="5" md="6" lg="3" xl="3">
@@ -78,6 +84,12 @@
             >
               Пустое поле 
             </small>
+                  <small
+                  v-if="$v.companyData.auditory.age.to.$dirty && !$v.companyData.auditory.age.to.numeric"
+                  class="error-message"
+                >
+                  Только цифры
+                </small>
                     </b-col>
                 </b-row>
           </b-form-group>
@@ -124,7 +136,7 @@
                 <b-col cols="6" sm="8" md="3" lg="3" xl="3">
             <b-button type="button"
                         class="app-new-submit-button"
-                        :class="{'disabled': !$v.$anyDirty || $v.$anyError}"
+                        :class="{'disabled-look': !$v.$anyDirty || $v.$anyError}"
                         @click="sendData">
                 {{isEdit ? "Назад":"Продолжить"}}
             </b-button>
@@ -147,7 +159,7 @@
 <script>
 import store from '@/store/store'
 import { validationMixin } from 'vuelidate'
-import { required, minValue, maxValue } from 'vuelidate/lib/validators'
+import { required, minValue, maxValue, numeric } from 'vuelidate/lib/validators'
 
 export default {
   name: 'Step3',
@@ -168,10 +180,12 @@ export default {
                   age: {
                       from: {
                           required,
+                          numeric,
                           minValue: minValue(0)
                       },
                       to: {
                           required,
+                          numeric,
                           maxValue: maxValue(99)
                       }
                   }

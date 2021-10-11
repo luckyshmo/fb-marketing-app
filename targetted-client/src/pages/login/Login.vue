@@ -66,7 +66,7 @@
       <b-button
         type="submit"
         class="app-new-submit-button"
-        :class="{'disabled': !$v.$anyDirty || $v.$anyError}"
+        :class="{'disabled-look': !$v.$anyDirty || $v.$anyError}"
       >
         Войти
       </b-button>

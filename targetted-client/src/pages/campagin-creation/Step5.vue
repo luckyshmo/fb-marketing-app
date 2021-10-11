@@ -15,8 +15,8 @@
       <b-col cols="12" sm="6">
       <b-form-group
             class="input-group input-group-range"
-            label="Бюджет в день">
-        <p class="app-label-right">{{campaginData.budget}} ₽ </p>
+            :label="`Бюджет в день: ${campaginData.budget} ₽`">
+        <!-- <p class="app-label-right">{{campaginData.budget}} ₽ </p> -->
             <b-form-input id="range-1" v-model="campaginData.budget" type="range" min="5" max="5000" step="5"></b-form-input>
 
            </b-form-group>
@@ -24,8 +24,8 @@
       <b-col cols="12" sm="6">
             <b-form-group
               class="input-group input-group-range"
-              label="Продолжительность">
-          <p class="app-label-right">{{campaginData.timeLength}} д</p>
+              :label="`Продолжительность: ${campaginData.timeLength} д`">
+          <!-- <p class="app-label-right">{{campaginData.timeLength}} д</p> -->
               <b-form-input id="range-2" v-model="campaginData.timeLength" type="range" min="1" max="31" step="1"></b-form-input>
            </b-form-group>
       </b-col>
@@ -154,7 +154,7 @@
            </b-form-group>
             <b-button type="button"
                          v-if="!isRegistered"
-                         :class="{'disabled': !$v.$anyDirty || $v.$anyError}"
+                         :class="{'disabled-look': !$v.$anyDirty || $v.$anyError}"
                         class="app-new-submit-button"
                         @click="sendData">
         Зарегистрироваться
@@ -165,7 +165,7 @@
       </section>
 
         <b-button type="button"
-        :class="{'disabled': !$v.$anyDirty || $v.$anyError}"
+        :class="{'disabled-look': !$v.$anyDirty || $v.$anyError}"
                          v-if="isRegistered"
                         class="app-new-submit-button"
                         @click="sendData">
@@ -206,22 +206,21 @@ export default {
           required,
           minLength: minLength(8)
         },
-         passwordCheck: {
+        passwordCheck: {
           required,
           minLength: minLength(8)
         },
-         name: {
+        name: {
           required,
           alpha,
           minLength: minLength(2)
         },
-         phone: {
+        phone: {
           required,
           numeric,
-          minLength: minLength(9)
+          //minLength: minLength(9)
         }
       }
-      
     },
     data: function () {
         return {

@@ -127,7 +127,7 @@
 <br class="d-none d-sm-block">
         <b-button
           class="app-new-submit-button"
-          :class="{'disabled': !$v.$anyDirty || $v.$anyError}"
+          :class="{'disabled-look': !$v.$anyDirty || $v.$anyError}"
           @click="register()"
         >
           Зарегистрироваться

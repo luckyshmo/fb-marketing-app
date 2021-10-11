@@ -170,7 +170,7 @@
           </b-button>
         </b-col>
         <b-col cols="6" sm="8" md="6" lg="6" xl="6" class="app-new-small-text-fit">
-            <p class="text-muted">Загрузите креативы, чтобы продолжить</p>
+            <p class="text-muted text-pt-desktop">Загрузите креативы, чтобы продолжить</p>
         </b-col>
       </b-row>
 
@@ -371,22 +371,24 @@ export default {
     width: 174px;
     height: 280px;
 }
-@media (min-width: 650px) {
-  #load-frame {
-    width: 201px;
-    height: 348px;
-  }
-}
+
 #load-frame-small {
     border: 2px dashed #CCCCCC;
     border-radius: 20px;
     width: 160px;
     height: 160px;
 }
-#load-frame:hover {
-    background: $light;
+@media (min-width: 650px) {
+  #load-frame {
+    width: 201px;
+    height: 348px;
+  }
+  #load-frame-small {
+    width: 201px;
+    height: 201px;
+  }
 }
-#load-frame-small:hover {
+#load-frame:hover, #load-frame-small:hover {
     background: $light;
 }
 .stories-image-wrapper {

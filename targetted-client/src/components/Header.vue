@@ -182,7 +182,7 @@ export default {
     background: #E2FF12;
     filter: blur(9px);
     position: absolute;
-    width: 100px;
+    width: 120px;
     height: 20px;
     z-index: -1;
     top: 28px;

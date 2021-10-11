@@ -252,14 +252,6 @@ export default {
       localStorage.setItem('campagin_step', this.currentStep)
     },
     saveAndNext(data){
-        // console.log(data.company)
-
-        // if(data && data.company){
-        //   this.company = {
-        //     ...this.company,
-        //     ...data.company
-        //   }
-        // }
 
         if(data){
           this.company = {
@@ -268,9 +260,21 @@ export default {
           }
         }
 
-        this.currentStep = this.currentStep + 1;
+        const nextStepNumber = this.currentStep + 1;
+        if(this.totalSteps < nextStepNumber) {
+          this.updateCompany();
+          localStorage.setItem('campagin_step', 1)
 
-        localStorage.setItem('campagin_step', this.currentStep)
+          //CHECK MONEY ENOUGH
+          this.$router.push('/payment')
+          //OR 
+          //this.$router.push('/main')
+          return
+        }
+
+        //todo: mv to service
+        localStorage.setItem('campagin_step', nextStepNumber)
+        localStorage.setItem('campagin_data', JSON.stringify(this.company));
 
         if(!this.isEdit && this.currentStep === 2) {
             this.createCompany();

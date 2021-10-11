@@ -200,14 +200,14 @@
             
                 <b-col cols="6" sm="8" md="3" lg="3" xl="3">
               <b-button type="button"
-              :class="{'disabled': !$v.$anyDirty || $v.$anyError}"
+              :class="{'disabled-look': !$v.$anyDirty || $v.$anyError}"
                         class="app-new-submit-button"
                         @click="sendData">
                   {{isEdit ? "Назад":"Продолжить"}}
               </b-button>
                 </b-col>
                 <b-col cols="6" sm="8" md="6" lg="6" xl="6" class="app-new-small-text-fit">
-                  <p class="text-muted">Заполните все данные,<br>чтобы продолжить</p>
+                  <p class="text-muted text-pt-desktop">Заполните все данные, чтобы продолжить</p>
                 </b-col>
           </b-row>
       </b-form-group>
