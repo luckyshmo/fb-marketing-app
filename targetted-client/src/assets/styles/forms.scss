@@ -51,6 +51,14 @@ h3.app-new-header {
 
 .form-control{
     width: 640px !important;
+
+    &.is-invalid {
+        background-color: #FFE9E9 !important;
+        background-image:none;
+    }
+    &.is-valid {
+        background-image:none;
+    }
 }
 @media(max-width: 600px){
     .form-control{
@@ -120,11 +128,6 @@ h3.app-new-header {
             color: $activeVolet;
         }
     }
-}
-
-.form-control.is-invalid {
-    background-color: #FFE9E9 !important;
-    background-image:none;
 }
 
 .input-group {

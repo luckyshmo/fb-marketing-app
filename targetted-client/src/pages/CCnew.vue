@@ -77,7 +77,7 @@
           <b-col cols="3" class=" d-none d-md-block d-lg-block d-xl-block">
           <aside>
             <h3 class="app-new-header">
-              Заполнено {{(displayNumber)*100}}%
+              Заполнено {{displayNumber}}%
               </h3>
               <ul class="app-new-progress-text">
                 <li :class="{active:(currentStep>=1)}">
@@ -170,7 +170,7 @@ export default {
   },
   computed: {
     number() {
-      return this.currentStep/this.totalSteps;
+      return (this.currentStep/this.totalSteps)*100;
     },
     isEdit () {
       return this.$route.query.isEdit === 'true'
@@ -179,28 +179,8 @@ export default {
     content_cols() { return this.getWidth().content },
   },
   watch: {
-    	number: function(){
-    
-    	clearInterval(this.interval);
-    
-    		if(this.number == this.displayNumber){
-          return;
-        }
-    
-      	this.interval = window.setInterval(function(){
-        
-        	if(this.displayNumber != this.number){
-        
-        		var change = (this.number - this.displayNumber) / 10;
-            
-            change = change >= 0 ? Math.ceil(change) : Math.floor(change);
-          
-          	this.displayNumber = this.displayNumber + change;
-          
-          }
-        
-        }.bind(this), 20);
-      
+    number: function(){
+
     },
     $route (to) {
       console.log('route ', store.getters.GET_EMAIL)
@@ -232,7 +212,24 @@ export default {
       }
     }
   },
+  mounted(){
+
+      clearInterval(this.interval);
+
+      if(this.number == this.displayNumber){
+        return;
+      }
+
+      this.interval = window.setInterval(function(){
+        if(this.displayNumber != this.number){      
+          var change = (this.number - this.displayNumber) / 10;
+          change = change >= 0 ? Math.ceil(change) : Math.floor(change);
+          this.displayNumber = this.displayNumber + change;
+        }
+      }.bind(this), 20);
+  },
   beforeMount () {
+
 
     console.log('BM ', store.getters.GET_EMAIL, 'campId:', this.$router.history.current?.params?.id )
     if (!this.$router.history.current?.params?.id === 'undefined') {
@@ -270,6 +267,7 @@ export default {
   created() {
       window.addEventListener('resize', this.getWidth);
       this.getWidth();
+      
   },
   destroyed() {
       window.removeEventListener('resize', this.getWidth);

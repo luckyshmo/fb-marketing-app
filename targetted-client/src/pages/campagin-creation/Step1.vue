@@ -71,7 +71,7 @@
           label-for="input-horizontal">
           <b-form-input class="form-input"
                 :disabled="isEdit"
-                :state="$v.company.AccountURL.$dirty ? !$v.company.AccountURL : null"
+                :state="$v.company.AccountURL.$dirty ? !$v.company.AccountURL.$error : null"
                 v-model="$v.company.AccountURL.$model"
                 placeholder="Введите ссылку">
           </b-form-input>
@@ -90,7 +90,7 @@
 
           <b-form-select class="form-input"
              :disabled="isEdit"
-            :state="$v.company.CompanyFieldArea.$dirty ? !$v.company.CompanyFieldArea : null"
+            :state="$v.company.CompanyFieldArea.$dirty ? !$v.company.CompanyFieldArea.$error : null"
              v-model="$v.company.CompanyFieldArea.$model"
              :options="['Интернет-реклама', 'Прочее']"
              placeholder="Точный адрес">
@@ -112,7 +112,7 @@
 
       <b-form-textarea class="form-input"
                       :disabled="isEdit"
-                      :state="$v.company.CompanyField.$dirty ? !$v.company.CompanyField : null"
+                      :state="$v.company.CompanyField.$dirty ? !$v.company.CompanyField.$error : null"
                       v-model="$v.company.CompanyField.$model"
                       rows="6"
                       max-rows="9"
@@ -129,7 +129,7 @@
       label-for="input-horizontal">
       <b-form-input class="form-input"
                     v-model="$v.company.CompanyName.$model"
-                    :state="$v.company.CompanyName.$dirty ? !$v.company.CompanyName : null"
+                    :state="$v.company.CompanyName.$dirty ? !$v.company.CompanyName.$error : null"
                     :disabled="isEdit"
           placeholder="Введите название"
           @click="resetNameErr()"></b-form-input>
@@ -156,7 +156,7 @@
 
           <b-form-input class="form-input"
                         :disabled="isEdit"
-                        :state="$v.company.BusinessAddress.$dirty ? !$v.company.BusinessAddress : null"
+                        :state="$v.company.BusinessAddress ? !$v.company.BusinessAddress.$error : null"
                         v-model="$v.company.BusinessAddress.$model"
                         placeholder="Город или улица">
           </b-form-input>

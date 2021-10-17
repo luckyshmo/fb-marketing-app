@@ -74,6 +74,10 @@ const actions = {
             resolve(resp)
           })
           .catch(err => {
+            //TODO remove
+            resolve('test')
+
+
             console.log(err)
             reject(err)
           })
