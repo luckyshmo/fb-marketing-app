@@ -179,9 +179,6 @@ export default {
     content_cols() { return this.getWidth().content },
   },
   watch: {
-    number: function(){
-
-    },
     $route (to) {
       console.log('route ', store.getters.GET_EMAIL)
       window.scrollTo(0, 100)

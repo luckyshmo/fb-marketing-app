@@ -241,6 +241,13 @@ export default {
           }
         }
       },
+
+  mounted(){
+      //todo copy from Step1
+
+      // userData
+      // campaginData
+  },
     methods: {
         sendData(){
             this.$v.userData.$touch()

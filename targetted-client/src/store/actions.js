@@ -79,7 +79,7 @@ const actions = {
 
 
             console.log(err)
-            reject(err)
+          //  reject(err)
           })
       })
     },

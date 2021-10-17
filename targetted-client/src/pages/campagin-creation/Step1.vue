@@ -361,6 +361,20 @@ export default {
             })
         },
       },
+
+        mounted(){
+
+            const cd = localStorage.getItem('campagin_data');
+              try {
+                const cdd = JSON.parse(cd);
+                this.company = {
+                  ...cdd
+                };
+                console.log(this.company)
+              } catch {
+
+              }
+        },
       
       beforeMount() {
 

@@ -221,6 +221,11 @@ export default {
           }
         }
       },
+    mounted(){
+      //todo copy from Step1
+
+      // auditory
+    },
     methods: {
         sendDataNoValidate(){
             this.noValidate = true;
