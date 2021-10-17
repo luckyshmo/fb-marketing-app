@@ -114,7 +114,7 @@ body {
   font-size: 16px;
 }
 .main-button-grey:hover{
-  background-color: #EEEEEE !important;
+  background-color: #EAEAEA !important;
 }
 .main-button:hover {
   background-color: #5101B5 !important;
@@ -257,12 +257,19 @@ p {
   cursor: pointer;
 }
 
+.x-button:hover {
+  background: #EAEAEA;
+}
+
 .form-input{
     height: 44px;
     border-radius: 6px !important;
     border: none !important;
     background-color: #F3F3F3 !important;
     color: black !important;
+}
+.form-input:focus, .form-input:hover {
+  background-color: #EAEAEA !important;
 }
 
 .form-input.width-1-2 {

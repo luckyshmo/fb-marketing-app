@@ -246,7 +246,9 @@ export default {
   padding: 16px;
   margin-bottom: 22px;
  
-
+ &:hover {
+   background: #EAEAEA;
+ }
   & .date {
     font-size: 14px;
     line-height: 18px;

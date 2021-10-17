@@ -42,6 +42,22 @@ h3.app-new-header {
         line-height: 18px;
     }
 }
+
+.error-message{
+    position: absolute;
+    color: #FF2F12;
+    font-style: normal;
+  }
+
+.form-control{
+    width: 640px !important;
+}
+@media(max-width: 600px){
+    .form-control{
+        width: 100% !important;
+    }
+}
+
 .app-new-submit-button {
     background: $lime;
     border-radius: 6px;
@@ -49,6 +65,11 @@ h3.app-new-header {
     color: $black;
     padding: 9px 24px 11px;
     height: 44px;
+
+    &:hover {
+        background:$activeLime;
+        color: $black;
+    }
     &.less-padding {
         padding: 9px 8px 11px;
     }
@@ -95,11 +116,21 @@ h3.app-new-header {
     text-align: left;
     a {
         color: $violet;
+        &:hover {
+            color: $activeVolet;
+        }
     }
+}
+
+.form-control.is-invalid {
+    background-color: #FFE9E9 !important;
+    background-image:none;
 }
 
 .input-group {
     margin-left: 0px !important;;
+    text-align: left;
+    margin: 32px 20px 32px 20px !important;
 }
 
 .app-new-form-footer {

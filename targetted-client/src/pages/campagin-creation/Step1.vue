@@ -69,7 +69,11 @@
 
          <b-form-group label="Ссылка на аккаунт" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
           label-for="input-horizontal">
-          <b-form-input class="form-input" :disabled="isEdit" v-model="$v.company.AccountURL.$model" placeholder="Введите ссылку">
+          <b-form-input class="form-input"
+                :disabled="isEdit"
+                :state="$v.company.AccountURL.$dirty ? !$v.company.AccountURL : null"
+                v-model="$v.company.AccountURL.$model"
+                placeholder="Введите ссылку">
           </b-form-input>
              <small
               v-if="$v.company.AccountURL.$dirty && !$v.company.AccountURL.required"
@@ -86,6 +90,7 @@
 
           <b-form-select class="form-input"
              :disabled="isEdit"
+            :state="$v.company.CompanyFieldArea.$dirty ? !$v.company.CompanyFieldArea : null"
              v-model="$v.company.CompanyFieldArea.$model"
              :options="['Интернет-реклама', 'Прочее']"
              placeholder="Точный адрес">
@@ -107,6 +112,7 @@
 
       <b-form-textarea class="form-input"
                       :disabled="isEdit"
+                      :state="$v.company.CompanyField.$dirty ? !$v.company.CompanyField : null"
                       v-model="$v.company.CompanyField.$model"
                       rows="6"
                       max-rows="9"
@@ -121,7 +127,10 @@
 
       <b-form-group label="Название кампании" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
       label-for="input-horizontal">
-      <b-form-input class="form-input" v-model="$v.company.CompanyName.$model" :disabled="isEdit"
+      <b-form-input class="form-input"
+                    v-model="$v.company.CompanyName.$model"
+                    :state="$v.company.CompanyName.$dirty ? !$v.company.CompanyName : null"
+                    :disabled="isEdit"
           placeholder="Введите название"
           @click="resetNameErr()"></b-form-input>
           <small
@@ -145,7 +154,11 @@
              <p class="app-new-info">Если у вас офлайн бизнес, то укажите 
 точный адрес оказания услуг</p>
 
-          <b-form-input class="form-input" :disabled="isEdit" v-model="$v.company.BusinessAddress.$model" placeholder="Город или улица">
+          <b-form-input class="form-input"
+                        :disabled="isEdit"
+                        :state="$v.company.BusinessAddress.$dirty ? !$v.company.BusinessAddress : null"
+                        v-model="$v.company.BusinessAddress.$model"
+                        placeholder="Город или улица">
           </b-form-input>
              <small
               v-if="$v.company.BusinessAddress.$dirty && !$v.company.BusinessAddress.required"
@@ -176,6 +189,7 @@
                 >
                 <p class="app-new-info">Мы не покажем его в рекламе</p>
                     <b-form-input
+                    :state="$v.userData.phone.$dirty ? !$v.userData.phone.$error : null"
                     v-model="$v.userData.phone.$model"
                     class="form-input width-1-2"
                     placeholder="Введите телефон"

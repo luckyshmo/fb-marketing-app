@@ -15,6 +15,7 @@
         label="Номер телефона"
          id="input-group-main"
       >
+      {{validateState('phoneNumber')}}
         <b-form-input
           id="tel"
           v-model="form.phoneNumber"
@@ -24,7 +25,6 @@
           placeholder="Введите телефон"
         />
         <b-form-invalid-feedback
-          id="tel"
           class="error-message"
         >
           Минимум 10 символов
@@ -92,7 +92,6 @@
           v-model="form.password"
           class="form-input"
           type="password"
-          :state="validateState('password')"
           placeholder="Пароль"
         />
         <b-form-invalid-feedback
@@ -241,22 +240,3 @@ export default {
   }
 }
 </script>
-<style>
-.error-message{
-  position: absolute;
-  color: red;
-  font-style: normal;
-}
-.form-control{
-  width: 640px !important;
-}
-@media(max-width: 600px){
-  .form-control{
-    width: 100% !important;
-  }
-}
-.input-group{
-  text-align: left;
-  margin: 32px 20px 32px 20px !important;
-}
-</style>

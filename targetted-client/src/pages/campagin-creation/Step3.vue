@@ -58,6 +58,7 @@
                         <b-form-input
                             class="form-input app-new-form-input-small "
                             v-model="$v.companyData.auditory.age.from.$model"
+                            :state="$v.companyData.auditory.age.from.$dirty ? !$v.companyData.auditory.age.from.$error : null"
                             placeholder="от"></b-form-input>
                                  <small
               v-if="$v.companyData.auditory.age.from.$dirty && !$v.companyData.auditory.age.from.required"
@@ -77,6 +78,7 @@
                         <b-form-input
                             class="form-input app-new-form-input-small"
                             v-model="$v.companyData.auditory.age.to.$model"
+                            :state="$v.companyData.auditory.age.to.$dirty ? !$v.companyData.auditory.age.to.$error : null"
                             placeholder="до"></b-form-input>
                              <small
               v-if="$v.companyData.auditory.age.to.$dirty && !$v.companyData.auditory.age.to.required"
@@ -98,7 +100,7 @@
                     label="Местоположение"
                      id="input-group-main">
                     <b-form-input
-                    id="tel"
+                    :state="$v.companyData.auditory.location.$dirty ? !$v.companyData.auditory.location.$error : null"
                     v-model="$v.companyData.auditory.location.$model"
                     class="form-input"
                     placeholder="Введите адрес"
@@ -120,6 +122,7 @@
                       <b-form-textarea
                         id="textarea"
                         class="form-input"
+                        :state="$v.companyData.auditory.interests.$dirty ? !$v.companyData.auditory.interests.$error : null"
                         v-model="$v.companyData.auditory.interests.$model"
                         rows="3"
                         max-rows="6"

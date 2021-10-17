@@ -8,6 +8,10 @@
     background: $light;
     border-radius: 20px;
 
+    &:hover {
+        background: #EAEAEA;
+    }
+
     & .right-pointer {
         justify-content: flex-end;
         display: flex;

@@ -6,7 +6,7 @@
           <b-row class="app-new-steps-header">
             <b-col cols="8">
               <router-link id="app-link-back" v-if="currentStep === 1" :to="{name: 'mainPage'}">
-                <p class="text-muted" style="float:right;line-height:20px">← Назад</p>
+                ← Назад
               </router-link>
               <p class="text-muted clickable" v-else @click="goStepBack" style="float:left;margin-right: 4px;line-height: 20px;">← Назад</p>
          
@@ -77,7 +77,7 @@
           <b-col cols="3" class=" d-none d-md-block d-lg-block d-xl-block">
           <aside>
             <h3 class="app-new-header">
-              Заполнено {{(currentStep/totalSteps)*100}}%
+              Заполнено {{(displayNumber)*100}}%
               </h3>
               <ul class="app-new-progress-text">
                 <li :class="{active:(currentStep>=1)}">
@@ -163,10 +163,45 @@ export default {
       imageNames: [],
       ImagesSmall: [],
       Images: [],
-      company: companyDefault
+      company: companyDefault,
+      interval:false,
+      displayNumber:0,
     }
   },
+  computed: {
+    number() {
+      return this.currentStep/this.totalSteps;
+    },
+    isEdit () {
+      return this.$route.query.isEdit === 'true'
+    },
+    label_cols() { return this.getWidth().label},
+    content_cols() { return this.getWidth().content },
+  },
   watch: {
+    	number: function(){
+    
+    	clearInterval(this.interval);
+    
+    		if(this.number == this.displayNumber){
+          return;
+        }
+    
+      	this.interval = window.setInterval(function(){
+        
+        	if(this.displayNumber != this.number){
+        
+        		var change = (this.number - this.displayNumber) / 10;
+            
+            change = change >= 0 ? Math.ceil(change) : Math.floor(change);
+          
+          	this.displayNumber = this.displayNumber + change;
+          
+          }
+        
+        }.bind(this), 20);
+      
+    },
     $route (to) {
       console.log('route ', store.getters.GET_EMAIL)
       window.scrollTo(0, 100)
@@ -196,13 +231,6 @@ export default {
         this.reset()
       }
     }
-  },
-  computed: {
-    isEdit () {
-      return this.$route.query.isEdit === 'true'
-    },
-    label_cols() { return this.getWidth().label},
-    content_cols() { return this.getWidth().content },
   },
   beforeMount () {
 
@@ -246,6 +274,7 @@ export default {
   destroyed() {
       window.removeEventListener('resize', this.getWidth);
   },
+
   methods: {
     goStepBack(){
       this.currentStep = this.currentStep - 1;
@@ -400,8 +429,15 @@ export default {
   @import '@/assets/styles/vars.scss';
 
 #app-link-back {
-  float: left;
+  // float: left;
   margin-right: 5px;
+  float:left;
+  line-height:20px;
+  color: #6c757d ;
+
+  &:hover {
+    color:$black;
+  }
 }
 
 .app-new-progress-text  {
