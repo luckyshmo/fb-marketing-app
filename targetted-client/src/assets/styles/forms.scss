@@ -31,7 +31,7 @@ h3.app-new-header {
     background: #F3F3F3 !important;
     color: black !important;
     outline: none !important;
-    border-radius: 8px !important;
+    border-radius: 6px !important;
     height: 32px;
 }
 .app-new-small-text-fit {
@@ -44,11 +44,14 @@ h3.app-new-header {
 }
 
 .error-message{
-    position: absolute;
     color: #FF2F12;
     font-style: normal;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 24px;
+}
+
+input.form-input, textarea.form-input {
+    padding-left: 16px !important;
 }
 
 .form-control{
@@ -112,6 +115,7 @@ h3.app-new-header {
     text-align: left;
     line-height: 18px;
     font-size: 14px;
+    margin-bottom: 20px;
     a {
         color: $gray;
         text-decoration: underline !important;

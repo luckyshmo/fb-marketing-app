@@ -95,7 +95,7 @@ export default {
     .popup{
       width:320px;
       margin-left:-160px;   /* negative half of width above */
-      padding: 15px;
+      padding: 0;
     }
     .popup-footer {
       padding-left: 30px;

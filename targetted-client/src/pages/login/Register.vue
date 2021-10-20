@@ -6,22 +6,20 @@
     </h1>
 
     <b-form
-      id="form-centred"
       @submit="register"
     >
 
       <b-form-group
-        class="input-group"
         label="Номер телефона"
          id="input-group-main"
       >
-      {{validateState('phoneNumber')}}
+      
         <b-form-input
           id="tel"
           v-model="form.phoneNumber"
           class="form-input"
+          :state="$v.form.phoneNumber.$dirty ? !$v.form.phoneNumber.$error : null"
           type="tel"
-          :state="validateState('phoneNumber')"
           placeholder="Введите телефон"
         />
         <b-form-invalid-feedback
@@ -32,7 +30,6 @@
       </b-form-group>
 
       <b-form-group
-        class="input-group"
         label="Электронная почта"
          id="input-group-main"
       >
@@ -40,7 +37,7 @@
           v-model.trim="form.email"
           class="form-input"
           placeholder="Введите почту"
-          :state="validateState('email')"
+          :state="$v.form.email.$dirty ? !$v.form.email.$error : null"
           @click="resetErr()"
         />
         <small
@@ -64,7 +61,6 @@
       </b-form-group>
 
        <b-form-group
-        class="input-group"
         label="Имя"
          id="input-group-main"
       >
@@ -72,7 +68,7 @@
           v-model="form.name"
           class="form-input"
           placeholder="Введите имя"
-          :state="validateState('name')"
+          :state="$v.form.name.$dirty ? !$v.form.name.$error : null"
         />
         <small
           v-if="$v.form.name.$dirty && !$v.form.name.required"
@@ -83,7 +79,6 @@
       </b-form-group>
 
       <b-form-group
-        class="input-group"
         label="Пароль"
          id="input-group-main"
       >
@@ -102,7 +97,6 @@
         </b-form-invalid-feedback>
       </b-form-group>
       <b-form-group
-        class="input-group"
          id="input-group-main"
         label="Введите пароль повторно"
       >

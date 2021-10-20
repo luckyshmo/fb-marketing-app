@@ -236,10 +236,6 @@ p {
   color: #000000;
 }
 
-#form-centred{
-    text-align: center !important;
-}
-
 .md-button{
   height: 24px;
   width: 24px;

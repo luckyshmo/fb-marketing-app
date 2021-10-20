@@ -26,7 +26,7 @@
       
       <br>
 
-      <div v-if="showAdvanced">
+      <template v-if="showAdvanced">
 
           <h3> Уточнение аудитории</h3>
 
@@ -46,7 +46,7 @@
                         v-model="$v.companyData.auditory.gender.$model"
                         :options="auditory.gender"
                     ></b-form-radio-group>
-                </b-form-group>
+            </b-form-group>
 
             <b-form-group label="Возраст"
                         :label-cols="label_cols"
@@ -95,8 +95,8 @@
                     </b-col>
                 </b-row>
           </b-form-group>
+           
            <b-form-group
-                    class="input-group"
                     label="Местоположение"
                      id="input-group-main">
                     <b-form-input
@@ -112,8 +112,9 @@
               Пустое поле 
             </small>
            </b-form-group>
+           
            <b-form-group
-                    class="input-group"
+                    id="input-group-main"
                     label="Интересы"
                 >
                    <p class="app-new-info">
@@ -153,7 +154,7 @@
 
                     </b-col>
           </b-row>
-      </div>
+      </template>
       
     </b-form>
   </div>

@@ -59,7 +59,7 @@
 
         <b-form-group :label-cols="label_cols" :state="validateImages()" id="input-group-main"
          class="app-new-creative-uploads"
-          label-for="input-horizontal" description="До 5 слайдов в сториз">
+          label-for="input-horizontal">
           <div id="image-block">
             <div v-if="Images.length < 5" key="s0">
               <input style="display: none" type="file" multiple accept="Image/gif, Image/jpeg, Image/png, Image/jpg"
@@ -104,9 +104,9 @@
         <p class="app-new-info">В одном рекламном объявлении может быть до 5 слайдов</p>
 
         <b-form-group class="app-new-creative-uploads" :label-cols="label_cols" :state="validateImagesSmall()"
-          id="input-group-main" label-for="input-horizontal" description="До 5 слайдов в посте">
+          id="input-group-main" label-for="input-horizontal">
 
-          <div id="image-block">
+          <div id="image-block" style="margin-top: -70px;">
             <div v-if="ImagesSmall.length < 5" key="s0">
               <input style="display: none" type="file" multiple accept="Image/gif, Image/jpeg, Image/png, Image/jpg"
                 @change="onSmallFileSelected" ref="smallFileInput">
@@ -165,6 +165,7 @@
         <b-col cols="6" sm="8" md="3" lg="3" xl="3">
           <b-button  type="button"
                     class="app-new-submit-button"
+                    :class="{'disabled-look': validateImagesSmall() && validateImages()}"
                     @click="sendData">
             {{isEdit ? "Назад":"Продолжить"}}
           </b-button>
@@ -195,6 +196,9 @@ export default {
       },
       methods: {
         sendData(){
+          if(this.validateImagesSmall() && this.validateImages()){
+            return
+          }
             this.$emit('next', {
             imageNames: this.imageNames,
             ImagesSmall: this.ImagesSmall,
@@ -326,17 +330,19 @@ export default {
 #image-block {
     max-width: 530px;
     display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(160px, 1fr));
+    grid-template-columns: repeat(6,minmax(160px, 1fr));
     justify-content: space-between;
     align-items: center;
-    grid-gap: 24px;
+    grid-gap: 20px;
+    overflow-x: scroll;
+    margin-top: -30px;
 }
 #load-file {
     font-style: normal;
     font-weight: 600;
     font-size: $baseFont;
     line-height: $baseLH;
-    margin: 20px auto;
+    margin: 28px auto 18px;
     text-align: center;
     color: $black;
 }
@@ -347,7 +353,7 @@ export default {
     font-size: 12px;
     line-height: 20px;
     /* bottom: 0;//TODO почему то не работает */
-    margin-top: 140px;
+    margin-top: 134px;
     text-align: center;
     color: $gray;
 }
@@ -367,16 +373,18 @@ export default {
 }
 #load-frame {
     border: 2px dashed #CCCCCC;
-    border-radius: 20px;
+    border-radius: 16px;
     width: 174px;
     height: 280px;
+    margin-top: 50px;
 }
 
 #load-frame-small {
     border: 2px dashed #CCCCCC;
-    border-radius: 20px;
+    border-radius: 16px;
     width: 160px;
     height: 160px;
+    margin-top: 90px;
 }
 @media (min-width: 650px) {
   #load-frame {
@@ -398,9 +406,9 @@ export default {
   margin-top: -30px;
 }
 .icon-div-image{
-    position: absolute;
+    position: relative;
     margin-left: 140px;
-    margin-top: 15px;
+    top: 50px;
 }
 .icon-div-number {
   bottom: -270px;
@@ -408,7 +416,9 @@ export default {
   background-color: $black;
   border-radius: 12px;
   color: $light;
-  width: 34px;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
   margin-bottom: 0px;
   padding: 6px 13px;
   left: 10px;
@@ -417,7 +427,7 @@ export default {
   margin-top: -30px;
 
   & .icon-div-number {
-    bottom: -170px;
+    bottom: -150px;
   }
 }
 

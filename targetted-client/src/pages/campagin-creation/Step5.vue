@@ -14,7 +14,7 @@
     <b-row>
       <b-col cols="12" sm="6">
       <b-form-group
-            class="input-group input-group-range"
+            class="input-group-range"
             :label="`Бюджет в день: ${campaginData.budget} ₽`">
         <!-- <p class="app-label-right">{{campaginData.budget}} ₽ </p> -->
             <b-form-input id="range-1" v-model="campaginData.budget" type="range" min="5" max="5000" step="5"></b-form-input>
@@ -23,7 +23,7 @@
       </b-col>
       <b-col cols="12" sm="6">
             <b-form-group
-              class="input-group input-group-range"
+              class="input-group-range"
               :label="`Продолжительность: ${campaginData.timeLength} д`">
           <!-- <p class="app-label-right">{{campaginData.timeLength}} д</p> -->
               <b-form-input id="range-2" v-model="campaginData.timeLength" type="range" min="1" max="31" step="1"></b-form-input>
@@ -37,10 +37,9 @@
 
             <b-form-group
              id="input-group-main"
-                    class="input-group"
                     label="Номер телефона">
                     <b-form-input
-                    
+                    :state="$v.userData.phone.$dirty ? !$v.userData.phone.$error : null"
                     v-model="$v.userData.phone.$model"
                     class="form-input width-1-2"
                     placeholder="Введите телефон"
@@ -61,7 +60,6 @@
 
   <b-form-group
                  id="input-group-main"
-                    class="input-group"
                     label="Имя">
                     <b-form-input
                     v-model="$v.userData.name.$model"
@@ -84,10 +82,10 @@
 
                <b-form-group
                 id="input-group-main"
-                    class="input-group"
                     label="Электронная почта">
                     <b-form-input
                     v-model="$v.userData.email.$model"
+                    :state="$v.userData.email.$dirty ? !$v.userData.email.$error : null"
                     class="form-input"
                     placeholder="Введите вашу почту"
                     />
@@ -107,10 +105,10 @@
               
           <b-form-group
            id="input-group-main"
-                    class="input-group"
                     label="Пароль">
                     <b-form-input
                     v-model="$v.userData.password.$model"
+                    :state="$v.userData.password.$dirty ? !$v.userData.password.$error : null"
                     class="form-input width-1-2"
                     type="password"
                     placeholder=""
@@ -129,12 +127,12 @@
                     </small>
            </b-form-group>
             <b-form-group
-                    class="input-group"
                     label="Введите пароль повторно"
                      id="input-group-main"
                 >
                     <b-form-input
                     v-model="$v.userData.passwordCheck.$model"
+                    :state="$v.userData.passwordCheck.$dirty ? !$v.userData.passwordCheck.$error : null"
                     class="form-input width-1-2"
                     type="password"
                     placeholder=""

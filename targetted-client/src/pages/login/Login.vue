@@ -6,17 +6,16 @@
       Вход
     </h1>
 <b-form
-      id="form-centred"
       @submit.prevent="login"
     >
       <b-form-group
-        class="input-group"
         id="input-group-main"
         label="Электронная почта"
       >
         <b-form-input
           v-model="email"
           class="form-input"
+          :state="$v.email.$dirty ? !$v.email.$error : null"
           type="email"
           placeholder="Введите почту"
           @click="resetErr()"
@@ -42,13 +41,13 @@
       </b-form-group>
 
       <b-form-group
-        class="input-group"
         label="Пароль"
         id="input-group-main"
       >
         <b-form-input
           id="pas"
           v-model="password"
+          
           type="password"
           class="form-input"
           placeholder="Введите пароль"

@@ -5,17 +5,15 @@
     </h1>
 
     <b-form
-      id="form-centred"
-      @submit.prevent="sendRequest"
-    >
+      @submit.prevent="sendRequest">
       <b-form-group
-        class="input-group"
-      >
+        id="input-group-main">
       <p>
           Оставьте свой номер телефона, если у вас возникли вопросы или предложения :)
       </p>
         <b-form-input
           v-model="$v.form.phoneNumber.$model"
+          :state="$v.form.phoneNumber.$dirty ? !$v.form.phoneNumber.$error : null"
           class="form-input"
           placeholder="Телефон"
         />
@@ -24,9 +22,14 @@
                   v-if="$v.form.phoneNumber.$dirty && !$v.form.phoneNumber.required"
                   class="error-message"
                 >
-                  Телефон на указан
+                  Телефон не указан
                 </small>
-        
+                  <small
+                  v-if="$v.form.phoneNumber.$dirty && !$v.form.phoneNumber.numeric"
+                  class="error-message"
+                >
+                  Только цифры в телефоне
+                </small>
       </b-form-group>
 
       
@@ -50,21 +53,24 @@
 </template>
 <script>
 import { validationMixin } from 'vuelidate'
-import { required, minLength } from 'vuelidate/lib/validators'
+import { required, minLength, numeric } from 'vuelidate/lib/validators'
 
 export default {
     name: 'Questions',
   mixins: [validationMixin],
   data () {
     return {
-      phone: false,
+      form: {
+        phoneNumber: ''
+      },
     }
   },
     validations: {
       form: {
         phoneNumber: {
           required,
-          minLength: minLength(10)
+          numeric,
+          // minLength: minLength(10)
         },
       }
     },

@@ -49,15 +49,14 @@
 
     <b-form-group label="Что рекламируете" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
       label-for="input-horizontal">
+      
       <b-form-radio-group 
           v-model="$v.company.CompnayTarget.$model"
-       
           :disabled="isEdit"
           class="app-new-radio"
           :options="[
-                      'Аккаунт в Instagram или Facebook',
-                      'Сайт'
-                  ]"></b-form-radio-group>
+             'Аккаунт в Instagram или Facebook','Сайт'
+]"></b-form-radio-group>
 
                           <small
                   v-if="$v.company.CompnayTarget.$dirty && !$v.company.CompnayTarget.required"
@@ -98,7 +97,7 @@
 
           <p v-if="$v.company.CompanyFieldArea.$dirty" class="app-new-info">Стоимость перехода по рекламе ~ 10–30 ₽</p>
 
-                        <small
+                <small
                   v-if="$v.company.CompanyFieldArea.$dirty && !$v.company.CompanyFieldArea.required"
                   class="error-message"
                 >
@@ -148,7 +147,10 @@
 
     
 
-          <b-form-group label="Где оказываете услуги" :label-cols="label_cols" :content-cols="content_cols" id="input-group-main"
+          <b-form-group label="Где оказываете услуги"
+                       :label-cols="label_cols"
+                       :content-cols="content_cols"
+                       id="input-group-main"
           label-for="input-horizontal">
 
              <p class="app-new-info">Если у вас офлайн бизнес, то укажите 
@@ -183,7 +185,6 @@
       </b-form-group>
 
        <b-form-group
-                    class="input-group"
                     label="Номер телефона"
                     id="input-group-main"
                 >
@@ -252,7 +253,7 @@ export default {
           phone: {
             required,
             numeric,
-            minLength: minLength(7)
+            //minLength: minLength(7)
           }
         },
         company: {
@@ -370,7 +371,6 @@ export default {
                 this.company = {
                   ...cdd
                 };
-                console.log(this.company)
               } catch {
 
               }

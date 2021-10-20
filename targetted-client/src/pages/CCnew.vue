@@ -261,14 +261,14 @@ export default {
       }
     }
   },
-  created() {
-      window.addEventListener('resize', this.getWidth);
-      this.getWidth();
+  // created() {
+  //     window.addEventListener('resize', this.getWidth);
+  //     this.getWidth();
       
-  },
-  destroyed() {
-      window.removeEventListener('resize', this.getWidth);
-  },
+  // },
+  // destroyed() {
+  //     window.removeEventListener('resize', this.getWidth);
+  // },
 
   methods: {
     goStepBack(){
@@ -305,6 +305,7 @@ export default {
         } else {
             this.updateCompany();
         }
+        this.currentStep++;
     },
     reset () {
       this.isCompanyExist = false

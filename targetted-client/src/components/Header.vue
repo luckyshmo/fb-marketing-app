@@ -143,7 +143,7 @@ export default {
 
 @media (max-width: 600px) {
     #content-header{
-      padding: 24px;
+      padding: 22px 24px;
     }
 }
 
