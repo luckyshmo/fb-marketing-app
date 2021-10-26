@@ -1,0 +1,78 @@
+p, label, button, .app-header, .error-message, h1, h2, h3, h4 {
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    // font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, IBM Plex Sans  !important;
+    // font-style: normal;
+    // font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+p {
+    line-height: 172%;
+}
+.clickable {
+    cursor: pointer;
+}
+
+.app-header-bold {
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+}
+
+.app-block-icon {
+    float: right;
+    padding-right: 40px;
+    margin-top: -20px;
+}
+.app-mid-size {
+    margin-bottom: 2px;
+}
+
+.app-modal-white { 
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background: #fff;
+}
+@media (min-width: 600px) {
+    .text-pt-desktop {
+        margin-top: 12px;
+    }
+}
+
+.ml-2 {
+    margin-left: 2em;
+}
+.ml-1 {
+    margin-left: 1em;
+}
+.ml-0 {
+    margin-left: 0;
+}
+@media (min-width: 576px) { 
+    .ml-lg-2 {
+        margin-left: 2em;
+    }
+    .ml-lg-1 {
+        margin-left: 1em;
+    }
+ }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+    .ml-md-2 {
+        margin-left: 2em;
+    }
+    .ml-md-1 {
+        margin-left: 1em;
+    }
+ }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+    .ml-xl-2 {
+        margin-left: 2em;
+    }
+    .ml-xl-1 {
+        margin-left: 1em;
+    }
+ }

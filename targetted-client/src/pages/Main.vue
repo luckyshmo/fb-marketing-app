@@ -1,15 +1,36 @@
 <template>
+<div id="content-wrapper">
   <div id="content">
-    <div v-if="store.getters.GET_COMPANY_LIST.length > 0">
-      <h1 id="h1">
-        Главная
+
+    <template v-if="isVideo" class="app-modal-white">
+      <div class="video-pp-wrapper">
+      <iframe
+        id="ytplayer"
+        type="text/html"
+        src="https://www.youtube.com/embed/EgpUx9_4ZIQ?autoplay=1&origin=https://youtu.be/EgpUx9_4ZIQ"
+        frameborder="0"
+      />
+      <div
+        id="ytcloser"
+      >
+        <b-icon
+          class="x-button"
+          icon="x"
+          @click="closeVideo"
+        />
+      </div>
+      </div>
+    </template>
+
+    <template v-if="store.getters.GET_COMPANY_LIST.length > 0">
+      <h1 id="h1" style="margin-top: 24px;">
+        Александр, добро пожаловать!
       </h1>
       <div>
-        <h2 id="h2">
+        <!-- <h2 id="h2">
           Общий баланс
-        </h2>
-
-        <b-form-group
+        </h2> -->
+        <!-- <b-form-group
           id="input-group-main"
           label="Всего на счету"
           :label-cols="3"
@@ -19,35 +40,42 @@
           <p id="balance">
             {{ user.amount }} ₽
           </p>
-        </b-form-group>
+        </b-form-group> -->
 
-        <b-button
+        <!-- <b-button
           variant="primary"
-          class="main-button-grey"
-          style="margint-top: 20px"
+          class="main-button-grey mt-2"
           @click="push"
         >
           Пополнить баланс
-        </b-button>
+        </b-button> -->
       </div>
-      <h2 id="h2">
-        Ваши рекламные кампании
-      </h2>
+
+         <p>Здесь вы можете ознакомиться со&nbsp;своими рекламными кампаниями.</p>
+
       <div>
         <div>
+
+<!-- 
+ <b-row class="mt-5">
+        <b-col cols="6" sm="8" md="3" lg="3" xl="3"> -->
+
+
           <div
             v-for="company in store.getters.GET_COMPANY_LIST"
             :key="company.Id"
+            class="campagin-item"
           >
             <router-link :to="{path: '/company-balance/'+ company.Id, query: { isEdit: true }}">
-              <div class="c-div">
-                <div class="l">
+
+
+              <b-row>
+              <b-col cols="10">
+                  <p class="c-date">Создана {{company.Date}}</p>
                   <p class="c-name">
                     {{ company.CompanyName }}
                   </p>
-                </div>
-                <div class="r">
-                  <div class="c-status">
+               <div class="c-status">
                     <div
                       v-if="!isFb(company)"
                       id="white"
@@ -67,69 +95,56 @@
                       {{ getStatus(company) }}
                     </p>
                   </div>
-                </div>
-              </div>
+              </b-col>
+              <b-col cols="2" class="right-pointer">
+                <b-icon icon="chevron-right" @click="openCompanyDetails"/>
+              </b-col>
+           </b-row>
             </router-link>
           </div>
         </div>
       </div>
-    </div>
+    </template>
 
-    <div v-if="!(store.getters.GET_COMPANY_LIST.length > 0)">
+    <template v-if="!(store.getters.GET_COMPANY_LIST.length > 0)">
       <h1 id="h1">
         Добро<br>пожаловать!
       </h1>
       <p id="p1">
         Для привлечения новых клиентов осталось<br>совсем немного. Создайте свою рекламную кампанию<br>или посмотрите видео-инструкцию, если возникли вопросы :)
       </p>
-    </div>
+    </template>
 
-    <div style="margin-top: 16px">
+    <div class="mt-5">
       <router-link
         v-if="store.getters.GET_COMPANY_LIST.length < 3"
         :to="{path: '/company'}"
       >
         <b-button
-          variant="primary"
-          class="main-button"
-          style="margin-right: 12px; margin-top: 12px"
+          class="app-new-submit-button"
         >
-          Создать кампанию
+          Создать новую
         </b-button>
       </router-link>
+      <br class="d-block d-sm-none d-md-none d-lg-none">
       <b-button
         variant="primary"
-        :class="{'main-button': !(store.getters.GET_COMPANY_LIST.length > 0),
-                 'main-button-grey': store.getters.GET_COMPANY_LIST.length > 0 }"
-        style="margin-top: 12px"
+        class="main-button-grey ml-0 ml-sm-2 ml-lg-2 ml-md-2 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
         @click="showVideo"
       >
-        Посмотреть {{ !(store.getters.GET_COMPANY_LIST.length) > 0 ? "видео":"инструкцию" }}
+        <b-icon font-scale=".98" class="app-mid-size" icon="play-circle-fill"/>
+         Инструкция
       </b-button>
     </div>
-    <div v-if="isVideo">
-      <iframe
-        id="ytplayer"
-        type="text/html"
-        src="https://www.youtube.com/embed/EgpUx9_4ZIQ?autoplay=1&origin=https://youtu.be/EgpUx9_4ZIQ"
-        frameborder="0"
-      />
-      <div
-        id="ytcloser"
-      >
-        <b-icon
-          class="x-button"
-          icon="x"
-          @click="closeVideo"
-        />
-      </div>
-    </div>
+
+  </div>
   </div>
 </template>
 <script>
-import store from '../../store/store'
-import axios from 'axios'
-import router from '../../router/router'
+import store from '@/store/store'
+import {instance as axios} from '@/_services/index';
+import router from '@/router/router'
+
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL // TODO GLOABL APP CONST
 export default {
   name: 'MainPage',
@@ -146,7 +161,7 @@ export default {
       store.dispatch('getCompanyList')
       console.log('TO', to)
       if (to.name === 'mainPage') {
-        axios({ url: `${VUE_APP_API_URL}/api/user/0`, method: 'GET' })
+        axios.get({ url: `${VUE_APP_API_URL}/api/user/0`})
           .then(resp => {
             this.user = resp.data
           })
@@ -154,7 +169,7 @@ export default {
     }
   },
   beforeMount () {
-    axios({ url: `${VUE_APP_API_URL}/api/user/0`, method: 'GET' })
+    axios.get({ url: `${VUE_APP_API_URL}/api/user/0`})
       .then(resp => {
         this.user = resp.data
       })
@@ -163,6 +178,9 @@ export default {
     this.getAdCompanyList()
   },
   methods: {
+    openCompanyDetails(){
+
+    },
     showVideo () {
       this.isVideo = true
     },
@@ -173,7 +191,8 @@ export default {
       router.push({ path: '/company-balance/' + store.getters.GET_COMPANY_LIST[0].Id, query: { isEdit: true } })
     },
     isMoney () {
-      return this.user.Amount > 0
+      return true
+      //return this.user.Amount > 0
     },
     isFb (company) {
       return company.FbPageId.length > 0
@@ -183,12 +202,12 @@ export default {
       //     return "facebook не подключен"
       // }
       if (this.user.Amount === 0) {
-        return 'закончился рекламный бюджет'
+        return 'ожидает оплаты'
       }
       if (!company.IsStarted) {
-        return 'настраивается'
+        return 'черновик'
       }
-      return 'работает'
+      return 'в работе'
     },
     getAdCompanyList () {
       store.dispatch('getCompanyList')
@@ -196,7 +215,57 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
+  @import '@/assets/styles/vars.scss';
+
+.video-pp-wrapper {
+      background: #fff;
+    z-index: 1000;
+    position: absolute;
+    width: 100vh;
+    left: 0px;
+    padding: 10%;
+    height: 100vw;
+}
+.right-pointer {
+      justify-content: flex-end;
+      display: flex;
+      align-items: center;
+      color: #000;
+  }
+
+@media (min-width: 600px){
+  .campagin-item {
+    max-width: 50%;
+  }
+}
+
+.campagin-item {
+  background: $light;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 22px;
+ 
+ &:hover {
+   background: #EAEAEA;
+ }
+  & .date {
+    font-size: 14px;
+    line-height: 18px;
+    color: $gray;
+  }
+  & .link {
+    font-size: $baseFont;
+    line-height: $baseLH;
+  }
+
+  & .status {
+    font-size: 14px;
+    line-height: 18px;
+    color: $white;
+    border-radius: 6px;
+  }
+}
 #ytplayer{
     margin-top: 30px;
     width: 640px;
@@ -207,10 +276,17 @@ export default {
     margin-left: 620px;
     margin-top: -385px;
 }
+
+.c-date {
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 0;
+    color: $gray;
+}
 .c-div{
     cursor: pointer;
     margin-top: 40px;
-    background: #F3F3F3;
+    background: $light;
     border-radius: 20px;
     height: 112px;
     width: 100%;
@@ -219,7 +295,6 @@ export default {
 }
 .l {
   position: absolute;
-  text-align: center;
   margin-top: 46px;
   margin-left: 35px;
   height: 25%;
@@ -240,41 +315,42 @@ a {
     margin-left: 30px;
     margin-right: 20px;
     margin-top: 2px;
-    font-family: Montserrat;
     font-style: normal;
+    font-size: 14px;
     padding: 0px !important;
 }
 #white{
     background: white;
 }
 #yellow{
-    background: yellow;
+    background: $lime;
 }
 #green{
-    background: lightgreen;
+    background:#E2FF12;
 }
 .elipse{
     position: absolute;
-    width: 10px;
-    margin-top: 9px;
-    margin-left: 9px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
+    margin-top: 12px;
+    margin-left: 12px;
     border-radius: 5px;
 }
 .c-status{
     text-align: center;
-    padding-top: 13px;
-    padding-left: 10px;
-    height: 55px;
+    // padding-top: 13px;
+    // padding-left: 10px;
+    height: 32px;
     padding-bottom: 1px;
-    background: #000000;
-    border-radius: 16px;
+    background: $black;
+    border-radius: 6px;
+    display: inline-block;
 }
 .c-name{
-    font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 16px;
+    line-height: 24px;
     color: #000000;
     text-align: left;
     width: 600px;
@@ -293,16 +369,22 @@ a {
         height: 170px;
     }
     .c-name{
-        max-width: 260px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
+        max-width: 260px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        margin-top: 3px;
+        margin-bottom: 7px;
     }
     .c-status{
-       height: auto;
        padding-bottom: 4px;
+       display: inline-block;
+       padding: 0;
     }
     .c-status-text{
-        margin-left: 15px;
+        margin-left: 27px;
         margin-right: 10px;
-        margin-bottom: 10px;
+        margin-bottom: 3px;
     }
     .c-div{
         margin-top: 15px;
@@ -311,8 +393,8 @@ a {
     .l {
         position: relative;
         text-align: left;
-        margin-top: 20px;
-        margin-left: 20px;
+        margin-top: 14px;
+        margin-left: 16px;
         height: auto;
     }
     .r {
@@ -322,7 +404,7 @@ a {
         margin-right: auto;
         margin-top: auto;
         height: auto;
-        margin: 20px;
+        margin: 16px;
 
     }
 }

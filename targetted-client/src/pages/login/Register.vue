@@ -1,43 +1,43 @@
 <template>
-  <div id="content-login">
+<div id="content-wrapper">
+  <div id="content">
     <h1 class="app-header">
       Регистрация
     </h1>
 
     <b-form
-      id="form-centred"
       @submit="register"
     >
 
       <b-form-group
-        class="input-group"
         label="Номер телефона"
+         id="input-group-main"
       >
+      
         <b-form-input
           id="tel"
           v-model="form.phoneNumber"
           class="form-input"
+          :state="$v.form.phoneNumber.$dirty ? !$v.form.phoneNumber.$error : null"
           type="tel"
-          :state="validateState('phoneNumber')"
           placeholder="Введите телефон"
         />
         <b-form-invalid-feedback
-          id="tel"
           class="error-message"
         >
-          Номер телефона должен содержать как минимум 10 символов
+          Минимум 10 символов
         </b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group
-        class="input-group"
         label="Электронная почта"
+         id="input-group-main"
       >
         <b-form-input
           v-model.trim="form.email"
           class="form-input"
           placeholder="Введите почту"
-          :state="validateState('email')"
+          :state="$v.form.email.$dirty ? !$v.form.email.$error : null"
           @click="resetErr()"
         />
         <small
@@ -61,14 +61,14 @@
       </b-form-group>
 
        <b-form-group
-        class="input-group"
         label="Имя"
+         id="input-group-main"
       >
         <b-form-input
           v-model="form.name"
           class="form-input"
           placeholder="Введите имя"
-          :state="validateState('name')"
+          :state="$v.form.name.$dirty ? !$v.form.name.$error : null"
         />
         <small
           v-if="$v.form.name.$dirty && !$v.form.name.required"
@@ -79,15 +79,14 @@
       </b-form-group>
 
       <b-form-group
-        class="input-group"
         label="Пароль"
+         id="input-group-main"
       >
         <b-form-input
           id="pas"
           v-model="form.password"
           class="form-input"
           type="password"
-          :state="validateState('password')"
           placeholder="Пароль"
         />
         <b-form-invalid-feedback
@@ -98,7 +97,7 @@
         </b-form-invalid-feedback>
       </b-form-group>
       <b-form-group
-        class="input-group"
+         id="input-group-main"
         label="Введите пароль повторно"
       >
         <b-form-input
@@ -118,16 +117,17 @@
       </b-form-group>
 
       <b-form-group class="app-new-form-footer">
-
+<br class="d-none d-sm-block">
         <b-button
-          class="app-new-button-main"
+          class="app-new-submit-button"
+          :class="{'disabled-look': !$v.$anyDirty || $v.$anyError}"
           @click="register()"
         >
           Зарегистрироваться
         </b-button>
 
         <p class="app-new-info">
-          Нажимая кнопку “Зарегистрироваться” вы соглашаетесь с условиями оферты и политикой конфиденциальности.
+          Нажимая кнопку “Зарегистрироваться” вы соглашаетесь с условиями <a href="#">оферты</a> и <a href="#">политикой конфиденциальности</a>.
         </p>
 
         <p class="app-new-login-sub">
@@ -138,10 +138,11 @@
       </b-form-group>
     </b-form>
   </div>
+  </div>
 </template>
 <script>
-import router from '../../../router/router'
-import axios from 'axios'
+import router from '@/router/router'
+import {instance as axios} from '@/_services/index';
 import { validationMixin } from 'vuelidate'
 import { required, minLength, email } from 'vuelidate/lib/validators'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -193,7 +194,7 @@ export default {
     },
     validatePassword (name) {
       const { $dirty, $error } = this.$v.form[name]
-      console.log($dirty, $error, this.form.password === this.form.passwordRepeat)
+      // console.log($dirty, $error, this.form.password === this.form.passwordRepeat)
       if ($dirty ? !$error : null) {
         return this.form.password === this.form.passwordRepeat
       } else {
@@ -213,7 +214,10 @@ export default {
         phoneNumber: this.form.phoneNumber
       }
       console.log('rData', data)
-      axios({ url: `${VUE_APP_API_URL}/auth/sign-up`, data: data, method: 'POST' })
+      axios.post({ 
+          url: `${VUE_APP_API_URL}/auth/sign-up`,
+          data
+          })
         .then(resp => {
           this.emailExists = false
           console.log(resp)
@@ -230,23 +234,3 @@ export default {
   }
 }
 </script>
-<style>
-.error-message{
-  position: absolute;
-  color: red;
-  font-family: Montserrat;
-  font-style: normal;
-}
-.form-control{
-  width: 520px !important;
-}
-@media(max-width: 600px){
-  .form-control{
-    width: 265px !important;
-  }
-}
-.input-group{
-  text-align: left;
-  margin: 32px 20px 32px 20px !important;
-}
-</style>

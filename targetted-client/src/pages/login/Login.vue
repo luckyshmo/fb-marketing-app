@@ -1,22 +1,22 @@
 <template>
-  <div id="content-login">
+<div id="content-wrapper">
+  <div id="content">
+    
     <h1 class="app-header">
       Вход
     </h1>
-
-    <b-form
-      id="form-centred"
+<b-form
       @submit.prevent="login"
     >
       <b-form-group
-        class="input-group"
+        id="input-group-main"
         label="Электронная почта"
       >
         <b-form-input
           v-model="email"
           class="form-input"
+          :state="$v.email.$dirty ? !$v.email.$error : null"
           type="email"
-          :state="validateState('email')"
           placeholder="Введите почту"
           @click="resetErr()"
         />
@@ -30,7 +30,7 @@
           v-if="$v.email.$dirty && !$v.email.email"
           class="error-message"
         >
-          Некрорректный email
+          Некорректный email
         </small>
         <small
           v-if="userNotExist"
@@ -41,15 +41,15 @@
       </b-form-group>
 
       <b-form-group
-        class="input-group"
         label="Пароль"
+        id="input-group-main"
       >
         <b-form-input
           id="pas"
           v-model="password"
+          
           type="password"
           class="form-input"
-          :state="validateState('password')"
           placeholder="Введите пароль"
         />
         <b-form-invalid-feedback
@@ -61,45 +61,47 @@
       </b-form-group>
 
       <b-form-group class="app-new-form-footer">
+        <br class="d-none d-sm-block">
       <b-button
         type="submit"
-        class="app-new-button-main"
+        class="app-new-submit-button"
+        :class="{'disabled-look': !$v.$anyDirty || $v.$anyError}"
       >
         Войти
       </b-button>
 
-      <p class="app-new-login-sub">
+      <p class="app-new-login-sub mt-5">
         Или <router-link :to="{name: 'register'}">
-          зарегистрироваться
+          зарегистрируйтесь
         </router-link>
       </p>
 
       </b-form-group>
 
     </b-form>
+    
+  </div>
   </div>
 </template>
 <script>
-import router from '../../../router/router'
+
 import { validationMixin } from 'vuelidate'
 import { required, minLength, email } from 'vuelidate/lib/validators'
-import store from '../../../store/store'
+import store from '@/store/store'
+
 export default {
   mixins: [validationMixin],
   data () {
     return {
       userNotExist: false,
       email: '',
-      password: ''
+      password: '',
+      store
     }
   },
   methods: {
     resetErr () {
       this.userNotExist = false
-    },
-    validateState (name) {
-      const { $dirty, $error } = this.$v[name]
-      return $dirty ? !$error : null
     },
     login: function () {
       this.$v.$touch()
@@ -112,7 +114,7 @@ export default {
         .then(resp => {
           this.userNotExist = false
           console.log(resp)
-          router.push('main')
+          this.$router.push('main')
         })
         .catch(err => {
           console.log(err)

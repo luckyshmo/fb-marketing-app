@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import Footer from './components/Footer.vue'
-import Header from './components/Header.vue'
-import store from '../store/store'
-import router from '../router/router'
+import Footer from '@/components/Footer.vue'
+import Header from '@/components/Header.vue'
+import store from '@/store/store'
+import router from '@/router/router'
 export default {
   name: 'App',
   components: {
@@ -44,6 +44,7 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap');
 /* @import url('') format("opentype"); */
 @font-face {
     font-family: Monument Extended;
@@ -55,30 +56,30 @@ export default {
    /* -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important; */
   /* text-align: center; */
-  overflow: hidden;
-  background-color: black !important;
+  /* overflow: hidden; */
+
 }
 html {
   overflow-y: auto;
   height: 100% !important;
   width: 100% !important;
-  background-color: black !important;
 }
-
+body {
+  background: #fff;
+}
 /* Global styles */
 
-.main-button-grey{
+.btn.main-button-grey{
     background: #F3F3F3 !important;
     color: black !important;
     outline: none !important;
-    border-radius: 8px !important;
-    padding: 12px 28px !important;
+    border-radius: 6px;
+    padding: 9px 24px 11px;
     border:none !important;
-    font-family: Montserrat !important;
+    font-family: 'IBM Plex Sans', sans-serif !important;
     font-style: normal !important;
-    font-weight: 600 !important;
+    font-weight: 400 !important;
     line-height: 24px;
-    height: 48px;
 }
 
 .main-button-big{
@@ -113,7 +114,7 @@ html {
   font-size: 16px;
 }
 .main-button-grey:hover{
-  background-color: #EEEEEE !important;
+  background-color: #EAEAEA !important;
 }
 .main-button:hover {
   background-color: #5101B5 !important;
@@ -149,22 +150,20 @@ html {
 }
 
 #content {
-  padding: 80px;
-  width: 1220px;
+  padding: 66px 0;
   margin: 0% auto 0% auto !important;
   background-color: white !important;
   border-radius: 25px !important;
 }
 #content-wrapper {
-  width: 1220px;
+  max-width: 1060px;
   margin: 0% auto 0% auto !important;
-  background-color: #6C1BD2 !important;
   border-radius: 25px !important;
-  padding-bottom: 176px;
+  padding-bottom: 45px;
 }
 @media (max-width: 600px) {
   #content{
-    width: 375px;
+    width: calc(100vw - 48px);
   }
   #content-wrapper{
     width: 375px;
@@ -180,7 +179,7 @@ html {
 }
 
 #navigation-text {
-    font-family: Montserrat;
+    
     font-style: normal;
     font-weight: normal;
     font-size: 1em;
@@ -191,15 +190,16 @@ html {
 
 h1 {
   margin: 0px;
-  font-family: Montserrat !important;
-  font-style: normal !important;
-  font-weight: 900 !important;
-  line-height: 72px !important;
-  font-size: 72px !important;
+  font-weight: bold !important;
+  line-height: 56px !important;
+  font-size: 60px !important;
   color: black;
 }
+@media (max-width: 600px) {
+
+}
 #h1-centered {
-  font-family: Montserrat;
+  font-family: IBM Plex Sans;
   font-style: normal;
   font-weight: 900;
   font-size: 72px;
@@ -207,16 +207,16 @@ h1 {
   text-align: center;
 }
 p {
-  font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
   color: black;
+  margin-bottom: 20px;
 }
 
 #h2-n {
-  font-family: Montserrat;
+  
   font-style: normal;
   font-weight: 900;
   /* font-size: 2.3em; */
@@ -225,9 +225,9 @@ p {
   color: #000000;
 }
 #h2 {
-  margin-top: 60px;
-  margin-bottom: 20px;
-  font-family: Montserrat;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-family: IBM Plex Sans;
   font-style: normal;
   font-weight: 900;
   /* font-size: 2.3em; */
@@ -236,18 +236,13 @@ p {
   color: #000000;
 }
 
-#form-centred{
-    text-align: center !important;
-}
-#input-group-main{
-  margin-top: 32px;
+.md-button{
+  height: 24px;
+  width: 24px;
   color: black;
-  display: flex;
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: normal;
-  font-weight: 400;
-  font-size: 1em;
+  background: #f3f3f3;
+  border-radius: 20px;
+  cursor: pointer;
 }
 .x-button{
   height: 40px;
@@ -257,31 +252,29 @@ p {
   border-radius: 20px;
   cursor: pointer;
 }
-@media (max-width: 600px) {
-    #input-group-main{
-        display:grid;
-    }
-    #h1-centered {
-      font-size: 36px;
-      line-height: 44px;
-    }
-    h1 {
-      font-size: 36px !important;
-      line-height: 44px !important;
-    }
-    #h2 {
-      font-size: 24px;
-      line-height: 32px;
-      margin-top: 24px;
-      margin-bottom: 20px;
-    }
+
+.x-button:hover {
+  background: #EAEAEA;
 }
+
 .form-input{
-    height: 48px;
-    border-radius: 8px !important;
+    height: 44px;
+    border-radius: 6px !important;
     border: none !important;
     background-color: #F3F3F3 !important;
     color: black !important;
+}
+.form-input:focus, .form-input:hover {
+  background-color: #EAEAEA !important;
+}
+
+.form-input.width-1-2 {
+  max-width: 45%;
+}
+@media (max-width: 450px) {
+  .form-input.width-1-2 {
+    max-width: 99%;
+  }
 }
 
 ::-webkit-scrollbar {
@@ -292,15 +285,12 @@ p {
     .main-button {
       padding: 12px 10px !important;
     }
-    .main-button-grey{
-      background: #F3F3F3; color: black; margin-top: 15px
-    }
     .submit-button{
       margin-top: 75px;
       padding: 12px 10px !important;
     }
     #content{
-      padding: 40px;
+      padding: 24px 0;
     }
 }
 </style>
