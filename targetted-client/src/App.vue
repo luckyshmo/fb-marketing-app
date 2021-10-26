@@ -1,20 +1,20 @@
 <template>
   <div id="app">
-    <Header />
-    <div class="main">
+    <section class="content">
+      <Header />
       <keep-alive>
         <router-view />
       </keep-alive>
-    </div>
+    </section>
     <Footer />
   </div>
 </template>
 
 <script>
-import Footer from '@/components/Footer.vue'
-import Header from '@/components/Header.vue'
-import store from '@/store/store'
-import router from '@/router/router'
+import Footer from '@src/components/Footer.vue'
+import Header from '@src/components/Header.vue'
+import store from '@src/store/store'
+import router from '@src/router/router'
 export default {
   name: 'App',
   components: {
@@ -45,31 +45,29 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap');
-/* @import url('') format("opentype"); */
+
 @font-face {
     font-family: Monument Extended;
     font-weight: bold;
     src: url("./assets/MonumentExtended-Regular.otf") format("opentype");
 }
 
-#app {
-   /* -webkit-font-smoothing: antialiased !important;
-  -moz-osx-font-smoothing: grayscale !important; */
-  /* text-align: center; */
-  /* overflow: hidden; */
-
-}
-html {
-  overflow-y: auto;
-  height: 100% !important;
-  width: 100% !important;
-}
-body {
-  background: #fff;
-}
 /* Global styles */
+html, body, #app {
+  height: 100%;
+  width: 100%;
+}
 
-.btn.main-button-grey{
+#app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 1108px; /* visibleWidth(1060) + 2 * px(24) */
+  padding: 0 24px;
+  margin: 0 auto;
+}
+
+.btn.main-button-grey {
     background: #F3F3F3 !important;
     color: black !important;
     outline: none !important;
@@ -82,7 +80,7 @@ body {
     line-height: 24px;
 }
 
-.main-button-big{
+.main-button-big {
   color:white !important;
   outline: none !important;
   height: 56px;
@@ -90,7 +88,6 @@ body {
   border-radius: 8px !important;
   padding: 12px 28px !important;
   border:none !important;
-
   line-height: 32px;
   font-family: Montserrat !important;
   font-style: normal !important;
@@ -106,34 +103,40 @@ body {
   border-radius: 8px !important;
   padding: 12px 28px !important;
   border:none !important;
-
   line-height: 24px;
   font-family: Montserrat !important;
   font-style: normal !important;
   font-weight: 600 !important;
   font-size: 16px;
 }
-.main-button-grey:hover{
+
+.main-button-grey:hover {
   background-color: #EAEAEA !important;
 }
+
 .main-button:hover {
   background-color: #5101B5 !important;
 }
+
 .main-button-big:hover {
   background-color: #5101B5 !important;
 }
 @media (max-width: 600px) {
+    #app {
+      width: 100%;
+    }
+
     .main-button {
       height: 48px;
       font-size: 16px;
     }
 }
 
-.submit-button{
+.submit-button {
   outline: none !important;
   position: absolute !important;
-  margin-top: 138px; /* //TODO dependce on content-wrapper */
-  color:white !important;
+  margin-top: 138px; /* TODO dependce on content-wrapper */
+  color: white !important;
   background-color: #FF62B7 !important;
   border-radius: 8px !important;
   padding: 12px 28px !important;
@@ -145,59 +148,40 @@ body {
   line-height: 32px;
   font-size: 20px;
 }
-.submit-button:hover{
+
+.submit-button:hover {
   background-color:#F248A4 !important;
 }
 
-#content {
-  padding: 66px 0;
-  margin: 0% auto 0% auto !important;
-  background-color: white !important;
-  border-radius: 25px !important;
-}
-#content-wrapper {
-  max-width: 1060px;
-  margin: 0% auto 0% auto !important;
-  border-radius: 25px !important;
-  padding-bottom: 45px;
-}
-@media (max-width: 600px) {
-  #content{
-    width: calc(100vw - 48px);
-  }
-  #content-wrapper{
-    width: 375px;
-  }
-}
 #content-login {
   padding: 80px 40px 80px 40px;
-  margin: 0px 50px 0px 50px !important;
   background-color: white !important;
   border-radius: 25px !important;
   max-width:640px;
-  margin:0 auto !important;
+  margin:0 auto;
 }
 
 #navigation-text {
-    
     font-style: normal;
     font-weight: normal;
     font-size: 1em;
     max-width: 250px;
-    margin: 32px auto 0px auto;
+    margin: 32px auto 0 auto;
     color: #767676;
 }
 
 h1 {
-  margin: 0px;
+  margin: 0;
   font-weight: bold !important;
   line-height: 56px !important;
   font-size: 60px !important;
   color: black;
 }
+
 @media (max-width: 600px) {
 
 }
+
 #h1-centered {
   font-family: IBM Plex Sans;
   font-style: normal;
@@ -206,6 +190,7 @@ h1 {
   line-height: 72px;
   text-align: center;
 }
+
 p {
   font-style: normal;
   font-weight: normal;
@@ -216,7 +201,6 @@ p {
 }
 
 #h2-n {
-  
   font-style: normal;
   font-weight: 900;
   /* font-size: 2.3em; */
@@ -224,15 +208,15 @@ p {
 
   color: #000000;
 }
+
 #h2 {
-  margin-top: 0px;
-  margin-bottom: 0px;
+  margin-top: 0;
+  margin-bottom: 0;
   font-family: IBM Plex Sans;
   font-style: normal;
   font-weight: 900;
   /* font-size: 2.3em; */
   font-size: 36px;
-
   color: #000000;
 }
 
@@ -244,6 +228,7 @@ p {
   border-radius: 20px;
   cursor: pointer;
 }
+
 .x-button{
   height: 40px;
   width: 40px;
@@ -257,20 +242,26 @@ p {
   background: #EAEAEA;
 }
 
-.form-input{
+.form-input,
+.form-select {
     height: 44px;
     border-radius: 6px !important;
     border: none !important;
     background-color: #F3F3F3 !important;
     color: black !important;
 }
-.form-input:focus, .form-input:hover {
+
+.form-select:focus,
+.form-select:hover,
+.form-input:focus,
+.form-input:hover {
   background-color: #EAEAEA !important;
 }
 
 .form-input.width-1-2 {
   max-width: 45%;
 }
+
 @media (max-width: 450px) {
   .form-input.width-1-2 {
     max-width: 99%;
@@ -278,19 +269,17 @@ p {
 }
 
 ::-webkit-scrollbar {
-  width: 0px;
+  width: 0;
 }
 
 @media (max-width: 600px) {
     .main-button {
       padding: 12px 10px !important;
     }
+
     .submit-button{
       margin-top: 75px;
       padding: 12px 10px !important;
-    }
-    #content{
-      padding: 24px 0;
     }
 }
 </style>

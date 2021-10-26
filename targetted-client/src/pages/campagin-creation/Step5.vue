@@ -1,14 +1,14 @@
 <template>
    <div>
         <slot name="header"></slot>
-     
+
      <p>Выберите желаемый охват аудитории вашей рекламной кампании.</p>
-      
+
       <br class="d-none d-sm-block">
       <br class="d-none d-sm-block">
 
         <b-form>
-               
+
         <CampaginStats :data="stats"/>
 
     <b-row>
@@ -102,7 +102,7 @@
                   Некорректный email
                 </small>
            </b-form-group>
-              
+
           <b-form-group
            id="input-group-main"
                     label="Пароль">
@@ -174,95 +174,95 @@
 </template>
 
 <script>
-import store from '@/store/store'
-import CampaginStats from '@/components/CampaginStats'
+import store from '@src/store/store'
+import CampaginStats from '@src/components/CampaginStats'
 
 import { required, email, minLength, numeric, alpha } from 'vuelidate/lib/validators'
 import { validationMixin } from 'vuelidate'
 
-//todo: load from backend
+// todo: load from backend
 const stats = {
-  seen: {min: 5, max: 5000},
-  clicks: {min: 67, max: 1300},
-  costs: 5000,
+  seen: { min: 5, max: 5000 },
+  clicks: { min: 67, max: 1300 },
+  costs: 5000
 }
 
 export default {
   name: 'Step5',
-    props: ['label_cols', 'content_cols', 'company', 'isEdit'],
-    components: {
-      CampaginStats
-    },
-    mixins: [validationMixin],
-     validations: {
-      userData: {
-        email: {
-          email,
-          required
-        },
-        password: {
-          required,
-          minLength: minLength(8)
-        },
-        passwordCheck: {
-          required,
-          minLength: minLength(8)
-        },
-        name: {
-          required,
-          alpha,
-          minLength: minLength(2)
-        },
-        phone: {
-          required,
-          numeric,
-          //minLength: minLength(9)
-        }
-      }
-    },
-    data: function () {
-        return {
-          stats,
-          store, //fixme
-          isRegistered: false,
-          campaginData: {
-            budget: 100,
-            timeLength: 6
-          },
-          //todo: mv to separate component ?
-          userData: {
-            phone:'',
-            email:'',
-            name: '',
-            password: '',
-            passwordCheck:''
-          }
-        }
-      },
-
-  mounted(){
-      //todo copy from Step1
-
-      // userData
-      // campaginData
+  props: ['label_cols', 'content_cols', 'company', 'isEdit'],
+  components: {
+    CampaginStats
   },
-    methods: {
-        sendData(){
-            this.$v.userData.$touch()
-            if (this.$v.userData.$anyError) {
-              window.scrollTo(0, 100)
-              return
-            }
-            
-            this.$emit('next', this.campaginData);
-        }
+  mixins: [validationMixin],
+  validations: {
+    userData: {
+      email: {
+        email,
+        required
+      },
+      password: {
+        required,
+        minLength: minLength(8)
+      },
+      passwordCheck: {
+        required,
+        minLength: minLength(8)
+      },
+      name: {
+        required,
+        alpha,
+        minLength: minLength(2)
+      },
+      phone: {
+        required,
+        numeric
+        // minLength: minLength(9)
+      }
     }
+  },
+  data: function () {
+    return {
+      stats,
+      store, // fixme
+      isRegistered: false,
+      campaginData: {
+        budget: 100,
+        timeLength: 6
+      },
+      // todo: mv to separate component ?
+      userData: {
+        phone: '',
+        email: '',
+        name: '',
+        password: '',
+        passwordCheck: ''
+      }
+    }
+  },
+
+  mounted () {
+    // todo copy from Step1
+
+    // userData
+    // campaginData
+  },
+  methods: {
+    sendData () {
+      this.$v.userData.$touch()
+      if (this.$v.userData.$anyError) {
+        window.scrollTo(0, 100)
+        return
+      }
+
+      this.$emit('next', this.campaginData)
+    }
+  }
 }
 </script>
 
 <style lang="scss">
-  @import '@/assets/styles/vars.scss';
-  
+  @import '@src/assets/styles/vars.scss';
+
   .app-label-right {
     font-family: IBM Plex Sans;
     font-style: normal;
@@ -270,8 +270,8 @@ export default {
     font-size: $baseFont;
     line-height: $baseLH;
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: 0;
+    right: 0;
   }
   .app-new-stats {
      &-details {
@@ -313,21 +313,24 @@ export default {
   margin: 10px 0;
   width: 100%;
 }
+
 input[type=range]:focus {
   outline: none;
 }
+
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 5px;
   cursor: pointer;
   animate: 0.2s;
-  box-shadow: 0px 0px 0px $black;
+  box-shadow: 0 0 0 $black;
   background: $light;
   border-radius: 2px;
-  border: 0px solid  $black;
+  border: 0 solid  $black;
 }
+
 input[type=range]::-webkit-slider-thumb {
-  box-shadow: 0px 0px 0px $white;
+  box-shadow: 0 0 0 $white;
   border: 1px solid $light;
   height: 32px;
   width: 32px;
@@ -337,21 +340,24 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   margin-top: -13px;
 }
+
 input[type=range]:focus::-webkit-slider-runnable-track {
   background: $light;
 }
+
 input[type=range]::-moz-range-track {
   width: 100%;
   height: 5px;
   cursor: pointer;
   animate: 0.2s;
-  box-shadow: 0px 0px 0px $black;
+  box-shadow: 0 0 0 $black;
   background: $light;
   border-radius: 2px;
-  border: 0px solid $black;
+  border: 0 solid $black;
 }
+
 input[type=range]::-moz-range-thumb {
-  box-shadow: 0px 0px 0px $white;
+  box-shadow: 0 0 0 $white;
   border: 1px solid $light;
   height: 32px;
   width: 32px;
@@ -359,6 +365,7 @@ input[type=range]::-moz-range-thumb {
   background: $black;
   cursor: pointer;
 }
+
 input[type=range]::-ms-track {
   width: 100%;
   height: 5px;
@@ -368,21 +375,24 @@ input[type=range]::-ms-track {
   border-color: transparent;
   color: transparent;
 }
+
 input[type=range]::-ms-fill-lower {
   background: $light;
-  border: 0px solid $black;
+  border: 0 solid $black;
   border-radius: 4px;
-  box-shadow: 0px 0px 0px $black;
+  box-shadow: 0 0 0 $black;
 }
+
 input[type=range]::-ms-fill-upper {
   background: $light;
-  border: 0px solid $black;
+  border: 0 solid $black;
   border-radius: 4px;
-  box-shadow: 0px 0px 0px $black;
+  box-shadow: 0 0 0 $black;
 }
+
 input[type=range]::-ms-thumb {
   margin-top: 1px;
-  box-shadow: 0px 0px 0px $white;
+  box-shadow: 0 0 0 $white;
   border: 1px solid #E3E3E3;
   height: 32px;
   width: 32px;
@@ -390,9 +400,11 @@ input[type=range]::-ms-thumb {
   background: $black;
   cursor: pointer;
 }
+
 input[type=range]:focus::-ms-fill-lower {
   background: $light;
 }
+
 input[type=range]:focus::-ms-fill-upper {
   background: $light;
 }
