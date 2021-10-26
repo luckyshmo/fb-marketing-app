@@ -4,9 +4,12 @@ p, label, button, .app-header, .error-message, h1, h2, h3, h4 {
     // font-style: normal;
     // font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
 }
+
 p {
-    line-height: 172%;
+    font-size: 16px;
+    line-height: 24px;
 }
+
 .clickable {
     cursor: pointer;
 }
@@ -26,7 +29,7 @@ p {
     margin-bottom: 2px;
 }
 
-.app-modal-white { 
+.app-modal-white {
     z-index: 1000;
     width: 100vw;
     height: 100vh;
@@ -48,7 +51,7 @@ p {
 .ml-0 {
     margin-left: 0;
 }
-@media (min-width: 576px) { 
+@media (min-width: 576px) {
     .ml-lg-2 {
         margin-left: 2em;
     }
@@ -58,7 +61,7 @@ p {
  }
 
 // Medium devices (tablets, 768px and up)
-@media (min-width: 768px) { 
+@media (min-width: 768px) {
     .ml-md-2 {
         margin-left: 2em;
     }
@@ -68,7 +71,7 @@ p {
  }
 
 // Large devices (desktops, 992px and up)
-@media (min-width: 992px) { 
+@media (min-width: 992px) {
     .ml-xl-2 {
         margin-left: 2em;
     }

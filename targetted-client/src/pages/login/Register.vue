@@ -13,7 +13,7 @@
         label="Номер телефона"
          id="input-group-main"
       >
-      
+
         <b-form-input
           id="tel"
           v-model="form.phoneNumber"
@@ -109,7 +109,7 @@
           placeholder="Введите пароль"
         />
         <small
-          v-if="form.password != form.passwordRepeat"
+          v-if="form.password !== form.passwordRepeat"
           class="error-message"
         >
           Пароли не совпадают
@@ -141,8 +141,8 @@
   </div>
 </template>
 <script>
-import router from '@/router/router'
-import {instance as axios} from '@/_services/index';
+import router from '@src/router/router'
+import { instance as axios } from '@src/_services/index'
 import { validationMixin } from 'vuelidate'
 import { required, minLength, email } from 'vuelidate/lib/validators'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -214,10 +214,10 @@ export default {
         phoneNumber: this.form.phoneNumber
       }
       console.log('rData', data)
-      axios.post({ 
-          url: `${VUE_APP_API_URL}/auth/sign-up`,
-          data
-          })
+      axios.post({
+        url: `${VUE_APP_API_URL}/auth/sign-up`,
+        data
+      })
         .then(resp => {
           this.emailExists = false
           console.log(resp)

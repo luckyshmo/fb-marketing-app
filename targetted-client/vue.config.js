@@ -1,18 +1,18 @@
-const path = require("path");
+const path = require('path')
 
-const vueSrc = "./src";
+const vueSrc = './src'
 
 module.exports = {
   lintOnSave: false,
   devServer: {
     host: 'localhost',
-    proxy: 'http://localhost:8087',
+    proxy: 'http://localhost:8087'
   },
   configureWebpack: {
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, vueSrc)
-      },
+        '@src': path.resolve(__dirname, vueSrc)
+      }
     }
   }
 }

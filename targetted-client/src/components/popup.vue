@@ -76,8 +76,8 @@ export default {
     left: 0;
     top: 0;
     bottom: 0;
-    display: flex;
   }
+
   .popup {
     padding: 20px;
     align-content: center;
@@ -91,6 +91,7 @@ export default {
     background-color: white;
     border-radius: 25px;
   }
+
   @media (max-width: 600px) {
     .popup{
       width:320px;

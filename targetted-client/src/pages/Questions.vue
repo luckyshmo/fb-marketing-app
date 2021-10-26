@@ -32,8 +32,6 @@
                 </small>
       </b-form-group>
 
-      
-
       <b-form-group class="app-new-form-footer">
       <b-button
         type="submit"
@@ -53,49 +51,50 @@
 </template>
 <script>
 import { validationMixin } from 'vuelidate'
-import { required, minLength, numeric } from 'vuelidate/lib/validators'
+import { required, numeric } from 'vuelidate/lib/validators'
 
 export default {
-    name: 'Questions',
+  name: 'Questions',
   mixins: [validationMixin],
   data () {
     return {
       form: {
         phoneNumber: ''
-      },
+      }
     }
   },
-    validations: {
-      form: {
-        phoneNumber: {
-          required,
-          numeric,
-          // minLength: minLength(10)
-        },
+  validations: {
+    form: {
+      phoneNumber: {
+        required,
+        numeric
+        // minLength: minLength(10)
       }
-    },
+    }
+  },
   methods: {
     sendRequest: function () {
       this.$v.$touch()
+      // eslint-disable-next-line no-empty
       if (this.$v.$anyError) {
-        return
+
       }
-        //TODO
-    //   store.dispatch('login', { email, password })
-    //     .then(resp => {
-    //       this.userNotExist = false
-    //       console.log(resp)
-    //       router.push('main')
-    //     })
-    //     .catch(err => {
-    //       console.log(err)
-    //       if (err.response.data.message === 'sql: no rows in result set') {
-    //         this.userNotExist = true
-    //       }
-    //     }
-    //     )
+      // TODO
+      //   store.dispatch('login', { email, password })
+      //     .then(resp => {
+      //       this.userNotExist = false
+      //       console.log(resp)
+      //       router.push('main')
+      //     })
+      //     .catch(err => {
+      //       console.log(err)
+      //       if (err.response.data.message === 'sql: no rows in result set') {
+      //         this.userNotExist = true
+      //       }
+      //     }
+      //     )
     }
-  },
+  }
 }
 </script>
 <style>

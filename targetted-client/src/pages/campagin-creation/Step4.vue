@@ -3,7 +3,7 @@
         <slot name="header"></slot>
         <b-form>
         <p>
-            Привяжите страницу Facebook к targetted, чтобы настроить и запустить рекламную кампанию от имени вашего бизнеса.
+            Привяжите страницу Facebook к&nbsp;targetted, чтобы настроить и&nbsp;запустить рекламную кампанию от имени вашего бизнеса.
         </p>
 
         <b-button type="button"
@@ -17,7 +17,6 @@
                 @click="sendData">
         {{isEdit ? "Назад":"Привязать позже"}}
       </b-button>
-
 
         <b-row align-h="between" no-gutters v-if="isConnectStarted">
           <h2>Наличие бизнес-аккаунта Instagram</h2>
@@ -98,7 +97,6 @@
           </div>
         </popup>
 
-
         <div class="mt-5 mb-5" v-if="isConnectStarted">
           <h2>Возникли сложности?</h2>
           <p>Посмотрите видео-инструкцию или пропустите этот шаг и мы поможем вам привязать аккаунт позже.</p>
@@ -112,74 +110,76 @@
       </b-button>
         </div>
 
-       
     </b-form>
   </div>
 </template>
 
 <script>
-import store from '@/store/store'
-import accountService from '@/_services/account.service'
-import popup from '@/components/BigPopup.vue'
+import store from '@src/store/store'
+import accountService from '@src/_services/account.service'
+import popup from '@src/components/BigPopup.vue'
 
 export default {
   name: 'Step4',
-    props: ['label_cols', 'content_cols', 'company', 'isEdit'],
-    components: {
-      popup
-    },
-    data: function () {
-        return {
-          store, //fixme
-          isInfoPopupVisible: false,
-          isConnectStarted: false,
-        }
-      },
-    methods: {
-        startConnecting(){
-          this.isConnectStarted = true;
-        },
-        showHelpVideo(){
-
-        },
-        loginFB() {
-          accountService.login()
-        },
-        sendData(){
-            //todo
-            //вопрос, какие тут данные отправляем?
-            this.$emit('next');
-        },
-        showPopupInfo() {
-          this.isInfoPopupVisible = true
-        },
-        closeInfoPopup() {
-          this.isInfoPopupVisible = false
-        },
+  props: ['label_cols', 'content_cols', 'company', 'isEdit'],
+  components: {
+    popup
+  },
+  data: function () {
+    return {
+      store, // fixme
+      isInfoPopupVisible: false,
+      isConnectStarted: false
     }
+  },
+  methods: {
+    startConnecting () {
+      this.isConnectStarted = true
+    },
+    showHelpVideo () {
+
+    },
+    loginFB () {
+      accountService.login()
+    },
+    sendData () {
+      // todo
+      // вопрос, какие тут данные отправляем?
+      this.$emit('next')
+    },
+    showPopupInfo () {
+      this.isInfoPopupVisible = true
+    },
+    closeInfoPopup () {
+      this.isInfoPopupVisible = false
+    }
+  }
 }
 </script>
 
 <style lang="scss">
-  @import '@/assets/styles/vars.scss';
-.num-wrapper{
-    display: flex;
-    align-items: stretch;
-    margin-bottom: 16px;
-}
-.num{
-    background: $light;
-    width: 48px;
-    height: 48px;
-    border-radius: 24px;
-}
-.num-num{
-    padding-top: 11px;
-    padding-left: 19px;
-}
-.num-text{
-    margin-left: 16px;
-    max-width: 600px;
-}
+  @import '@src/assets/styles/vars.scss';
+
+  .num-wrapper{
+      display: flex;
+      align-items: stretch;
+      margin-bottom: 16px;
+  }
+  .num{
+      background: $light;
+      width: 48px;
+      height: 48px;
+      border-radius: 24px;
+  }
+
+  .num-num{
+      padding-top: 11px;
+      padding-left: 19px;
+  }
+
+  .num-text{
+      margin-left: 16px;
+      max-width: 600px;
+  }
 
 </style>

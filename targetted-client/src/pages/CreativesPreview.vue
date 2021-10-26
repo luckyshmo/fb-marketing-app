@@ -8,7 +8,6 @@
 
                 <br><br><br>...<br><br><br><br>
 
-
                 <h2>Реклама в ленте</h2>
 
                 <div class="hidden">
@@ -46,7 +45,7 @@
         <article class="instapost">
             <header class="instapost__header">
                 <a class="profile-img" href="#" target="_blank">
-                    <img src="@/assets/Ellipse64.png" alt="username" />
+                    <img src="@src/assets/Ellipse64.png" alt="username" />
                 </a>
                 <div class="profile-name">
                     <a class="user instalink" href="" target="_blank">
@@ -61,7 +60,7 @@
                 </button>
             </header>
             <section class="instapost__image">
-                <img class="img img-0 show" src="@/assets/image2.png" alt="image" />
+                <img class="img img-0 show" src="@src/assets/image2.png" alt="image" />
                 <div class="like-heart">
                     <svg>
                         <use xlink:href="#dislike" />
@@ -132,12 +131,6 @@
   </div>
 </template>
 
-<script>
-export default {
-
-}
-</script>
-
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 
@@ -191,12 +184,14 @@ article {
   bottom: 1rem;
   right: 1rem;
 }
+
 .challenge-part-of a,
 .challenge-part-of a:visited {
   color: #b5bbc3;
   -webkit-text-decoration-style: wavy;
           text-decoration-style: wavy;
 }
+
 .challenge-part-of a:hover, .challenge-part-of a:active,
 .challenge-part-of a:visited:hover,
 .challenge-part-of a:visited:active {
@@ -214,6 +209,7 @@ article .btn {
   height: 2.5rem;
   padding: 0.5rem;
 }
+
 article .btn:focus {
   outline: 1px dotted #98a1ad;
 }
@@ -251,11 +247,13 @@ article .btn svg {
         width: 90%;
     }
 }
+
 .instapost__header {
   display: flex;
   align-items: center;
   padding: 1rem;
 }
+
 .instapost__header .profile-img img {
   -o-object-fit: cover;
      object-fit: cover;
@@ -263,25 +261,31 @@ article .btn svg {
   height: 32px;
   border-radius: 50%;
 }
+
 .instapost__header .profile-name {
   display: flex;
   flex-direction: column;
   margin-left: 0.875rem;
 }
+
 .instapost__header .profile-name a {
   font-size: 0.875rem;
 }
+
 .instapost__header .profile-name a.location,
 .instapost__header .profile-name a.location:active {
   color: #5b6977;
   text-decoration: none;
 }
+
 .instapost__header .btn-more {
   margin: 0 0 0 auto;
 }
+
 .instapost__image {
   position: relative;
 }
+
 .instapost__image .img {
   -o-object-fit: cover;
      object-fit: cover;
@@ -289,9 +293,11 @@ article .btn svg {
   display: none;
   border-radius: 6px;
 }
+
 .instapost__image .img.show {
   display: block;
 }
+
 .instapost__image .like-heart {
   position: absolute;
   top: 50%;
@@ -299,82 +305,100 @@ article .btn svg {
   transform: translate(-50%, -50%);
   display: none;
 }
+
 .instapost__image .like-heart svg {
   fill: white;
   filter: drop-shadow(0 0 0.5rem #2f363d);
 }
+
 .instapost__image .like-heart.show {
   display: block;
   -webkit-animation: heartbeatAlt 0.8s linear forwards;
           animation: heartbeatAlt 0.8s linear forwards;
 }
+
 .instapost__action {
   display: flex;
   align-items: center;
   padding: 0 1rem;
 }
+
 .instapost__action .btn svg {
   fill: #2f363d;
 }
+
 .instapost__action .btn-like .like-icon {
   display: block;
 }
+
 .instapost__action .btn-like .dislike-icon {
   display: none;
   fill: #ed4956;
 }
+
 .instapost__action .btn-like.dislike .like-icon {
   display: none;
 }
+
 .instapost__action .btn-save {
   margin-left: auto;
 }
+
 .instapost__likes {
   color: #5b6977;
   font-size: 0.875rem;
   padding: 0 1rem;
   margin: 0 0 0.5rem;
 }
+
 .instapost__description {
   color: #5b6977;
   font-size: 0.875rem;
   padding: 0 1rem;
 }
+
 .instapost__comment-list, .instapost__comment-list:visited {
   color: #728393;
   font-size: 0.875rem;
   padding: 0.5rem 1rem;
   text-decoration: none;
 }
+
 .instapost__timestamp {
   color: #728393;
   text-transform: uppercase;
   font-size: 0.625rem;
   padding: 0 1rem 0.25rem;
 }
+
 .instapost__add-comment {
   display: flex;
   align-items: center;
   padding: 0.25rem 1rem 0;
   border-top: 1px solid #edeff1;
 }
+
 .instapost__add-comment .btn-smiley svg {
   fill: #2f363d;
 }
+
 .instapost__add-comment textarea {
   flex: 1;
   border: 0;
   resize: none;
 }
+
 .instapost__add-comment textarea:focus {
   outline: 0;
 }
+
 .instapost__add-comment .btn-send-comment {
   color: #0095f6;
   width: auto;
   font-size: 0.875rem;
   font-weight: bold;
 }
+
 .instapost__add-comment .btn-send-comment[disabled=disabled] {
   cursor: default;
   opacity: 0.3;

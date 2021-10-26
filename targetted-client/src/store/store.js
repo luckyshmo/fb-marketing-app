@@ -8,7 +8,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     token: localStorage.getItem('token') || '',
-    //tmp default state, for demo
+    // tmp default state, for demo
     adCompanyList: localStorage.getItem('user_company') || [{
       Id: 'test-url',
       CompanyName: 'Test url',
@@ -63,11 +63,11 @@ const store = new Vuex.Store({
     },
     logout (state) {
       state = {
-        status:'',
-        user:'',
-        email:'',
-        token:'',
-      };
+        status: '',
+        user: '',
+        email: '',
+        token: ''
+      }
     }
   },
   actions,
@@ -78,7 +78,7 @@ const store = new Vuex.Store({
           c: {
             FbPageId: '',
             CompanyName: '',
-            CompnayPurpose: '',
+            CompanyPurpose: '',
             CompanyField: '',
             BusinessAdress: '',
             Images: [],

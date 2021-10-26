@@ -1,8 +1,9 @@
-import {instance} from './index';
+import { instance } from './index'
 
 export const createCompany = (data) => {
 
 }
+
 export const updateCompany = (data) => {
 
 }

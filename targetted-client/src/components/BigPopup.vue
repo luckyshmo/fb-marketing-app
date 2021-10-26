@@ -52,6 +52,7 @@ export default {
   },
   mounted () {
     const vm = this
+
     vm.renderAction()
     document.addEventListener('click', function (item) {
       if (item.target === vm.$refs.popup_wrapper) {
@@ -79,6 +80,7 @@ export default {
     max-height: 470px;
     overflow-y: auto !important;
   }
+
   .popup-content-big:before {
     content:'';
     margin-top: 50px;
@@ -89,6 +91,7 @@ export default {
     top:0;
     background:linear-gradient(transparent 350px, white);
   }
+
   .popup-wrapper-big {
     /* //TODO */
     cursor: grab;
@@ -102,8 +105,8 @@ export default {
     left: 0;
     top: 0;
     bottom: 0;
-    display: flex;
   }
+
   .popup-big {
     padding: 20px;
     align-content: center;
@@ -118,12 +121,14 @@ export default {
     background-color: white;
     border-radius: 25px;
   }
+
   @media (max-width: 600px) {
     .popup-big{
       width:320px;
       margin-left:-160px;   /* negative half of width above */
       padding: 15px;
     }
+
     .popup-footer-big {
       padding-left: 30px;
       padding-right: 30px;

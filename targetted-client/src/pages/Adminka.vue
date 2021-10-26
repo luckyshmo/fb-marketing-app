@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <div
     id="content"
   >
@@ -130,7 +130,7 @@
               </div>
               <p>ID: <b>{{ company.Id }}</b></p>
               <p>Название: <b>{{ company.CompanyName }}</b></p>
-              <p>Цель: <b>{{ company.CompnayPurpose }}</b></p>
+              <p>Цель: <b>{{ company.CompanyPurpose }}</b></p>
               <p>Сфера деятельности: <b>{{ company.CompanyField }}</b></p>
               <p>Бизнесс адрес: <b>{{ company.BusinessAddress }}</b></p>
               <p>Статус креативов: <b>{{ company.CreativeStatus }}</b></p>
@@ -197,11 +197,11 @@
   </div>
 </template>
 <script>
-import {instance as axios} from '@/_services/index';
-import store from '@/store/store'
-import loading from '@/components/Loading.vue'
+import { instance as axios } from '@src/_services/index'
+import store from '@src/store/store'
+import loading from '@src/components/Loading.vue'
+import { APP_UI_URL } from '../constants'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
-import {APP_UI_URL} from '../constants';
 
 export default {
   components: {
@@ -244,32 +244,33 @@ export default {
       // this.isLoading = true
 
       let uArr = this.users
+
       if (this.isAmount === 'true') {
         this.currentPage = 1
         uArr = this.users.filter((user) => {
           return user.amount > 0
         })
       }
+
       if (this.userFilter.length > 1) {
         this.currentPage = 1
         uArr = uArr.filter((user) => {
-          const isFiltered = (user.name.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
+          return (user.name.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
           user.email.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
           user.phoneNumber.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
           user.id.toLowerCase().match(this.userFilter.trim().toLowerCase()) ||
           user.TimeCreated.toLowerCase().match(this.userFilter.trim().toLowerCase()))
-          return isFiltered
         })
       }
+
       if (this.companyFilter.length > 1) {
         this.currentPage = 1
         uArr = uArr.filter((user) => {
           return user.companies.filter((com) => {
-            const isF = com.Id.toLowerCase().match(this.companyFilter.trim().toLowerCase()) ||
+            return com.Id.toLowerCase().match(this.companyFilter.trim().toLowerCase()) ||
             com.CompanyName.toLowerCase().match(this.companyFilter.trim().toLowerCase()) ||
             com.PostDescription.toLowerCase().match(this.companyFilter.trim().toLowerCase())
-            return isF
-          }).length > 0
+          })?.length > 0
         })
       }
 
@@ -284,7 +285,7 @@ export default {
       return `https://facebook.com/${id}`
     },
     changeBalance (id, amount) {
-      axios.post({ url: `${VUE_APP_API_URL}/api/user/${id}/update-balance/${amount}`})
+      axios.post({ url: `${VUE_APP_API_URL}/api/user/${id}/update-balance/${amount}` })
         .then(resp => {
           this.$alert(resp.statusText)
         })
@@ -293,7 +294,7 @@ export default {
         })
     },
     startCompany (id) {
-      axios.post({ url: `${VUE_APP_API_URL}/api/company/start/${id}`})
+      axios.post({ url: `${VUE_APP_API_URL}/api/company/start/${id}` })
         .then(resp => {
           this.$alert(resp.statusText)
         })
@@ -302,7 +303,7 @@ export default {
         })
     },
     stopCompany (id) {
-      axios.post({ url: `${VUE_APP_API_URL}/api/company/stop/${id}`})
+      axios.post({ url: `${VUE_APP_API_URL}/api/company/stop/${id}` })
         .then(resp => {
           this.$alert(resp.statusText)
         })
@@ -317,7 +318,7 @@ export default {
       return this.imageNames.filter(image => image.id === id && this.isStoriesImage(image.name) === isStories)
     },
     getPendingPages () {
-      axios.get({ url: `${VUE_APP_API_URL}/api/facebook/pending`})
+      axios.get({ url: `${VUE_APP_API_URL}/api/facebook/pending` })
         .then(resp => {
           this.pendingPages = resp.data
         })
@@ -327,7 +328,7 @@ export default {
         })
     },
     checkIfPageIsOwned (id) {
-      axios.get({ url: `${VUE_APP_API_URL}/api/facebook/owned/${id}`})
+      axios.get({ url: `${VUE_APP_API_URL}/api/facebook/owned/${id}` })
         .then(resp => {
           console.log(resp)
           this.$alert('Кампания добавлена в БМ')
@@ -338,7 +339,7 @@ export default {
         })
     },
     makeClaimRequest () {
-      axios.post({ url: `${VUE_APP_API_URL}/api/facebook/claim/${this.fbIDforClaim}`})
+      axios.post({ url: `${VUE_APP_API_URL}/api/facebook/claim/${this.fbIDforClaim}` })
         .then(resp => {
           console.log(resp)
         })
@@ -347,7 +348,7 @@ export default {
         })
     },
     removePageFromPendingList (id) {
-      const url = `${VUE_APP_API_URL}/api/facebook/pending/${id}`;
+      const url = `${VUE_APP_API_URL}/api/facebook/pending/${id}`
       axios.delete({ url })
         .then(resp => {
           this.pendingPages = this.pendingPages.filter(ID => ID !== id)
@@ -359,7 +360,7 @@ export default {
         })
     },
     getUsers () {
-      const url = `${VUE_APP_API_URL}/api/user/`;
+      const url = `${VUE_APP_API_URL}/api/user/`
       axios.get({ url })
         .then(resp => {
           this.users = resp.data
@@ -372,7 +373,8 @@ export default {
         })
     },
     getAddCompanies (id, i) { // вообще во VUE 3 должно работать...
-    const url = `${VUE_APP_API_URL}/api/user/${id}/company/`;
+      const url = `${VUE_APP_API_URL}/api/user/${id}/company/`
+
       axios.get({ url })
         .then(resp => {
           this.users[i].companies = []
@@ -391,17 +393,18 @@ export default {
         })
     },
     getCompanyImagesNames (cID, uID) {
-      axios.get({ url: `${VUE_APP_API_URL}/api/user/${uID}/company/${cID}/images/`})
-        .then(resp => {
-          if (resp.data != null) {
-            for (let i = 0; i < resp.data.length; i++) {
-              this.imageNames.push({
-                id: cID,
-                name: resp.data[i]
-              })
-            }
+      axios.get({
+        url: `${VUE_APP_API_URL}/api/user/${uID}/company/${cID}/images/`
+      }).then(resp => {
+        if (resp.data != null) {
+          for (let i = 0; i < resp.data.length; i++) {
+            this.imageNames.push({
+              id: cID,
+              name: resp.data[i]
+            })
           }
-        })
+        }
+      })
     },
     getImageByName (name, uID, cID) {
       return `${APP_UI_URL}/images/${uID}/${cID}${name}`
@@ -416,6 +419,7 @@ export default {
     padding: 20px;
     margin-bottom: 30px;
 }
+
 .swal2-styled.swal2-confirm {
     background-color: #6C1BD2 !important;
 }
