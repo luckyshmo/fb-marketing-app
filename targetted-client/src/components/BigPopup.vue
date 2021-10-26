@@ -4,7 +4,7 @@
     class="popup-wrapper-big"
   >
     <div class="popup-big">
-      <div
+      <!-- <div
         style="position: absolute;
       margin-left: 740px;
       margin-top: -5px;"
@@ -14,7 +14,7 @@
           icon="x"
           @click="closePopup"
         />
-      </div>
+      </div> -->
       <div
         style="position: absolute;
       margin-left: 370px;

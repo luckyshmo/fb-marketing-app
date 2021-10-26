@@ -3,13 +3,14 @@
     ref="popup_wrapper"
     class="popup_wrapper"
   >
+   <b-icon
+          class="x-button"
+          icon="x"
+          @click="closePopup"
+        />
     <div class="popup">
-      <div
-        style="position: absolute;
-      margin-left: 570px;
-      margin-top: -5px;"
-      >
-        <b-icon
+      <div style="position: fixed;right: 20px;top: 35px;">
+          <b-icon
           class="x-button"
           icon="x"
           @click="closePopup"
@@ -67,7 +68,7 @@ export default {
     cursor: grab;
     position: fixed;
     z-index: 1;
-    background: rgba(0, 0, 0, 0.9);
+    background: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,7 +81,6 @@ export default {
   .popup {
     padding: 20px;
     align-content: center;
-    text-align: center;
     position:absolute;
     top:50%;
     left:50%;
@@ -95,7 +95,7 @@ export default {
     .popup{
       width:320px;
       margin-left:-160px;   /* negative half of width above */
-      padding: 15px;
+      padding: 0;
     }
     .popup-footer {
       padding-left: 30px;

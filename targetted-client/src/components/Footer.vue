@@ -1,40 +1,44 @@
 <template>
-  <div>
     <div class="footer">
-      <div id="footer-t">
-        © targetted.ru, 2020–2021
+      <div class="footer-t">
+        © targetted.ru, 2020–2021. <a href="#">Оферта</a>.
       </div>
     </div>
-  </div>
 </template>
 <script>
 export default {
 
 }
 </script>
-<style>
-#footer-t{
+<style lang="scss">
+  @import '@/assets/styles/vars.scss';
+
+.footer-t{
     position:relative;
     bottom: -38px;
     margin: 0 auto;
+    text-align: left;
+
+    max-width: 1060px;
 }
-#footer-of{
-    margin: 0 auto;
-    margin-top: -80px;
-    width: 1220px;
-    color: #767676;
+@media (max-width: 600px) {
+  .footer-t{
+    margin-left: 24px;
+  }
+}
+.footer-t a {
+  color: $gray !important;
+  text-decoration: underline !important;
 }
 .footer {
     height: 100px;
-    font-family: Montserrat;
+
     font-style: normal;
     font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 14px;
+    line-height: 18px;
     /* identical to box height, or 150% */
-
     text-align: center;
-
-    color: #767676;
+    color: $gray;
 }
 </style>

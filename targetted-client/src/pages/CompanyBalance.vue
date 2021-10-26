@@ -7,19 +7,24 @@
           id="navigation-text"
           style="margin:0;"
         >
-          ← К списку кампаний
+          ← Назад
         </p>
       </router-link>
+         
+    <h1>Реклама от 9 сентября</h1>
+
       <div
         v-if="getWidthPx() > 600"
         id="company-status-wrapper"
       >
-        <h1
+
+      
+        <!-- <h1
           id="h1"
           style="max-width: 700px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"
         >
-          {{ company.CompanyName }}
-        </h1>
+          Реклама от 9 сентября
+        </h1> -->
         <div
           id="c-status"
           class="c-status"
@@ -44,6 +49,8 @@
           </p>
         </div>
       </div>
+
+
       <div v-if="!(getWidthPx() > 600)">
         <h1
           id="h1"
@@ -76,11 +83,21 @@
         </div>
       </div>
 
-      <h2 id="h2">
-        Общий баланс
-      </h2>
+  <br>
 
-      <b-form-group
+   <section class="app-new-stats">
+            <div class="app-new-stats-type">instagram.com/targetted</div>
+            <div class="app-new-stats-details">Аккаунт в Instagram или Facebook</div>
+            
+            <div class="app-new-stats-type">Заявки в директ</div>
+            <div class="app-new-stats-details">Цель рекламной кампании</div>
+            
+            <div class="app-new-stats-type">1 498 ₽ за 7 дней</div>
+            <div class="app-new-stats-details">Общие затраты</div>
+      </section>
+
+
+      <!-- <b-form-group
         id="input-group-main"
         label="Всего на счету"
         :label-cols="label_cols"
@@ -209,8 +226,8 @@
             Минимально один день
           </b-form-invalid-feedback>
         </b-form-group>
-      </b-form>
-      <div>
+      </b-form> -->
+      <!-- <div>
         <h2 id="h2">
           Настройки кампании
         </h2>
@@ -224,25 +241,25 @@
             К настройкам кампании
           </b-button>
         </router-link>
-      </div>
-      <b-button
+      </div> -->
+      <!-- <b-button
         class="submit-button"
         type="submit"
         @click="updateCompany()"
       >
         {{ isEdit ? "Обновить":"Запустить" }} кампанию
-      </b-button>
+      </b-button> -->
     </div>
   </div>
 </template>
 <script>
-import store from '../../../store/store'
-import router from '../../../router/router'
-import axios from 'axios'
-import popup from '../popup.vue'
+import store from '@/store/store'
+import router from '@/router/router'
+import {instance as axios} from '@/_services/index';
+import popup from '@/components/popup.vue'
 import { validationMixin } from 'vuelidate'
 import { required, minValue } from 'vuelidate/lib/validators'
-import loading from '../Loading.vue'
+import loading from '@/components/Loading.vue'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   components: {
@@ -400,7 +417,7 @@ export default {
       if (!company.IsStarted) {
         return 'настраивается'
       }
-      return 'работает'
+      return 'в работе'
     },
     isFb (company) {
       return company.FbPageId.length > 0
@@ -469,15 +486,11 @@ export default {
 }
 </script>
 <style>
-#c-status{
-    margin: 12px;
-}
 #company-status-wrapper{
     display: flex;
     align-items: stretch;
 }
 #balance{
-    font-family: Montserrat;
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
