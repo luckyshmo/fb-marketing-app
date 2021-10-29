@@ -15,63 +15,68 @@
         </b-col>
       </b-row>
       <b-row align-h="between">
-        <b-col cols="auto">
-          <Step1 :label_cols="label_cols"
-                 :content_cols="content_cols"
-                 :isEdit="isEdit"
-                 @logout="logout"
-                 v-if="currentStep ===  1"
-                 @next="saveAndNext">
+        <b-col>
+          <Step1
+            :label_cols="label_cols"
+            :content_cols="content_cols"
+            :isEdit="isEdit"
+            @logout="logout"
+            v-if="currentStep ===  1"
+            @next="saveAndNext">
             <template v-slot:header>
               <h1>О бизнесе</h1>
             </template>
           </Step1>
 
-          <Step2 :label_cols="label_cols"
-                 :content_cols="content_cols"
-                 :isEdit="isEdit"
-                 v-if="currentStep ===  2"
-                 :company="company"
-                 @next="saveAndNext">
+          <Step2
+            :label_cols="label_cols"
+            :content_cols="content_cols"
+            :isEdit="isEdit"
+            :company="company"
+            v-if="currentStep ===  2"
+            @next="saveAndNext">
             <template v-slot:header>
               <h1>Изображения </h1>
             </template>
           </Step2>
 
-          <Step3 :label_cols="label_cols"
-                 :content_cols="content_cols"
-                 :isEdit="isEdit"
-                 v-if="currentStep ===  3"
-                 :company="company"
-                 @next="saveAndNext">
+          <Step3
+            :label_cols="label_cols"
+            :content_cols="content_cols"
+            :isEdit="isEdit"
+            :company="company"
+            v-if="currentStep ===  3"
+            @next="saveAndNext">
             <template v-slot:header>
               <h1>Аудитория</h1>
             </template>
           </Step3>
-          <!--
-                        <Step4 :label_cols="label_cols"
-                                :content_cols="content_cols"
-                                :isEdit="isEdit"
-                                v-if="currentStep ===  4"
-                                :company="company"
-                                @next="saveAndNext">
-                                <template v-slot:header>
-                                  <h1>Привязка страницы</h1>
-                                </template>
-                        </Step4> -->
 
-          <Step5 :label_cols="label_cols"
-                 :content_cols="content_cols"
-                 :isEdit="isEdit"
-                 v-if="currentStep ===  4"
-                 :company="company"
-                 @next="saveAndNext">
+          <Step4
+            :label_cols="label_cols"
+            :content_cols="content_cols"
+            :isEdit="isEdit"
+            :company="company"
+            v-if="currentStep ===  4"
+            @next="saveAndNext">
+            <template v-slot:header>
+              <h1>Привязка страницы</h1>
+            </template>
+          </Step4>
+
+          <Step5
+            :label_cols="label_cols"
+            :content_cols="content_cols"
+            :isEdit="isEdit"
+            :company="company"
+            v-if="currentStep ===  4"
+            @next="saveAndNext">
             <template v-slot:header>
               <h1>Охват рекламы</h1>
             </template>
           </Step5>
         </b-col>
-        <b-col cols="auto" class="steps-process">
+        <b-col class="steps-process">
           <aside>
             <h2>
               Заполнено {{displayNumber}}%
@@ -83,9 +88,9 @@
               <li :class="{active:(currentStep>=2)}">
                 Изображения
               </li>
-              <!-- <li :class="{active:(currentStep>=3)}">
+              <li :class="{active:(currentStep>=3)}">
                 Привязка аккаунта
-              </li> -->
+              </li>
               <li :class="{active:(currentStep>=3)}">
                 Охват рекламы
               </li>
@@ -112,7 +117,7 @@ import loading from '@src/components/Loading.vue'
 import Step1 from './campagin-creation/Step1.vue'
 import Step2 from './campagin-creation/Step2.vue'
 import Step3 from './campagin-creation/Step3.vue'
-// import Step4 from './campagin-creation/Step4.vue'
+import Step4 from './campagin-creation/Step4.vue'
 import Step5 from './campagin-creation/Step5.vue'
 
 const companyDefault = {
@@ -142,7 +147,7 @@ export default {
     Step1,
     Step2,
     Step3,
-    // Step4,
+    Step4,
     Step5
   },
   data () {
@@ -487,18 +492,13 @@ export default {
       margin-right: 3px;
   }
 
-  .steps-process {
-    display: block;
-    margin-right: 119px;
-  }
-
   @media (max-width: 790px) {
     #image-block {
       max-width: 350px;
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1008px) {
     .steps-process {
       display: none;
     }

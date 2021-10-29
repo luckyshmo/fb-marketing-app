@@ -14,6 +14,11 @@ h2 {
     font-weight: bold;
 }
 
+.step {
+    width: 580px;
+    margin-right: 61px;
+}
+
 .app-new-button-main {
     font-family: 'IBM Plex Sans', sans-serif !important;
     flex-direction: row;
@@ -67,8 +72,8 @@ textarea.form-input {
     padding-left: 16px !important;
 }
 
-.form-control{
-    width: 640px !important;
+.form-control {
+    width: 580px;
 
     &.is-invalid {
         background-color: #FFE9E9 !important;
@@ -77,11 +82,6 @@ textarea.form-input {
 
     &.is-valid {
         background-image:none;
-    }
-}
-@media(max-width: 600px){
-    .form-control{
-        width: 100% !important;
     }
 }
 
@@ -105,13 +105,6 @@ textarea.form-input {
     &.disabled-look {
         background: #F0FF87;
         color: #777;
-    }
-}
-@media (min-width: 600px) {
-    .app-new-submit-button,
-    .btn.main-button-grey {
-        padding: 9px 32px 11px;
-        height: 48px;
     }
 }
 
@@ -236,6 +229,12 @@ textarea.form-input {
         margin-left: 26px;
         min-width: 270px;
         display: inline-block;
+    }
+}
+
+@media(max-width: 580px){
+    .step {
+        width: 100%;
     }
 }
 
