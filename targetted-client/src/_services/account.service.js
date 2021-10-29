@@ -1,6 +1,6 @@
 // import { BehaviorSubject } from 'rxjs';
 
-import store from '@/store/store'
+import store from '@src/store/store'
 
 // const accountSubject = new BehaviorSubject(null);
 

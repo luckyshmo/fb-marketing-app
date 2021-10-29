@@ -1,15 +1,14 @@
 import Router from 'vue-router'
 import Vue from 'vue'
-import mainPage from '@/pages/Main.vue'
-import login from '@/pages/login/Login.vue'
-import questions from '@/pages/Questions.vue'
-import register from '@/pages/login/Register.vue'
-import createCompany from '@/pages/CCnew.vue'
-import imagesPreview from '@/pages/CreativesPreview.vue'
-import paymentPage from '@/pages/Payment.vue'
-import store from '../store/store'
-import CompanyBalance from '@/pages/CompanyBalance.vue'
-import adminka from '@/pages/Adminka.vue'
+import mainPage from '@src/pages/Main.vue'
+import login from '@src/pages/login/Login.vue'
+import questions from '@src/pages/Questions.vue'
+import register from '@src/pages/login/Register.vue'
+import createCompany from '@src/pages/CCnew.vue'
+import imagesPreview from '@src/pages/CreativesPreview.vue'
+import paymentPage from '@src/pages/Payment.vue'
+import CompanyBalance from '@src/pages/CompanyBalance.vue'
+import adminka from '@src/pages/Adminka.vue'
 
 Vue.use(Router)
 
@@ -105,7 +104,6 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  
   // if (to.matched.some(record => record.meta.requiresAuth)) {
   //   // this route requires auth, check if logged in
   //   // if not, redirect to login page.

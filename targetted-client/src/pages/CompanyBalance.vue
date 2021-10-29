@@ -10,7 +10,7 @@
           ← Назад
         </p>
       </router-link>
-         
+
     <h1>Реклама от 9 сентября</h1>
 
       <div
@@ -18,7 +18,6 @@
         id="company-status-wrapper"
       >
 
-      
         <!-- <h1
           id="h1"
           style="max-width: 700px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"
@@ -49,7 +48,6 @@
           </p>
         </div>
       </div>
-
 
       <div v-if="!(getWidthPx() > 600)">
         <h1
@@ -88,14 +86,13 @@
    <section class="app-new-stats">
             <div class="app-new-stats-type">instagram.com/targetted</div>
             <div class="app-new-stats-details">Аккаунт в Instagram или Facebook</div>
-            
+
             <div class="app-new-stats-type">Заявки в директ</div>
             <div class="app-new-stats-details">Цель рекламной кампании</div>
-            
+
             <div class="app-new-stats-type">1 498 ₽ за 7 дней</div>
             <div class="app-new-stats-details">Общие затраты</div>
       </section>
-
 
       <!-- <b-form-group
         id="input-group-main"
@@ -253,17 +250,15 @@
   </div>
 </template>
 <script>
-import store from '@/store/store'
-import router from '@/router/router'
-import {instance as axios} from '@/_services/index';
-import popup from '@/components/popup.vue'
+import store from '@src/store/store'
+import router from '@src/router/router'
+import { instance as axios } from '@src/_services/index'
 import { validationMixin } from 'vuelidate'
 import { required, minValue } from 'vuelidate/lib/validators'
-import loading from '@/components/Loading.vue'
+import loading from '@src/components/Loading.vue'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   components: {
-    popup,
     loading
   },
   mixins: [validationMixin],
@@ -297,7 +292,7 @@ export default {
       company: {
         FbPageId: '',
         CompanyName: '',
-        CompnayPurpose: '',
+        CompanyPurpose: '',
         CompanyField: '',
         BusinessAdress: '',
         Images: [],
@@ -340,14 +335,13 @@ export default {
   },
   methods: {
     getWidthPx () {
-      const width = Math.max(
+      return Math.max(
         document.body.scrollWidth,
         document.documentElement.scrollWidth,
         document.body.offsetWidth,
         document.documentElement.offsetWidth,
         document.documentElement.clientWidth
       )
-      return width
     },
     validateState (name) {
       const { $dirty, $error } = this.$v.company[name]
@@ -365,11 +359,20 @@ export default {
       const data = `{
                 "amount": "${this.paymentAmount}.00"
             }`
-      axios({ url: `${VUE_APP_API_URL}/api/user/0/payment/token`, data: data, method: 'POST' })
+      axios({
+        url: `${VUE_APP_API_URL}/api/user/0/payment/token`,
+        data: data,
+        method: 'POST'
+      })
         .then(resp => {
           console.log(resp)
           this.paymentID = resp.data.id
-          axios({ url: `${VUE_APP_API_URL}/api/user/0/payment/status/${this.paymentID}`, data: data, method: 'POST' })
+
+          axios({
+            url: `${VUE_APP_API_URL}/api/user/0/payment/status/${this.paymentID}`,
+            data: data,
+            method: 'POST'
+          })
             .then(resp => {
               console.log('status resp: ', resp.data)
               if (resp.data.status === 'succeeded') {
@@ -455,7 +458,7 @@ export default {
         companyData.append('Id', this.company.Id)
       }
       companyData.append('CompanyName', this.company.CompanyName)
-      companyData.append('CompnayPurpose', this.company.CompnayPurpose)
+      companyData.append('CompanyPurpose', this.company.CompanyPurpose)
       companyData.append('CompanyField', this.company.CompanyField)
       companyData.append('BusinessAddress', this.company.BusinessAddress)
       companyData.append('ImagesDescription', this.company.ImagesDescription)
@@ -501,24 +504,28 @@ export default {
     position: absolute;
     text-align: center;
 }
+
 .right {
   position: absolute;
-  right: 0px;
-  top: 0px;
+  right: 0;
+  top: 0;
   margin-top: 1%;
   margin-right: 30px;
 }
+
 @media (max-width: 600px) {
-    .left{
-         text-align: left;
-        position:relative;
-    }
-    .right{
-        position:relative;
-    }
-    .company-status{
-        height: auto;
-        position:relative;
-    }
+  .left{
+       text-align: left;
+      position:relative;
+  }
+
+  .right{
+      position:relative;
+  }
+
+  .company-status{
+      height: auto;
+      position:relative;
+  }
 }
 </style>

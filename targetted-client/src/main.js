@@ -13,7 +13,7 @@ import Vuelidate from 'vuelidate'
 import VueGtag from 'vue-gtag'
 import VueSimpleAlert from 'vue-simple-alert'
 
-import '@/assets/styles/forms.scss'
+import '@src/assets/styles/forms.scss'
 
 import initFacebookSdk from '../src/_helpers/init-facebook-sdk'
 
@@ -26,7 +26,7 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.config.productionTip = false
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === 'production'
 
 // this.$http для использования axios
 Vue.prototype.$http = Axios

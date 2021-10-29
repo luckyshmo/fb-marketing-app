@@ -15,7 +15,7 @@
                             @click="sendData">
                     {{isEdit ? "Назад":"Продолжить"}}
                 </b-button>
-         
+
                     <b-button
                     type="button"
                        class="main-button-grey ml-0 ml-sm-1 ml-lg-1 ml-md-1 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
@@ -23,7 +23,7 @@
                     v-if="!showAdvancedClicked">Уточнить настройки</b-button>
                 </b-col>
             </b-row>
-      
+
       <br>
 
       <template v-if="showAdvanced">
@@ -31,7 +31,7 @@
           <h3> Уточнение аудитории</h3>
 
           <!-- <p>
-              Укажите характеристики вашей аудитории, наши алгоритмы будут учитывать их при настройке рекламной кампании. 
+              Укажите характеристики вашей аудитории, наши алгоритмы будут учитывать их при настройке рекламной кампании.
           </p> -->
 
            <b-form-group
@@ -64,7 +64,7 @@
               v-if="$v.companyData.auditory.age.from.$dirty && !$v.companyData.auditory.age.from.required"
               class="error-message"
             >
-              Пустое поле 
+              Пустое поле
             </small>
                       <small
                   v-if="$v.companyData.auditory.age.from.$dirty && !$v.companyData.auditory.age.from.numeric"
@@ -73,7 +73,7 @@
                   Только цифры
                 </small>
                     </b-col>
-            
+
                     <b-col cols="6" sm="5" md="6" lg="3" xl="3">
                         <b-form-input
                             class="form-input app-new-form-input-small"
@@ -84,7 +84,7 @@
               v-if="$v.companyData.auditory.age.to.$dirty && !$v.companyData.auditory.age.to.required"
               class="error-message"
             >
-              Пустое поле 
+              Пустое поле
             </small>
                   <small
                   v-if="$v.companyData.auditory.age.to.$dirty && !$v.companyData.auditory.age.to.numeric"
@@ -95,7 +95,7 @@
                     </b-col>
                 </b-row>
           </b-form-group>
-           
+
            <b-form-group
                     label="Местоположение"
                      id="input-group-main">
@@ -109,10 +109,10 @@
               v-if="$v.companyData.auditory.location.$dirty && !$v.companyData.auditory.location.required"
               class="error-message"
             >
-              Пустое поле 
+              Пустое поле
             </small>
            </b-form-group>
-           
+
            <b-form-group
                     id="input-group-main"
                     label="Интересы"
@@ -132,7 +132,7 @@
               v-if="$v.companyData.auditory.interests.$dirty && !$v.companyData.auditory.interests.required"
               class="error-message"
             >
-              Пустое поле 
+              Пустое поле
             </small>
            </b-form-group>
 
@@ -142,7 +142,7 @@
                         class="app-new-submit-button"
                         :class="{'disabled-look': !$v.$anyDirty || $v.$anyError}"
                         @click="sendData">
-                {{isEdit ? "Назад":"Продолжить"}}
+                {{isEdit ? "Назад" : "Продолжить"}}
             </b-button>
  </b-col>
                 <b-col cols="10" sm="8" md="6" lg="6" xl="6" >
@@ -155,94 +155,94 @@
                     </b-col>
           </b-row>
       </template>
-      
+
     </b-form>
   </div>
 </template>
 
 <script>
-import store from '@/store/store'
+import store from '@src/store/store'
 import { validationMixin } from 'vuelidate'
 import { required, minValue, maxValue, numeric } from 'vuelidate/lib/validators'
 
 export default {
   name: 'Step3',
-    props: ['label_cols', 'content_cols', 'company', 'isEdit'],
-    mixins: [validationMixin],
-    validations: {
-         companyData: {
-              auditory: {
-                  gender: {
-                      required
-                  },
-                  location: {
-                      required
-                  },
-                  interests: {
-                      required
-                  },
-                  age: {
-                      from: {
-                          required,
-                          numeric,
-                          minValue: minValue(0)
-                      },
-                      to: {
-                          required,
-                          numeric,
-                          maxValue: maxValue(99)
-                      }
-                  }
-              }
+  props: ['label_cols', 'content_cols', 'company', 'isEdit'],
+  mixins: [validationMixin],
+  validations: {
+    companyData: {
+      auditory: {
+        gender: {
+          required
+        },
+        location: {
+          required
+        },
+        interests: {
+          required
+        },
+        age: {
+          from: {
+            required,
+            numeric,
+            minValue: minValue(0)
           },
-    },
-    data: function () {
-        return {
-          store, //fixme
-          showAdvanced: false,
-          noValidate: false,
-          showAdvancedClicked: false,
-          companyData: {
-              auditory: {
-                  gender: 'any',
-                  location: '',
-                  interests: '',
-                  age: {
-                      from: '',
-                      to: ''
-                  }
-              }
-          },
-          auditory: {
-              gender: [
-                    { text: 'Любой', value: 'any' },
-                    { text: 'Мужской', value: 'male' },
-                    { text: 'Женский', value: 'female' }
-              ]
+          to: {
+            required,
+            numeric,
+            maxValue: maxValue(99)
+          }
+        }
+      }
+    }
+  },
+  data: function () {
+    return {
+      store, // fixme
+      showAdvanced: false,
+      noValidate: false,
+      showAdvancedClicked: false,
+      companyData: {
+        auditory: {
+          gender: 'any',
+          location: '',
+          interests: '',
+          age: {
+            from: '',
+            to: ''
           }
         }
       },
-    mounted(){
-      //todo copy from Step1
-
-      // auditory
-    },
-    methods: {
-        sendDataNoValidate(){
-            this.noValidate = true;
-            this.sendData();
-        },
-        sendData(){
-            if(this.showAdvancedClicked && !this.noValidate) {
-                this.$v.companyData.auditory.$touch()
-                if (this.$v.companyData.auditory.$anyError) {
-                    window.scrollTo(0, 100)
-                    return
-                }
-            }
-
-            this.$emit('next', this.companyData);
-        }
+      auditory: {
+        gender: [
+          { text: 'Любой', value: 'any' },
+          { text: 'Мужской', value: 'male' },
+          { text: 'Женский', value: 'female' }
+        ]
+      }
     }
+  },
+  mounted () {
+    // todo copy from Step1
+
+    // auditory
+  },
+  methods: {
+    sendDataNoValidate () {
+      this.noValidate = true
+      this.sendData()
+    },
+    sendData () {
+      if (this.showAdvancedClicked && !this.noValidate) {
+        this.$v.companyData.auditory.$touch()
+        if (this.$v.companyData.auditory.$anyError) {
+          window.scrollTo(0, 100)
+          return
+        }
+      }
+
+      this.$emit('next', this.companyData)
+    }
+  }
 }
 </script>

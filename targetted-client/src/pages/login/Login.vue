@@ -1,7 +1,7 @@
 <template>
 <div id="content-wrapper">
   <div id="content">
-    
+
     <h1 class="app-header">
       Вход
     </h1>
@@ -47,7 +47,7 @@
         <b-form-input
           id="pas"
           v-model="password"
-          
+
           type="password"
           class="form-input"
           placeholder="Введите пароль"
@@ -79,7 +79,7 @@
       </b-form-group>
 
     </b-form>
-    
+
   </div>
   </div>
 </template>
@@ -87,7 +87,7 @@
 
 import { validationMixin } from 'vuelidate'
 import { required, minLength, email } from 'vuelidate/lib/validators'
-import store from '@/store/store'
+import store from '@src/store/store'
 
 export default {
   mixins: [validationMixin],
