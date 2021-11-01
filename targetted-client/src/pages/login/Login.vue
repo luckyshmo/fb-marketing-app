@@ -5,6 +5,10 @@
     <h1 class="app-header">
       Вход
     </h1>
+    <b-button   class="app-new-submit-button less-padding"
+                  @click="loginFB">
+                Есть аккаунт
+              </b-button>
 <b-form
       @submit.prevent="login"
     >
@@ -88,6 +92,7 @@
 import { validationMixin } from 'vuelidate'
 import { required, minLength, email } from 'vuelidate/lib/validators'
 import store from '@src/store/store'
+import accountService from '@src/_services/account.service'
 
 export default {
   mixins: [validationMixin],
@@ -100,6 +105,9 @@ export default {
     }
   },
   methods: {
+    loginFB () {
+      accountService.login()
+    },
     resetErr () {
       this.userNotExist = false
     },
