@@ -17,6 +17,8 @@ const span = 5 * time.Minute
 
 const permittedTasks = "['MANAGE', 'CREATE_CONTENT', 'MODERATE', 'ADVERTISE', 'ANALYZE']"
 
+// TODO sync.errorGroup for multiple req to fb api
+
 type Service interface {
 	PageClaim(ID string) (string, error)
 	GetOwnedPages() ([]FacebookPage, error)
