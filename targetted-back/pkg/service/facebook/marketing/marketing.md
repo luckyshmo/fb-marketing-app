@@ -3,6 +3,10 @@
 # [Error codes](https://developers.facebook.com/docs/marketing-api/error-reference)
 
 # Ad company
+
+https://docs.google.com/spreadsheets/d/1n1fFio1g7-vVe47GcBQxMvaZNIXGNi2EiyD9Zo-JhsU/edit#gid=393090050 - возможный пресет
+
+Исходя из данных objectives будем выбирать один  из пресетов рекламы
 ### Ad Company possible objectives:
 ```
 const (
@@ -21,6 +25,21 @@ const (
 	video_views           = "VIDEO_VIEWS"
 	product_catalog_sales = "PRODUCT_CATALOG_SALES"
 )
+const APP_INSTALLS = 'APP_INSTALLS';
+  const BRAND_AWARENESS = 'BRAND_AWARENESS';
+  const CONVERSIONS = 'CONVERSIONS';
+  const EVENT_RESPONSES = 'EVENT_RESPONSES';
+  const LEAD_GENERATION = 'LEAD_GENERATION';
+  const LINK_CLICKS = 'LINK_CLICKS';
+  const LOCAL_AWARENESS = 'LOCAL_AWARENESS';
+  const MESSAGES = 'MESSAGES';
+  const OFFER_CLAIMS = 'OFFER_CLAIMS';
+  const PAGE_LIKES = 'PAGE_LIKES';
+  const POST_ENGAGEMENT = 'POST_ENGAGEMENT';
+  const PRODUCT_CATALOG_SALES = 'PRODUCT_CATALOG_SALES';
+  const REACH = 'REACH';
+  const STORE_VISITS = 'STORE_VISITS';
+  const VIDEO_VIEWS = 'VIDEO_VIEWS';
 ```
 
 ### [Extend targeting](https://developers.facebook.com/docs/marketing-api/audiences/reference/advanced-targeting)
@@ -36,3 +55,6 @@ https://developers.facebook.com/docs/marketing-apis/guides/manage-your-ad-object
 
 # Instagram TODO
 https://developers.facebook.com/docs/marketing-api/guides/instagramads/get-started
+
+# ТЗ
+https://docs.google.com/document/d/1Ym6h7TlNowdfyIHBi25QsNpBOE1kHhUK45F8TwVLYYo/edit

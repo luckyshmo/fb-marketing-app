@@ -1,5 +1,6 @@
 package marketing
 
+// у нас ad и ad_set почти всегда будет 1 к 1
 type Ad struct {
 }
 
