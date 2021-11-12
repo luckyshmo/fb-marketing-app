@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/sirupsen/logrus"
+
 	//nolint: misspell
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/repository/pg/migrations"
@@ -15,8 +17,11 @@ const (
 
 // NewPostgresDB returns new sqlx driver for postgres DB.
 func NewPostgresDB(cfg config.Postgres) (*sqlx.DB, error) {
-	db, err := sqlx.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
-		cfg.HOST, cfg.PORT, cfg.UserName, cfg.DBName, cfg.PAS, cfg.SSLMode))
+	pgConf := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
+		cfg.HOST, cfg.PORT, cfg.UserName, cfg.DBName, cfg.PAS, cfg.SSLMode)
+
+	logrus.Infof("pg configurations:", pgConf)
+	db, err := sqlx.Open("postgres", pgConf)
 	if err != nil {
 		return nil, fmt.Errorf("sqlx open connection: %w", err)
 	}

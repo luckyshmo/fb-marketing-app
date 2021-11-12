@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
+	"github.com/sirupsen/logrus"
 
 	"github.com/golang-migrate/migrate/v4"
 
@@ -30,7 +31,8 @@ func RunPgMigrations() error { //? can be run from Makefile
 
 	connectionString := "postgres://" + cfg.Pg.UserName + ":" + cfg.Pg.PAS +
 		"@" + cfg.Pg.HOST + "/" + cfg.Pg.DBName + "?sslmode=" + cfg.Pg.SSLMode
-
+	logrus.Info(cfg.Pg.MigrationsPath)
+	logrus.Info(connectionString)
 	m, err := migrate.New(
 		cfg.Pg.MigrationsPath,
 		connectionString,

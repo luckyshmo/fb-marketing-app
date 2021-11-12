@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/getsentry/sentry-go"
-	_ "github.com/lib/pq"
+	_ "github.com/jackc/pgx/v4/stdlib"
 
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
 	logger "github.com/luckyshmo/fb-marketing-app/targetted-back/log"
