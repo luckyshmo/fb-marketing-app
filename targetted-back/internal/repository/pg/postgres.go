@@ -8,7 +8,7 @@ import (
 
 	//nolint: misspell
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/repository/pg/migrations"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/repository/pg/migrations"
 )
 
 const (

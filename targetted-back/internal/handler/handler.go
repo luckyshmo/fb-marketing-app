@@ -3,7 +3,7 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/service"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/service"
 
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 	"github.com/swaggo/gin-swagger/swaggerFiles"

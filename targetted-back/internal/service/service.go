@@ -3,10 +3,10 @@ package service
 import (
 	"github.com/google/uuid"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/repository"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/service/facebook"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/service/payment"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/repository"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/service/facebook"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/service/payment"
 )
 
 type Authorization interface {

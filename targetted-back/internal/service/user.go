@@ -2,8 +2,8 @@ package service
 
 import (
 	"github.com/google/uuid"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/repository"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/repository"
 )
 
 type UserService struct {
