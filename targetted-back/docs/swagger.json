@@ -9,6 +9,300 @@
     "host": "localhost:8080",
     "basePath": "/",
     "paths": {
+        "/api/company/": {
+            "get": {
+                "description": "get company list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "company"
+                ],
+                "summary": "get all companies",
+                "operationId": "getCompanyList",
+                "parameters": [
+                    {
+                        "description": "credentials",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.signInInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.AdCompany"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create company",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "company"
+                ],
+                "summary": "create company",
+                "operationId": "createCompany",
+                "parameters": [
+                    {
+                        "description": "credentials",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.signInInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/company/:id": {
+            "get": {
+                "description": "get company by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "company"
+                ],
+                "summary": "get company by id",
+                "operationId": "getCompanyByID",
+                "parameters": [
+                    {
+                        "description": "credentials",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.signInInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.AdCompany"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update company",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "company"
+                ],
+                "summary": "update company",
+                "operationId": "updateCompany",
+                "parameters": [
+                    {
+                        "description": "credentials",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.signInInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.AdCompany"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/company/:id/images/": {
+            "get": {
+                "description": "get company images names",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "company"
+                ],
+                "summary": "get company images names",
+                "operationId": "getCompanyImages",
+                "parameters": [
+                    {
+                        "description": "credentials",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.signInInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/:id": {
             "get": {
                 "security": [
@@ -42,7 +336,7 @@
                         }
                     },
                     "404": {
-                        "description": "Bad Request",
+                        "description": "Not Found",
                         "schema": {
                             "$ref": "#/definitions/handler.errorResponse"
                         }
@@ -101,7 +395,7 @@
                         }
                     },
                     "404": {
-                        "description": "Bad Request",
+                        "description": "Not Found",
                         "schema": {
                             "$ref": "#/definitions/handler.errorResponse"
                         }
@@ -160,7 +454,7 @@
                         }
                     },
                     "404": {
-                        "description": "Bad Request",
+                        "description": "Not Found",
                         "schema": {
                             "$ref": "#/definitions/handler.errorResponse"
                         }
@@ -193,14 +487,77 @@
         "handler.signInInput": {
             "type": "object",
             "required": [
-                "password",
-                "username"
+                "email",
+                "password"
             ],
             "properties": {
-                "password": {
+                "email": {
                     "type": "string"
                 },
-                "username": {
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.AdCompany": {
+            "type": "object",
+            "properties": {
+                "businessAddress": {
+                    "description": "TODO RENAME",
+                    "type": "string"
+                },
+                "companyField": {
+                    "type": "string"
+                },
+                "companyName": {
+                    "type": "string"
+                },
+                "compnayPurpose": {
+                    "type": "string"
+                },
+                "creationDate": {
+                    "type": "string"
+                },
+                "creativeStatus": {
+                    "type": "string"
+                },
+                "currentAmount": {
+                    "type": "number"
+                },
+                "dailyAmount": {
+                    "type": "integer"
+                },
+                "days": {
+                    "type": "integer"
+                },
+                "fbPageId": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "imagesDescription": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "imagesSmallDescription": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "isStarted": {
+                    "type": "boolean"
+                },
+                "postDescription": {
+                    "type": "string"
+                },
+                "startDate": {
+                    "type": "string"
+                },
+                "userId": {
                     "type": "string"
                 }
             }
@@ -208,18 +565,33 @@
         "models.User": {
             "type": "object",
             "required": [
-                "name",
-                "password",
-                "username"
+                "email",
+                "password"
             ],
             "properties": {
+                "amount": {
+                    "type": "number"
+                },
+                "dateCreated": {
+                    "description": "!DEPRECATED",
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
                 "password": {
                     "type": "string"
                 },
-                "username": {
+                "phoneNumber": {
+                    "type": "string"
+                },
+                "timeCreated": {
                     "type": "string"
                 }
             }
