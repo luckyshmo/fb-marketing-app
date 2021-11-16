@@ -34,9 +34,10 @@ type Postgres struct {
 }
 
 type Facebook struct {
-	Token      string `envconfig:"FB_TOKEN"`
-	APIVersion string `envconfig:"FB_API_VERSION"`
-	BusinessID string `envconfig:"FB_BUSINESS_ID"`
+	Token       string `envconfig:"FB_TOKEN"`
+	APIVersion  string `envconfig:"FB_API_VERSION"`
+	BusinessID  string `envconfig:"FB_BUSINESS_ID"`
+	AdAccountID string `envconfig:"AD_ACCOUNT_ID"`
 }
 
 type Youkassa struct {

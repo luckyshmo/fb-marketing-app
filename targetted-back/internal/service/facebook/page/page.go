@@ -1,4 +1,4 @@
-package facebook
+package page
 
 import (
 	"bytes"
@@ -8,18 +8,15 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/service/facebook/models"
 	logger "github.com/luckyshmo/fb-marketing-app/targetted-back/log"
-
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
 )
 
-const span = 5 * time.Minute
+const span = 6 * time.Hour
 
 const permittedTasks = "['MANAGE', 'CREATE_CONTENT', 'MODERATE', 'ADVERTISE', 'ANALYZE']"
 
-// TODO sync.errorGroup for multiple req to fb api
-
-type Service interface {
+type API interface {
 	PageClaim(ID string) (string, error)
 	GetOwnedPages() ([]FacebookPage, error)
 	GetPendingPagesID() ([]string, error)
@@ -34,28 +31,21 @@ type FacebookPage struct {
 }
 
 // https://developers.facebook.com/docs/marketing-api/business-asset-management/guides/pages
-type FacebookService struct {
-	token      string
-	apiVersion string
-	businessID string
-
-	client http.Client
+type PageManager struct {
+	Credentials models.Credentials
+	client      http.Client
 }
 
-var _ Service = (*FacebookService)(nil)
-
-func NewFacebookService(cfg config.Facebook) *FacebookService {
-	return &FacebookService{
-		token:      cfg.Token,
-		apiVersion: cfg.APIVersion,
-		businessID: cfg.BusinessID,
+func NewPageManager(cr models.Credentials) *PageManager {
+	return &PageManager{
+		Credentials: cr,
 		client: http.Client{
 			Timeout: 15 * time.Second,
 		},
 	}
 }
 
-func (f *FacebookService) CheckPageLimitTicker(ctx context.Context) {
+func (f *PageManager) CheckPageLimitTicker(ctx context.Context) {
 	ticker := time.NewTicker(span)
 	go func() {
 		for {
@@ -89,12 +79,6 @@ func (f *FacebookService) CheckPageLimitTicker(ctx context.Context) {
 	}()
 }
 
-type claimRequest struct {
-	PageID         string `json:"page_id"`
-	PermittedTasks string `json:"permitted_tasks"`
-	Token          string `json:"access_token"`
-}
-
 type errorResp struct {
 	Error fbErr `json:"error"`
 }
@@ -108,17 +92,23 @@ type fbPendingResp struct {
 	Pending string `json:"pending"`
 }
 
-func (f *FacebookService) PageClaim(ID string) (string, error) {
-	// 	curl \
-	//   -F "page_id=<PAGE_ID>" \
-	//   -F "permitted_tasks=['ADVERTISE', 'ANALYZE']" \
-	//   -F "access_token=<ACCESS_TOKEN>" \
-	//   "https://graph.facebook.com/<API_VERSION>/<BUSINESS_ID>/client_pages"
+// 	curl \
+//   -F "page_id=<PAGE_ID>" \
+//   -F "permitted_tasks=['ADVERTISE', 'ANALYZE']" \
+//   -F "access_token=<ACCESS_TOKEN>" \
+//   "https://graph.facebook.com/<API_VERSION>/<BUSINESS_ID>/client_pages"
+func (f *PageManager) PageClaim(ID string) (string, error) {
+
+	type claimRequest struct {
+		PageID         string `json:"page_id"`
+		PermittedTasks string `json:"permitted_tasks"`
+		Token          string `json:"access_token"`
+	}
 
 	claimReqJson, err := json.Marshal(claimRequest{
 		PageID:         ID,
 		PermittedTasks: permittedTasks,
-		Token:          f.token,
+		Token:          f.Credentials.Token,
 	})
 	if err != nil {
 		return "ошибка сервера попробуйте позже", fmt.Errorf("marshal claim request: %w", err)
@@ -128,8 +118,8 @@ func (f *FacebookService) PageClaim(ID string) (string, error) {
 		"POST",
 		fmt.Sprintf(
 			"https://graph.facebook.com/%s/%s/client_pages", // ?page_id=%s&access_token=%s&permitted_tasks=%s"
-			f.apiVersion,
-			f.businessID,
+			f.Credentials.ApiVersion,
+			f.Credentials.BusinessID,
 		),
 		bytes.NewBuffer(claimReqJson),
 	)
@@ -164,7 +154,7 @@ type ownedPageResp struct {
 	Data []FacebookPage `json:"data"`
 }
 
-func (f *FacebookService) IsPageOwnedByID(ID string) (bool, error) {
+func (f *PageManager) IsPageOwnedByID(ID string) (bool, error) {
 	pages, err := f.GetOwnedPages()
 	if err != nil {
 		return false, fmt.Errorf("get owned pages: %w", err)
@@ -179,17 +169,16 @@ func (f *FacebookService) IsPageOwnedByID(ID string) (bool, error) {
 	return false, nil
 }
 
-func (f *FacebookService) GetOwnedPages() ([]FacebookPage, error) {
-	// 	curl -G \
-	//   -d "access_token=<token>" \
-	//   "https://graph.facebook.com/<API_version>/<business_id>/client_pages"
-
+// 	curl -G \
+//   -d "access_token=<token>" \
+//   "https://graph.facebook.com/<API_version>/<business_id>/client_pages"
+func (f *PageManager) GetOwnedPages() ([]FacebookPage, error) {
 	resp, err := f.client.Get(
 		fmt.Sprintf(
 			"https://graph.facebook.com/%s/%s/client_pages?access_token=%s",
-			f.apiVersion,
-			f.businessID,
-			f.token,
+			f.Credentials.ApiVersion,
+			f.Credentials.BusinessID,
+			f.Credentials.Token,
 		))
 	if err != nil {
 		return nil, fmt.Errorf("owned page request get: %w", err)
@@ -208,25 +197,24 @@ func (f *FacebookService) GetOwnedPages() ([]FacebookPage, error) {
 	return rResp.Data, nil
 }
 
-type pendingResp struct {
-	Data []data `json:"data"`
-}
+// curl -G \
+// -d "access_token=<admin_token>" \
+// "https://graph.facebook.com/<API_version>/<business_id>/pending_client_pages"
+func (f *PageManager) GetPendingPagesID() ([]string, error) {
 
-type data struct {
-	ID string `json:"id"`
-}
-
-func (f *FacebookService) GetPendingPagesID() ([]string, error) {
-	// curl -G \
-	// -d "access_token=<admin_token>" \
-	// "https://graph.facebook.com/<API_version>/<business_id>/pending_client_pages"
+	type data struct {
+		ID string `json:"id"`
+	}
+	type pendingResp struct {
+		Data []data `json:"data"`
+	}
 
 	resp, err := f.client.Get(
 		fmt.Sprintf(
 			"https://graph.facebook.com/%s/%s/pending_client_pages?access_token=%s",
-			f.apiVersion,
-			f.businessID,
-			f.token,
+			f.Credentials.ApiVersion,
+			f.Credentials.BusinessID,
+			f.Credentials.Token,
 		))
 	if err != nil {
 		return nil, fmt.Errorf("pending fb page request: %w", err)
@@ -250,17 +238,17 @@ func (f *FacebookService) GetPendingPagesID() ([]string, error) {
 	return pendingIDs, nil
 }
 
-func (f *FacebookService) DeletePageByID(ID string) error {
+func (f *PageManager) DeletePageByID(ID string) error {
 	logger.Info(fmt.Sprintf("FBPage ID to remove from pending: %s", ID))
 
 	req, err := http.NewRequest(
 		"DELETE",
 		fmt.Sprintf(
 			"https://graph.facebook.com/%s/%s/pages?page_id=%s&access_token=%s",
-			f.apiVersion,
-			f.businessID,
+			f.Credentials.ApiVersion,
+			f.Credentials.BusinessID,
 			ID,
-			f.token,
+			f.Credentials.Token,
 		),
 		nil,
 	)

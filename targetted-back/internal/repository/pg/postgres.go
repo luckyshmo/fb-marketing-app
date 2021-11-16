@@ -21,7 +21,7 @@ func NewPostgresDB(cfg config.Postgres) (*sqlx.DB, error) {
 		cfg.HOST, cfg.PORT, cfg.UserName, cfg.DBName, cfg.PAS, cfg.SSLMode)
 
 	logrus.Infof("pg configurations:", pgConf)
-	db, err := sqlx.Open("postgres", pgConf)
+	db, err := sqlx.Open("postgres", pgConf) //TODO "pgx"?
 	if err != nil {
 		return nil, fmt.Errorf("sqlx open connection: %w", err)
 	}
