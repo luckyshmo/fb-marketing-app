@@ -7,7 +7,7 @@ RUN go mod download
 
 COPY ./ ./
 
-# RUN go test -v go/pkg/...
+# RUN go test -v go/internal/...
 
 # build go app
 RUN go build -o targetted-back ./cmd/main.go
@@ -21,6 +21,6 @@ ENV GOPATH=/go
 COPY --from=builder $GOPATH/targetted-back ./
 
 # copy PG migrations
-COPY --from=builder $GOPATH/pkg/repository/pg/migrations/*.sql ./migrations/
+COPY --from=builder $GOPATH/internal/repository/pg/migrations/*.sql ./migrations/
 
 EXPOSE 8080

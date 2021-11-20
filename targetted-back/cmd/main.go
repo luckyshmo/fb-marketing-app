@@ -9,14 +9,14 @@ import (
 	"time"
 
 	"github.com/getsentry/sentry-go"
-	_ "github.com/lib/pq"
+	_ "github.com/jackc/pgx/v4/stdlib"
 
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/handler"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/repository"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/repository/pg"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/service"
 	logger "github.com/luckyshmo/fb-marketing-app/targetted-back/log"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/handler"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/repository"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/repository/pg"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/service"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/server"
 
 	"github.com/sirupsen/logrus"
@@ -71,7 +71,7 @@ func run() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	services.Facebook.CheckPageLimitTicker(ctx)
+	services.FacebookAPI.PageManager.CheckPageLimitTicker(ctx)
 
 	logger.Info("App Started")
 

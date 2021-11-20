@@ -79,9 +79,11 @@ if (isProd) {
     pageTrackerScreenviewEnabled: true
   }, router)
 }
-if (isProd) {
-  initFacebookSdk()
-}
+// if (isProd) {
+//   initFacebookSdk()
+// }
+
+initFacebookSdk()
 
 new Vue({
   render: h => h(App),

@@ -3,8 +3,8 @@ package repository
 import (
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/repository/pg"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/repository/pg"
 )
 
 type Authorization interface {

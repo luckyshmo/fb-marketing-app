@@ -3,10 +3,10 @@ package service
 import (
 	"github.com/google/uuid"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/repository"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/service/facebook/api"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/service/payment"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/repository"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/service/facebook"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/service/payment"
 )
 
 type Authorization interface {
@@ -36,7 +36,7 @@ type Service struct {
 	Authorization Authorization
 	User          User
 	AdCompany     AdCompany
-	Facebook      facebook.Service
+	FacebookAPI   api.Facebook
 	Payment       *payment.Youkassa
 }
 
@@ -45,7 +45,7 @@ func NewService(repos *repository.Repository, cfg *config.Config) *Service {
 		Authorization: NewAuthService(repos.Authorization),
 		User:          NewUserService(repos.User),
 		AdCompany:     NewAdCompanyService(repos.AdCompany),
-		Facebook:      facebook.NewFacebookService(cfg.Facebook),
+		FacebookAPI:   api.NewFacebook(cfg.Facebook),
 		Payment:       payment.NewYoukassaService(cfg.Youkassa),
 	}
 }

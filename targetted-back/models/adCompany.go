@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// AdCompany represent user ad company in our service
 type AdCompany struct {
 	Id                     uuid.UUID `db:"id"`
 	UserId                 uuid.UUID `db:"user_id"`

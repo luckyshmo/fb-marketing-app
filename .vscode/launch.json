@@ -9,11 +9,7 @@
             "name": "client",
             "request": "launch",
             "type": "node-terminal",
-            "envFile": "${workspaceFolder}/targetted-client/.env.local",
-            "env": {
-                "VUE_APP_API_URL":"http://localhost:8080",
-                "VUE_APP_FACEBOOK_APP_ID":"914216406086238"
-            }
+            "envFile": "${workspaceFolder}/targetted-client/.env.development",
         },
         {
             "name": "server",

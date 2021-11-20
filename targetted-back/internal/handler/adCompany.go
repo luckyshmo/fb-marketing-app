@@ -23,6 +23,18 @@ const (
 	postsFolder   = "/posts/"
 )
 
+// @Summary get all companies
+// @Tags company
+// @Description get company list
+// @ID getCompanyList
+// @Accept  json
+// @Produce  json
+// @Param input body signInInput true "credentials"
+// @Success 200 {object} []models.AdCompany
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/company/ [get]
 func (h *Handler) getCompanyList(c *gin.Context) {
 	userID, err := getUserId(c)
 	if err != nil {
@@ -41,6 +53,18 @@ func (h *Handler) getCompanyList(c *gin.Context) {
 	sendStatusResponse(c, http.StatusOK, companyList)
 }
 
+// @Summary get company images names
+// @Tags company
+// @Description get company images names
+// @ID getCompanyImages
+// @Accept  json
+// @Produce  json
+// @Param input body signInInput true "credentials"
+// @Success 200 {object} string
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/company/:id/images/ [get]
 func (h *Handler) getCompanyImages(c *gin.Context) {
 	userID, err := getUserId(c)
 	if err != nil {
@@ -74,6 +98,18 @@ func (h *Handler) getCompanyImages(c *gin.Context) {
 	sendStatusResponse(c, http.StatusOK, names)
 }
 
+// @Summary get company by id
+// @Tags company
+// @Description get company by id
+// @ID getCompanyByID
+// @Accept  json
+// @Produce  json
+// @Param input body signInInput true "credentials"
+// @Success 200 {object} models.AdCompany
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/company/:id [get]
 func (h *Handler) getCompanyByID(c *gin.Context) {
 	userID, err := getUserId(c)
 	if err != nil {
@@ -114,6 +150,18 @@ func (h *Handler) deleteCompany(c *gin.Context) {
 	}
 }
 
+// @Summary update company
+// @Tags company
+// @Description update company
+// @ID updateCompany
+// @Accept  json
+// @Produce  json
+// @Param input body signInInput true "credentials"
+// @Success 200 {object} models.AdCompany
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/company/:id [put]
 func (h *Handler) updateCompany(c *gin.Context) {
 
 	// id := c.Param("id") //id in request //TODO!
@@ -150,6 +198,18 @@ func (h *Handler) updateCompany(c *gin.Context) {
 	sendStatusResponse(c, http.StatusOK, company)
 }
 
+// @Summary create company
+// @Tags company
+// @Description create company
+// @ID createCompany
+// @Accept  json
+// @Produce  json
+// @Param input body signInInput true "credentials"
+// @Success 200 {object} uuid.UUID
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/company/ [post]
 func (h *Handler) createAdCompany(c *gin.Context) {
 
 	company, err := parseCompanyFromContext(c)

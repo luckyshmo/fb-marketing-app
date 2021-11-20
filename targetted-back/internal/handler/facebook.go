@@ -7,7 +7,7 @@ import (
 )
 
 func (h *Handler) pendingFacebookPages(c *gin.Context) {
-	pendingIDs, err := h.services.Facebook.GetPendingPagesID()
+	pendingIDs, err := h.services.FacebookAPI.PageManager.GetPendingPagesID()
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -19,7 +19,7 @@ func (h *Handler) pendingFacebookPages(c *gin.Context) {
 func (h *Handler) claimPage(c *gin.Context) {
 	fbPageID := c.Param("id")
 
-	message, err := h.services.Facebook.PageClaim(fbPageID)
+	message, err := h.services.FacebookAPI.PageManager.PageClaim(fbPageID)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, message)
 		return
@@ -30,7 +30,7 @@ func (h *Handler) claimPage(c *gin.Context) {
 }
 
 func (h *Handler) ownedFacebookPages(c *gin.Context) {
-	facebookPages, err := h.services.Facebook.GetOwnedPages()
+	facebookPages, err := h.services.FacebookAPI.PageManager.GetOwnedPages()
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -42,7 +42,7 @@ func (h *Handler) ownedFacebookPages(c *gin.Context) {
 func (h *Handler) isPageOwnedByID(c *gin.Context) {
 	fbPageID := c.Param("id")
 
-	isOwned, err := h.services.Facebook.IsPageOwnedByID(fbPageID)
+	isOwned, err := h.services.FacebookAPI.PageManager.IsPageOwnedByID(fbPageID)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -58,7 +58,7 @@ func (h *Handler) deletePendingFacebookPage(c *gin.Context) {
 
 	fbPageID := c.Param("id")
 
-	if err := h.services.Facebook.DeletePageByID(fbPageID); err != nil {
+	if err := h.services.FacebookAPI.PageManager.DeletePageByID(fbPageID); err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}

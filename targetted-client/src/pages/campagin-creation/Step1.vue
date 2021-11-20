@@ -1,5 +1,5 @@
 <template>
-  <section class="step1">
+  <section class="step step1">
     <slot name="header"></slot>
     <p>Заполните информацию о своём бизнесе.</p>
       <br class="d-none d-sm-block">

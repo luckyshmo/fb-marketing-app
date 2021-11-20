@@ -8,8 +8,8 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/google/uuid"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/repository"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
-	"github.com/luckyshmo/fb-marketing-app/targetted-back/pkg/repository"
 )
 
 //TODO! STORE not in open repo. It's OK only for demo
