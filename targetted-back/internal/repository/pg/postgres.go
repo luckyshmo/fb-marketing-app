@@ -17,13 +17,16 @@ const (
 
 // NewPostgresDB returns new sqlx driver for postgres DB.
 func NewPostgresDB(cfg config.Postgres) (*sqlx.DB, error) {
-	pgConf := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
-		cfg.HOST, cfg.PORT, cfg.UserName, cfg.DBName, cfg.PAS, cfg.SSLMode)
+	connectionString := "postgres://" + cfg.UserName + ":" + cfg.PAS +
+		"@" + "localhost" + ":" + cfg.PORT + "/" + cfg.DBName + "?sslmode=" + cfg.SSLMode
+	logrus.Infof("pg con str: %s", connectionString)
 
-	logrus.Infof("pg configurations: %s", pgConf)
-	db, err := sqlx.Open("postgres", pgConf) //TODO "pgx"?
+	db, err := sqlx.Open(
+		"pgx",
+		connectionString,
+	)
 	if err != nil {
-		return nil, fmt.Errorf("sqlx open connection: %w", err)
+		return nil, fmt.Errorf("connect to API postgres: %w", err)
 	}
 
 	err = db.Ping()

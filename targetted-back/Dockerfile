@@ -7,8 +7,6 @@ RUN go mod download
 
 COPY ./ ./
 
-# RUN go test -v go/internal/...
-
 # build go app
 RUN go build -o targetted-back ./cmd/main.go
 
