@@ -10,3 +10,5 @@ tasks:
     go test -v  ./...
   lint:
     golangci-lint run
+  swag:
+    swag init -g cmd/main.go --output docs
