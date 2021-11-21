@@ -12,9 +12,9 @@ import (
 
 // Config. Should be filled from Env. Use launch.json(vscode) on local machine
 type Config struct {
+	AppPort    string `envconfig:"APP_PORT"`
 	CorsHeader string `envconfig:"CORS_HEADER"`
-
-	AppPort string `envconfig:"APP_PORT"`
+	FakeDB     bool   `envconfig:"FAKE_DB"`
 
 	Pg       Postgres
 	Logging  Logging
@@ -69,6 +69,7 @@ func Get() *Config {
 		}
 		validate(config)
 	})
+	logrus.Info(config)
 	return &config
 }
 

@@ -18,6 +18,14 @@
             "mode": "auto",
             "program": "${workspaceFolder}/targetted-back/cmd",
             "envFile": "${workspaceFolder}/targetted-back/.env.dev",
+        },
+        {
+            "name": "server-nodb",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/targetted-back/cmd",
+            "envFile": "${workspaceFolder}/targetted-back/.env.front.dev",
         }
     ],
     "compounds": [

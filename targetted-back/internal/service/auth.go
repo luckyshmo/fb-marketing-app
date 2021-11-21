@@ -46,7 +46,7 @@ func (s *AuthService) GenerateToken(email, password string) (string, error) {
 	//Get user from DB
 	user, err := s.repo.GetUser(email, generatePasswordHash(password))
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("get user: %w", err)
 	}
 
 	//HMAC-SHA256 algorithm, has several security issues //? change? //https://habr.com/en/post/450054/
@@ -75,7 +75,7 @@ func (s *AuthService) ParseToken(accessToken string) (uuid.UUID, error) {
 		return []byte(signingKey), nil
 	})
 	if err != nil {
-		return uuid.Nil, err
+		return uuid.Nil, fmt.Errorf("parse jwt: %w", err)
 	}
 
 	claims, ok := token.Claims.(*tokenClaims) //cast syntax

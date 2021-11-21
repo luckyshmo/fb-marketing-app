@@ -42,6 +42,13 @@ tasks:
     cmds:
       - docker-compose build targetted-back
 
-  run-dev-front:
+  # No database backend
+  build-dev-front:
     cmds:
-      - docker-compose up targetted-back
+      - docker-compose build targetted-back-nodb
+
+  run-dev-front:
+    deps:
+      - build-dev-front
+    cmds:
+      - docker-compose up targetted-back-nodb

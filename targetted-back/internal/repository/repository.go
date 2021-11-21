@@ -3,6 +3,7 @@ package repository
 import (
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/repository/inmemory"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/repository/pg"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
 )
@@ -26,7 +27,7 @@ type AdCompany interface {
 	Start(id uuid.UUID) error
 	Stop(id uuid.UUID) error
 	GetAll(userID uuid.UUID) ([]models.AdCompany, error)
-	GetByID(companyID string) (models.AdCompany, error)
+	GetByID(companyID string) (models.AdCompany, error) //TODO ID -> uuid
 }
 
 type Repository struct {
@@ -40,5 +41,14 @@ func NewSqlxRepository(db *sqlx.DB) *Repository {
 		Authorization: pg.NewAuthPostgres(db),
 		User:          pg.NewUserPG(db),
 		AdCompany:     pg.NewAdCompanyPg(db),
+	}
+}
+
+func NewInMemoryRepository() *Repository {
+	inmemory.Init()
+	return &Repository{
+		Authorization: inmemory.NewAuthMemory(),
+		User:          inmemory.NewUserMemory(),
+		AdCompany:     inmemory.NewAdCompanyMemory(),
 	}
 }

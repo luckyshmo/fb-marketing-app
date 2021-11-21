@@ -40,5 +40,15 @@ services:
       - "8080:8080"
     depends_on:
       - postgres-targetted
+
+  targetted-back-nodb:
+    build: ./targetted-back/
+    command: ./targetted-back
+    image: targetted-back
+    env_file: ./targetted-back/.env.front.dev
+    volumes:
+      - ./images:/images
+    ports:
+      - "8080:8080"
 volumes:
   pgdata_targetted:
