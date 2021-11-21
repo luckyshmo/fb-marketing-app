@@ -18,7 +18,7 @@ const (
 // NewPostgresDB returns new sqlx driver for postgres DB.
 func NewPostgresDB(cfg config.Postgres) (*sqlx.DB, error) {
 	connectionString := "postgres://" + cfg.UserName + ":" + cfg.PAS +
-		"@" + "localhost" + ":" + cfg.PORT + "/" + cfg.DBName + "?sslmode=" + cfg.SSLMode
+		"@" + cfg.HOST + ":" + cfg.PORT + "/" + cfg.DBName + "?sslmode=" + cfg.SSLMode
 	logrus.Infof("pg con str: %s", connectionString)
 
 	db, err := sqlx.Open(
