@@ -22,9 +22,9 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// @title Example API
+// @title Facebook ads manager
 // @version 1.0
-// @description API Server Example for building go microservices
+// @description Facebook ads manager
 
 // @host localhost:8080
 // @BasePath /
@@ -41,7 +41,7 @@ func main() {
 }
 
 //main func
-func run() error {
+func run() (err error) {
 	// config
 	time.Sleep(time.Second)
 	cfg := config.Get()
@@ -50,14 +50,22 @@ func run() error {
 	defer sentry.Flush(2 * time.Second)
 
 	//Init DB
-	db, err := pg.NewPostgresDB(cfg.Pg)
-	if err != nil {
-		return fmt.Errorf("failed to initialize db: %w", err)
+	var repo *repository.Repository
+	if cfg.FakeDB {
+		repo = repository.NewInMemoryRepository()
+	} else {
+		db, err := pg.NewPostgresDB(cfg.Pg)
+		if err != nil {
+			return fmt.Errorf("failed to initialize db: %w", err)
+		}
+		repo = repository.NewSqlxRepository(db)
+		defer func() {
+			err = db.Close()
+		}()
 	}
 
 	//Init main components
-	repos := repository.NewSqlxRepository(db)
-	services := service.NewService(repos, cfg)
+	services := service.NewService(repo, cfg)
 	handlers := handler.NewHandler(services)
 
 	//starting server
@@ -81,9 +89,6 @@ func run() error {
 	<-quit
 
 	logger.Info("App Shutting Down")
-	if err := db.Close(); err != nil {
-		return err
-	}
 
 	return nil
 }
