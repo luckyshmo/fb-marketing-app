@@ -1,2 +1,2 @@
-DROP TABLE ad_company;
+DROP TABLE ad_campaign;
 DROP TABLE user_tb;

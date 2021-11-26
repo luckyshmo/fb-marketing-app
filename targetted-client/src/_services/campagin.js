@@ -1,9 +1,9 @@
 import { instance } from './index'
 
-export const createCompany = (data) => {
+export const createCampaign = (data) => {
 
 }
 
-export const updateCompany = (data) => {
+export const updateCampaign = (data) => {
 
 }

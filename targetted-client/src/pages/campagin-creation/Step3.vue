@@ -43,7 +43,7 @@
                 >
                     <b-form-radio-group
                         class="app-new-radio"
-                        v-model="$v.companyData.auditory.gender.$model"
+                        v-model="$v.campaignData.auditory.gender.$model"
                         :options="auditory.gender"
                     ></b-form-radio-group>
             </b-form-group>
@@ -57,17 +57,17 @@
                     <b-col cols="6" sm="5" md="6" lg="3" xl="3">
                         <b-form-input
                             class="form-input app-new-form-input-small "
-                            v-model="$v.companyData.auditory.age.from.$model"
-                            :state="$v.companyData.auditory.age.from.$dirty ? !$v.companyData.auditory.age.from.$error : null"
+                            v-model="$v.campaignData.auditory.age.from.$model"
+                            :state="$v.campaignData.auditory.age.from.$dirty ? !$v.campaignData.auditory.age.from.$error : null"
                             placeholder="от"></b-form-input>
                                  <small
-              v-if="$v.companyData.auditory.age.from.$dirty && !$v.companyData.auditory.age.from.required"
+              v-if="$v.campaignData.auditory.age.from.$dirty && !$v.campaignData.auditory.age.from.required"
               class="error-message"
             >
               Пустое поле
             </small>
                       <small
-                  v-if="$v.companyData.auditory.age.from.$dirty && !$v.companyData.auditory.age.from.numeric"
+                  v-if="$v.campaignData.auditory.age.from.$dirty && !$v.campaignData.auditory.age.from.numeric"
                   class="error-message"
                 >
                   Только цифры
@@ -77,17 +77,17 @@
                     <b-col cols="6" sm="5" md="6" lg="3" xl="3">
                         <b-form-input
                             class="form-input app-new-form-input-small"
-                            v-model="$v.companyData.auditory.age.to.$model"
-                            :state="$v.companyData.auditory.age.to.$dirty ? !$v.companyData.auditory.age.to.$error : null"
+                            v-model="$v.campaignData.auditory.age.to.$model"
+                            :state="$v.campaignData.auditory.age.to.$dirty ? !$v.campaignData.auditory.age.to.$error : null"
                             placeholder="до"></b-form-input>
                              <small
-              v-if="$v.companyData.auditory.age.to.$dirty && !$v.companyData.auditory.age.to.required"
+              v-if="$v.campaignData.auditory.age.to.$dirty && !$v.campaignData.auditory.age.to.required"
               class="error-message"
             >
               Пустое поле
             </small>
                   <small
-                  v-if="$v.companyData.auditory.age.to.$dirty && !$v.companyData.auditory.age.to.numeric"
+                  v-if="$v.campaignData.auditory.age.to.$dirty && !$v.campaignData.auditory.age.to.numeric"
                   class="error-message"
                 >
                   Только цифры
@@ -100,13 +100,13 @@
                     label="Местоположение"
                      id="input-group-main">
                     <b-form-input
-                    :state="$v.companyData.auditory.location.$dirty ? !$v.companyData.auditory.location.$error : null"
-                    v-model="$v.companyData.auditory.location.$model"
+                    :state="$v.campaignData.auditory.location.$dirty ? !$v.campaignData.auditory.location.$error : null"
+                    v-model="$v.campaignData.auditory.location.$model"
                     class="form-input"
                     placeholder="Введите адрес"
                     />
                     <small
-              v-if="$v.companyData.auditory.location.$dirty && !$v.companyData.auditory.location.required"
+              v-if="$v.campaignData.auditory.location.$dirty && !$v.campaignData.auditory.location.required"
               class="error-message"
             >
               Пустое поле
@@ -123,13 +123,13 @@
                       <b-form-textarea
                         id="textarea"
                         class="form-input"
-                        :state="$v.companyData.auditory.interests.$dirty ? !$v.companyData.auditory.interests.$error : null"
-                        v-model="$v.companyData.auditory.interests.$model"
+                        :state="$v.campaignData.auditory.interests.$dirty ? !$v.campaignData.auditory.interests.$error : null"
+                        v-model="$v.campaignData.auditory.interests.$model"
                         rows="3"
                         max-rows="6"
                         ></b-form-textarea>
                            <small
-              v-if="$v.companyData.auditory.interests.$dirty && !$v.companyData.auditory.interests.required"
+              v-if="$v.campaignData.auditory.interests.$dirty && !$v.campaignData.auditory.interests.required"
               class="error-message"
             >
               Пустое поле
@@ -167,10 +167,10 @@ import { required, minValue, maxValue, numeric } from 'vuelidate/lib/validators'
 
 export default {
   name: 'Step3',
-  props: ['label_cols', 'content_cols', 'company', 'isEdit'],
+  props: ['label_cols', 'content_cols', 'campaign', 'isEdit'],
   mixins: [validationMixin],
   validations: {
-    companyData: {
+    campaignData: {
       auditory: {
         gender: {
           required
@@ -202,7 +202,7 @@ export default {
       showAdvanced: false,
       noValidate: false,
       showAdvancedClicked: false,
-      companyData: {
+      campaignData: {
         auditory: {
           gender: 'any',
           location: '',
@@ -234,14 +234,14 @@ export default {
     },
     sendData () {
       if (this.showAdvancedClicked && !this.noValidate) {
-        this.$v.companyData.auditory.$touch()
-        if (this.$v.companyData.auditory.$anyError) {
+        this.$v.campaignData.auditory.$touch()
+        if (this.$v.campaignData.auditory.$anyError) {
           window.scrollTo(0, 100)
           return
         }
       }
 
-      this.$emit('next', this.companyData)
+      this.$emit('next', this.campaignData)
     }
   }
 }

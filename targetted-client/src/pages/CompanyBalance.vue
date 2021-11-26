@@ -15,7 +15,7 @@
 
       <div
         v-if="getWidthPx() > 600"
-        id="company-status-wrapper"
+        id="campaign-status-wrapper"
       >
 
         <!-- <h1
@@ -29,22 +29,22 @@
           class="c-status"
         >
           <div
-            v-if="!isFb(company)"
+            v-if="!isFb(campaign)"
             id="white"
             class="elipse"
           />
           <div
-            v-if="isFb(company) && !isMoney(company)"
+            v-if="isFb(campaign) && !isMoney(campaign)"
             id="yellow"
             class="elipse"
           />
           <div
-            v-if="isFb(company) && isMoney(company)"
+            v-if="isFb(campaign) && isMoney(campaign)"
             id="green"
             class="elipse"
           />
           <p class="c-status-text">
-            {{ getStatus(company) }}
+            {{ getStatus(campaign) }}
           </p>
         </div>
       </div>
@@ -54,29 +54,29 @@
           id="h1"
           style="max-width: 300px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"
         >
-          {{ company.CompanyName }}
+          {{ campaign.CampaignName }}
         </h1>
         <div
           id="c-status"
           class="c-status"
         >
           <div
-            v-if="!isFb(company)"
+            v-if="!isFb(campaign)"
             id="white"
             class="elipse"
           />
           <div
-            v-if="isFb(company) && !isMoney(company)"
+            v-if="isFb(campaign) && !isMoney(campaign)"
             id="yellow"
             class="elipse"
           />
           <div
-            v-if="isFb(company) && isMoney(company)"
+            v-if="isFb(campaign) && isMoney(campaign)"
             id="green"
             class="elipse"
           />
           <p class="c-status-text">
-            {{ getStatus(company) }}
+            {{ getStatus(campaign) }}
           </p>
         </div>
       </div>
@@ -102,7 +102,7 @@
         label-for="input-horizontal"
       >
         <p id="balance">
-          {{ company.CurrentAmount }} ₽
+          {{ campaign.CurrentAmount }} ₽
         </p>
       </b-form-group>
 
@@ -128,7 +128,7 @@
         <div v-if="getWidthPx() > 600">
           <div
             v-if="!isFormRendered"
-            id="company-status-wrapper"
+            id="campaign-status-wrapper"
             style="margin: 0 auto; width: 430px;"
           >
             <b-form-input
@@ -181,7 +181,7 @@
         <div id="payment-form" />
       </popup>
 
-      <b-form @submit.prevent="startCompany()">
+      <b-form @submit.prevent="startCampaign()">
         <h2 id="h2">
           Рекламный бюджет
         </h2>
@@ -193,7 +193,7 @@
           label-for="input-horizontal"
         >
           <b-form-input
-            v-model="company.DailyAmount"
+            v-model="campaign.DailyAmount"
             class="form-input"
             :state="validateState('DailyAmount')"
             placeholder="Введите сумму"
@@ -212,7 +212,7 @@
           label-for="input-horizontal"
         >
           <b-form-input
-            v-model="company.Days"
+            v-model="campaign.Days"
             class="form-input"
             :state="validateState('Days')"
             placeholder="Введите колчиество дней"
@@ -229,7 +229,7 @@
           Настройки кампании
         </h2>
         <p>Пока вы не можете изменить настройки кампании. Если хотите внести<br>какие-то изменения, то напишите нам или создайте новую кампанию.</p>
-        <router-link :to="{path: '/company/'+ company.Id, query: { isEdit: true }}">
+        <router-link :to="{path: '/campaign/'+ campaign.Id, query: { isEdit: true }}">
           <b-button
             variant="primary"
             class="main-button-grey"
@@ -242,7 +242,7 @@
       <!-- <b-button
         class="submit-button"
         type="submit"
-        @click="updateCompany()"
+        @click="updateCampaign()"
       >
         {{ isEdit ? "Обновить":"Запустить" }} кампанию
       </b-button> -->
@@ -267,7 +267,7 @@ export default {
       required,
       minValue: minValue(500)
     },
-    company: {
+    campaign: {
       DailyAmount: {
         required,
         minValue: minValue(200)
@@ -289,11 +289,11 @@ export default {
       isInfoPopupVisible: false,
       label_cols: this.getWidth().label,
       content_cols: this.getWidth().content,
-      company: {
+      campaign: {
         FbPageId: '',
-        CompanyName: '',
-        CompanyPurpose: '',
-        CompanyField: '',
+        CampaignName: '',
+        CampaignPurpose: '',
+        CampaignField: '',
         BusinessAdress: '',
         Images: [],
         ImagesDescription: [],
@@ -316,9 +316,9 @@ export default {
     $route (to) {
       this.isLoading = false
       if (!(typeof to.params.id === 'undefined')) {
-        axios({ url: `${VUE_APP_API_URL}/api/company/${to.params.id}`, method: 'GET' })
+        axios({ url: `${VUE_APP_API_URL}/api/campaign/${to.params.id}`, method: 'GET' })
           .then(resp => {
-            this.company = resp.data
+            this.campaign = resp.data
           })
       }
     }
@@ -328,9 +328,9 @@ export default {
     mScript.setAttribute('src', 'https://yookassa.ru/checkout-widget/v1/checkout-widget.js')
     document.head.appendChild(mScript)
 
-    axios({ url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`, method: 'GET' })
+    axios({ url: `${VUE_APP_API_URL}/api/campaign/${this.$router.history.current.params.id}`, method: 'GET' })
       .then(resp => {
-        this.company = resp.data
+        this.campaign = resp.data
       })
   },
   methods: {
@@ -344,7 +344,7 @@ export default {
       )
     },
     validateState (name) {
-      const { $dirty, $error } = this.$v.company[name]
+      const { $dirty, $error } = this.$v.campaign[name]
       return $dirty ? !$error : null
     },
     validateState1 (name) {
@@ -376,7 +376,7 @@ export default {
             .then(resp => {
               console.log('status resp: ', resp.data)
               if (resp.data.status === 'succeeded') {
-                this.company.DailyAmount = this.company.DailyAmount + resp.data.amount.value
+                this.campaign.DailyAmount = this.campaign.DailyAmount + resp.data.amount.value
               }
             })
             .catch(err => {
@@ -404,26 +404,26 @@ export default {
     showPopupInfo () {
       this.isInfoPopupVisible = true
     },
-    startCompany () {
+    startCampaign () {
       console.log(this.balanceForm)
     },
-    isMoney (company) {
-      return company.CurrentAmount > 0
+    isMoney (campaign) {
+      return campaign.CurrentAmount > 0
     },
-    getStatus (company) {
-      // if (company.FbPageId.length === 0) {
+    getStatus (campaign) {
+      // if (campaign.FbPageId.length === 0) {
       //     return "facebook не подключен"
       // }
-      if (company.CurrentAmount === 0) {
+      if (campaign.CurrentAmount === 0) {
         return 'закончился рекламный бюджет'
       }
-      if (!company.IsStarted) {
+      if (!campaign.IsStarted) {
         return 'настраивается'
       }
       return 'в работе'
     },
-    isFb (company) {
-      return company.FbPageId.length > 0
+    isFb (campaign) {
+      return campaign.FbPageId.length > 0
     },
     getWidth () {
       const width = Math.max(
@@ -444,37 +444,37 @@ export default {
         content: 9
       }
     },
-    updateCompany () {
-      this.$v.company.$touch()
-      if (this.$v.company.$anyError) {
+    updateCampaign () {
+      this.$v.campaign.$touch()
+      if (this.$v.campaign.$anyError) {
         return
       }
 
       this.isLoading = true
 
-      const companyData = new FormData()
-      companyData.append('FbPageId', this.company.FbPageId)
+      const campaignData = new FormData()
+      campaignData.append('FbPageId', this.campaign.FbPageId)
       if (this.isEdit) {
-        companyData.append('Id', this.company.Id)
+        campaignData.append('Id', this.campaign.Id)
       }
-      companyData.append('CompanyName', this.company.CompanyName)
-      companyData.append('CompanyPurpose', this.company.CompanyPurpose)
-      companyData.append('CompanyField', this.company.CompanyField)
-      companyData.append('BusinessAddress', this.company.BusinessAddress)
-      companyData.append('ImagesDescription', this.company.ImagesDescription)
-      companyData.append('ImagesSmallDescription', this.company.ImagesSmallDescription)
-      companyData.append('CreativeStatus', this.company.CreativeStatus)
-      companyData.append('PostDescription', this.company.PostDescription)
-      companyData.append('DailyAmount', this.company.DailyAmount)
-      companyData.append('Days', this.company.Days)
-      axios({ url: `${VUE_APP_API_URL}/api/company/${this.company.Id}`, data: companyData, method: 'PUT' })
+      campaignData.append('CampaignName', this.campaign.CampaignName)
+      campaignData.append('CampaignPurpose', this.campaign.CampaignPurpose)
+      campaignData.append('CampaignField', this.campaign.CampaignField)
+      campaignData.append('BusinessAddress', this.campaign.BusinessAddress)
+      campaignData.append('ImagesDescription', this.campaign.ImagesDescription)
+      campaignData.append('ImagesSmallDescription', this.campaign.ImagesSmallDescription)
+      campaignData.append('CreativeStatus', this.campaign.CreativeStatus)
+      campaignData.append('PostDescription', this.campaign.PostDescription)
+      campaignData.append('DailyAmount', this.campaign.DailyAmount)
+      campaignData.append('Days', this.campaign.Days)
+      axios({ url: `${VUE_APP_API_URL}/api/campaign/${this.campaign.Id}`, data: campaignData, method: 'PUT' })
         .then(resp => {
           console.log(resp)
           router.push({ path: '/main' })
         })
         .catch(err => {
-          if (err.response.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
-            this.isCompanyExist = true
+          if (err.response.data.message === 'pq: duplicate key value violates unique constraint "ad_campaign_name_user_id_key"') {
+            this.isCampaignExist = true
           }
           if (err.response.status === 401) {
             store.dispatch('logout')
@@ -489,7 +489,7 @@ export default {
 }
 </script>
 <style>
-#company-status-wrapper{
+#campaign-status-wrapper{
     display: flex;
     align-items: stretch;
 }
@@ -523,7 +523,7 @@ export default {
       position:relative;
   }
 
-  .company-status{
+  .campaign-status{
       height: auto;
       position:relative;
   }

@@ -49,20 +49,20 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 			facebook.POST("/claim/:id", h.claimPage)
 		}
-		adCompany := api.Group("/company")
+		adCampaign := api.Group("/campaign")
 		{
-			adCompany.POST("/", h.createAdCompany)
-			adCompany.GET("/", h.getCompanyList)
-			adCompany.GET("/:id", h.getCompanyByID)
-			adCompany.PUT("/:id", h.updateCompany)
-			adCompany.DELETE("/:id", h.deleteCompany)
+			adCampaign.POST("/", h.createAdCampaign)
+			adCampaign.GET("/", h.getCampaignList)
+			adCampaign.GET("/:id", h.getCampaignByID)
+			adCampaign.PUT("/:id", h.updateCampaign)
+			adCampaign.DELETE("/:id", h.deleteCampaign)
 
-			adCompany.POST("/start/:id", h.startAdCompany)
-			adCompany.POST("/stop/:id", h.stopAdCompany)
+			adCampaign.POST("/start/:id", h.startAdCampaign)
+			adCampaign.POST("/stop/:id", h.stopAdCampaign)
 
-			images := adCompany.Group(":id/images")
+			images := adCampaign.Group(":id/images")
 			{
-				images.GET("/", h.getCompanyImages)
+				images.GET("/", h.getCampaignImages)
 			}
 		}
 		users := api.Group("/user")
@@ -79,12 +79,12 @@ func (h *Handler) InitRoutes() *gin.Engine {
 					payment.POST("/status/:payment-id", h.getPaymentStatus)
 				}
 
-				company := user.Group("/company")
+				campaign := user.Group("/campaign")
 				{
-					company.GET("/", h.getCompanyListByUserID)
-					images := company.Group(":company-id/images")
+					campaign.GET("/", h.getCampaignListByUserID)
+					images := campaign.Group(":campaign-id/images")
 					{
-						images.GET("/", h.getUserCompanyImages)
+						images.GET("/", h.getUserCampaignImages)
 					}
 				}
 			}

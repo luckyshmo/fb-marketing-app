@@ -22,7 +22,7 @@
         <!-- <b-form-group label="Наличие креативов" :label-cols="label_cols" :content-cols="content_cols"
           id="input-group-main" label-for="input-horizontal">
           <b-form-radio-group
-          v-model="company.CreativeStatus"
+          v-model="campaign.CreativeStatus"
           class="app-new-radio"
           :options="[
                                   'Есть рекламные креативы',
@@ -91,7 +91,7 @@
           <div v-for="(Image, index) in Images" :key="Image.name">
             <b-form-group :label="textOnSlide(index)" :label-cols="label_cols" :content-cols="content_cols"
               id="input-group-main" label-for="input-horizontal">
-              <b-form-input class="form-input" v-model="company.ImagesDescription[index]" placeholder="Введите текст">
+              <b-form-input class="form-input" v-model="campaign.ImagesDescription[index]" placeholder="Введите текст">
               </b-form-input>
             </b-form-group>
           </div>
@@ -132,7 +132,7 @@
           <div v-for="(Image, index) in ImagesSmall" :key="Image.name">
             <b-form-group :label="textOnImage(index)" :label-cols="label_cols" :content-cols="content_cols"
               id="input-group-main" label-for="input-horizontal">
-              <b-form-input class="form-input" v-model="company.ImagesSmallDescription[index]"
+              <b-form-input class="form-input" v-model="campaign.ImagesSmallDescription[index]"
                 placeholder="Введите текст"></b-form-input>
             </b-form-group>
           </div>
@@ -140,7 +140,7 @@
       </div>
       <b-form-group v-if="ImagesSmall.length > 0" label="Описание под постом в ленте" :label-cols="label_cols"
         :content-cols="content_cols" id="input-group-main" label-for="input-horizontal">
-        <b-form-textarea class="form-input" style="height: 100px" v-model="company.PostDescription"
+        <b-form-textarea class="form-input" style="height: 100px" v-model="campaign.PostDescription"
           placeholder="Введите текст"></b-form-textarea>
       </b-form-group>
 
@@ -182,7 +182,7 @@ import { APP_UI_URL } from '@src/constants'
 
 export default {
   name: 'Step2',
-  props: ['label_cols', 'content_cols', 'company', 'isEdit'],
+  props: ['label_cols', 'content_cols', 'campaign', 'isEdit'],
   data: function () {
     return {
       store, // fixme
@@ -203,8 +203,8 @@ export default {
       })
     },
     getImageByName (name) {
-      const uID = this.company.UserId
-      const cID = this.company.Id
+      const uID = this.campaign.UserId
+      const cID = this.campaign.Id
       return `${APP_UI_URL}images/${uID}/${cID}${name}`
     },
     removeImageSmall (Image) {
@@ -232,7 +232,7 @@ export default {
     },
 
     isCreative () {
-      return this.company.CreativeStatus === 'Создать рекламные креативы'
+      return this.campaign.CreativeStatus === 'Создать рекламные креативы'
     },
     validateImagesSmall () {
       return this.ImagesSmall.length === 0

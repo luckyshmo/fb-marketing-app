@@ -48,36 +48,36 @@
            <b-row class="mt-5">
                   <b-col cols="6" sm="8" md="3" lg="3" xl="3"> -->
         <div
-          v-for="company in store.getters.GET_COMPANY_LIST"
-          :key="company.Id"
+          v-for="campaign in store.getters.GET_COMPANY_LIST"
+          :key="campaign.Id"
           class="campagin-item">
-          <router-link :to="{path: '/company-balance/'+ company.Id, query: { isEdit: true }}">
+          <router-link :to="{path: '/campaign-balance/'+ campaign.Id, query: { isEdit: true }}">
             <b-row>
               <b-col cols="10">
-                <p class="c-date">Создана {{company.Date}}</p>
+                <p class="c-date">Создана {{campaign.Date}}</p>
                 <p class="c-name">
-                  {{ company.CompanyName }}
+                  {{ campaign.CampaignName }}
                 </p>
                 <div class="c-status">
                   <div
-                    v-if="!isFb(company)"
+                    v-if="!isFb(campaign)"
                     id="white"
                     class="elipse" />
                   <div
-                    v-if="isFb(company) && !isMoney()"
+                    v-if="isFb(campaign) && !isMoney()"
                     id="yellow"
                     class="elipse" />
                   <div
-                    v-if="isFb(company) && isMoney()"
+                    v-if="isFb(campaign) && isMoney()"
                     id="green"
                     class="elipse" />
                   <p class="c-status-text">
-                    {{ getStatus(company) }}
+                    {{ getStatus(campaign) }}
                   </p>
                 </div>
               </b-col>
               <b-col cols="2" class="right-pointer">
-                <b-icon icon="chevron-right" @click="openCompanyDetails"/>
+                <b-icon icon="chevron-right" @click="openCampaignDetails"/>
               </b-col>
             </b-row>
           </router-link>
@@ -95,7 +95,7 @@
     <div class="mt-4">
       <router-link
         v-if="store.getters.GET_COMPANY_LIST.length < 3"
-        :to="{path: '/company'}">
+        :to="{path: '/campaign'}">
         <b-button
           class="app-new-submit-button">
           Создать новую
@@ -130,7 +130,7 @@ export default {
   watch: {
     $route (to) {
       this.isVideo = false
-      store.dispatch('getCompanyList')
+      store.dispatch('getCampaignList')
       console.log('TO', to)
       if (to.name === 'mainPage') {
         axios.get({ url: `${VUE_APP_API_URL}/api/user/0` })
@@ -147,10 +147,10 @@ export default {
       })
   },
   mounted () {
-    this.getAdCompanyList()
+    this.getAdCampaignList()
   },
   methods: {
-    openCompanyDetails () {
+    openCampaignDetails () {
 
     },
     showVideo () {
@@ -160,29 +160,29 @@ export default {
       this.isVideo = false
     },
     push () {
-      router.push({ path: '/company-balance/' + store.getters.GET_COMPANY_LIST[0].Id, query: { isEdit: true } })
+      router.push({ path: '/campaign-balance/' + store.getters.GET_COMPANY_LIST[0].Id, query: { isEdit: true } })
     },
     isMoney () {
       return true
       // return this.user.Amount > 0
     },
-    isFb (company) {
-      return company.FbPageId.length > 0
+    isFb (campaign) {
+      return campaign.FbPageId.length > 0
     },
-    getStatus (company) {
-      // if (company.FbPageId.length === 0) {
+    getStatus (campaign) {
+      // if (campaign.FbPageId.length === 0) {
       //     return "facebook не подключен"
       // }
       if (this.user.Amount === 0) {
         return 'ожидает оплаты'
       }
-      if (!company.IsStarted) {
+      if (!campaign.IsStarted) {
         return 'черновик'
       }
       return 'в работе'
     },
-    getAdCompanyList () {
-      store.dispatch('getCompanyList')
+    getAdCampaignList () {
+      store.dispatch('getCampaignList')
     }
   }
 }

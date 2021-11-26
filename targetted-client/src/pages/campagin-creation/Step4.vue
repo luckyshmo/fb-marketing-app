@@ -121,7 +121,7 @@ import popup from '@src/components/BigPopup.vue'
 
 export default {
   name: 'Step4',
-  props: ['label_cols', 'content_cols', 'company', 'isEdit'],
+  props: ['label_cols', 'content_cols', 'campaign', 'isEdit'],
   components: {
     popup
   },

@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
-	"github.com/sirupsen/logrus"
 
 	//nolint: misspell
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
@@ -19,7 +18,6 @@ const (
 func NewPostgresDB(cfg config.Postgres) (*sqlx.DB, error) {
 	connectionString := "postgres://" + cfg.UserName + ":" + cfg.PAS +
 		"@" + cfg.HOST + ":" + cfg.PORT + "/" + cfg.DBName + "?sslmode=" + cfg.SSLMode
-	logrus.Infof("pg con str: %s", connectionString)
 
 	db, err := sqlx.Open(
 		"pgx",
@@ -34,7 +32,7 @@ func NewPostgresDB(cfg config.Postgres) (*sqlx.DB, error) {
 		return nil, fmt.Errorf("ping pg DB: %w", err)
 	}
 
-	err = migrations.RunPgMigrations()
+	err = migrations.RunPgMigrations(connectionString)
 	if err != nil {
 		return nil, fmt.Errorf("run pg migrations: %w", err)
 	}

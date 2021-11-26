@@ -2,11 +2,13 @@ package logger
 
 import (
 	"log"
-	"time"
+	"os"
 
 	"github.com/getsentry/sentry-go"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
 	"github.com/sirupsen/logrus"
+
+	runtime "github.com/banzaicloud/logrus-runtime-formatter"
 )
 
 func Init(cfg config.Logging) {
@@ -25,11 +27,17 @@ func Init(cfg config.Logging) {
 	} else {
 		logrus.SetLevel(lvl)
 	}
-	if cfg.Environment == "production" {
-		var JSONF = new(logrus.JSONFormatter)
-		JSONF.TimestampFormat = time.RFC3339
-		logrus.SetFormatter(JSONF)
-	}
+
+	formatter := runtime.Formatter{ChildFormatter: &logrus.TextFormatter{
+		FullTimestamp: true,
+	}}
+	formatter.Line = true
+	formatter.File = true
+	logrus.SetFormatter(&formatter)
+	logrus.SetOutput(os.Stdout)
+	logrus.WithFields(logrus.Fields{
+		"file": "main.go",
+	})
 }
 
 func Info(args string) {

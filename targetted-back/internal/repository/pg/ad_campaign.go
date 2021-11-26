@@ -11,17 +11,17 @@ import (
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
 )
 
-const adCompanyTable = "ad_company"
+const adCampaignTable = "ad_campaign"
 
-type AdCompanyPg struct {
+type AdCampaignPg struct {
 	db *sqlx.DB
 }
 
-func NewAdCompanyPg(db *sqlx.DB) *AdCompanyPg {
-	return &AdCompanyPg{db: db}
+func NewAdCampaignPg(db *sqlx.DB) *AdCampaignPg {
+	return &AdCampaignPg{db: db}
 }
 
-func (r *AdCompanyPg) Create(ac models.AdCompany) (uuid.UUID, error) {
+func (r *AdCampaignPg) Create(ac models.AdCampaign) (uuid.UUID, error) {
 	var id uuid.UUID
 
 	query := fmt.Sprintf(`INSERT INTO %s 
@@ -30,11 +30,11 @@ func (r *AdCompanyPg) Create(ac models.AdCompany) (uuid.UUID, error) {
 		images_description, images_small_description, post_description,
 		daily_amount, days)
 		values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id`,
-		adCompanyTable)
+		adCampaignTable)
 
 	row := r.db.QueryRow(query,
 		ac.UserId, ac.FbPageId, ac.BusinessAddress,
-		ac.CompanyField, ac.CompanyName, ac.CompnayPurpose, ac.CreativeStatus,
+		ac.CampaignField, ac.CampaignName, ac.CompnayPurpose, ac.CreativeStatus,
 		ac.ImagesDescription[0], ac.ImagesSmallDescription[0], ac.PostDescription,
 		ac.DailyAmount, ac.Days,
 	)
@@ -46,12 +46,12 @@ func (r *AdCompanyPg) Create(ac models.AdCompany) (uuid.UUID, error) {
 	return id, nil
 }
 
-func (r *AdCompanyPg) Delete(id string) error {
-	query := fmt.Sprintf(`DELETE FROM %s WHERE id = '%s'`, adCompanyTable, id)
+func (r *AdCampaignPg) Delete(id string) error {
+	query := fmt.Sprintf(`DELETE FROM %s WHERE id = '%s'`, adCampaignTable, id)
 	return r.db.QueryRow(query).Err()
 }
 
-func (r *AdCompanyPg) Update(ac models.AdCompany, idStr string) (uuid.UUID, error) {
+func (r *AdCampaignPg) Update(ac models.AdCampaign, idStr string) (uuid.UUID, error) {
 	var id uuid.UUID
 	query := fmt.Sprintf(`UPDATE %s set 
 	user_id = '%s', 
@@ -67,8 +67,8 @@ func (r *AdCompanyPg) Update(ac models.AdCompany, idStr string) (uuid.UUID, erro
 	daily_amount = '%d',
 	days = '%d'
 	WHERE id = '%s' RETURNING id`,
-		adCompanyTable,
-		ac.UserId, ac.FbPageId, ac.BusinessAddress, ac.CompanyField, ac.CompanyName, ac.CompnayPurpose,
+		adCampaignTable,
+		ac.UserId, ac.FbPageId, ac.BusinessAddress, ac.CampaignField, ac.CampaignName, ac.CompnayPurpose,
 		ac.CreativeStatus, ac.ImagesDescription[0], ac.ImagesSmallDescription[0], ac.PostDescription,
 		ac.DailyAmount, ac.Days,
 		idStr)
@@ -79,12 +79,12 @@ func (r *AdCompanyPg) Update(ac models.AdCompany, idStr string) (uuid.UUID, erro
 	return id, nil
 }
 
-func (r *AdCompanyPg) changeStatus(id uuid.UUID, status bool) error {
+func (r *AdCampaignPg) changeStatus(id uuid.UUID, status bool) error {
 	var uuid uuid.UUID
 	query := fmt.Sprintf(`UPDATE %s set 
 	is_started = '%t'
 	WHERE id = '%s' RETURNING id`,
-		adCompanyTable,
+		adCampaignTable,
 		status,
 		id.String())
 	row := r.db.QueryRow(query)
@@ -94,21 +94,21 @@ func (r *AdCompanyPg) changeStatus(id uuid.UUID, status bool) error {
 	return nil
 }
 
-func (r *AdCompanyPg) Start(id uuid.UUID) error {
+func (r *AdCampaignPg) Start(id uuid.UUID) error {
 	return r.changeStatus(id, true)
 }
 
-func (r *AdCompanyPg) Stop(id uuid.UUID) error {
+func (r *AdCampaignPg) Stop(id uuid.UUID) error {
 	return r.changeStatus(id, false)
 }
 
-type adCompanyScan struct {
+type adCampaignScan struct {
 	Id                     uuid.UUID    `db:"id"`
 	UserId                 uuid.UUID    `db:"user_id"`
 	FbPageId               string       `db:"fb_page_id"`
 	BusinessAddress        string       `db:"business_address"` //TODO RENAME
-	CompanyField           string       `db:"field"`
-	CompanyName            string       `db:"name"`
+	CampaignField          string       `db:"field"`
+	CampaignName           string       `db:"name"`
 	CompnayPurpose         string       `db:"purpose"`
 	CreativeStatus         string       `db:"creative_status"`
 	ImagesDescription      string       `db:"images_description"`
@@ -121,28 +121,28 @@ type adCompanyScan struct {
 	StartDate              sql.NullTime `db:"date_started"`
 }
 
-func (r *AdCompanyPg) GetAll(userId uuid.UUID) ([]models.AdCompany, error) {
-	var companyList []models.AdCompany
-	var companyListS []adCompanyScan
+func (r *AdCampaignPg) GetAll(userId uuid.UUID) ([]models.AdCampaign, error) {
+	var campaignList []models.AdCampaign
+	var campaignListS []adCampaignScan
 
 	idString := userId.String()
 
 	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
 	field, name, purpose, creative_status,
 	images_description, images_small_description, post_description, daily_amount, days,
-	is_started, date_created, date_started FROM %s WHERE user_id = '%s'`, adCompanyTable, idString)
-	err := r.db.Select(&companyListS, query)
+	is_started, date_created, date_started FROM %s WHERE user_id = '%s'`, adCampaignTable, idString)
+	err := r.db.Select(&campaignListS, query)
 	if err != nil {
 		return nil, err
 	}
-	for _, c := range companyListS {
-		company := models.AdCompany{
+	for _, c := range campaignListS {
+		campaign := models.AdCampaign{
 			Id:                     c.Id,
 			UserId:                 c.UserId,
 			FbPageId:               c.FbPageId,
 			BusinessAddress:        c.BusinessAddress,
-			CompanyField:           c.CompanyField,
-			CompanyName:            c.CompanyName,
+			CampaignField:          c.CampaignField,
+			CampaignName:           c.CampaignName,
 			CompnayPurpose:         c.CompnayPurpose,
 			CreativeStatus:         c.CreativeStatus,
 			ImagesDescription:      strings.Split(c.ImagesDescription, ","),
@@ -154,46 +154,46 @@ func (r *AdCompanyPg) GetAll(userId uuid.UUID) ([]models.AdCompany, error) {
 			CreationDate:           c.CreationDate,
 		}
 		if c.StartDate.Valid {
-			company.StartDate = c.StartDate.Time
+			campaign.StartDate = c.StartDate.Time
 		}
-		companyList = append(companyList, company)
+		campaignList = append(campaignList, campaign)
 	}
 
-	return companyList, nil
+	return campaignList, nil
 }
 
-func (r *AdCompanyPg) GetByID(companyID string) (models.AdCompany, error) {
-	var company models.AdCompany
-	var scanCompany adCompanyScan
+func (r *AdCampaignPg) GetByID(campaignID string) (models.AdCampaign, error) {
+	var campaign models.AdCampaign
+	var scanCampaign adCampaignScan
 
-	idString := companyID
+	idString := campaignID
 
 	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
 	field, name, purpose, creative_status,
 	images_description, images_small_description, post_description, daily_amount, days,
-	is_started, date_created, date_started FROM %s WHERE id = '%s'`, adCompanyTable, idString)
-	err := r.db.Get(&scanCompany, query)
+	is_started, date_created, date_started FROM %s WHERE id = '%s'`, adCampaignTable, idString)
+	err := r.db.Get(&scanCampaign, query)
 
-	company = models.AdCompany{
-		Id:                     scanCompany.Id,
-		UserId:                 scanCompany.UserId,
-		FbPageId:               scanCompany.FbPageId,
-		BusinessAddress:        scanCompany.BusinessAddress,
-		CompanyField:           scanCompany.CompanyField,
-		CompanyName:            scanCompany.CompanyName,
-		CompnayPurpose:         scanCompany.CompnayPurpose,
-		CreativeStatus:         scanCompany.CreativeStatus,
-		ImagesDescription:      strings.Split(scanCompany.ImagesDescription, ","),
-		ImagesSmallDescription: strings.Split(scanCompany.ImagesSmallDescription, ","),
-		PostDescription:        scanCompany.PostDescription,
-		DailyAmount:            scanCompany.DailyAmount,
-		Days:                   scanCompany.Days,
-		IsStarted:              scanCompany.IsStarted,
-		CreationDate:           scanCompany.CreationDate,
+	campaign = models.AdCampaign{
+		Id:                     scanCampaign.Id,
+		UserId:                 scanCampaign.UserId,
+		FbPageId:               scanCampaign.FbPageId,
+		BusinessAddress:        scanCampaign.BusinessAddress,
+		CampaignField:          scanCampaign.CampaignField,
+		CampaignName:           scanCampaign.CampaignName,
+		CompnayPurpose:         scanCampaign.CompnayPurpose,
+		CreativeStatus:         scanCampaign.CreativeStatus,
+		ImagesDescription:      strings.Split(scanCampaign.ImagesDescription, ","),
+		ImagesSmallDescription: strings.Split(scanCampaign.ImagesSmallDescription, ","),
+		PostDescription:        scanCampaign.PostDescription,
+		DailyAmount:            scanCampaign.DailyAmount,
+		Days:                   scanCampaign.Days,
+		IsStarted:              scanCampaign.IsStarted,
+		CreationDate:           scanCampaign.CreationDate,
 	}
-	if scanCompany.StartDate.Valid {
-		company.StartDate = scanCompany.StartDate.Time
+	if scanCampaign.StartDate.Valid {
+		campaign.StartDate = scanCampaign.StartDate.Time
 	}
 
-	return company, err
+	return campaign, err
 }

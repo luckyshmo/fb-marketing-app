@@ -1,1 +1,0 @@
-ALTER TABLE user_tb ADD column if not exists date_created DATE NOT NULL DEFAULT CURRENT_DATE;

@@ -45,6 +45,7 @@ func run() (err error) {
 	// config
 	time.Sleep(time.Second)
 	cfg := config.Get()
+
 	// logger configuration
 	logger.Init(cfg.Logging)
 	defer sentry.Flush(2 * time.Second)

@@ -4,10 +4,10 @@ import mainPage from '@src/pages/Main.vue'
 import login from '@src/pages/login/Login.vue'
 import questions from '@src/pages/Questions.vue'
 import register from '@src/pages/login/Register.vue'
-import createCompany from '@src/pages/CCnew.vue'
+import createCampaign from '@src/pages/CCnew.vue'
 import imagesPreview from '@src/pages/CreativesPreview.vue'
 import paymentPage from '@src/pages/Payment.vue'
-import CompanyBalance from '@src/pages/CompanyBalance.vue'
+import CampaignBalance from '@src/pages/CampaignBalance.vue'
 import adminka from '@src/pages/Adminka.vue'
 
 Vue.use(Router)
@@ -64,9 +64,9 @@ const router = new Router({
       }
     },
     {
-      path: '/company',
-      name: 'create-company',
-      component: createCompany,
+      path: '/campaign',
+      name: 'create-campaign',
+      component: createCampaign,
       meta: {
         requiresAuth: true
       }
@@ -88,17 +88,17 @@ const router = new Router({
       }
     },
     {
-      path: '/company/:id',
-      name: 'edit-company',
-      component: createCompany,
+      path: '/campaign/:id',
+      name: 'edit-campaign',
+      component: createCampaign,
       meta: {
         requiresAuth: true
       }
     },
     {
-      path: '/company-balance/:id',
-      name: 'company-balance',
-      component: CompanyBalance
+      path: '/campaign-balance/:id',
+      name: 'campaign-balance',
+      component: CampaignBalance
     }
   ]
 })

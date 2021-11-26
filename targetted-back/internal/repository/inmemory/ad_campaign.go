@@ -8,16 +8,16 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var errCompanyNotFound = errors.New("company not found")
+var errCampaignNotFound = errors.New("campaign not found")
 
-type AdCompanyMemory struct {
+type AdCampaignMemory struct {
 }
 
-func NewAdCompanyMemory() *AdCompanyMemory {
-	return &AdCompanyMemory{}
+func NewAdCampaignMemory() *AdCampaignMemory {
+	return &AdCampaignMemory{}
 }
 
-func (r *AdCompanyMemory) Create(ac models.AdCompany) (uuid.UUID, error) {
+func (r *AdCampaignMemory) Create(ac models.AdCampaign) (uuid.UUID, error) {
 	db.Lock()
 	defer db.Unlock()
 
@@ -28,40 +28,40 @@ func (r *AdCompanyMemory) Create(ac models.AdCompany) (uuid.UUID, error) {
 	return id, nil
 }
 
-func (r *AdCompanyMemory) Delete(id string) error {
+func (r *AdCampaignMemory) Delete(id string) error {
 	db.Lock()
 	defer db.Unlock()
 
 	return errors.New("not implemented")
 }
 
-func (r *AdCompanyMemory) Update(ac models.AdCompany, idStr string) (uuid.UUID, error) {
+func (r *AdCampaignMemory) Update(ac models.AdCampaign, idStr string) (uuid.UUID, error) {
 	db.Lock()
 	defer db.Unlock()
 
 	return uuid.Nil, errors.New("not implemented")
 }
 
-func (r *AdCompanyMemory) changeStatus(id uuid.UUID, status bool) error {
+func (r *AdCampaignMemory) changeStatus(id uuid.UUID, status bool) error {
 	db.Lock()
 	defer db.Unlock()
 
 	return errors.New("not implemented")
 }
 
-func (r *AdCompanyMemory) Start(id uuid.UUID) error {
+func (r *AdCampaignMemory) Start(id uuid.UUID) error {
 	return r.changeStatus(id, true)
 }
 
-func (r *AdCompanyMemory) Stop(id uuid.UUID) error {
+func (r *AdCampaignMemory) Stop(id uuid.UUID) error {
 	return r.changeStatus(id, false)
 }
 
-func (r *AdCompanyMemory) GetAll(userId uuid.UUID) ([]models.AdCompany, error) {
+func (r *AdCampaignMemory) GetAll(userId uuid.UUID) ([]models.AdCampaign, error) {
 	db.Lock()
 	defer db.Unlock()
 
-	var userComp []models.AdCompany
+	var userComp []models.AdCampaign
 
 	logrus.Warn(userId)
 	logrus.Warn(db.Users)
@@ -74,19 +74,19 @@ func (r *AdCompanyMemory) GetAll(userId uuid.UUID) ([]models.AdCompany, error) {
 		}
 	}
 	if len(userComp) == 0 {
-		return nil, errCompanyNotFound
+		return nil, errCampaignNotFound
 	}
 	return userComp, nil
 }
 
-func (r *AdCompanyMemory) GetByID(companyID string) (models.AdCompany, error) {
+func (r *AdCampaignMemory) GetByID(campaignID string) (models.AdCampaign, error) {
 	db.Lock()
 	defer db.Unlock()
 	for _, ac := range db.AdCompanies {
-		if ac.Id.String() == companyID {
+		if ac.Id.String() == campaignID {
 			return ac, nil
 		}
 	}
 
-	return models.AdCompany{}, errCompanyNotFound
+	return models.AdCampaign{}, errCampaignNotFound
 }

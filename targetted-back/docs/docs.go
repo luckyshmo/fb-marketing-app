@@ -23,9 +23,9 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/company/": {
+        "/api/campaign/": {
             "get": {
-                "description": "get company list",
+                "description": "get campaign list",
                 "consumes": [
                     "application/json"
                 ],
@@ -33,10 +33,10 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "company"
+                    "campaign"
                 ],
                 "summary": "get all companies",
-                "operationId": "getCompanyList",
+                "operationId": "getCampaignList",
                 "parameters": [
                     {
                         "description": "credentials",
@@ -54,7 +54,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.AdCompany"
+                                "$ref": "#/definitions/models.AdCampaign"
                             }
                         }
                     },
@@ -85,7 +85,7 @@ var doc = `{
                 }
             },
             "post": {
-                "description": "create company",
+                "description": "create campaign",
                 "consumes": [
                     "application/json"
                 ],
@@ -93,10 +93,10 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "company"
+                    "campaign"
                 ],
-                "summary": "create company",
-                "operationId": "createCompany",
+                "summary": "create campaign",
+                "operationId": "createCampaign",
                 "parameters": [
                     {
                         "description": "credentials",
@@ -142,9 +142,9 @@ var doc = `{
                 }
             }
         },
-        "/api/company/:id": {
+        "/api/campaign/:id": {
             "get": {
-                "description": "get company by id",
+                "description": "get campaign by id",
                 "consumes": [
                     "application/json"
                 ],
@@ -152,10 +152,10 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "company"
+                    "campaign"
                 ],
-                "summary": "get company by id",
-                "operationId": "getCompanyByID",
+                "summary": "get campaign by id",
+                "operationId": "getCampaignByID",
                 "parameters": [
                     {
                         "description": "credentials",
@@ -171,7 +171,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.AdCompany"
+                            "$ref": "#/definitions/models.AdCampaign"
                         }
                     },
                     "400": {
@@ -201,7 +201,7 @@ var doc = `{
                 }
             },
             "put": {
-                "description": "update company",
+                "description": "update campaign",
                 "consumes": [
                     "application/json"
                 ],
@@ -209,10 +209,10 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "company"
+                    "campaign"
                 ],
-                "summary": "update company",
-                "operationId": "updateCompany",
+                "summary": "update campaign",
+                "operationId": "updateCampaign",
                 "parameters": [
                     {
                         "description": "credentials",
@@ -228,7 +228,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.AdCompany"
+                            "$ref": "#/definitions/models.AdCampaign"
                         }
                     },
                     "400": {
@@ -258,9 +258,9 @@ var doc = `{
                 }
             }
         },
-        "/api/company/:id/images/": {
+        "/api/campaign/:id/images/": {
             "get": {
-                "description": "get company images names",
+                "description": "get campaign images names",
                 "consumes": [
                     "application/json"
                 ],
@@ -268,10 +268,10 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "company"
+                    "campaign"
                 ],
-                "summary": "get company images names",
-                "operationId": "getCompanyImages",
+                "summary": "get campaign images names",
+                "operationId": "getCampaignImages",
                 "parameters": [
                     {
                         "description": "credentials",
@@ -513,17 +513,17 @@ var doc = `{
                 }
             }
         },
-        "models.AdCompany": {
+        "models.AdCampaign": {
             "type": "object",
             "properties": {
                 "businessAddress": {
                     "description": "TODO RENAME",
                     "type": "string"
                 },
-                "companyField": {
+                "campaignField": {
                     "type": "string"
                 },
-                "companyName": {
+                "campaignName": {
                     "type": "string"
                 },
                 "compnayPurpose": {

@@ -34,7 +34,7 @@ services:
     build: ./targetted-back/
     command: ./targetted-back
     image: targetted-back
-    env_file: ./targetted-back/.env.dev
+    env_file: ./targetted-back/.env
     volumes:
       - ./images:/images
     ports:

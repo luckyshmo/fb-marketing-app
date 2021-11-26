@@ -20,27 +20,27 @@ type User interface {
 	SetBalance(userId uuid.UUID, amount float64) error
 }
 
-type AdCompany interface {
-	Create(ac models.AdCompany) (uuid.UUID, error)
+type AdCampaign interface {
+	Create(ac models.AdCampaign) (uuid.UUID, error)
 	Delete(idStr string) error
-	Update(ac models.AdCompany, idStr string) (uuid.UUID, error)
+	Update(ac models.AdCampaign, idStr string) (uuid.UUID, error)
 	Start(id uuid.UUID) error
 	Stop(id uuid.UUID) error
-	GetAll(userID uuid.UUID) ([]models.AdCompany, error)
-	GetByID(companyID string) (models.AdCompany, error) //TODO ID -> uuid
+	GetAll(userID uuid.UUID) ([]models.AdCampaign, error)
+	GetByID(campaignID string) (models.AdCampaign, error) //TODO ID -> uuid
 }
 
 type Repository struct {
 	Authorization Authorization
 	User          User
-	AdCompany     AdCompany
+	AdCampaign    AdCampaign
 }
 
 func NewSqlxRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: pg.NewAuthPostgres(db),
 		User:          pg.NewUserPG(db),
-		AdCompany:     pg.NewAdCompanyPg(db),
+		AdCampaign:    pg.NewAdCampaignPg(db),
 	}
 }
 
@@ -49,6 +49,6 @@ func NewInMemoryRepository() *Repository {
 	return &Repository{
 		Authorization: inmemory.NewAuthMemory(),
 		User:          inmemory.NewUserMemory(),
-		AdCompany:     inmemory.NewAdCompanyMemory(),
+		AdCampaign:    inmemory.NewAdCampaignMemory(),
 	}
 }
