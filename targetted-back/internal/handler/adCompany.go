@@ -24,39 +24,39 @@ const (
 )
 
 // @Summary get all companies
-// @Tags company
-// @Description get company list
-// @ID getCompanyList
+// @Tags campaign
+// @Description get campaign list
+// @ID getCampaignList
 // @Accept  json
 // @Produce  json
 // @Param input body signInInput true "credentials"
-// @Success 200 {object} []models.AdCompany
+// @Success 200 {object} []models.AdCampaign
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
-// @Router /api/company/ [get]
-func (h *Handler) getCompanyList(c *gin.Context) {
+// @Router /api/campaign/ [get]
+func (h *Handler) getCampaignList(c *gin.Context) {
 	userID, err := getUserId(c)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 	}
-	companyList, err := h.services.AdCompany.GetAll(userID)
+	campaignList, err := h.services.AdCampaign.GetAll(userID)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	sort.SliceStable(companyList, func(i, j int) bool {
-		return companyList[i].CreationDate.After(companyList[j].CreationDate)
+	sort.SliceStable(campaignList, func(i, j int) bool {
+		return campaignList[i].CreationDate.After(campaignList[j].CreationDate)
 	})
 
-	sendStatusResponse(c, http.StatusOK, companyList)
+	sendStatusResponse(c, http.StatusOK, campaignList)
 }
 
-// @Summary get company images names
-// @Tags company
-// @Description get company images names
-// @ID getCompanyImages
+// @Summary get campaign images names
+// @Tags campaign
+// @Description get campaign images names
+// @ID getCampaignImages
 // @Accept  json
 // @Produce  json
 // @Param input body signInInput true "credentials"
@@ -64,16 +64,16 @@ func (h *Handler) getCompanyList(c *gin.Context) {
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
-// @Router /api/company/:id/images/ [get]
-func (h *Handler) getCompanyImages(c *gin.Context) {
+// @Router /api/campaign/:id/images/ [get]
+func (h *Handler) getCampaignImages(c *gin.Context) {
 	userID, err := getUserId(c)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
-	companyIDstring := c.Param("id")
+	campaignIDstring := c.Param("id")
 
-	path := "./images/" + userID.String() + "/" + companyIDstring
+	path := "./images/" + userID.String() + "/" + campaignIDstring
 
 	files, err := ioutil.ReadDir(path + storiesFolder)
 	if err != nil {
@@ -98,28 +98,28 @@ func (h *Handler) getCompanyImages(c *gin.Context) {
 	sendStatusResponse(c, http.StatusOK, names)
 }
 
-// @Summary get company by id
-// @Tags company
-// @Description get company by id
-// @ID getCompanyByID
+// @Summary get campaign by id
+// @Tags campaign
+// @Description get campaign by id
+// @ID getCampaignByID
 // @Accept  json
 // @Produce  json
 // @Param input body signInInput true "credentials"
-// @Success 200 {object} models.AdCompany
+// @Success 200 {object} models.AdCampaign
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
-// @Router /api/company/:id [get]
-func (h *Handler) getCompanyByID(c *gin.Context) {
+// @Router /api/campaign/:id [get]
+func (h *Handler) getCampaignByID(c *gin.Context) {
 	userID, err := getUserId(c)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	companyIDstring := c.Param("id")
+	campaignIDstring := c.Param("id")
 
-	company, err := h.services.AdCompany.GetByID(userID, companyIDstring) //TODO probably delete userID?
+	campaign, err := h.services.AdCampaign.GetByID(userID, campaignIDstring) //TODO probably delete userID?
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -131,12 +131,12 @@ func (h *Handler) getCompanyByID(c *gin.Context) {
 		return
 	}
 
-	company.CurrentAmount = user.Amount //TODO ну как бы бред
+	campaign.CurrentAmount = user.Amount //TODO ну как бы бред
 
-	sendStatusResponse(c, http.StatusOK, company)
+	sendStatusResponse(c, http.StatusOK, campaign)
 }
 
-func (h *Handler) deleteCompany(c *gin.Context) {
+func (h *Handler) deleteCampaign(c *gin.Context) {
 	// id := c.Param("id") //id in request //TODO!
 
 	// uuid, err := uuid.Parse(id)
@@ -144,25 +144,25 @@ func (h *Handler) deleteCompany(c *gin.Context) {
 	// 	sendErrorResponse(c, http.StatusBadRequest, err.Error())
 	// 	return
 	// }
-	companyIDstring := c.Param("id")
-	if err := h.services.AdCompany.Delete(companyIDstring); err != nil {
+	campaignIDstring := c.Param("id")
+	if err := h.services.AdCampaign.Delete(campaignIDstring); err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 	}
 }
 
-// @Summary update company
-// @Tags company
-// @Description update company
-// @ID updateCompany
+// @Summary update campaign
+// @Tags campaign
+// @Description update campaign
+// @ID updateCampaign
 // @Accept  json
 // @Produce  json
 // @Param input body signInInput true "credentials"
-// @Success 200 {object} models.AdCompany
+// @Success 200 {object} models.AdCampaign
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
-// @Router /api/company/:id [put]
-func (h *Handler) updateCompany(c *gin.Context) {
+// @Router /api/campaign/:id [put]
+func (h *Handler) updateCampaign(c *gin.Context) {
 
 	// id := c.Param("id") //id in request //TODO!
 
@@ -171,37 +171,37 @@ func (h *Handler) updateCompany(c *gin.Context) {
 	// 	sendErrorResponse(c, http.StatusBadRequest, err.Error())
 	// 	return
 	// }
-	companyIDstring := c.Param("id")
-	if companyIDstring == "" {
+	campaignIDstring := c.Param("id")
+	if campaignIDstring == "" {
 		sendErrorResponse(c, http.StatusInternalServerError, "ID is empty")
 		return
 	}
 
-	company, err := parseCompanyFromContext(c)
+	campaign, err := parseCampaignFromContext(c)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	companyID, err := h.services.AdCompany.Update(company, companyIDstring)
+	campaignID, err := h.services.AdCampaign.Update(campaign, campaignIDstring)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	err = createImagesForCompany(c, company.UserId, companyID)
+	err = createImagesForCampaign(c, campaign.UserId, campaignID)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	sendStatusResponse(c, http.StatusOK, company)
+	sendStatusResponse(c, http.StatusOK, campaign)
 }
 
-// @Summary create company
-// @Tags company
-// @Description create company
-// @ID createCompany
+// @Summary create campaign
+// @Tags campaign
+// @Description create campaign
+// @ID createCampaign
 // @Accept  json
 // @Produce  json
 // @Param input body signInInput true "credentials"
@@ -209,31 +209,31 @@ func (h *Handler) updateCompany(c *gin.Context) {
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
-// @Router /api/company/ [post]
-func (h *Handler) createAdCompany(c *gin.Context) {
+// @Router /api/campaign/ [post]
+func (h *Handler) createAdCampaign(c *gin.Context) {
 
-	company, err := parseCompanyFromContext(c)
+	campaign, err := parseCampaignFromContext(c)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	companyID, err := h.services.AdCompany.Create(company)
+	campaignID, err := h.services.AdCampaign.Create(campaign)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	err = createImagesForCompany(c, company.UserId, companyID)
+	err = createImagesForCampaign(c, campaign.UserId, campaignID)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	sendStatusResponse(c, http.StatusOK, companyID)
+	sendStatusResponse(c, http.StatusOK, campaignID)
 }
 
-func (h *Handler) startAdCompany(c *gin.Context) {
+func (h *Handler) startAdCampaign(c *gin.Context) {
 	id := c.Param("id") //id in request
 
 	uuid, err := uuid.Parse(id)
@@ -242,7 +242,7 @@ func (h *Handler) startAdCompany(c *gin.Context) {
 		return
 	}
 
-	err = h.services.AdCompany.Start(uuid)
+	err = h.services.AdCampaign.Start(uuid)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -250,13 +250,13 @@ func (h *Handler) startAdCompany(c *gin.Context) {
 
 	//TODO:
 	//money service remove payment
-	//company service change status
+	//campaign service change status
 
-	sendStatusResponse(c, http.StatusOK, "Company startted")
+	sendStatusResponse(c, http.StatusOK, "Campaign startted")
 
 }
 
-func (h *Handler) stopAdCompany(c *gin.Context) {
+func (h *Handler) stopAdCampaign(c *gin.Context) {
 	id := c.Param("id") //id in request
 
 	uuid, err := uuid.Parse(id)
@@ -265,13 +265,13 @@ func (h *Handler) stopAdCompany(c *gin.Context) {
 		return
 	}
 
-	err = h.services.AdCompany.Stop(uuid)
+	err = h.services.AdCampaign.Stop(uuid)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	sendStatusResponse(c, http.StatusOK, "Company stopped")
+	sendStatusResponse(c, http.StatusOK, "Campaign stopped")
 }
 
 func writeMultiPartImage(multipartFile *multipart.FileHeader, path string) error {
@@ -302,14 +302,14 @@ func writeMultiPartImage(multipartFile *multipart.FileHeader, path string) error
 	return nil
 }
 
-func parseCompanyFromContext(c *gin.Context) (models.AdCompany, error) {
+func parseCampaignFromContext(c *gin.Context) (models.AdCampaign, error) {
 	userID, err := getUserId(c)
 	if err != nil {
-		return models.AdCompany{}, fmt.Errorf("get user id form context: %w", err)
+		return models.AdCampaign{}, fmt.Errorf("get user id form context: %w", err)
 	}
 
 	if err = c.Request.ParseMultipartForm(104857600); err != nil { // 100 MB
-		return models.AdCompany{}, fmt.Errorf("parse multiparform: %w", err)
+		return models.AdCampaign{}, fmt.Errorf("parse multiparform: %w", err)
 	}
 
 	v := c.Request.MultipartForm.Value
@@ -323,12 +323,12 @@ func parseCompanyFromContext(c *gin.Context) (models.AdCompany, error) {
 	if err != nil {
 		logger.Error(fmt.Errorf("parse days: %w", err))
 	}
-	company := models.AdCompany{
+	campaign := models.AdCampaign{
 		UserId:                 userID,
 		FbPageId:               v["FbPageId"][0],
 		BusinessAddress:        v["BusinessAddress"][0],
-		CompanyField:           v["CompanyField"][0],
-		CompanyName:            v["CompanyName"][0],
+		CampaignField:          v["CampaignField"][0],
+		CampaignName:           v["CampaignName"][0],
 		CompnayPurpose:         v["CompnayPurpose"][0],
 		CreativeStatus:         v["CreativeStatus"][0],
 		ImagesDescription:      v["ImagesDescription"],
@@ -338,11 +338,11 @@ func parseCompanyFromContext(c *gin.Context) (models.AdCompany, error) {
 		Days:                   days,
 	}
 
-	return company, nil
+	return campaign, nil
 }
 
-func createImagesForCompany(c *gin.Context, userId uuid.UUID, companyID uuid.UUID) error {
-	path := "images/" + userId.String() + "/" + companyID.String()
+func createImagesForCampaign(c *gin.Context, userId uuid.UUID, campaignID uuid.UUID) error {
+	path := "images/" + userId.String() + "/" + campaignID.String()
 
 	err := os.MkdirAll(path+storiesFolder, os.ModePerm)
 	if err != nil {

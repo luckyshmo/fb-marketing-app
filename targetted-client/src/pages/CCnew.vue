@@ -32,7 +32,7 @@
             :label_cols="label_cols"
             :content_cols="content_cols"
             :isEdit="isEdit"
-            :company="company"
+            :campaign="campaign"
             v-if="currentStep ===  2"
             @next="saveAndNext">
             <template v-slot:header>
@@ -44,7 +44,7 @@
             :label_cols="label_cols"
             :content_cols="content_cols"
             :isEdit="isEdit"
-            :company="company"
+            :campaign="campaign"
             v-if="currentStep ===  3"
             @next="saveAndNext">
             <template v-slot:header>
@@ -56,7 +56,7 @@
             :label_cols="label_cols"
             :content_cols="content_cols"
             :isEdit="isEdit"
-            :company="company"
+            :campaign="campaign"
             v-if="currentStep ===  4"
             @next="saveAndNext">
             <template v-slot:header>
@@ -68,7 +68,7 @@
             :label_cols="label_cols"
             :content_cols="content_cols"
             :isEdit="isEdit"
-            :company="company"
+            :campaign="campaign"
             v-if="currentStep ===  4"
             @next="saveAndNext">
             <template v-slot:header>
@@ -120,12 +120,12 @@ import Step3 from './campagin-creation/Step3.vue'
 import Step4 from './campagin-creation/Step4.vue'
 import Step5 from './campagin-creation/Step5.vue'
 
-const companyDefault = {
+const campaignDefault = {
   FbPageId: '',
   Id: '',
-  CompanyName: '',
-  CompanyPurpose: 'Сообщения в директ',
-  CompanyField: '',
+  CampaignName: '',
+  CampaignPurpose: 'Сообщения в директ',
+  CampaignField: '',
   BusinessAddress: '',
   Images: [],
   ImagesDescription: [],
@@ -139,7 +139,7 @@ const companyDefault = {
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
-  name: 'CreateCompany',
+  name: 'CreateCampaign',
   mixins: [validationMixin],
   components: {
     // popup,
@@ -156,14 +156,14 @@ export default {
       totalSteps: 4,
       store,
       isLoading: false,
-      isCompanyExist: false,
+      isCampaignExist: false,
       isInfoPopupVisible: false,
       isRequestSent: false,
       pageSubmitted: false,
       imageNames: [],
       ImagesSmall: [],
       Images: [],
-      company: companyDefault,
+      campaign: campaignDefault,
       interval: false,
       displayNumber: 0
     }
@@ -184,12 +184,12 @@ export default {
       window.scrollTo(0, 100)
       this.isLoading = false
       if (!(typeof to.params.id === 'undefined')) {
-        axios.get({ url: `${VUE_APP_API_URL}/api/company/${to.params.id}` })
+        axios.get({ url: `${VUE_APP_API_URL}/api/campaign/${to.params.id}` })
           .then(resp => {
-            this.company = resp.data
+            this.campaign = resp.data
 
             this.getImages()
-            if (this.company.FbPageId !== '') {
+            if (this.campaign.FbPageId !== '') {
               this.isRequestSent = true
               this.pageSubmitted = true
             }
@@ -227,12 +227,12 @@ export default {
   beforeMount () {
     console.log('BM ', store.getters.GET_EMAIL, 'campId:', this.$router.history.current?.params?.id)
     if (!this.$router.history.current?.params?.id === 'undefined') {
-      axios.get({ url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}` })
+      axios.get({ url: `${VUE_APP_API_URL}/api/campaign/${this.$router.history.current.params.id}` })
         .then(resp => {
-          this.company = resp.data
+          this.campaign = resp.data
 
           this.getImages()
-          if (this.company.FbPageId !== '') {
+          if (this.campaign.FbPageId !== '') {
             this.isRequestSent = true
             this.pageSubmitted = true
           }
@@ -247,13 +247,13 @@ export default {
     }
   },
   validations: {
-    company: {
-      CompanyName: {
+    campaign: {
+      CampaignName: {
         required,
         maxLength: maxLength(30),
         minLength: minLength(3)
       },
-      CompanyField: {
+      CampaignField: {
         required
       }
     }
@@ -274,15 +274,15 @@ export default {
     },
     saveAndNext (data) {
       if (data) {
-        this.company = {
-          ...this.company,
+        this.campaign = {
+          ...this.campaign,
           ...data
         }
       }
 
       const nextStepNumber = this.currentStep + 1
       if (this.totalSteps < nextStepNumber) {
-        this.updateCompany()
+        this.updateCampaign()
         localStorage.setItem('campagin_step', 1)
 
         // CHECK MONEY ENOUGH
@@ -294,27 +294,27 @@ export default {
 
       // todo: mv to service
       localStorage.setItem('campagin_step', nextStepNumber)
-      localStorage.setItem('campagin_data', JSON.stringify(this.company))
+      localStorage.setItem('campagin_data', JSON.stringify(this.campaign))
 
       if (!this.isEdit && this.currentStep === 2) {
-        this.createCompany()
+        this.createCampaign()
       } else {
-        this.updateCompany()
+        this.updateCampaign()
       }
       this.currentStep++
     },
     reset () {
-      this.isCompanyExist = false
+      this.isCampaignExist = false
       this.Images = []
       this.ImagesSmall = []
       this.isLoading = false
-      this.company = companyDefault
+      this.campaign = campaignDefault
       this.isInfoPopupVisible = false
       this.isRequestSent = false
       this.pageSubmitted = false
     },
     getImages () {
-      axios.get({ url: `${VUE_APP_API_URL}/api/company/${this.company.Id}/images/` })
+      axios.get({ url: `${VUE_APP_API_URL}/api/campaign/${this.campaign.Id}/images/` })
         .then(resp => {
           if (resp.data == null) {
             this.imageNames = []
@@ -342,11 +342,11 @@ export default {
       }
     },
 
-    updateCompany () {
-      store.dispatch('saveCompany', this.company)
+    updateCampaign () {
+      store.dispatch('saveCampaign', this.campaign)
     },
 
-    createCompany () {
+    createCampaign () {
       if (!this.isEdit) { // TODO isEdit = isInView for some time
         // this.$v.$touch()
         // if (this.$v.$anyError) {
@@ -358,10 +358,10 @@ export default {
 
         if (!this.isEdit) {
           console.log('dispatch')
-          store.dispatch('saveCompany', this.company)
+          store.dispatch('saveCampaign', this.campaign)
             .then((resp) => {
               this.reset()
-              router.push({ path: `/company-balance/${resp.data}`, query: {} }) // TODO QUERY
+              router.push({ path: `/campaign-balance/${resp.data}`, query: {} }) // TODO QUERY
             })
             .catch(err => {
               this.isLoading = false
@@ -369,8 +369,8 @@ export default {
               // console.log(err.response)
               // console.log(err.response.data)
               // console.log(err.response.data.message)
-              if (err.response.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
-                this.isCompanyExist = true
+              if (err.response.data.message === 'pq: duplicate key value violates unique constraint "ad_campaign_name_user_id_key"') {
+                this.isCampaignExist = true
               }
 
               // TODO: remove, replaced by axios interceptor
@@ -382,15 +382,15 @@ export default {
               // }
             })
         } else {
-          axios.get({ url: `${VUE_APP_API_URL}/api/company/${this.company.Id}`, data: companyData })
+          axios.get({ url: `${VUE_APP_API_URL}/api/campaign/${this.campaign.Id}`, data: campaignData })
             .then(() => {
-              router.push({ path: `/company-balance/${this.company.Id}`, query: { isEdit: false } })
+              router.push({ path: `/campaign-balance/${this.campaign.Id}`, query: { isEdit: false } })
             })
             .catch(err => {
               this.isLoading = false
               console.log(err)
-              if (err.response?.data.message === 'pq: duplicate key value violates unique constraint "ad_company_name_user_id_key"') {
-                this.isCompanyExist = true
+              if (err.response?.data.message === 'pq: duplicate key value violates unique constraint "ad_campaign_name_user_id_key"') {
+                this.isCampaignExist = true
               }
 
               // TODO: remove, replaced by axios interceptor
@@ -403,7 +403,7 @@ export default {
             })
         }
       } else {
-        router.push({ path: `/company-balance/${this.company.Id}`, query: { isEdit: false } })
+        router.push({ path: `/campaign-balance/${this.campaign.Id}`, query: { isEdit: false } })
       }
     },
 

@@ -20,55 +20,55 @@ function buildFormData (formData, data, parentKey) {
 const jsonToFormData = (data, isEdit) => {
   console.log(data, isEdit)
   // todo, from SO
-  const companyData = new FormData()
-  buildFormData(companyData, data)
+  const campaignData = new FormData()
+  buildFormData(campaignData, data)
 
-  // companyData.append('FbPageId', data.FbPageId)
+  // campaignData.append('FbPageId', data.FbPageId)
   // if (isEdit) {
-  //   companyData.append('Id', data.Id)
+  //   campaignData.append('Id', data.Id)
   // }
-  // companyData.append('CompanyName', data.CompanyName)
-  // companyData.append('CompanyPurpose', data.CompanyPurpose)
-  // companyData.append('CompanyField', data.CompanyField)
-  // companyData.append('BusinessAddress', data.BusinessAddress)
-  // companyData.append('ImagesDescription', data.ImagesDescription)
-  // companyData.append('ImagesSmallDescription', data.ImagesSmallDescription)
-  // companyData.append('CreativeStatus', data.CreativeStatus)
-  // companyData.append('PostDescription', data.PostDescription)
-  // companyData.append('DailyAmount', data.DailyAmount)
-  // companyData.append('Days', data.Days)
+  // campaignData.append('CampaignName', data.CampaignName)
+  // campaignData.append('CampaignPurpose', data.CampaignPurpose)
+  // campaignData.append('CampaignField', data.CampaignField)
+  // campaignData.append('BusinessAddress', data.BusinessAddress)
+  // campaignData.append('ImagesDescription', data.ImagesDescription)
+  // campaignData.append('ImagesSmallDescription', data.ImagesSmallDescription)
+  // campaignData.append('CreativeStatus', data.CreativeStatus)
+  // campaignData.append('PostDescription', data.PostDescription)
+  // campaignData.append('DailyAmount', data.DailyAmount)
+  // campaignData.append('Days', data.Days)
   // Array.from(data.ImagesSmall).forEach(Image => {
-  //   companyData.append('ImageSmall', Image)
+  //   campaignData.append('ImageSmall', Image)
   // })
   // Array.from(data.Images).forEach(Image => {
-  //   companyData.append('Image', Image)
+  //   campaignData.append('Image', Image)
   // })
 
-  return companyData
+  return campaignData
 }
 
 const actions = {
-  saveCompany ({ commit }, companyData) {
-    const data = jsonToFormData(companyData)
-    const url = `${VUE_APP_API_URL}/api/company/`
+  saveCampaign ({ commit }, campaignData) {
+    const data = jsonToFormData(campaignData)
+    const url = `${VUE_APP_API_URL}/api/campaign/`
 
     return new Promise((resolve, reject) => {
       commit('save_request') // TOdo
       axios.post(url, data)
         .then(resp => {
-          axios.get(`${VUE_APP_API_URL}/api/company/`)
+          axios.get(`${VUE_APP_API_URL}/api/campaign/`)
             .then(resp => {
               console.log('user companies resp', resp)
-              localStorage.setItem('user_company', resp.data)
-              commit('set_user_company', resp.data)
+              localStorage.setItem('user_campaign', resp.data)
+              commit('set_user_campaign', resp.data)
               resolve(resp)
             })
             .catch(err => {
               console.log(err)
               reject(err)
             })
-            // localStorage.setItem('user_company', resp.data) //?
-            // commit('set_user_company', resp.data) //?
+            // localStorage.setItem('user_campaign', resp.data) //?
+            // commit('set_user_campaign', resp.data) //?
           resolve(resp)
         })
         .catch(err => {
@@ -80,14 +80,14 @@ const actions = {
         })
     })
   },
-  updateCompany ({ commit }, companyData) {
-    const data = jsonToFormData(companyData, true)
+  updateCampaign ({ commit }, campaignData) {
+    const data = jsonToFormData(campaignData, true)
 
     const id = ''
     return new Promise((resolve, reject) => {
       commit('save_request') // TOdo
       debugger
-      const url = `${VUE_APP_API_URL}/api/company/${id}`
+      const url = `${VUE_APP_API_URL}/api/campaign/${id}`
       axios.put(url, { data })
         .then(resp => {
           resolve(resp)
@@ -98,13 +98,13 @@ const actions = {
         })
     })
   },
-  getCompanyList ({ commit }) {
+  getCampaignList ({ commit }) {
     return new Promise((resolve, reject) => {
-      const url = `${VUE_APP_API_URL}/api/company/`
+      const url = `${VUE_APP_API_URL}/api/campaign/`
       axios.get(url)
         .then(resp => {
-          localStorage.setItem('user_company', resp.data)
-          commit('set_user_company', resp.data)
+          localStorage.setItem('user_campaign', resp.data)
+          commit('set_user_campaign', resp.data)
           resolve(resp)
         })
         .catch(err => {
@@ -113,9 +113,9 @@ const actions = {
         })
     })
   },
-  getCompanyByID ({ commit }, id) {
-    function getCompany (id) {
-      const url = `${VUE_APP_API_URL}/api/company/${id}`
+  getCampaignByID ({ commit }, id) {
+    function getCampaign (id) {
+      const url = `${VUE_APP_API_URL}/api/campaign/${id}`
       return axios.get(url)
         .then(resp => {
           return resp.data
@@ -124,8 +124,8 @@ const actions = {
           console.log(err)
         })
     }
-    function getCompanyImages (id) {
-      return axios.get({ url: `${VUE_APP_API_URL}/api/company/${id}/images/`, timeout })
+    function getCampaignImages (id) {
+      return axios.get({ url: `${VUE_APP_API_URL}/api/campaign/${id}/images/`, timeout })
         .then(resp => {
           return resp.data
         })
@@ -133,14 +133,14 @@ const actions = {
           console.log(err)
         })
     }
-    Promise.all([getCompany(id), getCompanyImages(id)])
+    Promise.all([getCampaign(id), getCampaignImages(id)])
       .then(function (results) {
-        const companyData = results[0]
+        const campaignData = results[0]
         const imagesNames = results[1]
-        console.log(companyData)
+        console.log(campaignData)
         console.log('im', imagesNames)
-        commit('set_adCompany', companyData)
-        commit('set_adCompanyImages', imagesNames) // TODO
+        commit('set_adCampaign', campaignData)
+        commit('set_adCampaignImages', imagesNames) // TODO
       })
   },
   login ({ commit }, user) {

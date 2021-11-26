@@ -15,7 +15,7 @@
           <p>Выберите страницу которую хотите привязать</p>
           <b-form-group label="Выберите страницу" :label-cols="label_cols" :content-cols="content_cols"
             id="input-group-main" label-for="input-horizontal">
-            <b-form-radio-group v-model="company.FbPageId" :options="store.getters.GET_FB_PAGES"></b-form-radio-group>
+            <b-form-radio-group v-model="campaign.FbPageId" :options="store.getters.GET_FB_PAGES"></b-form-radio-group>
           </b-form-group>
         </div>
         <b-button class="main-button" @click="sendFbRequest()">
@@ -34,7 +34,7 @@
       <!-- <div v-if="pageSubmitted">
         <div class="c-status" style="margin-top: 30px; max-width: 800px">
           <div class="elipse" id="green"></div>
-          <p class="c-status-text" id="c-status-text-u" style="text-align: left;">Страница {{company.FbPageId}} привязана
+          <p class="c-status-text" id="c-status-text-u" style="text-align: left;">Страница {{campaign.FbPageId}} привязана
             к targetted</p>
         </div>
       </div>
@@ -52,18 +52,18 @@
         label-for="input-horizontal">
         <b-form-radio-group
           :disabled="isEdit"
-          v-model="company.CompanyTarget"
+          v-model="campaign.CampaignTarget"
           :options="['Аккаунт в Instagram или Facebook', 'Сайт']"
           class="app-new-radio" />
-<!--          @change="setFieldValue('CompanyTarget', $event)" />-->
+<!--          @change="setFieldValue('CampaignTarget', $event)" />-->
 <!--        <small-->
-<!--          v-if="customErrors.company.CompanyTarget"-->
+<!--          v-if="customErrors.campaign.CampaignTarget"-->
 <!--          class="error-message">-->
 <!--          Не указана цель рекламы-->
 <!--        </small>-->
       </b-form-group>
 
-      <div v-if="this.company.CompanyTarget !== undefined">
+      <div v-if="this.campaign.CampaignTarget !== undefined">
 
         <b-form-group
           label="Ссылка на аккаунт"
@@ -73,11 +73,11 @@
           label-for="input-horizontal">
           <b-form-input class="form-input"
                         :disabled="isEdit"
-                        :state="$v.company.AccountURL.$dirty ? !$v.company.AccountURL.$error : null"
-                        v-model="$v.company.AccountURL.$model"
+                        :state="$v.campaign.AccountURL.$dirty ? !$v.campaign.AccountURL.$error : null"
+                        v-model="$v.campaign.AccountURL.$model"
                         placeholder="Введите ссылку" />
           <small
-            v-if="$v.company.AccountURL.$dirty && !$v.company.AccountURL.required"
+            v-if="$v.campaign.AccountURL.$dirty && !$v.campaign.AccountURL.required"
             class="error-message">
             Укажите URL
           </small>
@@ -91,16 +91,16 @@
           label-for="input-horizontal">
           <b-form-select
             class="form-select"
-            v-model="company.CompanyFieldArea"
+            v-model="campaign.CampaignFieldArea"
             :options="['Выберите из спиcка', 'Интернет-реклама', 'Сайт']"
-            @change="setFieldValue('CompanyFieldArea', $event)" />
+            @change="setFieldValue('CampaignFieldArea', $event)" />
           <p
-            v-if="company.CompanyFieldArea === 'Интернет-реклама'"
+            v-if="campaign.CampaignFieldArea === 'Интернет-реклама'"
             class="app-new-info__bottom">
             Стоимость перехода по рекламе ~ 10–30 ₽
           </p>
           <small
-            v-if="customErrors.company.CompanyFieldArea"
+            v-if="customErrors.campaign.CampaignFieldArea"
             class="error-message">
             Не указана cфера деятельности
           </small>
@@ -118,14 +118,14 @@
           <b-form-textarea
             class="form-input"
             :disabled="isEdit"
-            :state="$v.company.CompanyField.$dirty ? !$v.company.CompanyField.$error : null"
-            v-model="$v.company.CompanyField.$model"
+            :state="$v.campaign.CampaignField.$dirty ? !$v.campaign.CampaignField.$error : null"
+            v-model="$v.campaign.CampaignField.$model"
             rows="6"
             max-rows="9"
             placeholder="Введите описание">
           </b-form-textarea>
           <small
-            v-if="$v.company.CompanyField.$dirty && !$v.company.CompanyField.required"
+            v-if="$v.campaign.CampaignField.$dirty && !$v.campaign.CampaignField.required"
             class="error-message">
             Пустое поле
           </small>
@@ -139,18 +139,18 @@
         <!--      label-for="input-horizontal">-->
         <!--      <b-form-input-->
         <!--        class="form-input"-->
-        <!--        v-model="$v.company.CompanyName.$model"-->
-        <!--        :state="$v.company.CompanyName.$dirty ? !$v.company.CompanyName.$error : null"-->
+        <!--        v-model="$v.campaign.CampaignName.$model"-->
+        <!--        :state="$v.campaign.CampaignName.$dirty ? !$v.campaign.CampaignName.$error : null"-->
         <!--        :disabled="isEdit"-->
         <!--        placeholder="Введите название"-->
         <!--        @click="resetNameErr()">-->
         <!--      </b-form-input>-->
         <!--      <small-->
-        <!--        v-if="$v.company.CompanyName.$dirty && !$v.company.CompanyName.required"-->
+        <!--        v-if="$v.campaign.CampaignName.$dirty && !$v.campaign.CampaignName.required"-->
         <!--        class="error-message">-->
         <!--        Название должно быть между 3 и 30 символами-->
         <!--      </small>-->
-        <!--      <small v-if="isCompanyExist" class="error-message">-->
+        <!--      <small v-if="isCampaignExist" class="error-message">-->
         <!--        Кампания с таким именем уже создана-->
         <!--      </small>-->
         <!--    </b-form-group>-->
@@ -167,12 +167,12 @@
           <b-form-input
             class="form-input"
             :disabled="isEdit"
-            :state="$v.company.BusinessAddress ? !$v.company.BusinessAddress.$error : null"
-            v-model="$v.company.BusinessAddress.$model"
+            :state="$v.campaign.BusinessAddress ? !$v.campaign.BusinessAddress.$error : null"
+            v-model="$v.campaign.BusinessAddress.$model"
             placeholder="Город или улица">
           </b-form-input>
           <small
-            v-if="$v.company.BusinessAddress.$dirty && !$v.company.BusinessAddress.required"
+            v-if="$v.campaign.BusinessAddress.$dirty && !$v.campaign.BusinessAddress.required"
             class="error-message">
             Укажите адрес
           </small>
@@ -185,7 +185,7 @@
           id="input-group-main"
           label-for="input-horizontal">
           <b-form-radio-group
-            v-model="company.CompanyPurpose"
+            v-model="campaign.CampaignPurpose"
             :disabled="isEdit"
             class="app-new-radio"
             :options="[
@@ -269,8 +269,8 @@ export default {
         // minLength: minLength(7)
       }
     },
-    company: {
-      CompanyName: {
+    campaign: {
+      CampaignName: {
         required,
         maxLength: maxLength(30),
         minLength: minLength(3)
@@ -282,10 +282,10 @@ export default {
         required
         // minLength: minLength(10)
       },
-      CompanyField: {
+      CampaignField: {
         required
       },
-      CompanyFieldArea: {
+      CampaignFieldArea: {
         required
       }
     }
@@ -296,21 +296,21 @@ export default {
       isLoading: false,
       isRequestSent: false,
       pageSubmitted: false,
-      isCompanyExist: false,
+      isCampaignExist: false,
       userData: {
         phone: ''
       },
-      company: {
+      campaign: {
         FbPageId: '',
-        CompanyTarget: '',
+        CampaignTarget: '',
         UserId: '',
         Id: '',
-        CompanyName: '',
-        CompanyPurpose: 'Сообщения в директ',
-        CompanyField: '',
+        CampaignName: '',
+        CampaignPurpose: 'Сообщения в директ',
+        CampaignField: '',
         BusinessAddress: '',
         AccountURL: '',
-        CompanyFieldArea: 'Выберите из спиcка',
+        CampaignFieldArea: 'Выберите из спиcка',
         ImagesDescription: [],
         ImagesSmallDescription: [],
         CreativeStatus: 'Есть рекламные креативы',
@@ -319,8 +319,8 @@ export default {
         Days: 0
       },
       customErrors: {
-        company: {
-          CompanyFieldArea: false
+        campaign: {
+          CampaignFieldArea: false
         },
         anyError: false
       }
@@ -329,29 +329,29 @@ export default {
   methods: {
     sendData () {
       // валидация с помощью vuelidate
-      this.$v.company.$touch()
+      this.$v.campaign.$touch()
 
       // кастомная валидация для checkbox/select
-      Object.keys(this.customErrors.company).forEach(nameField => {
-        if (!this.company[nameField]) {
-          this.customErrors.company[nameField] = true
+      Object.keys(this.customErrors.campaign).forEach(nameField => {
+        if (!this.campaign[nameField]) {
+          this.customErrors.campaign[nameField] = true
           this.customErrors.anyError = true
         }
       })
 
-      if (this.$v.company.$anyError || this.customErrors.anyError) {
+      if (this.$v.campaign.$anyError || this.customErrors.anyError) {
         window.scrollTo(0, 100)
         return
       }
 
-      this.$emit('next', this.company)
+      this.$emit('next', this.campaign)
     },
     setFieldValue (fieldName, value) {
-      if (this.company[fieldName]) {
-        this.company[fieldName] = value
+      if (this.campaign[fieldName]) {
+        this.campaign[fieldName] = value
 
-        if (this.customErrors.company[fieldName]) {
-          this.customErrors.company[fieldName] = false
+        if (this.customErrors.campaign[fieldName]) {
+          this.customErrors.campaign[fieldName] = false
         }
       }
     },
@@ -359,18 +359,18 @@ export default {
     //   const {
     //     $dirty,
     //     $error
-    //   } = this.$v.company[name]
+    //   } = this.$v.campaign[name]
     //   return $dirty ? !$error : null
     // },
     resetNameErr () {
-      this.isCompanyExist = false
+      this.isCampaignExist = false
     },
     getFBRedirect () {
-      return `https://facebook.com/${this.company.FbPageId}/settings/?tab=admin_roles`
+      return `https://facebook.com/${this.campaign.FbPageId}/settings/?tab=admin_roles`
     },
     sendFbRequest () {
       this.isLoading = true
-      axios.post({ url: `${VUE_APP_API_URL}/api/facebook/claim/${this.company.FbPageId}` })
+      axios.post({ url: `${VUE_APP_API_URL}/api/facebook/claim/${this.campaign.FbPageId}` })
         .then(resp => {
           this.isLoading = false
           console.log(resp)
@@ -383,7 +383,7 @@ export default {
     },
     checkPageSubmitted () {
       this.isLoading = true
-      axios.get({ url: `${VUE_APP_API_URL}/api/facebook/owned/${this.company.FbPageId}` })
+      axios.get({ url: `${VUE_APP_API_URL}/api/facebook/owned/${this.campaign.FbPageId}` })
         .then(resp => {
           this.isLoading = false
           console.log(resp)
@@ -401,7 +401,7 @@ export default {
     const cd = localStorage.getItem('campagin_data')
     try {
       const cdd = JSON.parse(cd)
-      this.company = {
+      this.campaign = {
         ...cdd
       }
       // eslint-disable-next-line no-empty
@@ -413,13 +413,13 @@ export default {
   beforeMount () {
     if (!(typeof this.$router.history.current.params.id === 'undefined')) {
       axios.get({
-        url: `${VUE_APP_API_URL}/api/company/${this.$router.history.current.params.id}`
+        url: `${VUE_APP_API_URL}/api/campaign/${this.$router.history.current.params.id}`
       })
         .then(resp => {
-          this.company = resp.data
+          this.campaign = resp.data
 
           this.getImages()
-          if (this.company.FbPageId !== '') {
+          if (this.campaign.FbPageId !== '') {
             this.isRequestSent = true
             this.pageSubmitted = true
           }

@@ -6,41 +6,41 @@ import (
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
 )
 
-type AdCompanyService struct {
-	repo repository.AdCompany
+type AdCampaignService struct {
+	repo repository.AdCampaign
 }
 
-var _ AdCompany = (*AdCompanyService)(nil)
+var _ AdCampaign = (*AdCampaignService)(nil)
 
-func NewAdCompanyService(repo repository.AdCompany) *AdCompanyService {
-	return &AdCompanyService{repo: repo}
+func NewAdCampaignService(repo repository.AdCampaign) *AdCampaignService {
+	return &AdCampaignService{repo: repo}
 }
 
-func (s *AdCompanyService) Create(ac models.AdCompany) (uuid.UUID, error) {
+func (s *AdCampaignService) Create(ac models.AdCampaign) (uuid.UUID, error) {
 	return s.repo.Create(ac)
 }
 
-func (s *AdCompanyService) GetAll(userID uuid.UUID) ([]models.AdCompany, error) {
+func (s *AdCampaignService) GetAll(userID uuid.UUID) ([]models.AdCampaign, error) {
 	return s.repo.GetAll(userID)
 }
 
-func (s *AdCompanyService) Delete(id string) error {
+func (s *AdCampaignService) Delete(id string) error {
 	return s.repo.Delete(id)
 }
 
-func (s *AdCompanyService) Update(ac models.AdCompany, id string) (uuid.UUID, error) {
+func (s *AdCampaignService) Update(ac models.AdCampaign, id string) (uuid.UUID, error) {
 	return s.repo.Update(ac, id)
 }
 
-func (s *AdCompanyService) Start(id uuid.UUID) error {
+func (s *AdCampaignService) Start(id uuid.UUID) error {
 	return s.repo.Start(id)
 }
 
-func (s *AdCompanyService) Stop(id uuid.UUID) error {
+func (s *AdCampaignService) Stop(id uuid.UUID) error {
 	return s.repo.Stop(id)
 }
 
 //TODO call image REPOS SERVICE
-func (s *AdCompanyService) GetByID(userID uuid.UUID, companyID string) (models.AdCompany, error) {
-	return s.repo.GetByID(companyID)
+func (s *AdCampaignService) GetByID(userID uuid.UUID, campaignID string) (models.AdCampaign, error) {
+	return s.repo.GetByID(campaignID)
 }

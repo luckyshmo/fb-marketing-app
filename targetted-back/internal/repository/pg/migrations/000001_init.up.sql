@@ -9,7 +9,7 @@ CREATE TABLE user_tb
     password_hash varchar(255) not null
 );
 
-CREATE TABLE ad_company
+CREATE TABLE ad_campaign
 (
     id                          uuid DEFAULT uuid_generate_v4 () not null unique,
     user_id                     uuid references user_tb (id) on delete cascade,

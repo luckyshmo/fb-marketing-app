@@ -15,14 +15,14 @@ definitions:
     - email
     - password
     type: object
-  models.AdCompany:
+  models.AdCampaign:
     properties:
       businessAddress:
         description: TODO RENAME
         type: string
-      companyField:
+      campaignField:
         type: string
-      companyName:
+      campaignName:
         type: string
       compnayPurpose:
         type: string
@@ -87,12 +87,12 @@ info:
   title: Example API
   version: "1.0"
 paths:
-  /api/company/:
+  /api/campaign/:
     get:
       consumes:
       - application/json
-      description: get company list
-      operationId: getCompanyList
+      description: get campaign list
+      operationId: getCampaignList
       parameters:
       - description: credentials
         in: body
@@ -107,7 +107,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.AdCompany'
+              $ref: '#/definitions/models.AdCampaign'
             type: array
         "400":
           description: Bad Request
@@ -127,12 +127,12 @@ paths:
             $ref: '#/definitions/handler.errorResponse'
       summary: get all companies
       tags:
-      - company
+      - campaign
     post:
       consumes:
       - application/json
-      description: create company
-      operationId: createCompany
+      description: create campaign
+      operationId: createCampaign
       parameters:
       - description: credentials
         in: body
@@ -163,15 +163,15 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/handler.errorResponse'
-      summary: create company
+      summary: create campaign
       tags:
-      - company
-  /api/company/:id:
+      - campaign
+  /api/campaign/:id:
     get:
       consumes:
       - application/json
-      description: get company by id
-      operationId: getCompanyByID
+      description: get campaign by id
+      operationId: getCampaignByID
       parameters:
       - description: credentials
         in: body
@@ -185,7 +185,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.AdCompany'
+            $ref: '#/definitions/models.AdCampaign'
         "400":
           description: Bad Request
           schema:
@@ -202,14 +202,14 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/handler.errorResponse'
-      summary: get company by id
+      summary: get campaign by id
       tags:
-      - company
+      - campaign
     put:
       consumes:
       - application/json
-      description: update company
-      operationId: updateCompany
+      description: update campaign
+      operationId: updateCampaign
       parameters:
       - description: credentials
         in: body
@@ -223,7 +223,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.AdCompany'
+            $ref: '#/definitions/models.AdCampaign'
         "400":
           description: Bad Request
           schema:
@@ -240,15 +240,15 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/handler.errorResponse'
-      summary: update company
+      summary: update campaign
       tags:
-      - company
-  /api/company/:id/images/:
+      - campaign
+  /api/campaign/:id/images/:
     get:
       consumes:
       - application/json
-      description: get company images names
-      operationId: getCompanyImages
+      description: get campaign images names
+      operationId: getCampaignImages
       parameters:
       - description: credentials
         in: body
@@ -279,9 +279,9 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/handler.errorResponse'
-      summary: get company images names
+      summary: get campaign images names
       tags:
-      - company
+      - campaign
   /api/user/:id:
     get:
       consumes:

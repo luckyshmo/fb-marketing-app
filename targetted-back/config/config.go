@@ -1,8 +1,8 @@
 package config
 
 import (
+	"encoding/json"
 	"fmt"
-	"reflect"
 	"sync"
 
 	"github.com/sirupsen/logrus"
@@ -67,19 +67,15 @@ func Get() *Config {
 		if err != nil {
 			logrus.Fatal(err)
 		}
-		validate(config)
+		config.print()
 	})
-	logrus.Info(config)
 	return &config
 }
 
-func validate(cfg Config) {
-	refConf := reflect.ValueOf(cfg)
-	typeOfRefConf := refConf.Type()
-
-	for i := 0; i < refConf.NumField(); i++ {
-		if fmt.Sprint(refConf.Field(i).Interface()) == "" {
-			logrus.Error(fmt.Sprintf("Config: %s value is empty!", typeOfRefConf.Field(i).Name))
-		}
+func (cfg *Config) print() {
+	jsonConfig, err := json.MarshalIndent(cfg, "", "  ")
+	if err != nil {
+		logrus.Errorf("marshal config to print: %w", err)
 	}
+	fmt.Println(string(jsonConfig))
 }

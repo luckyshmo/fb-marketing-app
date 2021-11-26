@@ -11,7 +11,7 @@ import (
 type dbScheme struct {
 	sync.Mutex
 	Users       []models.User
-	AdCompanies []models.AdCompany
+	AdCompanies []models.AdCampaign
 }
 
 var db dbScheme
@@ -19,7 +19,7 @@ var db dbScheme
 func Init() {
 
 	usrID, _ := uuid.FromBytes([]byte("8db1eadc-ff22-4b87-bfef-049e913d6122"))
-	companyID, _ := uuid.FromBytes([]byte("95f9bd3a-95a8-460f-a737-f7a946df42f7"))
+	campaignID, _ := uuid.FromBytes([]byte("95f9bd3a-95a8-460f-a737-f7a946df42f7"))
 
 	db = dbScheme{
 		Users: []models.User{
@@ -30,18 +30,17 @@ func Init() {
 				Password:    "686a7172686a7177313234363137616a6668616a73601f1889667efaebb33b8c12572835da3f027f78",
 				PhoneNumber: "+79995600000",
 				Amount:      0.0,
-				DateCreated: time.Now(),
 				TimeCreated: time.Now(),
 			},
 		},
-		AdCompanies: []models.AdCompany{
+		AdCompanies: []models.AdCampaign{
 			{
-				Id:                     companyID,
+				Id:                     campaignID,
 				UserId:                 usrID,
 				FbPageId:               "",
 				BusinessAddress:        "Ekb",
-				CompanyField:           "Some field",
-				CompanyName:            "Some name",
+				CampaignField:          "Some field",
+				CampaignName:           "Some name",
 				CompnayPurpose:         "Some purpose",
 				CreativeStatus:         "??",
 				ImagesDescription:      []string{""},

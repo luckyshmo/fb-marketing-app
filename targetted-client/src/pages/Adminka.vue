@@ -56,7 +56,7 @@
         />
 
         <b-form-input
-          v-model="companyFilter"
+          v-model="campaignFilter"
           class="form-input"
           disabled-field
           style="margin-bottom: 20px"
@@ -106,53 +106,53 @@
             </button>
             <h3>Данные кампаний</h3>
             <div
-              v-for="company in user.companies"
-              :key="company.Id"
+              v-for="campaign in user.companies"
+              :key="campaign.Id"
               style="padding: 30px; background: rgb(255, 255, 255); margin: 10px; border-radius: 30px"
             >
-              <h4>{{ company.CompanyName }}</h4>
+              <h4>{{ campaign.CampaignName }}</h4>
               <p>
                 facebook page ID:
-                <b>{{ company.FbPageId }}</b>
+                <b>{{ campaign.FbPageId }}</b>
               </p>
-              <div v-if="company.FbPageId.length > 0">
+              <div v-if="campaign.FbPageId.length > 0">
                 <a
                   target="_blank"
-                  :href="getFBRedirect(company.FbPageId)"
+                  :href="getFBRedirect(campaign.FbPageId)"
                 > link </a>
                 <button
                   class="main-button"
                   style=""
-                  @click="checkIfPageIsOwned(company.FbPageId)"
+                  @click="checkIfPageIsOwned(campaign.FbPageId)"
                 >
                   Проверить
                 </button>
               </div>
-              <p>ID: <b>{{ company.Id }}</b></p>
-              <p>Название: <b>{{ company.CompanyName }}</b></p>
-              <p>Цель: <b>{{ company.CompanyPurpose }}</b></p>
-              <p>Сфера деятельности: <b>{{ company.CompanyField }}</b></p>
-              <p>Бизнесс адрес: <b>{{ company.BusinessAddress }}</b></p>
-              <p>Статус креативов: <b>{{ company.CreativeStatus }}</b></p>
-              <p>Надписи сториз: <b>{{ company.ImagesDescription }}</b></p>
-              <p>Написи постов: <b>{{ company.ImagesSmallDescription }}</b></p>
-              <p>Описание под постом: <b>{{ company.PostDescription }}</b></p>
-              <p>Дневной бюджет <b>{{ company.DailyAmount }}</b></p>
-              <p>Количество дней: <b>{{ company.Days }}</b></p>
-              <p>Дата создания: <b>{{ company.CreationDate }}</b></p>
-              <p>Дата запуска: <b>{{ company.StartDate }}</b></p>
+              <p>ID: <b>{{ campaign.Id }}</b></p>
+              <p>Название: <b>{{ campaign.CampaignName }}</b></p>
+              <p>Цель: <b>{{ campaign.CampaignPurpose }}</b></p>
+              <p>Сфера деятельности: <b>{{ campaign.CampaignField }}</b></p>
+              <p>Бизнесс адрес: <b>{{ campaign.BusinessAddress }}</b></p>
+              <p>Статус креативов: <b>{{ campaign.CreativeStatus }}</b></p>
+              <p>Надписи сториз: <b>{{ campaign.ImagesDescription }}</b></p>
+              <p>Написи постов: <b>{{ campaign.ImagesSmallDescription }}</b></p>
+              <p>Описание под постом: <b>{{ campaign.PostDescription }}</b></p>
+              <p>Дневной бюджет <b>{{ campaign.DailyAmount }}</b></p>
+              <p>Количество дней: <b>{{ campaign.Days }}</b></p>
+              <p>Дата создания: <b>{{ campaign.CreationDate }}</b></p>
+              <p>Дата запуска: <b>{{ campaign.StartDate }}</b></p>
               <!-- <button class="main-button">Выгрузить креативы</button> -->
               <div>
                 <h5>Истории</h5>
                 <div id="image-block">
                   <div
-                    v-for="(image) in filteredImageNames(company.Id, true)"
+                    v-for="(image) in filteredImageNames(campaign.Id, true)"
                     :key="image.name"
                   >
                     <div>
                       <img
                         id="preview"
-                        :src="getImageByName(image.name, company.UserId, company.Id)"
+                        :src="getImageByName(image.name, campaign.UserId, campaign.Id)"
                       >
                     </div>
                   </div>
@@ -160,13 +160,13 @@
                 <h5>Посты</h5>
                 <div id="image-block">
                   <div
-                    v-for="(image) in filteredImageNames(company.Id, false)"
+                    v-for="(image) in filteredImageNames(campaign.Id, false)"
                     :key="image.name"
                   >
                     <div>
                       <img
                         id="preview"
-                        :src="getImageByName(image.name, company.UserId, company.Id)"
+                        :src="getImageByName(image.name, campaign.UserId, campaign.Id)"
                       >
                     </div>
                   </div>
@@ -174,18 +174,18 @@
               </div>
 
               <button
-                v-if="company.IsStarted"
+                v-if="campaign.IsStarted"
                 class="main-button"
                 style="margin-top: 25px"
-                @click="stopCompany(company.Id)"
+                @click="stopCampaign(campaign.Id)"
               >
                 Остановить кампанию
               </button>
               <button
-                v-if="!company.IsStarted"
+                v-if="!campaign.IsStarted"
                 class="main-button"
                 style="margin-top: 25px"
-                @click="startCompany(company.Id)"
+                @click="startCampaign(campaign.Id)"
               >
                 Запустить кампанию
               </button>
@@ -211,7 +211,7 @@ export default {
     return {
       isLoading: false,
       userFilter: '',
-      companyFilter: '',
+      campaignFilter: '',
       isAmount: false,
       currentPage: 1,
       perPage: 15,
@@ -263,13 +263,13 @@ export default {
         })
       }
 
-      if (this.companyFilter.length > 1) {
+      if (this.campaignFilter.length > 1) {
         this.currentPage = 1
         uArr = uArr.filter((user) => {
           return user.companies.filter((com) => {
-            return com.Id.toLowerCase().match(this.companyFilter.trim().toLowerCase()) ||
-            com.CompanyName.toLowerCase().match(this.companyFilter.trim().toLowerCase()) ||
-            com.PostDescription.toLowerCase().match(this.companyFilter.trim().toLowerCase())
+            return com.Id.toLowerCase().match(this.campaignFilter.trim().toLowerCase()) ||
+            com.CampaignName.toLowerCase().match(this.campaignFilter.trim().toLowerCase()) ||
+            com.PostDescription.toLowerCase().match(this.campaignFilter.trim().toLowerCase())
           })?.length > 0
         })
       }
@@ -293,8 +293,8 @@ export default {
           this.$alert(err.response.data.message)
         })
     },
-    startCompany (id) {
-      axios.post({ url: `${VUE_APP_API_URL}/api/company/start/${id}` })
+    startCampaign (id) {
+      axios.post({ url: `${VUE_APP_API_URL}/api/campaign/start/${id}` })
         .then(resp => {
           this.$alert(resp.statusText)
         })
@@ -302,8 +302,8 @@ export default {
           this.$alert(err.response.data.message)
         })
     },
-    stopCompany (id) {
-      axios.post({ url: `${VUE_APP_API_URL}/api/company/stop/${id}` })
+    stopCampaign (id) {
+      axios.post({ url: `${VUE_APP_API_URL}/api/campaign/stop/${id}` })
         .then(resp => {
           this.$alert(resp.statusText)
         })
@@ -373,7 +373,7 @@ export default {
         })
     },
     getAddCompanies (id, i) { // вообще во VUE 3 должно работать...
-      const url = `${VUE_APP_API_URL}/api/user/${id}/company/`
+      const url = `${VUE_APP_API_URL}/api/user/${id}/campaign/`
 
       axios.get({ url })
         .then(resp => {
@@ -381,7 +381,7 @@ export default {
           if (resp.data != null) {
             this.users[i].companies.push(...resp.data)
             for (let i = 0; i < resp.data.length; i++) {
-              this.getCompanyImagesNames(resp.data[i].Id, resp.data[i].UserId)
+              this.getCampaignImagesNames(resp.data[i].Id, resp.data[i].UserId)
             }
             this.isAmount = true
             this.isAmount = false //! пздц костыль
@@ -392,9 +392,9 @@ export default {
           this.users[i].companies = []
         })
     },
-    getCompanyImagesNames (cID, uID) {
+    getCampaignImagesNames (cID, uID) {
       axios.get({
-        url: `${VUE_APP_API_URL}/api/user/${uID}/company/${cID}/images/`
+        url: `${VUE_APP_API_URL}/api/user/${uID}/campaign/${cID}/images/`
       }).then(resp => {
         if (resp.data != null) {
           for (let i = 0; i < resp.data.length; i++) {

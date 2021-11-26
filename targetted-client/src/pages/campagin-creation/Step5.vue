@@ -189,7 +189,7 @@ const stats = {
 
 export default {
   name: 'Step5',
-  props: ['label_cols', 'content_cols', 'company', 'isEdit'],
+  props: ['label_cols', 'content_cols', 'campaign', 'isEdit'],
   components: {
     CampaginStats
   },

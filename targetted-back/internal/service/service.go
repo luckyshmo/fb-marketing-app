@@ -22,20 +22,20 @@ type User interface {
 	SetBalance(id uuid.UUID, amount float64) error
 }
 
-type AdCompany interface {
-	Create(ac models.AdCompany) (uuid.UUID, error)
+type AdCampaign interface {
+	Create(ac models.AdCampaign) (uuid.UUID, error)
 	Delete(ID string) error
 	Start(id uuid.UUID) error
 	Stop(id uuid.UUID) error
-	Update(ac models.AdCompany, ID string) (uuid.UUID, error)
-	GetAll(userID uuid.UUID) ([]models.AdCompany, error)
-	GetByID(userID uuid.UUID, companyID string) (models.AdCompany, error)
+	Update(ac models.AdCampaign, ID string) (uuid.UUID, error)
+	GetAll(userID uuid.UUID) ([]models.AdCampaign, error)
+	GetByID(userID uuid.UUID, campaignID string) (models.AdCampaign, error)
 }
 
 type Service struct {
 	Authorization Authorization
 	User          User
-	AdCompany     AdCompany
+	AdCampaign    AdCampaign
 	FacebookAPI   api.Facebook
 	Payment       *payment.Youkassa
 }
@@ -44,7 +44,7 @@ func NewService(repos *repository.Repository, cfg *config.Config) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
 		User:          NewUserService(repos.User),
-		AdCompany:     NewAdCompanyService(repos.AdCompany),
+		AdCampaign:    NewAdCampaignService(repos.AdCampaign),
 		FacebookAPI:   api.NewFacebook(cfg.Facebook),
 		Payment:       payment.NewYoukassaService(cfg.Youkassa),
 	}

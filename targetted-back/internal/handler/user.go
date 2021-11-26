@@ -96,26 +96,26 @@ func (h *Handler) getUserList(c *gin.Context) {
 	sendStatusResponse(c, http.StatusOK, users)
 }
 
-func (h *Handler) getCompanyListByUserID(c *gin.Context) {
+func (h *Handler) getCampaignListByUserID(c *gin.Context) {
 	userID := c.Param("id")
 	uID, err := uuid.Parse(userID)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 	}
-	companyList, err := h.services.AdCompany.GetAll(uID)
+	campaignList, err := h.services.AdCampaign.GetAll(uID)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	sendStatusResponse(c, http.StatusOK, companyList)
+	sendStatusResponse(c, http.StatusOK, campaignList)
 }
 
-func (h *Handler) getUserCompanyImages(c *gin.Context) {
-	companyID := c.Param("company-id")
+func (h *Handler) getUserCampaignImages(c *gin.Context) {
+	campaignID := c.Param("campaign-id")
 	userID := c.Param("id")
 
-	path := "./images/" + userID + "/" + companyID
+	path := "./images/" + userID + "/" + campaignID
 
 	files, err := ioutil.ReadDir(path + storiesFolder)
 	if err != nil {
