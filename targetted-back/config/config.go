@@ -75,7 +75,7 @@ func Get() *Config {
 func (cfg *Config) print() {
 	jsonConfig, err := json.MarshalIndent(cfg, "", "  ")
 	if err != nil {
-		logrus.Errorf("marshal config to print: %w", err)
+		logrus.Error(err)
 	}
 	fmt.Println(string(jsonConfig))
 }
