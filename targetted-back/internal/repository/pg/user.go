@@ -43,7 +43,7 @@ func (r *UserPG) AddMoney(userId uuid.UUID, amount float64) error {
 	query = fmt.Sprintf(`UPDATE %s set 
 	amount = '%f'
 	WHERE id = '%s' RETURNING id`,
-		usersTable, user.Amount+amount, userId)
+		usersTable, user.Balance+amount, userId)
 	row := r.db.QueryRow(query)
 	if err := row.Scan(&id); err != nil {
 		return err

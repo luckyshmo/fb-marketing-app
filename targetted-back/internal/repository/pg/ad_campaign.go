@@ -28,15 +28,15 @@ func (r *AdCampaignPg) Create(ac models.AdCampaign) (uuid.UUID, error) {
 		(user_id, fb_page_id, business_address,
 		field, name, purpose, creative_status,
 		images_description, images_small_description, post_description,
-		daily_amount, days)
-		values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id`,
+		budget, daily_budget, days)
+		values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id`,
 		adCampaignTable)
 
 	row := r.db.QueryRow(query,
 		ac.UserId, ac.FbPageId, ac.BusinessAddress,
-		ac.CampaignField, ac.CampaignName, ac.CompnayPurpose, ac.CreativeStatus,
+		ac.Field, ac.Name, ac.Objective, ac.CreativeStatus,
 		ac.ImagesDescription[0], ac.ImagesSmallDescription[0], ac.PostDescription,
-		ac.DailyAmount, ac.Days,
+		ac.Budget, ac.DailyBudget, ac.Days,
 	)
 
 	if err := row.Scan(&id); err != nil {
@@ -59,18 +59,19 @@ func (r *AdCampaignPg) Update(ac models.AdCampaign, idStr string) (uuid.UUID, er
 	business_address = '%s',
 	field = '%s',
 	name = '%s',
-	purpose = '%s',
+	objective = '%s',
 	creative_status = '%s',
 	images_description = '%s',
 	images_small_description = '%s',
 	post_description = '%s',
-	daily_amount = '%d',
+	budget = '%f',
+	daily_budget = '%f',
 	days = '%d'
 	WHERE id = '%s' RETURNING id`,
 		adCampaignTable,
-		ac.UserId, ac.FbPageId, ac.BusinessAddress, ac.CampaignField, ac.CampaignName, ac.CompnayPurpose,
-		ac.CreativeStatus, ac.ImagesDescription[0], ac.ImagesSmallDescription[0], ac.PostDescription,
-		ac.DailyAmount, ac.Days,
+		ac.UserId, ac.FbPageId, ac.BusinessAddress, ac.Field, ac.Name, ac.Objective,
+		ac.CreativeStatus, ac.ImagesDescription[0], ac.ImagesSmallDescription[0], ac.PostDescription, ac.Budget,
+		ac.DailyBudget, ac.Days,
 		idStr)
 	row := r.db.QueryRow(query)
 	if err := row.Scan(&id); err != nil {
@@ -106,15 +107,16 @@ type adCampaignScan struct {
 	Id                     uuid.UUID    `db:"id"`
 	UserId                 uuid.UUID    `db:"user_id"`
 	FbPageId               string       `db:"fb_page_id"`
-	BusinessAddress        string       `db:"business_address"` //TODO RENAME
-	CampaignField          string       `db:"field"`
-	CampaignName           string       `db:"name"`
-	CompnayPurpose         string       `db:"purpose"`
+	BusinessAddress        string       `db:"business_address"`
+	Field                  string       `db:"field"`
+	Name                   string       `db:"name"`
+	Objective              string       `db:"objective"`
 	CreativeStatus         string       `db:"creative_status"`
 	ImagesDescription      string       `db:"images_description"`
 	ImagesSmallDescription string       `db:"images_small_description"`
 	PostDescription        string       `db:"post_description"`
-	DailyAmount            int          `db:"daily_amount"`
+	Budget                 float64      `db:"budget"`
+	DailyBudget            float64      `db:"daily_budget"`
 	Days                   int          `db:"days"`
 	IsStarted              bool         `db:"is_started"`
 	CreationDate           time.Time    `db:"date_created"`
@@ -129,7 +131,7 @@ func (r *AdCampaignPg) GetAll(userId uuid.UUID) ([]models.AdCampaign, error) {
 
 	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
 	field, name, purpose, creative_status,
-	images_description, images_small_description, post_description, daily_amount, days,
+	images_description, images_small_description, post_description, budget, daily_budget, days,
 	is_started, date_created, date_started FROM %s WHERE user_id = '%s'`, adCampaignTable, idString)
 	err := r.db.Select(&campaignListS, query)
 	if err != nil {
@@ -141,14 +143,15 @@ func (r *AdCampaignPg) GetAll(userId uuid.UUID) ([]models.AdCampaign, error) {
 			UserId:                 c.UserId,
 			FbPageId:               c.FbPageId,
 			BusinessAddress:        c.BusinessAddress,
-			CampaignField:          c.CampaignField,
-			CampaignName:           c.CampaignName,
-			CompnayPurpose:         c.CompnayPurpose,
+			Field:                  c.Field,
+			Name:                   c.Name,
+			Objective:              c.Objective,
 			CreativeStatus:         c.CreativeStatus,
 			ImagesDescription:      strings.Split(c.ImagesDescription, ","),
 			ImagesSmallDescription: strings.Split(c.ImagesSmallDescription, ","),
 			PostDescription:        c.PostDescription,
-			DailyAmount:            c.DailyAmount,
+			Budget:                 c.Budget,
+			DailyBudget:            c.DailyBudget,
 			Days:                   c.Days,
 			IsStarted:              c.IsStarted,
 			CreationDate:           c.CreationDate,
@@ -170,7 +173,7 @@ func (r *AdCampaignPg) GetByID(campaignID string) (models.AdCampaign, error) {
 
 	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
 	field, name, purpose, creative_status,
-	images_description, images_small_description, post_description, daily_amount, days,
+	images_description, images_small_description, post_description, budget, daily_budget, days,
 	is_started, date_created, date_started FROM %s WHERE id = '%s'`, adCampaignTable, idString)
 	err := r.db.Get(&scanCampaign, query)
 
@@ -179,14 +182,14 @@ func (r *AdCampaignPg) GetByID(campaignID string) (models.AdCampaign, error) {
 		UserId:                 scanCampaign.UserId,
 		FbPageId:               scanCampaign.FbPageId,
 		BusinessAddress:        scanCampaign.BusinessAddress,
-		CampaignField:          scanCampaign.CampaignField,
-		CampaignName:           scanCampaign.CampaignName,
-		CompnayPurpose:         scanCampaign.CompnayPurpose,
+		Field:                  scanCampaign.Field,
+		Name:                   scanCampaign.Name,
+		Objective:              scanCampaign.Objective,
 		CreativeStatus:         scanCampaign.CreativeStatus,
 		ImagesDescription:      strings.Split(scanCampaign.ImagesDescription, ","),
 		ImagesSmallDescription: strings.Split(scanCampaign.ImagesSmallDescription, ","),
 		PostDescription:        scanCampaign.PostDescription,
-		DailyAmount:            scanCampaign.DailyAmount,
+		DailyBudget:            scanCampaign.DailyBudget,
 		Days:                   scanCampaign.Days,
 		IsStarted:              scanCampaign.IsStarted,
 		CreationDate:           scanCampaign.CreationDate,

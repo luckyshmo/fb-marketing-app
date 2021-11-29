@@ -1,0 +1,39 @@
+{
+    "name": "",
+    "special_ad_categories": "No categories declared",
+    "buying_type": "Auction",
+    "objective": "",
+    "budget_optimization": "On",
+    "budget": 0.0,
+    "daily_budget": 0.0,
+    "campaign_bid_strategy": "Lowest cost",
+    "ad_scheduling": "Run ads all the time",
+    "ad_set": {
+      "ad_type": "Click to message",
+      "messaging_apps": "Instagram Direct",
+      "accounts": "",
+      "audience": "",
+      "location": "",
+      "age": "25-40/25-50",
+      "gender": "Women",
+      "detailed_targeting": "",
+      "include_people_who_match": "Beauty, Cosmetology, Beauty salons, Face, Skin, Lip, Exfoliation (cosmetology)",
+      "and_also_match": "Interests: Online shopping, Behaviours: Engaged shoppers",
+      "detailed_targeting_expansion": "No",
+      "languages": "Russian",
+      "placements": "Manual placements",
+      "platforms": "Instagram",
+      "feeds": "Instagram feed, Instagram Explore",
+      "stories_and_reels": "Instagram Stories",
+      "ad": {
+        "name": "",
+        "facebook_page": "",
+        "instagram_account": "",
+        "settings": "",
+        "format": "",
+        "creatives": "",
+        "message": "",
+        "call_to_action": ""
+      }
+    }
+  }
