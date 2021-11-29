@@ -6,9 +6,10 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
+	"github.com/stretchr/testify/require"
 )
 
-func Test_Test(t *testing.T) {
+func Test_TemplateMerge(t *testing.T) {
 	ac, err := NewAdCampaign(models.AdCampaign{
 		Id:                     uuid.UUID{},
 		UserId:                 uuid.UUID{},
@@ -29,5 +30,6 @@ func Test_Test(t *testing.T) {
 		CreationDate:           time.Now(),
 		StartDate:              time.Now(),
 	})
+	require.NoError(t, err)
 	ac.print()
 }
