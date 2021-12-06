@@ -18,7 +18,7 @@ func Test_TemplateMerge(t *testing.T) {
 		BusinessAddress:        "Ekb",
 		Field:                  "Some field",
 		Name:                   "Some name",
-		Objective:              "Some purpose",
+		Objective:              "Some objective",
 		CreativeStatus:         "??",
 		ImagesDescription:      []string{"1", "2", "3"},
 		ImagesSmallDescription: []string{"1", "2", "3"},
@@ -27,8 +27,8 @@ func Test_TemplateMerge(t *testing.T) {
 		DailyBudget:            10.0,
 		Days:                   10,
 		IsStarted:              false,
-		CreationDate:           time.Now(),
-		StartDate:              time.Now(),
+		TimeCreated:            time.Now(),
+		TimeStarted:            time.Now(),
 	})
 	require.NoError(t, err)
 	ac.print()

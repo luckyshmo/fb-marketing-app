@@ -28,7 +28,7 @@ const jsonToFormData = (data, isEdit) => {
   //   campaignData.append('Id', data.Id)
   // }
   // campaignData.append('CampaignName', data.CampaignName)
-  // campaignData.append('CampaignPurpose', data.CampaignPurpose)
+  // campaignData.append('CampaignObjective', data.CampaignObjective)
   // campaignData.append('CampaignField', data.CampaignField)
   // campaignData.append('BusinessAddress', data.BusinessAddress)
   // campaignData.append('ImagesDescription', data.ImagesDescription)
@@ -53,12 +53,12 @@ const actions = {
     const url = `${VUE_APP_API_URL}/api/campaign/`
 
     return new Promise((resolve, reject) => {
-      commit('save_request') // TOdo
+      commit('save_request')
       axios.post(url, data)
         .then(resp => {
           axios.get(`${VUE_APP_API_URL}/api/campaign/`)
             .then(resp => {
-              console.log('user companies resp', resp)
+              console.log('user campaigns resp', resp)
               localStorage.setItem('user_campaign', resp.data)
               commit('set_user_campaign', resp.data)
               resolve(resp)
@@ -103,6 +103,7 @@ const actions = {
       const url = `${VUE_APP_API_URL}/api/campaign/`
       axios.get(url)
         .then(resp => {
+          console.log(resp.data)
           localStorage.setItem('user_campaign', resp.data)
           commit('set_user_campaign', resp.data)
           resolve(resp)
@@ -147,7 +148,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       commit('auth_request')
       const url = `${VUE_APP_API_URL}/auth/sign-in`
-      axios.post(url, { data: user, timeout })
+      axios.post(url, user)
         .then(resp => {
           console.log('usr + resp: ', resp.data)
           const token = resp.data.token

@@ -4,10 +4,10 @@ const vueSrc = './src'
 
 module.exports = {
   lintOnSave: false,
-  devServer: {
-    host: 'localhost',
-    proxy: 'http://localhost:8087'
-  },
+  // devServer: {
+  //   host: 'localhost',
+  //   proxy: 'http://localhost:8087'
+  // },
   configureWebpack: {
     resolve: {
       alias: {

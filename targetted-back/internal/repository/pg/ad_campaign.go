@@ -26,7 +26,7 @@ func (r *AdCampaignPg) Create(ac models.AdCampaign) (uuid.UUID, error) {
 
 	query := fmt.Sprintf(`INSERT INTO %s 
 		(user_id, fb_page_id, business_address,
-		field, name, purpose, creative_status,
+		field, name, objective, creative_status,
 		images_description, images_small_description, post_description,
 		budget, daily_budget, days)
 		values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id`,
@@ -119,8 +119,8 @@ type adCampaignScan struct {
 	DailyBudget            float64      `db:"daily_budget"`
 	Days                   int          `db:"days"`
 	IsStarted              bool         `db:"is_started"`
-	CreationDate           time.Time    `db:"date_created"`
-	StartDate              sql.NullTime `db:"date_started"`
+	TimeCreated            time.Time    `db:"time_created"`
+	TimeStarted            sql.NullTime `db:"time_started"`
 }
 
 func (r *AdCampaignPg) GetAll(userId uuid.UUID) ([]models.AdCampaign, error) {
@@ -130,9 +130,9 @@ func (r *AdCampaignPg) GetAll(userId uuid.UUID) ([]models.AdCampaign, error) {
 	idString := userId.String()
 
 	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
-	field, name, purpose, creative_status,
+	field, name, objective, creative_status,
 	images_description, images_small_description, post_description, budget, daily_budget, days,
-	is_started, date_created, date_started FROM %s WHERE user_id = '%s'`, adCampaignTable, idString)
+	is_started, time_created, time_started FROM %s WHERE user_id = '%s'`, adCampaignTable, idString)
 	err := r.db.Select(&campaignListS, query)
 	if err != nil {
 		return nil, err
@@ -154,10 +154,11 @@ func (r *AdCampaignPg) GetAll(userId uuid.UUID) ([]models.AdCampaign, error) {
 			DailyBudget:            c.DailyBudget,
 			Days:                   c.Days,
 			IsStarted:              c.IsStarted,
-			CreationDate:           c.CreationDate,
+
+			TimeCreated: c.TimeCreated,
 		}
-		if c.StartDate.Valid {
-			campaign.StartDate = c.StartDate.Time
+		if c.TimeStarted.Valid {
+			campaign.TimeStarted = c.TimeStarted.Time
 		}
 		campaignList = append(campaignList, campaign)
 	}
@@ -172,9 +173,9 @@ func (r *AdCampaignPg) GetByID(campaignID string) (models.AdCampaign, error) {
 	idString := campaignID
 
 	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
-	field, name, purpose, creative_status,
+	field, name, objective, creative_status,
 	images_description, images_small_description, post_description, budget, daily_budget, days,
-	is_started, date_created, date_started FROM %s WHERE id = '%s'`, adCampaignTable, idString)
+	is_started, time_created, time_started FROM %s WHERE id = '%s'`, adCampaignTable, idString)
 	err := r.db.Get(&scanCampaign, query)
 
 	campaign = models.AdCampaign{
@@ -192,10 +193,10 @@ func (r *AdCampaignPg) GetByID(campaignID string) (models.AdCampaign, error) {
 		DailyBudget:            scanCampaign.DailyBudget,
 		Days:                   scanCampaign.Days,
 		IsStarted:              scanCampaign.IsStarted,
-		CreationDate:           scanCampaign.CreationDate,
+		TimeCreated:            scanCampaign.TimeCreated,
 	}
-	if scanCampaign.StartDate.Valid {
-		campaign.StartDate = scanCampaign.StartDate.Time
+	if scanCampaign.TimeStarted.Valid {
+		campaign.TimeStarted = scanCampaign.TimeStarted.Time
 	}
 
 	return campaign, err

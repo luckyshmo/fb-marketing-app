@@ -23,7 +23,7 @@ const (
 	postsFolder   = "/posts/"
 )
 
-// @Summary get all companies
+// @Summary get all campaigns
 // @Tags campaign
 // @Description get campaign list
 // @ID getCampaignList
@@ -47,7 +47,7 @@ func (h *Handler) getCampaignList(c *gin.Context) {
 	}
 
 	sort.SliceStable(campaignList, func(i, j int) bool {
-		return campaignList[i].CreationDate.After(campaignList[j].CreationDate)
+		return campaignList[i].TimeCreated.After(campaignList[j].TimeCreated)
 	})
 
 	sendStatusResponse(c, http.StatusOK, campaignList)
@@ -338,7 +338,7 @@ func parseCampaignFromContext(c *gin.Context) (models.AdCampaign, error) {
 		BusinessAddress:        AdCampaign["BusinessAddress"][0],
 		Field:                  AdCampaign["Field"][0],
 		Name:                   AdCampaign["Name"][0],
-		Objective:              AdCampaign["Purpose"][0],
+		Objective:              AdCampaign["Objective"][0],
 		CreativeStatus:         AdCampaign["CreativeStatus"][0],
 		ImagesDescription:      AdCampaign["ImagesDescription"],
 		ImagesSmallDescription: AdCampaign["ImagesSmallDescription"],

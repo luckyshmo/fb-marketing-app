@@ -185,7 +185,7 @@
           id="input-group-main"
           label-for="input-horizontal">
           <b-form-radio-group
-            v-model="campaign.CampaignPurpose"
+            v-model="campaign.CampaignObjective"
             :disabled="isEdit"
             class="app-new-radio"
             :options="[
@@ -306,7 +306,7 @@ export default {
         UserId: '',
         Id: '',
         CampaignName: '',
-        CampaignPurpose: 'Сообщения в директ',
+        CampaignObjective: 'Сообщения в директ',
         CampaignField: '',
         BusinessAddress: '',
         AccountURL: '',
@@ -338,11 +338,14 @@ export default {
           this.customErrors.anyError = true
         }
       })
+      // console.log(this.$v.campaign.$anyError)
+      // console.log(this.customErrors.anyError)
+      // if (this.$v.campaign.$anyError || this.customErrors.anyError) {
+      //   window.scrollTo(0, 100)
+      //   return
+      // }
 
-      if (this.$v.campaign.$anyError || this.customErrors.anyError) {
-        window.scrollTo(0, 100)
-        return
-      }
+      console.log(this.campaign)
 
       this.$emit('next', this.campaign)
     },

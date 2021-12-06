@@ -1,12 +1,21 @@
-// import { BehaviorSubject } from 'rxjs';
-
 import store from '@src/store/store'
-
-// const accountSubject = new BehaviorSubject(null);
 
 export const accountService = {
   login,
-  logout
+  logout,
+  getInstagram,
+}
+
+function getInstagram (pageID) {
+  FB.api(
+    "/{page-id}/instagram_accounts",
+    function (response) {
+      console.log(response)
+      if (response && !response.error) {
+        
+      }
+    }
+  );
 }
 
 async function login () {
@@ -20,7 +29,6 @@ async function login () {
     console.log('AccountSet')
   }, {
     scope: 'ads_management, public_profile, business_management, pages_show_list, instagram_basic, instagram_content_publish, read_insights, instagram_manage_insights, pages_read_engagement, pages_manage_ads',
-    // manage_pages, publish_pages
     return_scopes: true
   })
 }

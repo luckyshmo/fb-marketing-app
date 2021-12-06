@@ -35,7 +35,7 @@ var doc = `{
                 "tags": [
                     "campaign"
                 ],
-                "summary": "get all companies",
+                "summary": "get all campaigns",
                 "operationId": "getCampaignList",
                 "parameters": [
                     {
@@ -526,7 +526,7 @@ var doc = `{
                 "campaignName": {
                     "type": "string"
                 },
-                "compnayPurpose": {
+                "compnayObjective": {
                     "type": "string"
                 },
                 "creationDate": {

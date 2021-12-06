@@ -21,7 +21,7 @@
                 "tags": [
                     "campaign"
                 ],
-                "summary": "get all companies",
+                "summary": "get all campaigns",
                 "operationId": "getCampaignList",
                 "parameters": [
                     {
@@ -512,7 +512,7 @@
                 "campaignName": {
                     "type": "string"
                 },
-                "compnayPurpose": {
+                "compnayObjective": {
                     "type": "string"
                 },
                 "creationDate": {

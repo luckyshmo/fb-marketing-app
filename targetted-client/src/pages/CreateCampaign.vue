@@ -124,7 +124,7 @@ const campaignDefault = {
   FbPageId: '',
   Id: '',
   CampaignName: '',
-  CampaignPurpose: 'Сообщения в директ',
+  CampaignObjective: 'Сообщения в директ',
   CampaignField: '',
   BusinessAddress: '',
   Images: [],

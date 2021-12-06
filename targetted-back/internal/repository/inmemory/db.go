@@ -11,7 +11,7 @@ import (
 type dbScheme struct {
 	sync.Mutex
 	Users       []models.User
-	AdCompanies []models.AdCampaign
+	AdCampaigns []models.AdCampaign
 }
 
 var db dbScheme
@@ -33,7 +33,7 @@ func Init() {
 				TimeCreated: time.Now(),
 			},
 		},
-		AdCompanies: []models.AdCampaign{
+		AdCampaigns: []models.AdCampaign{
 			{
 				Id:                     campaignID,
 				UserId:                 usrID,
@@ -42,7 +42,7 @@ func Init() {
 				BusinessAddress:        "Ekb",
 				Field:                  "Some field",
 				Name:                   "Some name",
-				Objective:              "Some purpose",
+				Objective:              "Some objective",
 				CreativeStatus:         "??",
 				ImagesDescription:      []string{"1", "2", "3"},
 				ImagesSmallDescription: []string{"1", "2", "3"},
@@ -51,8 +51,8 @@ func Init() {
 				DailyBudget:            10.0,
 				Days:                   10,
 				IsStarted:              false,
-				CreationDate:           time.Now(),
-				StartDate:              time.Now(),
+				TimeCreated:            time.Now(),
+				TimeStarted:            time.Now(),
 			},
 		},
 	}

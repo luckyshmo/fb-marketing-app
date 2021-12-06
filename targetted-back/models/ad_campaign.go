@@ -24,10 +24,10 @@ type AdCampaign struct {
 	ImagesSmallDescription []string `db:"images_small_description"`
 	PostDescription        string   `db:"post_description"`
 	// !!! скорее всего составное поле!!! day * dailyB
-	Budget       float64   `db:"current_budget"`
-	DailyBudget  float64   `db:"daily_budget"`
-	Days         int       `db:"days"`
-	IsStarted    bool      `db:"is_started"`
-	CreationDate time.Time `db:"date_created"`
-	StartDate    time.Time `db:"date_started"`
+	Budget      float64   `db:"current_budget"`
+	DailyBudget float64   `db:"daily_budget"`
+	Days        int       `db:"days"`
+	IsStarted   bool      `db:"is_started"`
+	TimeCreated time.Time `db:"time_created"`
+	TimeStarted time.Time `db:"time_started"`
 }
