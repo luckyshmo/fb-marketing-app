@@ -1,1 +1,0 @@
-ALTER TABLE user_tb  ADD column if not exists amount double precision default 0.0 not null;

@@ -13,6 +13,6 @@ type User struct {
 	Email       string    `json:"email" binding:"required"`
 	Password    string    `json:"password" binding:"required"`
 	PhoneNumber string    `json:"phoneNumber" db:"phone_number"`
-	Amount      float64   `json:"amount" db:"amount"`
+	Balance     float64   `json:"balance" db:"balance"`
 	TimeCreated time.Time `db:"time_created"`
 }

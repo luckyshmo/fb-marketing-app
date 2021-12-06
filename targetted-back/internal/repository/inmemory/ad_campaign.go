@@ -23,7 +23,7 @@ func (r *AdCampaignMemory) Create(ac models.AdCampaign) (uuid.UUID, error) {
 
 	id := uuid.New()
 	ac.Id = id
-	db.AdCompanies = append(db.AdCompanies, ac)
+	db.AdCampaigns = append(db.AdCampaigns, ac)
 
 	return id, nil
 }
@@ -65,9 +65,9 @@ func (r *AdCampaignMemory) GetAll(userId uuid.UUID) ([]models.AdCampaign, error)
 
 	logrus.Warn(userId)
 	logrus.Warn(db.Users)
-	logrus.Warn(db.AdCompanies)
+	logrus.Warn(db.AdCampaigns)
 
-	for _, ac := range db.AdCompanies {
+	for _, ac := range db.AdCampaigns {
 		logrus.Errorf("%s \n %s", ac.UserId.String(), userId.String())
 		if ac.UserId.String() == userId.String() {
 			userComp = append(userComp, ac)
@@ -82,7 +82,7 @@ func (r *AdCampaignMemory) GetAll(userId uuid.UUID) ([]models.AdCampaign, error)
 func (r *AdCampaignMemory) GetByID(campaignID string) (models.AdCampaign, error) {
 	db.Lock()
 	defer db.Unlock()
-	for _, ac := range db.AdCompanies {
+	for _, ac := range db.AdCampaigns {
 		if ac.Id.String() == campaignID {
 			return ac, nil
 		}

@@ -292,7 +292,7 @@ export default {
       campaign: {
         FbPageId: '',
         CampaignName: '',
-        CampaignPurpose: '',
+        CampaignObjective: '',
         CampaignField: '',
         BusinessAdress: '',
         Images: [],
@@ -458,7 +458,7 @@ export default {
         campaignData.append('Id', this.campaign.Id)
       }
       campaignData.append('CampaignName', this.campaign.CampaignName)
-      campaignData.append('CampaignPurpose', this.campaign.CampaignPurpose)
+      campaignData.append('CampaignObjective', this.campaign.CampaignObjective)
       campaignData.append('CampaignField', this.campaign.CampaignField)
       campaignData.append('BusinessAddress', this.campaign.BusinessAddress)
       campaignData.append('ImagesDescription', this.campaign.ImagesDescription)

@@ -24,7 +24,7 @@ definitions:
         type: string
       campaignName:
         type: string
-      compnayPurpose:
+      compnayObjective:
         type: string
       creationDate:
         type: string
@@ -125,7 +125,7 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/handler.errorResponse'
-      summary: get all companies
+      summary: get all campaigns
       tags:
       - campaign
     post:

@@ -6,9 +6,7 @@
     "serve": "vue-cli-service serve --open --public localhost:3000 --port 3000",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "serve:ssl": "vue-cli-service serve --https --open --public localhost:3000 --port 3000",
-    "mockbackend": "node ./scripts/mockBackend.js",
-    "postinstall": "npm run build && npm run mockbackend"
+    "serve:ssl": "vue-cli-service serve --https --open --public localhost:3000 --port 3000"
   },
   "dependencies": {
     "@sentry/tracing": "^6.9.0",

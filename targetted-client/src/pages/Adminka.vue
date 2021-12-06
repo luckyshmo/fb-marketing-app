@@ -106,7 +106,7 @@
             </button>
             <h3>Данные кампаний</h3>
             <div
-              v-for="campaign in user.companies"
+              v-for="campaign in user.campaigns"
               :key="campaign.Id"
               style="padding: 30px; background: rgb(255, 255, 255); margin: 10px; border-radius: 30px"
             >
@@ -130,7 +130,7 @@
               </div>
               <p>ID: <b>{{ campaign.Id }}</b></p>
               <p>Название: <b>{{ campaign.CampaignName }}</b></p>
-              <p>Цель: <b>{{ campaign.CampaignPurpose }}</b></p>
+              <p>Цель: <b>{{ campaign.CampaignObjective }}</b></p>
               <p>Сфера деятельности: <b>{{ campaign.CampaignField }}</b></p>
               <p>Бизнесс адрес: <b>{{ campaign.BusinessAddress }}</b></p>
               <p>Статус креативов: <b>{{ campaign.CreativeStatus }}</b></p>
@@ -266,7 +266,7 @@ export default {
       if (this.campaignFilter.length > 1) {
         this.currentPage = 1
         uArr = uArr.filter((user) => {
-          return user.companies.filter((com) => {
+          return user.campaigns.filter((com) => {
             return com.Id.toLowerCase().match(this.campaignFilter.trim().toLowerCase()) ||
             com.CampaignName.toLowerCase().match(this.campaignFilter.trim().toLowerCase()) ||
             com.PostDescription.toLowerCase().match(this.campaignFilter.trim().toLowerCase())
@@ -365,21 +365,21 @@ export default {
         .then(resp => {
           this.users = resp.data
           for (let i = 0; i < this.users.length; i++) {
-            this.getAddCompanies(this.users[i].id, i)
+            this.getAddCampaigns(this.users[i].id, i)
           }
         })
         .catch(err => {
           console.log(err)
         })
     },
-    getAddCompanies (id, i) { // вообще во VUE 3 должно работать...
+    getAddCampaigns (id, i) { // вообще во VUE 3 должно работать...
       const url = `${VUE_APP_API_URL}/api/user/${id}/campaign/`
 
       axios.get({ url })
         .then(resp => {
-          this.users[i].companies = []
+          this.users[i].campaigns = []
           if (resp.data != null) {
-            this.users[i].companies.push(...resp.data)
+            this.users[i].campaigns.push(...resp.data)
             for (let i = 0; i < resp.data.length; i++) {
               this.getCampaignImagesNames(resp.data[i].Id, resp.data[i].UserId)
             }
@@ -389,7 +389,7 @@ export default {
         })
         .catch(err => {
           console.log(err)
-          this.users[i].companies = []
+          this.users[i].campaigns = []
         })
     },
     getCampaignImagesNames (cID, uID) {

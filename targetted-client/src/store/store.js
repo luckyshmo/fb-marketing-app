@@ -8,20 +8,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     token: localStorage.getItem('token') || '',
-    // tmp default state, for demo
-    adCampaignList: localStorage.getItem('user_campaign') || [{
-      Id: 'test-url',
-      CampaignName: 'Test url',
-      FbPageId: '',
-      Date: '10 Сентября'
-    },
-    {
-      Id: 'test-3456789',
-      CampaignName: 'https://www.figma.com/',
-      FbPageId: '2345678',
-      IsStarted: true,
-      Date: '1 Мая'
-    }],
+    adCampaignList: localStorage.getItem('user_campaign'),
     user: localStorage.getItem('user') || '',
     email: localStorage.getItem('email') || '',
     account: localStorage.getItem('account') || {},
@@ -49,8 +36,8 @@ const store = new Vuex.Store({
     set_email (state, email) {
       state.email = email
     },
-    set_user_campaign (state, companies) {
-      state.adCampaignList = companies
+    set_user_campaign (state, campaigns) {
+      state.adCampaignList = campaigns
     },
     save_request (state) {
       state.status = 'loading'
@@ -72,13 +59,13 @@ const store = new Vuex.Store({
   },
   actions,
   getters: {
-    GET_COMPANY_DATA (state) {
+    GET_CAMPAIGN_DATA (state) {
       if (typeof state.adCampaign.FbPageId === 'undefined') {
         const data = {
           c: {
             FbPageId: '',
             CampaignName: '',
-            CampaignPurpose: '',
+            CampaignObjective: '',
             CampaignField: '',
             BusinessAdress: '',
             Images: [],
@@ -116,7 +103,7 @@ const store = new Vuex.Store({
       }
       return pages
     },
-    GET_COMPANY_LIST (state) {
+    GET_CAMPAIGN_LIST (state) {
       if (Array.isArray(state.adCampaignList)) {
         return state.adCampaignList
       }

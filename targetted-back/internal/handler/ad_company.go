@@ -23,7 +23,7 @@ const (
 	postsFolder   = "/posts/"
 )
 
-// @Summary get all companies
+// @Summary get all campaigns
 // @Tags campaign
 // @Description get campaign list
 // @ID getCampaignList
@@ -47,7 +47,7 @@ func (h *Handler) getCampaignList(c *gin.Context) {
 	}
 
 	sort.SliceStable(campaignList, func(i, j int) bool {
-		return campaignList[i].CreationDate.After(campaignList[j].CreationDate)
+		return campaignList[i].TimeCreated.After(campaignList[j].TimeCreated)
 	})
 
 	sendStatusResponse(c, http.StatusOK, campaignList)
@@ -131,7 +131,7 @@ func (h *Handler) getCampaignByID(c *gin.Context) {
 		return
 	}
 
-	campaign.CurrentAmount = user.Amount //TODO ну как бы бред
+	campaign.Budget = user.Balance //TODO ну как бы бред
 
 	sendStatusResponse(c, http.StatusOK, campaign)
 }
@@ -312,29 +312,39 @@ func parseCampaignFromContext(c *gin.Context) (models.AdCampaign, error) {
 		return models.AdCampaign{}, fmt.Errorf("parse multiparform: %w", err)
 	}
 
-	v := c.Request.MultipartForm.Value
-	DailyAmountS := v["DailyAmount"][0]
-	DaysS := v["Days"][0]
-	da, err := strconv.Atoi(DailyAmountS)
+	AdCampaign := c.Request.MultipartForm.Value
+
+	budgetS := AdCampaign["Budget"][0]
+	budget, err := strconv.ParseFloat(budgetS, 64)
 	if err != nil {
-		logger.Error(fmt.Errorf("parse daily amount: %w", err))
+		logger.Error(fmt.Errorf("parse campaign budget: %w", err))
 	}
-	days, err := strconv.Atoi(DaysS)
+
+	dailyBudgetS := AdCampaign["DailyBudget"][0]
+	dailyBudget, err := strconv.ParseFloat(dailyBudgetS, 64)
+	if err != nil {
+		logger.Error(fmt.Errorf("parse daily campaign budget: %w", err))
+	}
+
+	daysS := AdCampaign["Days"][0]
+	days, err := strconv.Atoi(daysS)
 	if err != nil {
 		logger.Error(fmt.Errorf("parse days: %w", err))
 	}
+
 	campaign := models.AdCampaign{
 		UserId:                 userID,
-		FbPageId:               v["FbPageId"][0],
-		BusinessAddress:        v["BusinessAddress"][0],
-		CampaignField:          v["CampaignField"][0],
-		CampaignName:           v["CampaignName"][0],
-		CompnayPurpose:         v["CompnayPurpose"][0],
-		CreativeStatus:         v["CreativeStatus"][0],
-		ImagesDescription:      v["ImagesDescription"],
-		ImagesSmallDescription: v["ImagesSmallDescription"],
-		PostDescription:        v["PostDescription"][0],
-		DailyAmount:            da,
+		FbPageId:               AdCampaign["FbPageId"][0],
+		BusinessAddress:        AdCampaign["BusinessAddress"][0],
+		Field:                  AdCampaign["Field"][0],
+		Name:                   AdCampaign["Name"][0],
+		Objective:              AdCampaign["Objective"][0],
+		CreativeStatus:         AdCampaign["CreativeStatus"][0],
+		ImagesDescription:      AdCampaign["ImagesDescription"],
+		ImagesSmallDescription: AdCampaign["ImagesSmallDescription"],
+		PostDescription:        AdCampaign["PostDescription"][0],
+		Budget:                 budget,
+		DailyBudget:            dailyBudget,
 		Days:                   days,
 	}
 

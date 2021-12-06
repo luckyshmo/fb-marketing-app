@@ -11,7 +11,7 @@ import (
 type dbScheme struct {
 	sync.Mutex
 	Users       []models.User
-	AdCompanies []models.AdCampaign
+	AdCampaigns []models.AdCampaign
 }
 
 var db dbScheme
@@ -29,29 +29,30 @@ func Init() {
 				Email:       "admin@admin.com",
 				Password:    "686a7172686a7177313234363137616a6668616a73601f1889667efaebb33b8c12572835da3f027f78",
 				PhoneNumber: "+79995600000",
-				Amount:      0.0,
+				Balance:     0.0,
 				TimeCreated: time.Now(),
 			},
 		},
-		AdCompanies: []models.AdCampaign{
+		AdCampaigns: []models.AdCampaign{
 			{
 				Id:                     campaignID,
 				UserId:                 usrID,
-				FbPageId:               "",
+				FbPageId:               "321",
+				InstagramID:            "123",
 				BusinessAddress:        "Ekb",
-				CampaignField:          "Some field",
-				CampaignName:           "Some name",
-				CompnayPurpose:         "Some purpose",
+				Field:                  "Some field",
+				Name:                   "Some name",
+				Objective:              "Some objective",
 				CreativeStatus:         "??",
-				ImagesDescription:      []string{""},
-				ImagesSmallDescription: []string{""},
+				ImagesDescription:      []string{"1", "2", "3"},
+				ImagesSmallDescription: []string{"1", "2", "3"},
 				PostDescription:        "",
-				CurrentAmount:          100.0,
-				DailyAmount:            10.0,
+				Budget:                 100.0,
+				DailyBudget:            10.0,
 				Days:                   10,
 				IsStarted:              false,
-				CreationDate:           time.Now(),
-				StartDate:              time.Now(),
+				TimeCreated:            time.Now(),
+				TimeStarted:            time.Now(),
 			},
 		},
 	}

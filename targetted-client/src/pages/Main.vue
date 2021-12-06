@@ -15,40 +15,16 @@
         </div>
       </div>
     </template>
-    <template v-if="store.getters.GET_COMPANY_LIST.length > 0">
+    <template v-if="store.getters.GET_CAMPAIGN_LIST.length > 0">
       <h1>
         Александр, добро пожаловать!
       </h1>
-<!--      <div>-->
-<!--        <h2 id="h2">-->
-<!--          Общий баланс-->
-<!--        </h2>-->
-<!--        <b-form-group-->
-<!--          id="input-group-main"-->
-<!--          label="Всего на счету"-->
-<!--          :label-cols="3"-->
-<!--          :content-cols="7"-->
-<!--          label-for="input-horizontal">-->
-<!--          <p id="balance">-->
-<!--            {{ user.amount }} ₽-->
-<!--          </p>-->
-<!--        </b-form-group>-->
-<!--        <b-button-->
-<!--          variant="primary"-->
-<!--          class="main-button-grey mt-2"-->
-<!--          @click="push">-->
-<!--          Пополнить баланс-->
-<!--        </b-button>-->
-<!--      </div>-->
       <p>
         Здесь вы можете ознакомиться со&nbsp;своими рекламными кампаниями.
       </p>
       <div>
-        <!--
-           <b-row class="mt-5">
-                  <b-col cols="6" sm="8" md="3" lg="3" xl="3"> -->
         <div
-          v-for="campaign in store.getters.GET_COMPANY_LIST"
+          v-for="campaign in store.getters.GET_CAMPAIGN_LIST"
           :key="campaign.Id"
           class="campagin-item">
           <router-link :to="{path: '/campaign-balance/'+ campaign.Id, query: { isEdit: true }}">
@@ -84,7 +60,7 @@
         </div>
       </div>
     </template>
-    <template v-if="!(store.getters.GET_COMPANY_LIST.length > 0)">
+    <template v-if="!(store.getters.GET_CAMPAIGN_LIST.length > 0)">
       <h1>
         Добро<br>пожаловать!
       </h1>
@@ -94,7 +70,7 @@
     </template>
     <div class="mt-4">
       <router-link
-        v-if="store.getters.GET_COMPANY_LIST.length < 3"
+        v-if="store.getters.GET_CAMPAIGN_LIST.length < 3"
         :to="{path: '/campaign'}">
         <b-button
           class="app-new-submit-button">
@@ -160,7 +136,7 @@ export default {
       this.isVideo = false
     },
     push () {
-      router.push({ path: '/campaign-balance/' + store.getters.GET_COMPANY_LIST[0].Id, query: { isEdit: true } })
+      router.push({ path: '/campaign-balance/' + store.getters.GET_CAMPAIGN_LIST[0].Id, query: { isEdit: true } })
     },
     isMoney () {
       return true
