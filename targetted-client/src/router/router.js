@@ -9,6 +9,7 @@ import imagesPreview from '@src/pages/CreativesPreview.vue'
 import paymentPage from '@src/pages/Payment.vue'
 import CampaignBalance from '@src/pages/CampaignBalance.vue'
 import adminka from '@src/pages/Adminka.vue'
+import UnattachedAccount from "@src/pages/advertising-campaign/UnattachedAccount";
 
 Vue.use(Router)
 
@@ -99,6 +100,11 @@ const router = new Router({
       path: '/campaign-balance/:id',
       name: 'campaign-balance',
       component: CampaignBalance
+    },
+    {
+      path: '/unattached-account',
+      name: 'unattached-account',
+      component: UnattachedAccount
     }
   ]
 })
