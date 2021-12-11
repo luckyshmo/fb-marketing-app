@@ -9,7 +9,16 @@ import imagesPreview from '@src/pages/CreativesPreview.vue'
 import paymentPage from '@src/pages/Payment.vue'
 import CampaignBalance from '@src/pages/CampaignBalance.vue'
 import adminka from '@src/pages/Adminka.vue'
-
+import UnattachedAccount from "@src/pages/advertising-campaign/UnattachedAccount";
+import Draft from "@src/pages/advertising-campaign/Draft";
+import Launched from "@src/pages/advertising-campaign/Launched";
+import Moderation from "@src/pages/advertising-campaign/Moderation";
+import NotPassedModeration from "@src/pages/advertising-campaign/NotPassedModeration";
+import Money from "@src/pages/advertising-campaign/Money";
+import Stopped from "@src/pages/advertising-campaign/Stopped";
+import NotChange from "@src/pages/control-budget/NotChange";
+import ChangedSomething from "@src/pages/control-budget/ChangedSomething";
+import NoMoney from "@src/pages/control-budget/NoMoney";
 Vue.use(Router)
 
 const router = new Router({
@@ -99,6 +108,56 @@ const router = new Router({
       path: '/campaign-balance/:id',
       name: 'campaign-balance',
       component: CampaignBalance
+    },
+    {
+      path: '/unattached-account',
+      name: 'unattached-account',
+      component: UnattachedAccount
+    },
+    {
+      path: '/draft',
+      name: 'Draft',
+      component: Draft
+    },
+    {
+      path: '/launched',
+      name: 'Launched',
+      component: Launched
+    },
+    {
+      path: '/moderation',
+      name: 'Moderation',
+      component: Moderation
+    },
+    {
+      path: '/notPassedModeration',
+      name: 'NotPassedModeration',
+      component: NotPassedModeration
+    },
+    {
+      path: '/money',
+      name: 'Money',
+      component: Money
+    },
+    {
+      path: '/stopped',
+      name: 'Stopped',
+      component: Stopped
+    },
+    {
+      path: '/notchange',
+      name: 'NotChange',
+      component: NotChange
+    },
+    {
+      path: '/changedsomething',
+      name: 'ChangedSomething',
+      component: ChangedSomething
+    },
+    {
+      path: '/nomoney',
+      name: 'nomoney',
+      component: NoMoney
     }
   ]
 })
