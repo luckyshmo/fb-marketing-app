@@ -19,15 +19,17 @@ var (
 	errEmptyAuth     = errors.New("empty auth header")
 )
 
-func (h *Handler) userIdentity(c *gin.Context) {
-	userId, err := parseHeader(c.GetHeader(authHeader), h.services.Authorization.ParseToken)
-	if err != nil {
-		sendErrorResponse(c, http.StatusUnauthorized, err.Error())
-		return
-	}
+func (h *Handler) userIdentity() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		userId, err := parseHeader(c.GetHeader(authHeader), h.services.Authorization.ParseToken)
+		if err != nil {
+			sendErrorResponse(c, http.StatusUnauthorized, err.Error())
+			return
+		}
 
-	//add userCtx to metadata
-	c.Set(userCtx, userId)
+		//add userCtx to metadata
+		c.Set(userCtx, userId)
+	}
 }
 
 func parseHeader(header string, parse func(string) (uuid.UUID, error)) (uuid.UUID, error) {

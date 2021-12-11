@@ -24,24 +24,25 @@ type signInInput struct {
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
 // @Router /auth/sign-up [post]
-func (h *Handler) signUp(c *gin.Context) {
+func (h *Handler) signUp() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var input models.User
 
-	var input models.User
+		if err := c.BindJSON(&input); err != nil {
+			sendErrorResponse(c, http.StatusBadRequest, "invalid input body")
+			return
+		}
 
-	if err := c.BindJSON(&input); err != nil {
-		sendErrorResponse(c, http.StatusBadRequest, "invalid input body")
-		return
+		id, err := h.services.Authorization.CreateUser(input)
+		if err != nil {
+			sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		sendStatusResponse(c, http.StatusOK, map[string]interface{}{
+			"id": id, //JSON body
+		})
 	}
-
-	id, err := h.services.Authorization.CreateUser(input)
-	if err != nil {
-		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
-		return
-	}
-
-	sendStatusResponse(c, http.StatusOK, map[string]interface{}{
-		"id": id, //JSON body
-	})
 }
 
 // @Summary SignIn
@@ -56,24 +57,26 @@ func (h *Handler) signUp(c *gin.Context) {
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
 // @Router /auth/sign-in [post]
-func (h *Handler) signIn(c *gin.Context) {
-	var input signInInput
+func (h *Handler) signIn() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var input signInInput
 
-	if err := c.BindJSON(&input); err != nil {
-		sendErrorResponse(c, http.StatusBadRequest, err.Error())
-		return
+		if err := c.BindJSON(&input); err != nil {
+			sendErrorResponse(c, http.StatusBadRequest, err.Error())
+			return
+		}
+
+		token, err := h.services.Authorization.GenerateToken(input.Email, input.Password)
+		if err != nil {
+			sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		sendStatusResponse(c, http.StatusOK, map[string]interface{}{
+			"token": token, //JSON body
+			"user": models.User{
+				Email: input.Email,
+			},
+		})
 	}
-
-	token, err := h.services.Authorization.GenerateToken(input.Email, input.Password)
-	if err != nil {
-		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
-		return
-	}
-
-	sendStatusResponse(c, http.StatusOK, map[string]interface{}{
-		"token": token, //JSON body
-		"user": models.User{
-			Email: input.Email,
-		},
-	})
 }
