@@ -296,9 +296,7 @@ export default {
         CampaignField: '',
         BusinessAdress: '',
         Images: [],
-        ImagesDescription: [],
         ImagesSmall: [],
-        ImagesSmallDescription: [],
         CreativeStatus: '',
         PostDescription: '',
         CurrentAmount: 0,
@@ -461,8 +459,6 @@ export default {
       campaignData.append('CampaignObjective', this.campaign.CampaignObjective)
       campaignData.append('CampaignField', this.campaign.CampaignField)
       campaignData.append('BusinessAddress', this.campaign.BusinessAddress)
-      campaignData.append('ImagesDescription', this.campaign.ImagesDescription)
-      campaignData.append('ImagesSmallDescription', this.campaign.ImagesSmallDescription)
       campaignData.append('CreativeStatus', this.campaign.CreativeStatus)
       campaignData.append('PostDescription', this.campaign.PostDescription)
       campaignData.append('DailyAmount', this.campaign.DailyAmount)

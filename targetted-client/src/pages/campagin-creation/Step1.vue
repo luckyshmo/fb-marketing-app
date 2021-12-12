@@ -311,8 +311,6 @@ export default {
         BusinessAddress: '',
         AccountURL: '',
         CampaignFieldArea: 'Выберите из спиcка',
-        ImagesDescription: [],
-        ImagesSmallDescription: [],
         CreativeStatus: 'Есть рекламные креативы',
         PostDescription: '',
         DailyAmount: 0,

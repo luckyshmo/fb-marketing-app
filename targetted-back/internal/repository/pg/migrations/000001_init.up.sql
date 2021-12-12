@@ -21,8 +21,6 @@ CREATE TABLE ad_campaign
     name                        varchar(255) not null,
     objective                   varchar(255),
     creative_status             varchar(255),
-    images_description          varchar(255),
-    images_small_description    varchar(255),
     post_description            text,
     budget                      double precision,
 	daily_budget                double precision,
