@@ -15,7 +15,7 @@ type AdCampaign struct {
 	BuyingType          string  `json:"buying_type"`
 	Objective           string  `json:"objective"`
 	BudgetOptimization  string  `json:"budget_optimization"`
-	Budget              float64 `json:"budget"`
+	Duration            int     `json:"duration"`
 	DailyBudget         float64 `json:"daily_budget"`
 	CampaignBidStrategy string  `json:"campaign_bid_strategy"`
 	AdScheduling        string  `json:"ad_scheduling"`
@@ -84,7 +84,7 @@ func NewAdCampaign(uc models.AdCampaign) (AdCampaign, error) {
 
 	ac.Name = uc.Name
 	ac.Objective = uc.Objective
-	ac.Budget = uc.Budget
+	ac.Duration = uc.Duration
 	ac.DailyBudget = uc.DailyBudget
 
 	ac.AdSet.Accounts = uc.FbPageId //! Instagram? why duplicate ad?

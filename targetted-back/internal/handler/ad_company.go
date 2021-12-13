@@ -125,13 +125,11 @@ func (h *Handler) getCampaignByID(c *gin.Context) {
 		return
 	}
 
-	user, err := h.services.User.GetById(userID)
-	if err != nil {
-		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
-		return
-	}
-
-	campaign.Budget = user.Balance //TODO ну как бы бред
+	// user, err := h.services.User.GetById(userID)
+	// if err != nil {
+	// 	sendErrorResponse(c, http.StatusInternalServerError, err.Error())
+	// 	return
+	// }
 
 	sendStatusResponse(c, http.StatusOK, campaign)
 }
