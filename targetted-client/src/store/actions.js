@@ -34,7 +34,7 @@ const jsonToFormData = (data, isEdit) => {
   // campaignData.append('CreativeStatus', data.CreativeStatus)
   // campaignData.append('PostDescription', data.PostDescription)
   // campaignData.append('DailyAmount', data.DailyAmount)
-  // campaignData.append('Days', data.Days)
+  // campaignData.append('Duration', data.Duration)
   // Array.from(data.ImagesSmall).forEach(Image => {
   //   campaignData.append('ImageSmall', Image)
   // })

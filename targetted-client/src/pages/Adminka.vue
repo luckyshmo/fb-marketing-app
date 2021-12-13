@@ -136,7 +136,7 @@
               <p>Статус креативов: <b>{{ campaign.CreativeStatus }}</b></p>
               <p>Описание под постом: <b>{{ campaign.PostDescription }}</b></p>
               <p>Дневной бюджет <b>{{ campaign.DailyAmount }}</b></p>
-              <p>Количество дней: <b>{{ campaign.Days }}</b></p>
+              <p>Количество дней: <b>{{ campaign.Duration }}</b></p>
               <p>Дата создания: <b>{{ campaign.CreationDate }}</b></p>
               <p>Дата запуска: <b>{{ campaign.StartDate }}</b></p>
               <!-- <button class="main-button">Выгрузить креативы</button> -->

@@ -23,7 +23,7 @@ func Test_TemplateMerge(t *testing.T) {
 		PostDescription: "",
 		Budget:          100.0,
 		DailyBudget:     10.0,
-		Days:            10,
+		Duration:        10,
 		IsStarted:       false,
 		TimeCreated:     time.Now(),
 		TimeStarted:     time.Now(),

@@ -212,9 +212,9 @@
           label-for="input-horizontal"
         >
           <b-form-input
-            v-model="campaign.Days"
+            v-model="campaign.Duration"
             class="form-input"
-            :state="validateState('Days')"
+            :state="validateState('Duration')"
             placeholder="Введите колчиество дней"
           />
           <b-form-invalid-feedback
@@ -272,7 +272,7 @@ export default {
         required,
         minValue: minValue(200)
       },
-      Days: {
+      Duration: {
         required,
         maxValue: minValue(1)
       }
@@ -301,7 +301,7 @@ export default {
         PostDescription: '',
         CurrentAmount: 0,
         DailyAmount: 0,
-        Days: 0
+        Duration: 0
       }
     }
   },
@@ -462,7 +462,7 @@ export default {
       campaignData.append('CreativeStatus', this.campaign.CreativeStatus)
       campaignData.append('PostDescription', this.campaign.PostDescription)
       campaignData.append('DailyAmount', this.campaign.DailyAmount)
-      campaignData.append('Days', this.campaign.Days)
+      campaignData.append('Duration', this.campaign.Duration)
       axios({ url: `${VUE_APP_API_URL}/api/campaign/${this.campaign.Id}`, data: campaignData, method: 'PUT' })
         .then(resp => {
           console.log(resp)

@@ -24,14 +24,14 @@ func (r *AdCampaignPg) Create(ac models.AdCampaign) (uuid.UUID, error) {
 	query := fmt.Sprintf(`INSERT INTO %s 
 		(user_id, fb_page_id, business_address,
 		field, name, objective, creative_status, post_description,
-		budget, daily_budget, days)
+		budget, daily_budget, duration)
 		values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id`,
 		adCampaignTable)
 
 	row := r.db.QueryRow(query,
 		ac.UserId, ac.FbPageId, ac.BusinessAddress,
 		ac.Field, ac.Name, ac.Objective, ac.CreativeStatus, ac.PostDescription,
-		ac.Budget, ac.DailyBudget, ac.Days,
+		ac.Budget, ac.DailyBudget, ac.Duration,
 	)
 
 	if err := row.Scan(&id); err != nil {
@@ -59,12 +59,12 @@ func (r *AdCampaignPg) Update(ac models.AdCampaign, idStr string) (uuid.UUID, er
 	post_description = '%s',
 	budget = '%f',
 	daily_budget = '%f',
-	days = '%d'
+	duration = '%d'
 	WHERE id = '%s' RETURNING id`,
 		adCampaignTable,
 		ac.UserId, ac.FbPageId, ac.BusinessAddress, ac.Field, ac.Name, ac.Objective,
 		ac.CreativeStatus, ac.PostDescription, ac.Budget,
-		ac.DailyBudget, ac.Days,
+		ac.DailyBudget, ac.Duration,
 		idStr)
 	row := r.db.QueryRow(query)
 	if err := row.Scan(&id); err != nil {
@@ -102,7 +102,7 @@ func (r *AdCampaignPg) GetAll(userId uuid.UUID) ([]models.AdCampaign, error) {
 	idString := userId.String()
 
 	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
-	field, name, objective, creative_status, post_description, budget, daily_budget, days,
+	field, name, objective, creative_status, post_description, budget, daily_budget, duration,
 	is_started, time_created, time_started FROM %s WHERE user_id = '%s'`, adCampaignTable, idString)
 	err := r.db.Select(&campaignList, query)
 	if err != nil {
@@ -118,7 +118,7 @@ func (r *AdCampaignPg) GetByID(campaignID string) (models.AdCampaign, error) {
 	idString := campaignID
 
 	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
-	field, name, objective, creative_status, post_description, budget, daily_budget, days,
+	field, name, objective, creative_status, post_description, budget, daily_budget, duration,
 	is_started, time_created, time_started FROM %s WHERE id = '%s'`, adCampaignTable, idString)
 	err := r.db.Get(&campaign, query)
 	// if scanCampaign.TimeStarted.Valid {

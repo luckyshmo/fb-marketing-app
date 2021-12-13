@@ -34,7 +34,7 @@ definitions:
         type: number
       dailyAmount:
         type: integer
-      days:
+      duration:
         type: integer
       fbPageId:
         type: string

@@ -22,11 +22,10 @@ CREATE TABLE ad_campaign
     objective                   varchar(255),
     creative_status             varchar(255),
     post_description            text,
-    budget                      double precision,
+    duration                    integer,
 	daily_budget                double precision,
     is_started                  boolean default false not null,
     time_started                timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     time_created                timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	days                        integer,
     UNIQUE (name, user_id)
 );

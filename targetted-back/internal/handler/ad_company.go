@@ -314,38 +314,29 @@ func parseCampaignFromContext(c *gin.Context) (models.AdCampaign, error) {
 
 	AdCampaign := c.Request.MultipartForm.Value
 
-	budgetS := AdCampaign["Budget"][0]
-	budget, err := strconv.ParseFloat(budgetS, 64)
-	if err != nil {
-		logger.Error(fmt.Errorf("parse campaign budget: %w", err))
-	}
-
 	dailyBudgetS := AdCampaign["DailyBudget"][0]
 	dailyBudget, err := strconv.ParseFloat(dailyBudgetS, 64)
 	if err != nil {
 		logger.Error(fmt.Errorf("parse daily campaign budget: %w", err))
 	}
 
-	daysS := AdCampaign["Days"][0]
-	days, err := strconv.Atoi(daysS)
+	durationS := AdCampaign["Duration"][0]
+	duration, err := strconv.Atoi(durationS)
 	if err != nil {
-		logger.Error(fmt.Errorf("parse days: %w", err))
+		logger.Error(fmt.Errorf("parse duration: %w", err))
 	}
 
 	campaign := models.AdCampaign{
-		UserId:                 userID,
-		FbPageId:               AdCampaign["FbPageId"][0],
-		BusinessAddress:        AdCampaign["BusinessAddress"][0],
-		Field:                  AdCampaign["Field"][0],
-		Name:                   AdCampaign["Name"][0],
-		Objective:              AdCampaign["Objective"][0],
-		CreativeStatus:         AdCampaign["CreativeStatus"][0],
-		ImagesDescription:      AdCampaign["ImagesDescription"],
-		ImagesSmallDescription: AdCampaign["ImagesSmallDescription"],
-		PostDescription:        AdCampaign["PostDescription"][0],
-		Budget:                 budget,
-		DailyBudget:            dailyBudget,
-		Days:                   days,
+		UserId:          userID,
+		FbPageId:        AdCampaign["FbPageId"][0],
+		BusinessAddress: AdCampaign["BusinessAddress"][0],
+		Field:           AdCampaign["Field"][0],
+		Name:            AdCampaign["Name"][0],
+		Objective:       AdCampaign["Objective"][0],
+		CreativeStatus:  AdCampaign["CreativeStatus"][0],
+		PostDescription: AdCampaign["PostDescription"][0],
+		DailyBudget:     dailyBudget,
+		Duration:        duration,
 	}
 
 	return campaign, nil

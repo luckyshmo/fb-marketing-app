@@ -24,7 +24,7 @@ type AdCampaign struct {
 	// !!! скорее всего составное поле!!! day * dailyB
 	Budget      float64   `db:"current_budget"`
 	DailyBudget float64   `db:"daily_budget"`
-	Days        int       `db:"days"`
+	Duration    int       `db:"duration"`
 	IsStarted   bool      `db:"is_started"`
 	TimeCreated time.Time `db:"time_created"`
 	TimeStarted time.Time `db:"time_started"`
