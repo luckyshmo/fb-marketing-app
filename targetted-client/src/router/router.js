@@ -9,7 +9,8 @@ import imagesPreview from '@src/pages/CreativesPreview.vue'
 import paymentPage from '@src/pages/Payment.vue'
 import CampaignBalance from '@src/pages/CampaignBalance.vue'
 import adminka from '@src/pages/Adminka.vue'
-
+import AdvertisingCampaign from "@src/pages/AdvertisingCampaign";
+import ControlBudget from "@src/pages/ControlBudget";
 Vue.use(Router)
 
 const router = new Router({
@@ -99,6 +100,16 @@ const router = new Router({
       path: '/campaign-balance/:id',
       name: 'campaign-balance',
       component: CampaignBalance
+    },
+    {
+      path: '/advertising-campaign',
+      name: 'AdvertisingCampaign',
+      component: AdvertisingCampaign
+    },
+    {
+      path: '/control-budget',
+      name: 'ControlBudget',
+      component: ControlBudget
     }
   ]
 })
