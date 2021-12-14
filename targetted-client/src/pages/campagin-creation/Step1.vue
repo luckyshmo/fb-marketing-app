@@ -311,12 +311,10 @@ export default {
         BusinessAddress: '',
         AccountURL: '',
         CampaignFieldArea: 'Выберите из спиcка',
-        ImagesDescription: [],
-        ImagesSmallDescription: [],
         CreativeStatus: 'Есть рекламные креативы',
         PostDescription: '',
         DailyAmount: 0,
-        Days: 0
+        Duration: 0
       },
       customErrors: {
         campaign: {

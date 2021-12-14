@@ -128,13 +128,11 @@ const campaignDefault = {
   CampaignField: '',
   BusinessAddress: '',
   Images: [],
-  ImagesDescription: [],
   ImagesSmall: [],
-  ImagesSmallDescription: [],
   CreativeStatus: 'Есть рекламные креативы',
   PostDescription: '',
   DailyAmount: 0,
-  Days: 0
+  Duration: 0
 }
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 

@@ -541,7 +541,7 @@ var doc = `{
                 "dailyAmount": {
                     "type": "integer"
                 },
-                "days": {
+                "duration": {
                     "type": "integer"
                 },
                 "fbPageId": {

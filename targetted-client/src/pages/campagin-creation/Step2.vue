@@ -87,7 +87,7 @@
             Необходим минимум один файл
           </b-form-invalid-feedback>
         </b-form-group>
-        <div v-if="isCreative()">
+        <!-- <div v-if="isCreative()">
           <div v-for="(Image, index) in Images" :key="Image.name">
             <b-form-group :label="textOnSlide(index)" :label-cols="label_cols" :content-cols="content_cols"
               id="input-group-main" label-for="input-horizontal">
@@ -95,7 +95,7 @@
               </b-form-input>
             </b-form-group>
           </div>
-        </div>
+        </div> -->
 
         <br><br>
         <h2 class="app-header-bold">{{getPostLabel()}}</h2>
@@ -128,7 +128,7 @@
             Необходим минимум один файл
           </b-form-invalid-feedback>
         </b-form-group>
-        <div v-if="isCreative()" class="app-new-creative-uploads">
+        <!-- <div v-if="isCreative()" class="app-new-creative-uploads">
           <div v-for="(Image, index) in ImagesSmall" :key="Image.name">
             <b-form-group :label="textOnImage(index)" :label-cols="label_cols" :content-cols="content_cols"
               id="input-group-main" label-for="input-horizontal">
@@ -136,7 +136,7 @@
                 placeholder="Введите текст"></b-form-input>
             </b-form-group>
           </div>
-        </div>
+        </div> -->
       </div>
       <b-form-group v-if="ImagesSmall.length > 0" label="Описание под постом в ленте" :label-cols="label_cols"
         :content-cols="content_cols" id="input-group-main" label-for="input-horizontal">

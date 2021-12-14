@@ -31,12 +31,10 @@ const jsonToFormData = (data, isEdit) => {
   // campaignData.append('CampaignObjective', data.CampaignObjective)
   // campaignData.append('CampaignField', data.CampaignField)
   // campaignData.append('BusinessAddress', data.BusinessAddress)
-  // campaignData.append('ImagesDescription', data.ImagesDescription)
-  // campaignData.append('ImagesSmallDescription', data.ImagesSmallDescription)
   // campaignData.append('CreativeStatus', data.CreativeStatus)
   // campaignData.append('PostDescription', data.PostDescription)
   // campaignData.append('DailyAmount', data.DailyAmount)
-  // campaignData.append('Days', data.Days)
+  // campaignData.append('Duration', data.Duration)
   // Array.from(data.ImagesSmall).forEach(Image => {
   //   campaignData.append('ImageSmall', Image)
   // })

@@ -69,9 +69,7 @@ const store = new Vuex.Store({
             CampaignField: '',
             BusinessAdress: '',
             Images: [],
-            ImagesDescription: [],
             ImagesSmall: [],
-            ImagesSmallDescription: [],
             CreativeStatus: '',
             PostDescription: ''
           },

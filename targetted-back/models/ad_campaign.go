@@ -15,19 +15,15 @@ type AdCampaign struct {
 	//! rename
 	BusinessAddress string `db:"business_address"`
 	//! rename
-	Field                  string   `db:"field"`
-	Name                   string   `db:"name"`
-	AdName                 string   `db:"ad_name"`
-	Objective              string   `db:"objective"`
-	CreativeStatus         string   `db:"creative_status"`
-	ImagesDescription      []string `db:"images_description"`
-	ImagesSmallDescription []string `db:"images_small_description"`
-	PostDescription        string   `db:"post_description"`
-	// !!! скорее всего составное поле!!! day * dailyB
-	Budget      float64   `db:"current_budget"`
-	DailyBudget float64   `db:"daily_budget"`
-	Days        int       `db:"days"`
-	IsStarted   bool      `db:"is_started"`
-	TimeCreated time.Time `db:"time_created"`
-	TimeStarted time.Time `db:"time_started"`
+	Field           string    `db:"field"`
+	Name            string    `db:"name"`
+	AdName          string    `db:"ad_name"`
+	Objective       string    `db:"objective"`
+	CreativeStatus  string    `db:"creative_status"`
+	PostDescription string    `db:"post_description"`
+	DailyBudget     float64   `db:"daily_budget"`
+	Duration        int       `db:"duration"`
+	IsStarted       bool      `db:"is_started"`
+	TimeCreated     time.Time `db:"time_created"`
+	TimeStarted     time.Time `db:"time_started"`
 }
