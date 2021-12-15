@@ -24,13 +24,8 @@ type Config struct {
 
 // Postgres contains configurations info for Postgres DB.
 type Postgres struct {
-	HOST           string `envconfig:"PG_HOST"`
-	PORT           string `envconfig:"PG_PORT"`
-	PAS            string `envconfig:"PG_PAS"`
-	SSLMode        string `envconfig:"PG_SSLMODE"`
+	DSN            string `envconfig:"PG_DSN`
 	MigrationsPath string `envconfig:"PG_MIGRATIONS_PATH"`
-	UserName       string `envconfig:"PG_USERNAME"`
-	DBName         string `envconfig:"PG_DBNAME"`
 }
 
 type Facebook struct {

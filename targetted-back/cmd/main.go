@@ -16,6 +16,8 @@ import (
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/repository"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/repository/pg"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/service"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/service/facebook/img"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/service/facebook/models"
 	logger "github.com/luckyshmo/fb-marketing-app/targetted-back/log"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/server"
 
@@ -59,14 +61,26 @@ func run() (err error) {
 		if err != nil {
 			return fmt.Errorf("failed to initialize db: %w", err)
 		}
-		repo = repository.NewSqlxRepository(db)
+
+		if err := db.RunMigrations(); err != nil {
+			return fmt.Errorf("failed to run migrations: %w", err)
+		}
+
+		repo = repository.NewSqlxRepository(db.DB)
 		defer func() {
 			err = db.Close()
 		}()
 	}
 
+	storage := img.NewFBImgStorage(models.Credentials{
+		Token:       cfg.Facebook.Token,
+		ApiVersion:  cfg.Facebook.APIVersion,
+		BusinessID:  cfg.Facebook.BusinessID,
+		AdAccountID: cfg.Facebook.AdAccountID,
+	})
+
 	//Init main components
-	services := service.NewService(repo, cfg)
+	services := service.NewService(repo, storage, cfg)
 	handlers := handler.NewHandler(services)
 
 	//starting server

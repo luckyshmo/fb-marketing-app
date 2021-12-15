@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
+	"github.com/sirupsen/logrus"
 )
 
 type dbScheme struct {
@@ -18,8 +19,14 @@ var db dbScheme
 
 func Init() {
 
-	usrID, _ := uuid.FromBytes([]byte("8db1eadc-ff22-4b87-bfef-049e913d6122"))
-	campaignID, _ := uuid.FromBytes([]byte("95f9bd3a-95a8-460f-a737-f7a946df42f7"))
+	usrID, err := uuid.Parse("8db1eadc-ff22-4b87-bfef-049e913d6122")
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	campaignID, err := uuid.Parse("95f9bd3a-95a8-460f-a737-f7a946df42f7")
+	if err != nil {
+		logrus.Fatal(err)
+	}
 
 	db = dbScheme{
 		Users: []models.User{
@@ -44,7 +51,6 @@ func Init() {
 				Name:            "Some name",
 				Objective:       "Some objective",
 				CreativeStatus:  "??",
-				PostDescription: "",
 				DailyBudget:     10.0,
 				Duration:        10,
 				IsStarted:       false,

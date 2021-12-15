@@ -5,6 +5,7 @@ import (
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/config"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/repository"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/service/facebook/api"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/service/facebook/img"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/service/payment"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
 )
@@ -23,11 +24,11 @@ type User interface {
 }
 
 type AdCampaign interface {
-	Create(ac models.AdCampaign) (uuid.UUID, error)
+	Create(ac models.AdCampaign, imgWithInfo []ImageWithMessage) (uuid.UUID, error)
 	Delete(ID string) error
 	Start(id uuid.UUID) error
 	Stop(id uuid.UUID) error
-	Update(ac models.AdCampaign, ID string) (uuid.UUID, error)
+	Update(ac models.AdCampaign, ID string, imgWithInfo []ImageWithMessage) (uuid.UUID, error)
 	GetAll(userID uuid.UUID) ([]models.AdCampaign, error)
 	GetByID(userID uuid.UUID, campaignID string) (models.AdCampaign, error)
 }
@@ -40,11 +41,11 @@ type Service struct {
 	Payment       *payment.Youkassa
 }
 
-func NewService(repos *repository.Repository, cfg *config.Config) *Service {
+func NewService(repos *repository.Repository, storage img.ImageStorage, cfg *config.Config) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
 		User:          NewUserService(repos.User),
-		AdCampaign:    NewAdCampaignService(repos.AdCampaign),
+		AdCampaign:    NewAdCampaignService(repos.AdCampaign, storage),
 		FacebookAPI:   api.NewFacebook(cfg.Facebook),
 		Payment:       payment.NewYoukassaService(cfg.Youkassa),
 	}

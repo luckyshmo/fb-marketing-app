@@ -20,7 +20,6 @@ func Test_TemplateMerge(t *testing.T) {
 		Name:            "Some name",
 		Objective:       "Some objective",
 		CreativeStatus:  "??",
-		PostDescription: "",
 		DailyBudget:     10.0,
 		Duration:        10,
 		IsStarted:       false,
