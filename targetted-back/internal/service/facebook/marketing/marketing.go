@@ -9,9 +9,10 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var errFacebook = errors.New("Facebook error")
+var errFacebook = errors.New("facebook error")
 
 type API interface {
+	//! all needed methods
 }
 
 type MarketingAPI struct {
@@ -60,14 +61,7 @@ func (api *MarketingAPI) StartCampaign(pageID string) {
 	}
 	logrus.Info("adSetID=", adSetID)
 
-	imgHash, err := api.AddImage("./test.jpeg")
-	if err != nil {
-		logrus.Error(err)
-		return
-	}
-	logrus.Info("imgHash=", imgHash)
-
-	imgHash = "c4981a4aa76f8e5e8828b14d358fd96a"
+	imgHash := "c4981a4aa76f8e5e8828b14d358fd96a" //!
 
 	creativeID, err := api.CreateCreative(
 		"Test creative",

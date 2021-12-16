@@ -23,14 +23,14 @@ func (r *AdCampaignPg) Create(ac models.AdCampaign) (uuid.UUID, error) {
 
 	query := fmt.Sprintf(`INSERT INTO %s 
 		(user_id, fb_page_id, business_address,
-		field, name, objective, creative_status, post_description,
+		field, name, objective, creative_status,
 		daily_budget, duration)
-		values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id`,
+		values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`,
 		adCampaignTable)
 
 	row := r.db.QueryRow(query,
 		ac.UserId, ac.FbPageId, ac.BusinessAddress,
-		ac.Field, ac.Name, ac.Objective, ac.CreativeStatus, ac.PostDescription,
+		ac.Field, ac.Name, ac.Objective, ac.CreativeStatus,
 		ac.DailyBudget, ac.Duration,
 	)
 
@@ -56,13 +56,12 @@ func (r *AdCampaignPg) Update(ac models.AdCampaign, idStr string) (uuid.UUID, er
 	name = '%s',
 	objective = '%s',
 	creative_status = '%s',
-	post_description = '%s',
 	daily_budget = '%f',
 	duration = '%d'
 	WHERE id = '%s' RETURNING id`,
 		adCampaignTable,
 		ac.UserId, ac.FbPageId, ac.BusinessAddress, ac.Field, ac.Name, ac.Objective,
-		ac.CreativeStatus, ac.PostDescription,
+		ac.CreativeStatus,
 		ac.DailyBudget, ac.Duration,
 		idStr)
 	row := r.db.QueryRow(query)
@@ -100,9 +99,7 @@ func (r *AdCampaignPg) GetAll(userId uuid.UUID) ([]models.AdCampaign, error) {
 
 	idString := userId.String()
 
-	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
-	field, name, objective, creative_status, post_description, daily_budget, duration,
-	is_started, time_created, time_started FROM %s WHERE user_id = '%s'`, adCampaignTable, idString)
+	query := fmt.Sprintf(`SELECT * FROM %s WHERE user_id = '%s'`, adCampaignTable, idString)
 	err := r.db.Select(&campaignList, query)
 	if err != nil {
 		return nil, err
@@ -116,9 +113,7 @@ func (r *AdCampaignPg) GetByID(campaignID string) (models.AdCampaign, error) {
 
 	idString := campaignID
 
-	query := fmt.Sprintf(`SELECT id, user_id, fb_page_id, business_address,
-	field, name, objective, creative_status, post_description, daily_budget, duration,
-	is_started, time_created, time_started FROM %s WHERE id = '%s'`, adCampaignTable, idString)
+	query := fmt.Sprintf(`SELECT * FROM %s WHERE id = '%s'`, adCampaignTable, idString)
 	err := r.db.Get(&campaign, query)
 	// if scanCampaign.TimeStarted.Valid {
 	// 	campaign.TimeStarted = scanCampaign.TimeStarted.Time

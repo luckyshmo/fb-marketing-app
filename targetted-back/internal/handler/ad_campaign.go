@@ -14,6 +14,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"github.com/luckyshmo/fb-marketing-app/targetted-back/internal/service"
 	logger "github.com/luckyshmo/fb-marketing-app/targetted-back/log"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
 )
@@ -181,19 +182,20 @@ func (h *Handler) updateCampaign(c *gin.Context) {
 		return
 	}
 
-	campaignID, err := h.services.AdCampaign.Update(campaign, campaignIDstring)
+	imgArr, err := parseImgFromReq(c)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	err = createImagesForCampaign(c, campaign.UserId, campaignID)
+	//! should return proper campaign
+	_, err = h.services.AdCampaign.Update(campaign, campaignIDstring, imgArr)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	sendStatusResponse(c, http.StatusOK, campaign)
+	sendStatusResponse(c, http.StatusOK, "")
 }
 
 // @Summary create campaign
@@ -216,19 +218,64 @@ func (h *Handler) createAdCampaign(c *gin.Context) {
 		return
 	}
 
-	campaignID, err := h.services.AdCampaign.Create(campaign)
+	imgArr, err := parseImgFromReq(c)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	err = createImagesForCampaign(c, campaign.UserId, campaignID)
+	campaignID, err := h.services.AdCampaign.Create(campaign, imgArr)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	sendStatusResponse(c, http.StatusOK, campaignID)
+}
+
+func parseImgFromReq(c *gin.Context) (img []service.ImageWithMessage, err error) {
+	imagesMap := c.Request.MultipartForm.File
+	imagesArr := imagesMap["Image"]
+	for _, multipartImage := range imagesArr {
+		file, openErr := multipartImage.Open()
+		if err != nil {
+			err = openErr
+			return
+		}
+		defer file.Close()
+
+		image, readErr := ioutil.ReadAll(file)
+		if err != nil {
+			err = readErr
+			return
+		}
+		img = append(img, service.ImageWithMessage{
+			Img:     image,
+			IsStory: true,
+			Message: "", //!
+		})
+	}
+	imagesSmallArr := imagesMap["ImageSmall"]
+	for _, multipartImage := range imagesSmallArr {
+		file, openErr := multipartImage.Open()
+		if err != nil {
+			err = openErr
+			return
+		}
+		defer file.Close()
+
+		image, readErr := ioutil.ReadAll(file)
+		if err != nil {
+			err = readErr
+			return
+		}
+		img = append(img, service.ImageWithMessage{
+			Img:     image,
+			IsStory: false,
+			Message: "", //!
+		})
+	}
+	return
 }
 
 func (h *Handler) startAdCampaign(c *gin.Context) {
@@ -272,34 +319,6 @@ func (h *Handler) stopAdCampaign(c *gin.Context) {
 	sendStatusResponse(c, http.StatusOK, "Campaign stopped")
 }
 
-func writeMultiPartImage(multipartFile *multipart.FileHeader, path string) error {
-	file, err := multipartFile.Open()
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	buf := bytes.NewBuffer(nil)
-	if _, err := io.Copy(buf, file); err != nil {
-		return err
-	}
-
-	out, err := os.Create(fmt.Sprintf("./%s/%s", path, multipartFile.Filename))
-	if err != nil {
-		return err
-	}
-	defer out.Close()
-
-	fw := bufio.NewWriter(out)
-
-	_, err = fw.Write(buf.Bytes())
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func parseCampaignFromContext(c *gin.Context) (models.AdCampaign, error) {
 	userID, err := getUserId(c)
 	if err != nil {
@@ -332,14 +351,14 @@ func parseCampaignFromContext(c *gin.Context) (models.AdCampaign, error) {
 		Name:            AdCampaign["Name"][0],
 		Objective:       AdCampaign["Objective"][0],
 		CreativeStatus:  AdCampaign["CreativeStatus"][0],
-		PostDescription: AdCampaign["PostDescription"][0],
 		DailyBudget:     dailyBudget,
 		Duration:        duration,
-	}
+	} //! not all fields!
 
 	return campaign, nil
 }
 
+//! Deprecated but probably useful
 func createImagesForCampaign(c *gin.Context, userId uuid.UUID, campaignID uuid.UUID) error {
 	path := "images/" + userId.String() + "/" + campaignID.String()
 
@@ -366,6 +385,35 @@ func createImagesForCampaign(c *gin.Context, userId uuid.UUID, campaignID uuid.U
 		if err != nil {
 			return err
 		}
+	}
+
+	return nil
+}
+
+//! Deprecated but probably useful
+func writeMultiPartImage(multipartFile *multipart.FileHeader, path string) error {
+	file, err := multipartFile.Open()
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	buf := bytes.NewBuffer(nil)
+	if _, err := io.Copy(buf, file); err != nil {
+		return err
+	}
+
+	out, err := os.Create(fmt.Sprintf("./%s/%s", path, multipartFile.Filename))
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	fw := bufio.NewWriter(out)
+
+	_, err = fw.Write(buf.Bytes())
+	if err != nil {
+		return err
 	}
 
 	return nil
