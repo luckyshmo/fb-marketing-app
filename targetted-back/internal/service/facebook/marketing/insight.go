@@ -2,7 +2,7 @@ package marketing
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/sirupsen/logrus"
@@ -41,7 +41,7 @@ func (api *MarketingAPI) adObjectInsight(objectID string) (string, error) {
 	}
 	defer resp.Body.Close()
 
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", err //!
 	}

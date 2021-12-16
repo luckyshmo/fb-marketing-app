@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/sirupsen/logrus"
@@ -63,7 +63,7 @@ func (api *MarketingAPI) CreateAd(Name, AdSetID, CreativeID, Status string) (str
 		return "", fmt.Errorf("do create ad request: %w", err)
 	}
 	defer resp.Body.Close()
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", err //!
 	}

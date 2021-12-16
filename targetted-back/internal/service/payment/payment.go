@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 	"time"
@@ -67,7 +67,7 @@ func (y *Youkassa) WaitPaymentStatus(paymentID string) (float64, error) {
 		}
 		defer resp.Body.Close()
 
-		body, err := ioutil.ReadAll(resp.Body)
+		body, err := io.ReadAll(resp.Body)
 		if err != nil {
 			logger.Error(fmt.Errorf("payment status read body: %w", err))
 		}
@@ -119,7 +119,7 @@ func (y *Youkassa) GetPaymentToken(userID uuid.UUID, paymentAmount string) (paym
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		logger.Error(fmt.Errorf("read token response body: %w", err))
 	}
