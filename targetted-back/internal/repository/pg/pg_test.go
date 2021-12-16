@@ -12,6 +12,7 @@ import (
 )
 
 func Test_main(t *testing.T) {
+	t.Skip()
 	pg, err := NewPostgresDB(config.Postgres{
 		DSN: "postgres://postgres:example@127.0.0.1:5432/postgres?sslmode=disable",
 	})
