@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"mime/multipart"
 	"net/http"
 	"os"
@@ -76,13 +75,13 @@ func (h *Handler) getCampaignImages(c *gin.Context) {
 
 	path := "./images/" + userID.String() + "/" + campaignIDstring
 
-	files, err := ioutil.ReadDir(path + storiesFolder)
+	files, err := os.ReadDir(path + storiesFolder)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	filesSmall, err := ioutil.ReadDir(path + postsFolder)
+	filesSmall, err := os.ReadDir(path + postsFolder)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -244,7 +243,7 @@ func parseImgFromReq(c *gin.Context) (img []service.ImageWithMessage, err error)
 		}
 		defer file.Close()
 
-		image, readErr := ioutil.ReadAll(file)
+		image, readErr := io.ReadAll(file)
 		if err != nil {
 			err = readErr
 			return
@@ -264,7 +263,7 @@ func parseImgFromReq(c *gin.Context) (img []service.ImageWithMessage, err error)
 		}
 		defer file.Close()
 
-		image, readErr := ioutil.ReadAll(file)
+		image, readErr := io.ReadAll(file)
 		if err != nil {
 			err = readErr
 			return

@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"io/ioutil"
 	"net/http"
+	"os"
 	"sort"
 	"strconv"
 
@@ -117,13 +117,13 @@ func (h *Handler) getUserCampaignImages(c *gin.Context) {
 
 	path := "./images/" + userID + "/" + campaignID
 
-	files, err := ioutil.ReadDir(path + storiesFolder)
+	files, err := os.ReadDir(path + storiesFolder)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	filesSmall, err := ioutil.ReadDir(path + postsFolder)
+	filesSmall, err := os.ReadDir(path + postsFolder)
 	if err != nil {
 		sendErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

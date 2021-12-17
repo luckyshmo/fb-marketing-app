@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"time"
 
@@ -92,7 +92,7 @@ func (storage *FBImgStorage) Upload(img []byte) (hash, url string, err error) {
 	defer resp.Body.Close()
 
 	var imgR imgResp
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		err = fmt.Errorf("read resp body: %w", err)
 		return

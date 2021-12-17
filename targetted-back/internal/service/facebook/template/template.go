@@ -3,7 +3,7 @@ package template
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"os"
 
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
 	"github.com/sirupsen/logrus"
@@ -64,7 +64,7 @@ func (adCampaign *AdCampaign) print() {
 }
 
 func GetTemplate() (AdCampaign, error) {
-	bytes, err := ioutil.ReadFile("cosmetology.json")
+	bytes, err := os.ReadFile("cosmetology.json")
 	if err != nil {
 		return AdCampaign{}, fmt.Errorf("read: %w", err)
 	}

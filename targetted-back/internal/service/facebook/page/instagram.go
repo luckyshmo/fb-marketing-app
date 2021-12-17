@@ -2,7 +2,7 @@ package page
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/sirupsen/logrus"
@@ -37,7 +37,7 @@ func (page *PageManager) getInstagramIDByPageID(pageID string) (instagramID stri
 	}
 	defer resp.Body.Close()
 
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", err //!
 	}
