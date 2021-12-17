@@ -1,5 +1,5 @@
 <template>
-   <div>
+   <div class="step">
         <slot name="header"></slot>
         <b-form>
             <p>
@@ -18,7 +18,7 @@
 
                     <b-button
                     type="button"
-                       class="main-button-grey ml-0 ml-sm-1 ml-lg-1 ml-md-1 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
+                       class="main-button-grey ml-1 ml-sm-1 ml-lg-1 ml-md-1 mt-lg-0 mt-md-0 mt-sm-0 mt-0"
                     @click="showAdvanced = true; showAdvancedClicked = true"
                     v-if="!showAdvancedClicked">Уточнить настройки</b-button>
                 </b-col>
@@ -136,7 +136,7 @@
             </small>
            </b-form-group>
 
-                      <b-row>
+                      <b-row class="bottom__block">
                 <b-col cols="6" sm="8" md="3" lg="3" xl="3">
             <b-button type="button"
                         class="app-new-submit-button"
@@ -240,9 +240,15 @@ export default {
           return
         }
       }
+      this.$router.push('/campaign-step-5')
 
-      this.$emit('next', this.campaignData)
+      // this.$emit('next', this.campaignData)
     }
   }
 }
 </script>
+<style>
+.bottom__block{
+  margin-bottom: 200px;
+}
+</style>

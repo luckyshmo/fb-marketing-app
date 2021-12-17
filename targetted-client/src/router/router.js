@@ -9,7 +9,12 @@ import imagesPreview from '@src/pages/CreativesPreview.vue'
 import paymentPage from '@src/pages/Payment.vue'
 import CampaignBalance from '@src/pages/CampaignBalance.vue'
 import adminka from '@src/pages/Adminka.vue'
-
+import AdvertisingCampaign from "@src/pages/AdvertisingCampaign";
+import ControlBudget from "@src/pages/ControlBudget";
+import CreateCampaignStep1 from "@src/pages/CreateCampaignStep-1";
+import CreateCampaignStep2 from "@src/pages/CreateCampaignStep-2";
+import CreateCampaignStep3 from "@src/pages/CreateCampaignStep-3";
+import CreateCampaignStep5 from "@src/pages/CreateCampaignStep-5";
 Vue.use(Router)
 
 const router = new Router({
@@ -99,6 +104,36 @@ const router = new Router({
       path: '/campaign-balance/:id',
       name: 'campaign-balance',
       component: CampaignBalance
+    },
+    {
+      path: '/advertising-campaign',
+      name: 'AdvertisingCampaign',
+      component: AdvertisingCampaign
+    },
+    {
+      path: '/control-budget',
+      name: 'ControlBudget',
+      component: ControlBudget
+    },
+    {
+      path: '/campaign-step-1',
+      name: 'CreateCampaignStep1',
+      component: CreateCampaignStep1
+    },
+    {
+      path: '/campaign-step-2',
+      name: 'CreateCampaignStep2',
+      component: CreateCampaignStep2
+    },
+    {
+      path: '/campaign-step-3',
+      name: 'CreateCampaignStep3',
+      component: CreateCampaignStep3
+    },
+    {
+      path: '/campaign-step-5',
+      name: 'CreateCampaignStep5',
+      component: CreateCampaignStep5
     }
   ]
 })

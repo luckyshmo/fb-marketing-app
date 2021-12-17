@@ -1,107 +1,53 @@
 <template>
-    <section class="steps">
-      <loading v-if="isLoading" />
-      <b-row class="app-new-steps-header">
+  <section class="steps">
+    <loading v-if="isLoading" />
+    <b-row class="app-new-steps-header">
+      <b-col>
+        <router-link id="app-link-back"  :to="{path: '/campaign-step-3'}">
+          ← Назад
+        </router-link>
         <b-col>
-          <router-link id="app-link-back" v-if="currentStep === 1" :to="{name: 'mainPage'}">
-            ← Назад
-          </router-link>
-          <p class="text-muted clickable" v-else @click="goStepBack" style="float:left;margin-right: 4px;line-height: 20px;">
-            ← Назад
-          </p>
-          <b-col>
-            <div class="text-muted d-block d-md-none d-lg-none d-xl-none">&nbsp;∙&nbsp;Шаг {{currentStep}} из {{totalSteps}}</div>
-          </b-col>
+          <div class="text-muted d-block">&nbsp;∙&nbsp;Шаг 4 из 4</div>
         </b-col>
-      </b-row>
-      <b-row align-h="between">
-        <b-col>
-          <Step1
-            :label_cols="label_cols"
-            :content_cols="content_cols"
-            :isEdit="isEdit"
-            @logout="logout"
-            v-if="currentStep ===  1"
-            @next="saveAndNext">
-            <template v-slot:header>
-              <h1>О бизнесе</h1>
-            </template>
-          </Step1>
+      </b-col>
+    </b-row>
+    <b-row align-h="between">
+      <b-col>
 
-          <Step2
-            :label_cols="label_cols"
-            :content_cols="content_cols"
-            :isEdit="isEdit"
-            :campaign="campaign"
-            v-if="currentStep ===  2"
-            @next="saveAndNext">
-            <template v-slot:header>
-              <h1>Изображения </h1>
-            </template>
-          </Step2>
-
-          <Step3
-            :label_cols="label_cols"
-            :content_cols="content_cols"
-            :isEdit="isEdit"
-            :campaign="campaign"
-            v-if="currentStep ===  3"
-            @next="saveAndNext">
-            <template v-slot:header>
-              <h1>Аудитория</h1>
-            </template>
-          </Step3>
-
-          <Step4
-            :label_cols="label_cols"
-            :content_cols="content_cols"
-            :isEdit="isEdit"
-            :campaign="campaign"
-            v-if="currentStep ===  4"
-            @next="saveAndNext">
-            <template v-slot:header>
-              <h1>Привязка страницы</h1>
-            </template>
-          </Step4>
-
-          <Step5
-            :label_cols="label_cols"
-            :content_cols="content_cols"
-            :isEdit="isEdit"
-            :campaign="campaign"
-            v-if="currentStep ===  4"
-            @next="saveAndNext">
-            <template v-slot:header>
-              <h1>Охват рекламы</h1>
-            </template>
-          </Step5>
-        </b-col>
-        <b-col class="steps-process">
-          <aside>
-            <h2>
-              Заполнено {{displayNumber}}%
-            </h2>
-            <ul class="app-new-progress-text">
-              <li :class="{active:(currentStep>=1)}">
-                О бизнесе
-              </li>
-              <li :class="{active:(currentStep>=2)}">
-                Изображения
-              </li>
-              <li :class="{active:(currentStep>=3)}">
-                Привязка аккаунта
-              </li>
-              <li :class="{active:(currentStep>=3)}">
-                Охват рекламы
-              </li>
-              <li :class="{active:(currentStep>=4)}">
-                Аудитория
-              </li>
-            </ul>
-          </aside>
-        </b-col>
-      </b-row>
-    </section>
+        <Step5
+          :label_cols="label_cols"
+          :content_cols="content_cols"
+          :isEdit="isEdit"
+          :campaign="campaign"
+          @next="saveAndNext">
+          <template v-slot:header>
+            <h1>Охват рекламы</h1>
+          </template>
+        </Step5>
+      </b-col>
+      <b-col class="steps-process">
+        <aside>
+          <h2>
+            Заполнено 100%
+          </h2>
+          <ul class="app-new-progress-text">
+            <li>
+              О бизнесе
+            </li>
+            <li>
+              Изображения
+            </li>
+            <li>
+              Аудитория
+            </li>
+            <li class="active">
+              Охват рекламы
+            </li>
+          </ul>
+        </aside>
+      </b-col>
+    </b-row>
+  </section>
 </template>
 <script>
 
@@ -114,10 +60,6 @@ import { validationMixin } from 'vuelidate'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
 import loading from '@src/components/Loading.vue'
 
-import Step1 from './campagin-creation/Step1.vue'
-import Step2 from './campagin-creation/Step2.vue'
-import Step3 from './campagin-creation/Step3.vue'
-import Step4 from './campagin-creation/Step4.vue'
 import Step5 from './campagin-creation/Step5.vue'
 
 const campaignDefault = {
@@ -139,16 +81,12 @@ const campaignDefault = {
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
-  name: 'CreateCampaign',
+  name: 'CreateCampaignStep-3',
   mixins: [validationMixin],
   components: {
     // popup,
     loading,
-    Step1,
-    Step2,
-    Step3,
-    Step4,
-    Step5
+    Step5,
   },
   data () {
     return {
@@ -417,85 +355,84 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import '@src/assets/styles/vars.scss';
+@import '@src/assets/styles/vars.scss';
 
-  #app-link-back {
-    // float: left;
-    margin-right: 5px;
-    float:left;
-    line-height:20px;
-    color: #6c757d ;
+#app-link-back {
+  // float: left;
+  margin-right: 5px;
+  float:left;
+  line-height:20px;
+  color: #6c757d ;
 
-    &:hover {
-      color:$black;
-    }
+  &:hover {
+    color:$black;
   }
+}
 
-  .app-new-progress-text  {
-    list-style: none;
-    margin-left: -20px;
-    padding-left: 0;
-  }
+.app-new-progress-text  {
+  list-style: none;
+  margin-left: -20px;
+  padding-left: 0;
+}
 
-  .app-new-progress-text li {
+.app-new-progress-text li {
+  color: $gray;
+  font-size: $baseFont;
+  line-height: 46px;
+
+  &::before {
+    margin-right: 10px;
     color: $gray;
-    font-size: $baseFont;
-    line-height: 46px;
+    content: "•";
+  }
+
+  &.active {
+    color: $black;
 
     &::before {
-      margin-right: 10px;
-      color: $gray;
+      color: $lime;
       content: "•";
     }
-
-    &.active {
-      color: $black;
-
-      &::before {
-        color: $lime;
-        content: "•";
-      }
-    }
   }
+}
 
-  .app-new-steps-header {
-    font-size: 14px;
-    line-height: 18px;
-    margin: 52px 0 12px !important;
+.app-new-steps-header {
+  font-size: 14px;
+  line-height: 18px;
+  margin: 52px 0 12px !important;
+}
+
+#icon-div-image{
+  position: absolute;
+  margin-left: 140px;
+  margin-top: -15px;
+}
+
+#primary-under{
+  margin-left: 20px;
+}
+
+@media (max-width: 722px) {
+  #c-status-text-u{
+    margin-left: 30px;
   }
-
-  #icon-div-image{
-      position: absolute;
-      margin-left: 140px;
-      margin-top: -15px;
-  }
-
   #primary-under{
-      margin-left: 20px;
+    margin-left: 0;
+    margin-top: 20px;
   }
+}
 
-  @media (max-width: 722px) {
-      #c-status-text-u{
-          margin-left: 30px;
-      }
-      #primary-under{
-          margin-left: 0;
-          margin-top: 20px;
-      }
+aside {
+  margin-top: 35px;
+}
+
+.custom-control-input{
+  margin-right: 3px;
+}
+
+@media (max-width: 1008px) {
+  .steps-process {
+    display: none;
   }
-
-  aside {
-    margin-top: 35px;
-  }
-
-  .custom-control-input{
-      margin-right: 3px;
-  }
-
-
-  @media (max-width: 1008px) {
-    .steps-process {
-      display: none;
-    }
-  }
+}
 </style>

@@ -219,8 +219,8 @@
         </b-form-group>
 
         <b-form-group class="mt-5">
-          <b-row>
-            <b-col cols="6" sm="8" md="3" lg="3" xl="3">
+          <b-row class="bottom__block">
+            <b-col cols="6" sm="8" md="4" lg="4" xl="4">
               <b-button
                 type="button"
                 :class="{'disabled-look': !$v.$anyDirty || $v.$anyError}"
@@ -229,9 +229,9 @@
                 {{isEdit ? "Назад":"Продолжить"}}
               </b-button>
             </b-col>
-            <b-col cols="6" sm="8" md="6" lg="6" xl="6" class="app-new-small-text-fit">
+            <b-col cols="6" sm="8" md="8" lg="6" xl="6" class="app-new-small-text-fit">
               <p class="text-muted text-pt-desktop">
-                Заполните все данные, чтобы продолжить
+                Заполните все данные,<br/> чтобы продолжить
               </p>
             </b-col>
           </b-row>
@@ -330,24 +330,19 @@ export default {
     sendData () {
       // валидация с помощью vuelidate
       this.$v.campaign.$touch()
-
+      this.$router.push('/campaign-step-2')
       // кастомная валидация для checkbox/select
-      Object.keys(this.customErrors.campaign).forEach(nameField => {
-        if (!this.campaign[nameField]) {
-          this.customErrors.campaign[nameField] = true
-          this.customErrors.anyError = true
-        }
-      })
-      // console.log(this.$v.campaign.$anyError)
-      // console.log(this.customErrors.anyError)
+      // Object.keys(this.customErrors.campaign).forEach(nameField => {
+      //   if (!this.campaign[nameField]) {
+      //     this.customErrors.campaign[nameField] = true
+      //     this.customErrors.anyError = true
+      //   }
+      // })
       // if (this.$v.campaign.$anyError || this.customErrors.anyError) {
       //   window.scrollTo(0, 100)
       //   return
       // }
-
-      console.log(this.campaign)
-
-      this.$emit('next', this.campaign)
+      // this.$emit('next', this.campaign)
     },
     setFieldValue (fieldName, value) {
       if (this.campaign[fieldName]) {
@@ -445,6 +440,9 @@ export default {
       width: 640px;
       padding: 10px;
       margin-bottom: 12px;
+  }
+  .bottom__block{
+    margin-bottom: 200px;
   }
   @media(max-width: 550px) {
     select.form-input.custom-select {

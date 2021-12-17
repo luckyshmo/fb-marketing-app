@@ -2,16 +2,18 @@
   <section class="main">
     <template v-if="isVideo" class="app-modal-white">
       <div class="video-pp-wrapper">
-        <iframe
-          id="ytplayer"
-          type="text/html"
-          src="https://www.youtube.com/embed/EgpUx9_4ZIQ?autoplay=1&origin=https://youtu.be/EgpUx9_4ZIQ" />
-        <div
-          id="ytcloser">
-          <b-icon
-            class="x-button"
-            icon="x"
-            @click="closeVideo" />
+        <div>
+          <iframe
+            id="ytplayer"
+            type="text/html"
+            src="https://www.youtube.com/embed/EgpUx9_4ZIQ?autoplay=1&origin=https://youtu.be/EgpUx9_4ZIQ"/>
+          <div
+            id="ytcloser">
+            <b-icon
+              class="x-button"
+              icon="x"
+              @click="closeVideo"/>
+          </div>
         </div>
       </div>
     </template>
@@ -71,7 +73,7 @@
     <div class="mt-4">
       <router-link
         v-if="store.getters.GET_CAMPAIGN_LIST.length < 3"
-        :to="{path: '/campaign'}">
+        :to="{path: '/campaign-step-1'}">
         <b-button
           class="app-new-submit-button">
           Создать новую
@@ -171,15 +173,20 @@ export default {
   }
 
   .video-pp-wrapper {
-    background: #fff;
+    background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
     position: absolute;
-    width: 100vh;
+    width: 100%;
     left: 0;
-    padding: 10%;
-    height: 100vw;
+    top: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-
+  .video-pp-wrapper > div{
+    display: flex;
+  }
   .right-pointer {
     justify-content: flex-end;
     display: flex;
@@ -215,15 +222,19 @@ export default {
   }
 
   #ytplayer{
-    margin-top: 30px;
     width: 640px;
     height: 360px;
+    border-radius: 12px;
   }
 
   #ytcloser{
-    position: absolute;
-    margin-left: 620px;
-    margin-top: -385px;
+    margin-left: 16px;
+    & > svg{
+      background-color: transparent;
+      width: 24px;
+      height: 24px;
+      fill: $white;
+    }
   }
 
   .c-date {
@@ -326,15 +337,23 @@ export default {
   }
 
   @media (max-width: 600px) {
+    .video-pp-wrapper{
+      width: 100%;
+      background: $black;
+      & > div{
+        width: 100%;
+      }
+    }
+
     #ytcloser {
       position: absolute;
-      margin-left: 270px;
-      margin-top: -195px;
+      top: 24px;
+      right: 24px;
     }
 
     #ytplayer {
-      width: 290px;
-      height: 170px;
+      width: 100%;
+      border-radius: 0;
     }
 
     .c-name {

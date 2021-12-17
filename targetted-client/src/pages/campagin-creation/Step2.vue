@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="step step1">
     <slot name="header"></slot>
     <p>
       Загрузите картинки, которые будут отображаться в рекламе.
@@ -96,15 +96,13 @@
             </b-form-group>
           </div>
         </div>
-
-        <br><br>
         <h2 class="app-header-bold">{{getPostLabel()}}</h2>
         <p class="app-new-info">В одном рекламном объявлении может быть до 5 слайдов</p>
 
         <b-form-group class="app-new-creative-uploads" :label-cols="label_cols" :state="validateImagesSmall()"
           id="input-group-main" label-for="input-horizontal">
 
-          <div id="image-block" style="margin-top: -70px;">
+          <div id="image-small-block">
             <div v-if="ImagesSmall.length < 5" key="s0">
               <input style="display: none" type="file" multiple accept="Image/gif, Image/jpeg, Image/png, Image/jpg"
                 @change="onSmallFileSelected" ref="smallFileInput">
@@ -114,7 +112,7 @@
               </div>
             </div>
 
-            <div v-for="(Image, key) in ImagesSmall" :key="key" style="width: 160px; height: 160px;">
+            <div v-for="(Image, key) in ImagesSmall" :key="key">
               <div class="post-image-wrapper">
               <div class="icon-div-image">
                 <b-icon @click.stop="removeImageSmall(Image)" class="x-button" icon="x"></b-icon>
@@ -143,8 +141,6 @@
         <b-form-textarea class="form-input" style="height: 100px" v-model="campaign.PostDescription"
           placeholder="Введите текст"></b-form-textarea>
       </b-form-group>
-
-        <br><br>
         <h2>Предпросмотр</h2>
         <div class="creative-message" @click="$router.push('/preview')">
         <b-row>
@@ -158,8 +154,8 @@
 
         </div>
 
-       <b-row class="mt-5">
-        <b-col cols="6" sm="8" md="3" lg="3" xl="3">
+       <b-row class="mt-5 bottom__block">
+        <b-col cols="6" sm="4" md="4" lg="4" xl="4">
           <b-button  type="button"
                     class="app-new-submit-button"
                     :class="{'disabled-look': validateImagesSmall() && validateImages()}"
@@ -167,8 +163,8 @@
             {{isEdit ? "Назад":"Продолжить"}}
           </b-button>
         </b-col>
-        <b-col cols="6" sm="8" md="6" lg="6" xl="6" class="app-new-small-text-fit">
-            <p class="text-muted text-pt-desktop">Загрузите креативы, чтобы продолжить</p>
+        <b-col cols="6" sm="8" md="8" lg="8" xl="8" class="app-new-small-text-fit">
+            <p class="text-muted text-pt-desktop">Загрузите креативы,<br/> чтобы продолжить</p>
         </b-col>
       </b-row>
 
@@ -196,11 +192,12 @@ export default {
       if (this.validateImagesSmall() && this.validateImages()) {
         return
       }
-      this.$emit('next', {
-        imageNames: this.imageNames,
-        ImagesSmall: this.ImagesSmall,
-        Images: this.Images
-      })
+      this.$router.push('/campaign-step-3')
+      // this.$emit('next', {
+      //   imageNames: this.imageNames,
+      //   ImagesSmall: this.ImagesSmall,
+      //   Images: this.Images
+      // })
     },
     getImageByName (name) {
       const uID = this.campaign.UserId
@@ -306,35 +303,58 @@ export default {
 
 <style lang="scss">
   @import '@src/assets/styles/vars.scss';
-
+  .bottom__block{
+    margin-bottom: 200px;
+  }
   .app-new-creative-uploads {
     label[for=input-horizontal] {
       display: none;
     }
   }
+  #input-group-main{
+    margin-bottom: 40px !important;
+  }
+  #image-small-block{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(150px, 180px));
+    justify-content: space-between;
+    align-items: center;
+    grid-gap: 20px;
+    &  > div{
+      margin-top: 20px;
+      width: 180px;
+      height: 180px;
+    }
+  }
   #preview{
-      width: 160px;
-      height: 280px;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       border-radius: 12px;
   }
 
   #preview-small{
-      width: 160px;
-      height: 160px;
+      width:100%;
+      height:100%;
       object-fit: cover;
       border-radius: 20px;
   }
 
   #image-block {
-      max-width: 530px;
+      width: 100%;
       display: grid;
-      grid-template-columns: repeat(6,minmax(160px, 1fr));
+      grid-template-columns: repeat(3,minmax(150px, 180px));
       justify-content: space-between;
       align-items: center;
       grid-gap: 20px;
-      overflow-x: scroll;
-      margin-top: -30px;
+      //overflow-x: scroll;
+      //margin-top: -30px;
+    & > div{
+      max-width: 180px;
+      height: 316px;
+      margin-top: 20px;
+    }
   }
 
   #load-file {
@@ -367,61 +387,69 @@ export default {
       text-align: center;
       color: $gray;
   }
-
-  @media (max-width: 450px) {
-      #image-block {
-          max-width: 200px;
-      }
+  .stories-image-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
   }
+  .icon-div-image{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+  }
+
+  //@media (max-width: 600px) {
+  //  .step{
+  //    width: 100%;
+  //  }
+  //}
+  //@media (max-width: 450px) {
+  //    #image-block {
+  //        max-width: 200px;
+  //    }
+  //}
 
   #load-frame {
       border: 2px dashed #CCCCCC;
       border-radius: 16px;
-      width: 174px;
-      height: 280px;
-      margin-top: 50px;
+      //width: 174px;
+      //height: 280px;
+    width: 100%;
+    height: 100%;
   }
 
   #load-frame-small {
       border: 2px dashed #CCCCCC;
       border-radius: 16px;
-      width: 160px;
-      height: 160px;
-      margin-top: 90px;
+      width: 180px;
+      height: 180px;
   }
-
+  .post-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
   @media (min-width: 650px) {
-    #load-frame {
-      width: 201px;
-      height: 348px;
-    }
-    #load-frame-small {
-      width: 201px;
-      height: 201px;
-    }
+    //#load-frame {
+    //  width: 180px;
+    //  height: 316px;
+    //}
+    //#load-frame-small {
+    //  width: 201px;
+    //  height: 201px;
+    //}
   }
 
   #load-frame:hover, #load-frame-small:hover {
       background: $light;
   }
 
-  .stories-image-wrapper {
-    margin-top: -30px;
-  }
-
   .post-image-wrapper {
-    margin-top: -30px;
+    //margin-top: -30px;
   }
-
-  .icon-div-image{
-      position: relative;
-      margin-left: 140px;
-      top: 50px;
-  }
-
   .icon-div-number {
-    bottom: -270px;
-    position: relative;
+    bottom: 10px;
+    position: absolute;
     background-color: $black;
     border-radius: 12px;
     color: $light;
@@ -434,10 +462,10 @@ export default {
   }
 
   .post-image-wrapper {
-    margin-top: -30px;
+    //margin-top: -30px;
 
     & .icon-div-number {
-      bottom: -150px;
+      //bottom: -150px;
     }
   }
 

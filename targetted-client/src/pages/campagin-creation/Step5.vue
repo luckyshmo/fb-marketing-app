@@ -1,5 +1,5 @@
 <template>
-   <div>
+   <div class="step">
         <slot name="header"></slot>
 
      <p>Выберите желаемый охват аудитории вашей рекламной кампании.</p>
@@ -157,7 +157,7 @@
                         @click="sendData">
         Зарегистрироваться
       </b-button>
-         <p class="app-new-info mt-5 mt-sm-2">
+         <p class="app-new-info mt-5 mt-sm-2 bottom__block">
           Нажимая кнопку “Зарегистрироваться” вы соглашаетесь с условиями <a href="#">оферты</a> и <a href="#">политикой конфиденциальности</a>.
         </p>
       </section>
@@ -262,7 +262,9 @@ export default {
 
 <style lang="scss">
   @import '@src/assets/styles/vars.scss';
-
+  .bottom__block{
+    margin-bottom: 200px !important;
+  }
   .app-label-right {
     font-family: IBM Plex Sans;
     font-style: normal;
