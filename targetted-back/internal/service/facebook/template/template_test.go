@@ -25,6 +25,24 @@ func Test_TemplateMerge(t *testing.T) {
 		IsStarted:       false,
 		TimeCreated:     time.Now(),
 		TimeStarted:     time.Now(),
+
+		Images: models.Images{
+			Img: []models.Image{
+				{
+					Hash:    "123123123",
+					URL:     "some-url.com/img123",
+					Message: "Some story",
+					IsStory: true,
+				},
+				{
+					Hash:    "456456456",
+					URL:     "some-url.com/img456",
+					Message: "Some post",
+					IsStory: false,
+				},
+			},
+			PostDescription: "I'M POST DESC WITH EMOJI 😀😃😄😁😆😅😂🤣",
+		},
 	})
 	require.NoError(t, err)
 	ac.print()
