@@ -67,6 +67,12 @@ html, body, #app {
   margin: 0 auto;
 }
 
+@media (max-width: 1008px) {
+  #app{
+    position: relative;
+  }
+}
+
 .btn.main-button-grey {
     background: #F3F3F3 !important;
     color: black !important;
@@ -89,7 +95,7 @@ html, body, #app {
   padding: 12px 28px !important;
   border:none !important;
   line-height: 32px;
-  font-family: Montserrat !important;
+  font-family: Montserrat, sans-serif !important;
   font-style: normal !important;
   font-weight: 600 !important;
   font-size: 20px;
@@ -104,7 +110,7 @@ html, body, #app {
   padding: 12px 28px !important;
   border:none !important;
   line-height: 24px;
-  font-family: Montserrat !important;
+  font-family: Montserrat , sans-serif !important;
   font-style: normal !important;
   font-weight: 600 !important;
   font-size: 16px;
@@ -123,6 +129,7 @@ html, body, #app {
 }
 @media (max-width: 600px) {
     #app {
+      max-width: 600px;
       width: 100%;
     }
 
@@ -142,7 +149,7 @@ html, body, #app {
   padding: 12px 28px !important;
   height: 56px;
   border:none !important;
-  font-family: Montserrat !important;
+  font-family: Montserrat , sans-serif !important;
   font-style: normal !important;
   font-weight: 600 !important;
   line-height: 32px;
@@ -183,7 +190,7 @@ h1 {
 }
 
 #h1-centered {
-  font-family: IBM Plex Sans;
+  font-family: IBM Plex Sans , sans-serif;
   font-style: normal;
   font-weight: 900;
   font-size: 72px;
@@ -212,7 +219,7 @@ p {
 #h2 {
   margin-top: 0;
   margin-bottom: 0;
-  font-family: IBM Plex Sans;
+  font-family: IBM Plex Sans , sans-serif;
   font-style: normal;
   font-weight: 900;
   /* font-size: 2.3em; */
@@ -249,6 +256,7 @@ p {
     border: none !important;
     background-color: #F3F3F3 !important;
     color: black !important;
+
 }
 
 .form-select:focus,
@@ -259,10 +267,10 @@ p {
 }
 
 .form-input.width-1-2 {
-  max-width: 45%;
+  max-width: 276px;
 }
 
-@media (max-width: 450px) {
+@media (max-width: 600px) {
   .form-input.width-1-2 {
     max-width: 99%;
   }

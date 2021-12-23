@@ -1,88 +1,103 @@
 <template>
-   <div>
+   <div class="step">
         <slot name="header"></slot>
-
-     <p>Выберите желаемый охват аудитории вашей рекламной кампании.</p>
-
-      <br class="d-none d-sm-block">
-      <br class="d-none d-sm-block">
-
+          <p>Выберите желаемый охват аудитории вашей рекламной кампании.</p>
         <b-form>
 
         <CampaginStats :data="stats"/>
 
-    <b-row>
+    <b-row style="margin-top: 17px">
       <b-col cols="12" sm="6">
       <b-form-group
             class="input-group-range"
             :label="`Бюджет в день: ${campaginData.budget} ₽`">
         <!-- <p class="app-label-right">{{campaginData.budget}} ₽ </p> -->
-            <b-form-input id="range-1" v-model="campaginData.budget" type="range" min="5" max="5000" step="5"></b-form-input>
+            <b-form-input id="range-1"
+                          v-model="campaginData.budget"
+                          type="range"
+                          min="5"
+                          max="5000"
+                          step="5"
+                          style="margin-top: 0"
+            ></b-form-input>
 
            </b-form-group>
       </b-col>
-      <b-col cols="12" sm="6">
+      <b-col cols="12" sm="6" class="step-5-range">
             <b-form-group
               class="input-group-range"
               :label="`Продолжительность: ${campaginData.timeLength} д`">
           <!-- <p class="app-label-right">{{campaginData.timeLength}} д</p> -->
-              <b-form-input id="range-2" v-model="campaginData.timeLength" type="range" min="1" max="31" step="1"></b-form-input>
+              <b-form-input id="range-2"
+                            v-model="campaginData.timeLength"
+                            type="range"
+                            min="1"
+                            max="31"
+                            step="1"
+                            style="margin-top: 0"
+              ></b-form-input>
            </b-form-group>
       </b-col>
     </b-row>
 
-      <section v-if="!isRegistered">
-        <h3 style="font-weight: bold;">Зарегистрируйтесь</h3>
-        <p>Осталось только зарегистрироваться, чтобы запустить рекламу.</p>
-
-            <b-form-group
-             id="input-group-main"
-                    label="Номер телефона">
-                    <b-form-input
-                    :state="$v.userData.phone.$dirty ? !$v.userData.phone.$error : null"
-                    v-model="$v.userData.phone.$model"
-                    class="form-input width-1-2"
-                    placeholder="Введите телефон"
-                    />
-                        <small
+      <section v-if="!isRegistered" style="margin-top: 73px">
+        <h3 style="font-weight: bold; font-size: 24px; line-height: 30px;">Зарегистрируйтесь</h3>
+        <p style="margin-bottom: 33px">Осталось только зарегистрироваться, чтобы запустить рекламу.</p>
+            <div class="col-12" style="display: flex ; justify-content: space-between ; flex-wrap: wrap">
+              <b-form-group
+                id="input-group-main"
+                label="Номер телефона"
+                class="width__form"
+              >
+                <b-form-input
+                  :state="$v.userData.phone.$dirty ? !$v.userData.phone.$error : null"
+                  v-model="$v.userData.phone.$model"
+                  class="form-input width-1-2"
+                  placeholder="Введите телефон"
+                />
+                <small
                   v-if="$v.userData.phone.$dirty && !$v.userData.phone.required"
                   class="error-message"
                 >
                   Телефон на указан
                 </small>
-                        <small
+                <small
                   v-if="$v.userData.phone.$dirty && !$v.userData.phone.numeric"
                   class="error-message"
                 >
                   Только цифры в телефоне
                 </small>
-           </b-form-group>
+              </b-form-group>
 
-  <b-form-group
-                 id="input-group-main"
-                    label="Имя">
-                    <b-form-input
-                    v-model="$v.userData.name.$model"
-                    class="form-input"
-                    placeholder="Введите ваше имя"
-                    />
-                     <small
-                      v-if="$v.userData.name.$dirty && !$v.userData.name.required"
-                      class="error-message"
-                    >
-                      Имя не указанно
-                    </small>
-                             <small
+              <b-form-group
+                id="input-group-main"
+                class="width__form"
+                label="Имя">
+                <b-form-input
+                  v-model="$v.userData.name.$model"
+                  class="form-input width-1-2"
+                  placeholder="Введите ваше имя"
+                />
+                <small
+                  v-if="$v.userData.name.$dirty && !$v.userData.name.required"
+                  class="error-message"
+                >
+                  Имя не указанно
+                </small>
+                <small
                   v-if="$v.userData.name.$dirty && !$v.userData.name.alpha"
                   class="error-message"
                 >
                   Только буквы в имени
                 </small>
-           </b-form-group>
+              </b-form-group>
+            </div>
 
                <b-form-group
                 id="input-group-main"
-                    label="Электронная почта">
+                    label="Электронная почта"
+                style="margin-top: -7px"
+               >
                     <b-form-input
                     v-model="$v.userData.email.$model"
                     :state="$v.userData.email.$dirty ? !$v.userData.email.$error : null"
@@ -102,62 +117,67 @@
                   Некорректный email
                 </small>
            </b-form-group>
-
+        <div class="col-12 d-flex justify-content-between flex-wrap" style="margin-top: -6px">
           <b-form-group
-           id="input-group-main"
-                    label="Пароль">
-                    <b-form-input
-                    v-model="$v.userData.password.$model"
-                    :state="$v.userData.password.$dirty ? !$v.userData.password.$error : null"
-                    class="form-input width-1-2"
-                    type="password"
-                    placeholder=""
-                    />
-                      <small
-                      v-if="$v.userData.password.$dirty && !$v.userData.password.required"
-                      class="error-message"
-                    >
-                      Пароль не указан
-                    </small>
-                      <small
-                      v-if="$v.userData.password.$dirty && !$v.userData.password.minLength"
-                      class="error-message"
-                    >
-                      Пароль менее 8 символов
-                    </small>
-           </b-form-group>
-            <b-form-group
-                    label="Введите пароль повторно"
-                     id="input-group-main"
-                >
-                    <b-form-input
-                    v-model="$v.userData.passwordCheck.$model"
-                    :state="$v.userData.passwordCheck.$dirty ? !$v.userData.passwordCheck.$error : null"
-                    class="form-input width-1-2"
-                    type="password"
-                    placeholder=""
-                    />
-                    <small
-                      v-if="$v.userData.passwordCheck.$dirty && !$v.userData.passwordCheck.required"
-                      class="error-message"
-                    >
-                      Пароль не указан
-                    </small>
-                      <small
-                      v-if="$v.userData.passwordCheck.$dirty && !$v.userData.passwordCheck.minLength"
-                      class="error-message"
-                    >
-                      Пароль менее 8 символов
-                    </small>
-           </b-form-group>
-            <b-button type="button"
+            id="input-group-main"
+            label="Пароль"
+            class="width__form"
+          >
+            <b-form-input
+              v-model="$v.userData.password.$model"
+              :state="$v.userData.password.$dirty ? !$v.userData.password.$error : null"
+              class="form-input width-1-2"
+              type="password"
+              placeholder="Введите пароль"
+            />
+            <small
+              v-if="$v.userData.password.$dirty && !$v.userData.password.required"
+              class="error-message"
+            >
+              Пароль не указан
+            </small>
+            <small
+              v-if="$v.userData.password.$dirty && !$v.userData.password.minLength"
+              class="error-message"
+            >
+              Пароль менее 8 символов
+            </small>
+          </b-form-group>
+          <b-form-group
+            label="Введите пароль повторно"
+            id="input-group-main"
+            class="width__form"
+          >
+            <b-form-input
+              v-model="$v.userData.passwordCheck.$model"
+              :state="$v.userData.passwordCheck.$dirty ? !$v.userData.passwordCheck.$error : null"
+              class="form-input width-1-2"
+              type="password"
+              placeholder="Введите пароль"
+            />
+            <small
+              v-if="$v.userData.passwordCheck.$dirty && !$v.userData.passwordCheck.required"
+              class="error-message"
+            >
+              Пароль не указан
+            </small>
+            <small
+              v-if="$v.userData.passwordCheck.$dirty && !$v.userData.passwordCheck.minLength"
+              class="error-message"
+            >
+              Пароль менее 8 символов
+            </small>
+          </b-form-group>
+        </div>
+        <b-button type="button"
                          v-if="!isRegistered"
                          :class="{'disabled-look': !$v.$anyDirty || $v.$anyError}"
                         class="app-new-submit-button"
+                  style="max-width: 293px; width: 100%; margin-top: -12px; margin-bottom: 27px"
                         @click="sendData">
         Зарегистрироваться
       </b-button>
-         <p class="app-new-info mt-5 mt-sm-2">
+         <p class="app-new-info bottom__block step-5-text">
           Нажимая кнопку “Зарегистрироваться” вы соглашаетесь с условиями <a href="#">оферты</a> и <a href="#">политикой конфиденциальности</a>.
         </p>
       </section>
@@ -262,9 +282,8 @@ export default {
 
 <style lang="scss">
   @import '@src/assets/styles/vars.scss';
-
   .app-label-right {
-    font-family: IBM Plex Sans;
+    font-family: IBM Plex Sans , sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: $baseFont;
@@ -294,7 +313,25 @@ export default {
       width: 80%;
     }
   }
+.width__form{
+  width: 276px;
 
+}
+@media (max-width: 600px) {
+  .width__form{
+    width: 100%;
+    margin-top: -3px;
+  }
+  .step-5-range{
+    margin-top: 30px !important;
+  }
+  .step-5-text{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px !important;
+    line-height: 18px !important;
+  }
+}
 @media (min-width: 550px) {
   .input-group.input-group-range {
     margin-top: 14px !important;

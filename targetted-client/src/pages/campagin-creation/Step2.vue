@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="step">
     <slot name="header"></slot>
     <p>
       Загрузите картинки, которые будут отображаться в рекламе.
@@ -54,7 +54,7 @@
         </div>
       <h2 class="app-header-bold">{{getStoriesLabel()}}</h2>
 
-      <p class="app-new-info">В одном рекламном объявлении может быть до 5 слайдов</p>
+      <p class="app-new-info">В одном рекламном <br/>объявлении может быть <br/>до 5 слайдов</p>
 
         <b-form-group :label-cols="label_cols" :state="validateImages()" id="input-group-main"
          class="app-new-creative-uploads"
@@ -96,15 +96,13 @@
             </b-form-group>
           </div>
         </div>
-
-        <br><br>
         <h2 class="app-header-bold">{{getPostLabel()}}</h2>
-        <p class="app-new-info">В одном рекламном объявлении может быть до 5 слайдов</p>
+        <p class="app-new-info">В одном рекламном объявлении <br/> может быть<br/> до 5 слайдов</p>
 
         <b-form-group class="app-new-creative-uploads" :label-cols="label_cols" :state="validateImagesSmall()"
           id="input-group-main" label-for="input-horizontal">
 
-          <div id="image-block" style="margin-top: -70px;">
+          <div id="image-small-block">
             <div v-if="ImagesSmall.length < 5" key="s0">
               <input style="display: none" type="file" multiple accept="Image/gif, Image/jpeg, Image/png, Image/jpg"
                 @change="onSmallFileSelected" ref="smallFileInput">
@@ -114,7 +112,7 @@
               </div>
             </div>
 
-            <div v-for="(Image, key) in ImagesSmall" :key="key" style="width: 160px; height: 160px;">
+            <div v-for="(Image, key) in ImagesSmall" :key="key">
               <div class="post-image-wrapper">
               <div class="icon-div-image">
                 <b-icon @click.stop="removeImageSmall(Image)" class="x-button" icon="x"></b-icon>
@@ -139,14 +137,12 @@
         </div>
       </div>
       <b-form-group v-if="ImagesSmall.length > 0" label="Описание под постом в ленте" :label-cols="label_cols"
-        :content-cols="content_cols" id="input-group-main" label-for="input-horizontal">
-        <b-form-textarea class="form-input" style="height: 100px" v-model="campaign.PostDescription"
+        :content-cols="content_cols" id="input-group-main" label-for="input-horizontal" style="margin-top: -14px">
+        <b-form-textarea class="form-input" style="height: 132px; padding-top: 6px" v-model="campaign.PostDescription"
           placeholder="Введите текст"></b-form-textarea>
       </b-form-group>
-
-        <br><br>
         <h2>Предпросмотр</h2>
-        <div class="creative-message" @click="$router.push('/preview')">
+        <div class="creative-message"  @click="$router.push('/preview')">
         <b-row>
               <b-col cols="10">
                       Как будет выглядеть реклама
@@ -158,19 +154,19 @@
 
         </div>
 
-       <b-row class="mt-5">
-        <b-col cols="6" sm="8" md="3" lg="3" xl="3">
+       <div class="bottom__block">
+        <div style="max-width: 145px; margin-right: 20px">
           <b-button  type="button"
                     class="app-new-submit-button"
                     :class="{'disabled-look': validateImagesSmall() && validateImages()}"
                     @click="sendData">
             {{isEdit ? "Назад":"Продолжить"}}
           </b-button>
-        </b-col>
-        <b-col cols="6" sm="8" md="6" lg="6" xl="6" class="app-new-small-text-fit">
-            <p class="text-muted text-pt-desktop">Загрузите креативы, чтобы продолжить</p>
-        </b-col>
-      </b-row>
+        </div>
+        <div  class="app-new-small-text-fit" style="max-width: 160px">
+            <p class="text-muted text-pt-desktop" style="margin-top: 3px">Загрузите креативы,<br/> чтобы продолжить</p>
+        </div>
+      </div>
 
     </b-form>
   </div>
@@ -196,11 +192,12 @@ export default {
       if (this.validateImagesSmall() && this.validateImages()) {
         return
       }
-      this.$emit('next', {
-        imageNames: this.imageNames,
-        ImagesSmall: this.ImagesSmall,
-        Images: this.Images
-      })
+      this.$router.push('/campaign-step-3')
+      // this.$emit('next', {
+      //   imageNames: this.imageNames,
+      //   ImagesSmall: this.ImagesSmall,
+      //   Images: this.Images
+      // })
     },
     getImageByName (name) {
       const uID = this.campaign.UserId
@@ -312,29 +309,50 @@ export default {
       display: none;
     }
   }
+  #input-group-main{
+    margin-bottom: 40px !important;
+  }
+  #image-small-block{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    justify-content: space-between;
+    align-items: center;
+    grid-gap: 20px;
+    &  > div{
+      margin-top: 8px;
+      width: 180px;
+      height: 180px;
+    }
+  }
   #preview{
-      width: 160px;
-      height: 280px;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       border-radius: 12px;
   }
 
   #preview-small{
-      width: 160px;
-      height: 160px;
+      width:100%;
+      height:100%;
       object-fit: cover;
       border-radius: 20px;
   }
 
   #image-block {
-      max-width: 530px;
+      width: 100%;
       display: grid;
-      grid-template-columns: repeat(6,minmax(160px, 1fr));
+      grid-template-columns: repeat(3,minmax(180px, 1fr));
       justify-content: space-between;
       align-items: center;
       grid-gap: 20px;
-      overflow-x: scroll;
-      margin-top: -30px;
+      //overflow-x: scroll;
+      //margin-top: -30px;
+    & > div{
+      width: 180px;
+      height: 316px;
+      margin-top: 8px;
+    }
   }
 
   #load-file {
@@ -342,7 +360,7 @@ export default {
       font-weight: 600;
       font-size: $baseFont;
       line-height: $baseLH;
-      margin: 28px auto 18px;
+      margin: 27px auto 18px;
       text-align: center;
       color: $black;
   }
@@ -353,7 +371,7 @@ export default {
       font-size: 12px;
       line-height: 20px;
       /* bottom: 0;//TODO почему то не работает */
-      margin-top: 134px;
+      margin-top: 171px;
       text-align: center;
       color: $gray;
   }
@@ -366,62 +384,86 @@ export default {
       bottom: 0;
       text-align: center;
       color: $gray;
+      margin-top: 35px ;
+  }
+  .stories-image-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .icon-div-image{
+    position: absolute;
+    top: -10px;
+    right: -10px;
   }
 
-  @media (max-width: 450px) {
+  //@media (max-width: 600px) {
+  //  .step{
+  //    width: 100%;
+  //  }
+  //}
+  @media (max-width: 600px) {
       #image-block {
-          max-width: 200px;
+        grid-template-columns: repeat(2,minmax(160px, 1fr));
+        & > div{
+          max-width: 160px;
+          width: 100%;
+          height: 280px;
+        }
       }
+      #load-file{
+        margin: 25px auto 16px;
+      }
+    #file-size{
+      margin-top: 0;
+    }
+    #file-size-big{
+      margin-top: 136px;
+    }
+
+    #image-small-block{
+      grid-template-columns: repeat(2, minmax(160px, 1fr));
+      & > div{
+        max-width: 160px;
+        width: 100%;
+        height: 160px;
+      }
+    }
+    #load-frame-small{
+      width: 100%;
+      height: 100%;
+    }
   }
 
   #load-frame {
       border: 2px dashed #CCCCCC;
       border-radius: 16px;
-      width: 174px;
-      height: 280px;
-      margin-top: 50px;
+    width: 100%;
+    height: 100%;
   }
 
   #load-frame-small {
       border: 2px dashed #CCCCCC;
       border-radius: 16px;
-      width: 160px;
-      height: 160px;
-      margin-top: 90px;
+      width: 100%;
+      height: 100%;
   }
-
-  @media (min-width: 650px) {
-    #load-frame {
-      width: 201px;
-      height: 348px;
-    }
-    #load-frame-small {
-      width: 201px;
-      height: 201px;
-    }
+  .post-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
   }
 
   #load-frame:hover, #load-frame-small:hover {
       background: $light;
   }
 
-  .stories-image-wrapper {
-    margin-top: -30px;
-  }
-
   .post-image-wrapper {
-    margin-top: -30px;
+    //margin-top: -30px;
   }
-
-  .icon-div-image{
-      position: relative;
-      margin-left: 140px;
-      top: 50px;
-  }
-
   .icon-div-number {
-    bottom: -270px;
-    position: relative;
+    bottom: 10px;
+    position: absolute;
     background-color: $black;
     border-radius: 12px;
     color: $light;
@@ -434,10 +476,10 @@ export default {
   }
 
   .post-image-wrapper {
-    margin-top: -30px;
+    //margin-top: -30px;
 
     & .icon-div-number {
-      bottom: -150px;
+      //bottom: -150px;
     }
   }
 

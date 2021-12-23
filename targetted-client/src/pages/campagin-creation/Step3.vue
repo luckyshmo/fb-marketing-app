@@ -1,34 +1,39 @@
 <template>
-   <div>
+   <div class="step">
         <slot name="header"></slot>
         <b-form>
-            <p>
-             Наш сервис проанализирует рекламные кампании похожих бизнесов из вашей ниши и автоматически подберет оптимальные настройки целевой аудитории. Или вы можете самостоятельно указать настройки аудитории, если считаете это важным.
+            <p style="margin-bottom: 20px">
+              Наш сервис проанализирует рекламные кампании похожих бизнесов из вашей ниши и автоматически подберет оптимальные настройки целевой аудитории. Или вы можете самостоятельно указать настройки аудитории, мы используем эту информацию при настройке.
             </p>
 
             <b-row align-h="between" no-gutters>
 
                 <b-col cols="10">
+                  <div class="step2__button">
                     <b-button type="button"
-                            class="app-new-submit-button"
-                            v-if="!showAdvancedClicked"
-                            @click="sendData">
-                    {{isEdit ? "Назад":"Продолжить"}}
-                </b-button>
+                              class="app-new-submit-button"
+                              style="margin-right: 12px"
+                              v-if="!showAdvancedClicked"
+                              @click="sendData">
+                      {{isEdit ? "Назад":"Продолжить"}}
+                    </b-button>
+                  </div>
 
                     <b-button
                     type="button"
-                       class="main-button-grey ml-0 ml-sm-1 ml-lg-1 ml-md-1 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
+                       class="main-button-grey"
                     @click="showAdvanced = true; showAdvancedClicked = true"
                     v-if="!showAdvancedClicked">Уточнить настройки</b-button>
                 </b-col>
             </b-row>
 
-      <br>
-
       <template v-if="showAdvanced">
 
-          <h3> Уточнение аудитории</h3>
+          <h3 style="margin-top: 20px;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 30px;" class="step3__text">Уточнение аудитории</h3>
 
           <!-- <p>
               Укажите характеристики вашей аудитории, наши алгоритмы будут учитывать их при настройке рекламной кампании.
@@ -40,6 +45,7 @@
                 :content-cols="content_cols"
                 id="input-group-main"
                 label-for="input-horizontal"
+                style="margin-top: 10px; margin-bottom: 7px !important;"
                 >
                     <b-form-radio-group
                         class="app-new-radio"
@@ -51,6 +57,7 @@
             <b-form-group label="Возраст"
                         :label-cols="label_cols"
                         :content-cols="content_cols"
+                          style="margin-bottom: 33px !important;"
                     id="input-group-main" label-for="input-horizontal">
 
                 <b-row >
@@ -96,29 +103,29 @@
                 </b-row>
           </b-form-group>
 
-           <b-form-group
-                    label="Местоположение"
-                     id="input-group-main">
-                    <b-form-input
-                    :state="$v.campaignData.auditory.location.$dirty ? !$v.campaignData.auditory.location.$error : null"
-                    v-model="$v.campaignData.auditory.location.$model"
-                    class="form-input"
-                    placeholder="Введите адрес"
-                    />
-                    <small
-              v-if="$v.campaignData.auditory.location.$dirty && !$v.campaignData.auditory.location.required"
-              class="error-message"
-            >
-              Пустое поле
-            </small>
-           </b-form-group>
+<!--           <b-form-group-->
+<!--                    label="Местоположение"-->
+<!--                     id="input-group-main">-->
+<!--                    <b-form-input-->
+<!--                    :state="$v.campaignData.auditory.location.$dirty ? !$v.campaignData.auditory.location.$error : null"-->
+<!--                    v-model="$v.campaignData.auditory.location.$model"-->
+<!--                    class="form-input"-->
+<!--                    placeholder="Введите адрес"-->
+<!--                    />-->
+<!--                    <small-->
+<!--              v-if="$v.campaignData.auditory.location.$dirty && !$v.campaignData.auditory.location.required"-->
+<!--              class="error-message"-->
+<!--            >-->
+<!--              Пустое поле-->
+<!--            </small>-->
+<!--           </b-form-group>-->
 
            <b-form-group
                     id="input-group-main"
                     label="Интересы"
                 >
-                   <p class="app-new-info">
-                        Коротко опишите интересы и прочие характеристики ваших клиентов.
+                   <p class="app-new-info" style="margin-top: -7px">
+                     Коротко опишите интересы и другие характеристики ваших клиентов, которые вы считаете основными.
                     </p>
                       <b-form-textarea
                         id="textarea"
@@ -127,6 +134,8 @@
                         v-model="$v.campaignData.auditory.interests.$model"
                         rows="3"
                         max-rows="6"
+                        style="min-height: 132px ; margin-top: 15px"
+                        placeholder="Пример: девушки с доходом выше среднего, занимаются спортом и следят за своей фигурой"
                         ></b-form-textarea>
                            <small
               v-if="$v.campaignData.auditory.interests.$dirty && !$v.campaignData.auditory.interests.required"
@@ -136,24 +145,22 @@
             </small>
            </b-form-group>
 
-                      <b-row>
-                <b-col cols="6" sm="8" md="3" lg="3" xl="3">
-            <b-button type="button"
-                        class="app-new-submit-button"
-                        :class="{'disabled-look': !$v.$anyDirty || $v.$anyError}"
-                        @click="sendData">
-                {{isEdit ? "Назад" : "Продолжить"}}
+        <div class="bottom__block">
+          <div style="max-width: 145px; margin-right: 12px">
+            <b-button  type="button"
+                       class="app-new-submit-button"
+                       @click="sendData">
+              {{isEdit ? "Назад":"Продолжить"}}
             </b-button>
- </b-col>
-                <b-col cols="10" sm="8" md="6" lg="6" xl="6" >
+          </div>
+          <div  class="app-new-small-text-fit" style="max-width: 259px">
             <b-button
-                type="button"
-                    class="main-button-grey mt-md-0 mt-sm-0 mt-2"
-                @click="sendDataNoValidate"
-                >Продолжить без уточнения</b-button>
-
-                    </b-col>
-          </b-row>
+              type="button"
+              class="main-button-grey"
+              @click="sendDataNoValidate"
+            >Продолжить без уточнения</b-button>
+          </div>
+        </div>
       </template>
 
     </b-form>
@@ -240,9 +247,30 @@ export default {
           return
         }
       }
+      this.$router.push('/campaign-step-5')
 
-      this.$emit('next', this.campaignData)
+      // this.$emit('next', this.campaignData)
     }
   }
 }
 </script>
+<style>
+.step2__button{
+  display: inline-block;
+}
+@media (max-width: 600px) {
+  .app-new-small-text-fit > button{
+    margin-left: 0 !important;
+  }
+  .step2__button{
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  .step3__text{
+    margin-top: -4px !important;
+  }
+  .bottom__block > div:nth-child(2){
+    margin-top: 12px;
+  }
+}
+</style>

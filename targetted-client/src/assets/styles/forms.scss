@@ -34,7 +34,7 @@ h2 {
 }
 
 .app-new-button-sm {
-    padding: 0 16px;
+    padding: 7px 16px;
     font-size: 14px;
     border: none !important;
     font-style: normal !important;
@@ -45,10 +45,20 @@ h2 {
     border-radius: 6px !important;
     height: 32px;
     margin-right: 8px;
+    line-height: 18px !important;
+    display: flex;
+    align-items: center;
 }
 
 .app-new-button-sm:last-child {
     margin-right: 0;
+    width: 73px;
+}
+.app-new-button-sm:nth-child(2){
+    width: 170px;
+}
+.app-new-button-sm:nth-child(1){
+    width: 48px;
 }
 
 .app-new-small-text-fit {
@@ -113,7 +123,7 @@ textarea.form-input {
     font-weight: bold;
     font-size: $baseFont;
     line-height: 14px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .app-new-action-text {
@@ -176,7 +186,7 @@ textarea.form-input {
 
 @media (max-width: 600px) {
     #input-group-main{
-        display:grid;
+        //display:grid;
     }
 
     #h1-centered {
@@ -203,7 +213,7 @@ textarea.form-input {
 
 .app-new-radio {
     .custom-control.custom-control-inline.custom-radio {
-        min-height: 45px;
+        min-height: 41px;
     }
     .custom-control-input {
         display: none;
@@ -226,15 +236,14 @@ textarea.form-input {
     }
 
     .custom-control-input + label span {
-        margin-left: 26px;
+        margin-left: 28px;
         min-width: 270px;
         display: inline-block;
     }
 }
 
-@media(max-width: 580px){
+@media(max-width: 600px){
     .step {
         width: 100%;
     }
 }
-

@@ -7,8 +7,13 @@
     </popup>
     <b-row align-h="between">
       <b-col cols="auto">
-        <a href="https://targetted.ru/">
-          <img class="header-logo" src="@src/assets/logo.png" alt="" />
+        <a href="https://targetted.ru/" style="display: block;
+          width: 116px;
+          height: 31px;
+          margin-left: -7px;
+          margin-top: 2px;
+          ">
+          <img class="header-logo" src="@src/assets/logo.png" alt="logo" style="width: 100% ; height: 100%; object-fit: cover"/>
         </a>
       </b-col>
       <b-col cols="auto">
@@ -22,7 +27,7 @@
           &nbsp;
           <button
             variant="primary"
-            class="app-new-button-sm d-none d-md-block d-lg-block d-xl-block"
+            class="app-new-button-sm d-none d-md-block d-lg-block d-xl-block align-items-start"
             @click="register">
             Зарегистрироваться
           </button>
@@ -112,7 +117,7 @@ export default {
   @import '@src/assets/styles/vars.scss';
 
   .header {
-    padding: 30px 0;
+    padding: 27px 0;
   }
 
   .header-logo {
