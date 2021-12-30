@@ -15,6 +15,7 @@ import CreateCampaignStep1 from "@src/pages/CreateCampaignStep-1";
 import CreateCampaignStep2 from "@src/pages/CreateCampaignStep-2";
 import CreateCampaignStep3 from "@src/pages/CreateCampaignStep-3";
 import CreateCampaignStep5 from "@src/pages/CreateCampaignStep-5";
+import PageAnchor from "@src/pages/PageAnchor";
 Vue.use(Router)
 
 const router = new Router({
@@ -134,6 +135,11 @@ const router = new Router({
       path: '/campaign-step-5',
       name: 'CreateCampaignStep5',
       component: CreateCampaignStep5
+    },
+    {
+      path: '/page-anchor',
+      name: 'PageAnchor',
+      component: PageAnchor
     }
   ]
 })

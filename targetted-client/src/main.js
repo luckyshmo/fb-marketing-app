@@ -12,11 +12,12 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Vuelidate from 'vuelidate'
 import VueGtag from 'vue-gtag'
 import VueSimpleAlert from 'vue-simple-alert'
-
+import VModal from 'vue-js-modal/dist/index.nocss.js'
+import 'vue-js-modal/dist/styles.css'
 import '@src/assets/styles/forms.scss'
 
 import initFacebookSdk from '../src/_helpers/init-facebook-sdk'
-
+Vue.use(VModal)
 Vue.use(VueSimpleAlert)
 
 Vue.use(Vuelidate)

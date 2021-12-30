@@ -62,7 +62,8 @@ html, body, #app {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 1008px; /* visibleWidth(960) + 2 * px(24) */
+  max-width: 1008px; /* visibleWidth(960) + 2 * px(24) */
+  width: 100%;
   padding: 0 24px;
   margin: 0 auto;
 }

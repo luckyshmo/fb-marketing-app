@@ -1,37 +1,56 @@
 <template>
 <div id="content-wrapper">
-  <div id="content">
-    <h1 class="app-header">
+  <div id="content" class="step">
+    <h1 class="app-header register__header">
       Регистрация
     </h1>
 
     <b-form
       @submit="register"
     >
+        <div class="register__form_top">
+          <b-form-group
+            label="Номер телефона"
+            id="input-group-main"
 
-      <b-form-group
-        label="Номер телефона"
-         id="input-group-main"
-      >
-
-        <b-form-input
-          id="tel"
-          v-model="form.phoneNumber"
-          class="form-input"
-          :state="$v.form.phoneNumber.$dirty ? !$v.form.phoneNumber.$error : null"
-          type="tel"
-          placeholder="Введите телефон"
-        />
-        <b-form-invalid-feedback
-          class="error-message"
-        >
-          Минимум 10 символов
-        </b-form-invalid-feedback>
-      </b-form-group>
+          >
+            <b-form-input
+              id="tel"
+              v-model="form.phoneNumber"
+              class="form-input"
+              :state="$v.form.phoneNumber.$dirty ? !$v.form.phoneNumber.$error : null"
+              type="tel"
+              placeholder="Введите телефон"
+            />
+            <b-form-invalid-feedback
+              class="error-message"
+            >
+              Минимум 10 символов
+            </b-form-invalid-feedback>
+          </b-form-group>
+          <b-form-group
+            label="Имя"
+            id="input-group-main"
+          >
+            <b-form-input
+              v-model="form.name"
+              class="form-input"
+              placeholder="Введите имя"
+              :state="$v.form.name.$dirty ? !$v.form.name.$error : null"
+            />
+            <small
+              v-if="$v.form.name.$dirty && !$v.form.name.required"
+              class="error-message"
+            >
+              Пустое поле Имя
+            </small>
+          </b-form-group>
+        </div>
 
       <b-form-group
         label="Электронная почта"
-         id="input-group-main"
+        id="input-group-main"
+        class="register__form_email"
       >
         <b-form-input
           v-model.trim="form.email"
@@ -59,63 +78,45 @@
           Пользователь с таким email уже существует
         </small>
       </b-form-group>
-
-       <b-form-group
-        label="Имя"
-         id="input-group-main"
-      >
-        <b-form-input
-          v-model="form.name"
-          class="form-input"
-          placeholder="Введите имя"
-          :state="$v.form.name.$dirty ? !$v.form.name.$error : null"
-        />
-        <small
-          v-if="$v.form.name.$dirty && !$v.form.name.required"
-          class="error-message"
+      <div class="register__form_bottom">
+        <b-form-group
+          label="Пароль"
+          id="input-group-main"
         >
-          Пустое поле Имя
-        </small>
-      </b-form-group>
-
-      <b-form-group
-        label="Пароль"
-         id="input-group-main"
-      >
-        <b-form-input
-          id="pas"
-          v-model="form.password"
-          class="form-input"
-          type="password"
-          placeholder="Пароль"
-        />
-        <b-form-invalid-feedback
-          id="pas"
-          class="error-message"
+          <b-form-input
+            id="pas"
+            v-model="form.password"
+            class="form-input"
+            type="password"
+            placeholder="Введите пароль"
+          />
+          <b-form-invalid-feedback
+            id="pas"
+            class="error-message"
+          >
+            Пароль должен быть минимум 8 символов
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group
+          id="input-group-main"
+          label="Введите пароль повторно"
         >
-          Пароль должен быть минимум 8 символов
-        </b-form-invalid-feedback>
-      </b-form-group>
-      <b-form-group
-         id="input-group-main"
-        label="Введите пароль повторно"
-      >
-        <b-form-input
-          v-model="form.passwordRepeat"
-          type="password"
-          class="form-input"
-          aria-describedby="password-repeat-feedback"
-          :state="validatePassword('passwordRepeat')"
-          placeholder="Введите пароль"
-        />
-        <small
-          v-if="form.password !== form.passwordRepeat"
-          class="error-message"
-        >
-          Пароли не совпадают
-        </small>
-      </b-form-group>
-
+          <b-form-input
+            v-model="form.passwordRepeat"
+            type="password"
+            class="form-input"
+            aria-describedby="password-repeat-feedback"
+            :state="validatePassword('passwordRepeat')"
+            placeholder="Введите пароль"
+          />
+          <small
+            v-if="form.password !== form.passwordRepeat"
+            class="error-message"
+          >
+            Пароли не совпадают
+          </small>
+        </b-form-group>
+      </div>
       <b-form-group class="app-new-form-footer">
 <br class="d-none d-sm-block">
         <b-button
@@ -126,11 +127,11 @@
           Зарегистрироваться
         </b-button>
 
-        <p class="app-new-info">
+        <p class="app-new-info register__form_bottom_text">
           Нажимая кнопку “Зарегистрироваться” вы соглашаетесь с условиями <a href="#">оферты</a> и <a href="#">политикой конфиденциальности</a>.
         </p>
 
-        <p class="app-new-login-sub">
+        <p class="app-new-login-sub register__form_bottom_link">
           Или <router-link :to="{name: 'login'}">
             войдите
           </router-link> в свой аккаунт
@@ -233,3 +234,67 @@ export default {
   }
 }
 </script>
+<style>
+.register__header{
+  margin-top: 80px !important;
+}
+.register__form_top{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 46px;
+}
+.register__form_email{
+  margin-top: -7px;
+}
+.register__form_bottom{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: -7px;
+  margin-bottom: -35px;
+}
+.register__form_bottom_text{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px !important;
+  line-height: 18px !important;
+  margin-top: 28px !important;
+  margin-bottom: 39px !important;
+}
+.register__form_bottom_link{
+  margin-bottom: 196px;
+}
+@media (max-width: 600px) {
+  .register__header{
+    margin-top: 55px !important;
+  }
+  .register__form_top{
+    margin-top: 33px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .register__form_top > #input-group-main{
+    width: 100%;
+  }
+  .register__form_top > #input-group-main:nth-child(2){
+    margin-top: -6px;
+  }
+  .register__form_bottom{
+    flex-wrap: wrap;
+    margin-bottom: -13px;
+  }
+  .register__form_bottom > #input-group-main{
+    width: 100%;
+  }
+  .register__form_bottom > #input-group-main:nth-child(2){
+    margin-top: -7px;
+  }
+  .register__form_bottom_text{
+    margin-bottom: 40px !important;
+  }
+  .register__form_bottom_link{
+    margin-bottom: 77px;
+  }
+}
+</style>

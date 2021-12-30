@@ -60,8 +60,8 @@
         </b-col>
       </b-col>
     </b-row>
-    <b-row align-h="between">
-      <b-col>
+    <b-row >
+      <b-col class="step__col">
 
         <Step5
           :label_cols="label_cols"

@@ -1,5 +1,5 @@
 <template>
-  <section class="step step1">
+  <section class="step">
     <slot name="header"></slot>
     <p>Заполните информацию о своём бизнесе.</p>
     <b-form style="margin-top: 26px">

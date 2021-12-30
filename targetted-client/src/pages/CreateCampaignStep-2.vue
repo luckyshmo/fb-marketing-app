@@ -1,6 +1,134 @@
 <template>
+<!--  :adaptive="true"-->
   <section class="steps">
     <loading v-if="isLoading"/>
+    <modal name="popup-show"
+           :width="windowInnerWidth > 680 ? 676 : '95%' "
+           height="auto"
+           :scrollable="true"
+           classes="popup-block"
+           style="background-color: rgba(0, 0, 0, 0.5) !important; padding: 100px 0 !important;"
+    >
+      <div class="modal__button">
+        <b-icon
+          class="x-button"
+          icon="x"
+          @click="$modal.hide('popup-show')"
+        />
+      </div>
+
+      <div class="popup__block">
+        <div class="popup__modal">
+          <div class="popup__top_block">
+            <h2>Советы по созданию креативов</h2>
+            <p>Креативы должны быть в 2 размерах: 1920×1080px и 1080×1080px.</p>
+            <p>Лучше загрузить несколько вариантов креативов. Например, разные фотографии или видео, разные акции и
+              специальные предложения. Это увеличит эффективность рекламной кампании</p>
+          </div>
+          <div class="popup__advice">
+            <h2>Советы</h2>
+            <div>
+              <p>1.</p>
+              <p>Заинтересуйте заманчивым предложением на креативе. Например, дайте скидку на первое посещение;
+                предложите бесплатную консультацию; расскажите клиентам, что вы давно работаете на рынке и у вас много
+                отличных отзывов.</p>
+            </div>
+            <div>
+              <p>2.</p>
+              <p>Сделайте описание, которое расскажет пользователю подробнее о вашем бизнесе и предложении. Например, вы
+                можете перечислить ваши преимущества для клиента, рассказать подробнее об акции, указать как можно
+                купить ваш товар или услугу. </p>
+            </div>
+            <div>
+              <p>3.</p>
+              <p>Используйте изображения из наиболее популярных постов и сторизов, если они подходят для рекламируемой
+                услуги, товара или профиля.</p>
+            </div>
+          </div>
+          <div class="popup__descriptions">
+            <h2>Шаблон описания</h2>
+            <div>
+              <p>Заголовок</p>
+              <p>Сделайте его цепляющим, интересным. Кпримеру, укажите главное преимущество товара/услуги, задайте
+                вопрос или укажите цифры.</p>
+            </div>
+            <div>
+              <p>Особенности продукта, услуги</p>
+              <p>
+                В этом блоке сделайте описание свойств товара/услуги.
+              </p>
+            </div>
+            <div>
+              <p>Список с преимуществами</p>
+              <p>
+                Озвучьте достоинства продукта/услуги в виде списка. </p>
+            </div>
+            <div>
+              <p> Призыв к действию</p>
+              <p>
+                Сделайте потенциальным клиентам выгодное предложение с призывом к конкретному действию. Чтобы подтолкнуть к совершению покупки прямо сейчас, можно использовать эффект дефицита или предложить приятный бонус.  </p>
+            </div>
+            <div>
+              <p>Пример описания</p>
+              <p>
+                НАЧНЕМ ГОТОВИТЬСЯ К ЛЕТУ!<br/>🌹Весна уже пришла это значит, что скоро мы снимем куртки!</p>
+            </div>
+            <button>Показать всё</button>
+          </div>
+          <div class="popup__service">
+            <div>
+              <h2>Сервис для креативов</h2>
+              <p>
+                <a href="https://www.google.com">Canva.com</a>
+                — есть готовые шаблоны для создания рекламных постов и сторизов, бесплатные стоковые фото,
+                30-дневный бесплатный период.
+                <router-link to="/">Инструкция</router-link>
+                по созданию креативов для рекламы в Facebook и Instagram.
+              </p>
+            </div>
+            <div>
+              <h2>Примеры</h2>
+              <p>Бесплатное первое посещение.</p>
+              <p>Цель — привлечь клиента на запись, а потом сделать из него постоянного клиента. </p>
+              <div>
+                <img src="../assets/img/image 5.png" alt="img">
+              </div>
+            </div>
+            <div>
+              <p>Скидка на услугу.</p>
+              <p>
+                Цель — увеличить заинтересованность клиента в вашем предложении. </p>
+              <div>
+                <img src="../assets/img/image 7.png" alt="img">
+              </div>
+            </div>
+          </div>
+          <div class="popup__bottom">
+            <h2>Пример для карусели</h2>
+            <div>
+              <div>
+                <div>
+                  <img src="../assets/img/image 8.png" alt="img">
+                </div>
+                <p>Стоимость услуги<br/> со скидкой и описанием. </p>
+              </div>
+              <div>
+                <div>
+                  <img src="../assets/img/image 9.png" alt="img">
+                </div>
+                <p>Подробное описание<br/> услуг + подарок. </p>
+              </div>
+              <div>
+                <div>
+                  <img src="../assets/img/image 10.png" alt="img">
+                </div>
+                <p>Отзывы помогают<br/> вызвать больше доверия. </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </modal>
     <b-row class="app-new-steps-header">
       <b-col style="padding: 0; display: flex; align-items: center">
         <router-link id="app-link-back" :to="{path: '/campaign-step-1'}" style="display: flex; align-items: center">
@@ -60,8 +188,8 @@
         </b-col>
       </b-col>
     </b-row>
-    <b-row align-h="between">
-      <b-col>
+    <b-row >
+      <b-col class="step__col">
 
         <Step2
           :label_cols="12"
@@ -107,11 +235,9 @@ import accountService from '@src/_services/account.service'
 import store from '@src/store/store'
 import router from '@src/router/router'
 import {instance as axios} from '@src/_services/index'
-// import popup from '@src/components/BigPopup.vue'
 import {validationMixin} from 'vuelidate'
 import {required, maxLength, minLength} from 'vuelidate/lib/validators'
 import loading from '@src/components/Loading.vue'
-
 import Step2 from './campagin-creation/Step2.vue'
 
 const campaignDefault = {
@@ -136,7 +262,6 @@ export default {
   name: 'CreateCampaign',
   mixins: [validationMixin],
   components: {
-    // popup,
     loading,
     Step2,
   },
@@ -155,7 +280,8 @@ export default {
       Images: [],
       campaign: campaignDefault,
       interval: false,
-      displayNumber: 0
+      displayNumber: 0,
+      windowInnerWidth : window.innerWidth,
     }
   },
   computed: {
@@ -173,6 +299,9 @@ export default {
     }
   },
   watch: {
+    windowWidth() {
+      this.onResize()
+    },
     $route(to) {
       console.log('route ', store.getters.GET_EMAIL)
       window.scrollTo(0, 100)
@@ -204,6 +333,9 @@ export default {
     }
   },
   mounted() {
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.onResize);
+    })
     clearInterval(this.interval)
 
     if (this.number === this.displayNumber) {
@@ -265,6 +397,9 @@ export default {
     goStepBack() {
       this.currentStep = this.currentStep - 1
       localStorage.setItem('campagin_step', this.currentStep)
+    },
+    onResize() {
+      this.windowInnerWidth = window.innerWidth
     },
     saveAndNext(data) {
       if (data) {
@@ -412,7 +547,6 @@ export default {
 </script>
 <style lang="scss">
 @import '@src/assets/styles/vars.scss';
-
 #app-link-back {
   // float: left;
   margin-right: 5px;
@@ -432,8 +566,149 @@ export default {
     fill: $black;
   }
 }
-
-
+.popup-block{
+  background: #FFFFFF;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12), 0px 1px 3px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 20px !important;
+}
+.popup__block{
+  padding: 40px 48px 56px;
+}
+.modal__button{
+  position: relative;
+  width: 100%;
+  & > svg{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 4px;
+  }
+}
+.popup__top_block > h2{
+  font-size: 32px !important;
+  font-style: normal;
+  line-height: 38px !important;
+}
+.popup__top_block > p:nth-child(2){
+  margin-top: 12px;
+}
+.popup__top_block > p:nth-child(3){
+  margin-top: -3px;
+}
+.popup__advice{
+  padding: 22px 0;
+}
+.popup__advice > div{
+  width: 100%;
+  display: flex;
+}
+.popup__advice > div > p:nth-child(1){
+  max-width: 14px;
+  width: 100%;
+  margin-right: 8px;
+}
+.popup__advice > div > p{
+  margin-bottom: 12px;
+}
+.popup__descriptions > h2{
+  margin-top: 7px;
+}
+.popup__descriptions > div > p:nth-child(1){
+  font-weight: bold;
+  margin-bottom: 0;
+}
+.popup__descriptions > div > p:nth-child(2){
+  margin-bottom: 12px;
+}
+.popup__descriptions > div:nth-child(6) > p:nth-child(2){
+  margin-bottom: 0;
+}
+.popup__descriptions > button{
+  border: none;
+  background-color: transparent;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: $violet;
+  padding: 0;
+}
+.popup__service{
+  padding-top: 40px;
+}
+.popup__service > div:nth-child(1) > p > a{
+  color: $violet;
+}
+.popup__service > div:nth-child(2) > h2{
+  margin-top: 40px;
+}
+.popup__service > div:nth-child(2) > p:nth-child(2){
+  font-weight: bold;
+  margin-bottom: 0;
+}
+.popup__service > div:nth-child(2) > p:nth-child(3){
+  margin-bottom: 0;
+}
+.popup__service > div:nth-child(2) > div{
+  max-width: 283px;
+  width: 100%;
+  height: 279px;
+  margin-top: 12px;
+  & > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.popup__service > div:nth-child(3) > p:nth-child(1){
+  font-weight: bold;
+  margin-top: 28px;
+  margin-bottom: 0;
+}
+.popup__service > div:nth-child(3) > p:nth-child(2){
+  margin-bottom: 0;
+}
+.popup__service > div:nth-child(3) > div{
+  max-width: 283px;
+  width: 100%;
+  height: 283px;
+  margin-top: 12px;
+  & > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.popup__bottom{
+  padding-top: 40px;
+}
+.popup__bottom > div{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.popup__bottom > div > div{
+  max-width: 185px;
+  width: 100%;
+  p{
+    margin-top: 12px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px !important;
+    line-height: 18px !important;
+    margin-bottom: 0;
+  }
+}
+.popup__bottom > div > div > div{
+  width: 100%;
+  height: 328px;
+  & > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
 #icon-div-image {
   position: absolute;
   margin-left: 140px;
@@ -454,6 +729,26 @@ export default {
   }
 }
 
+@media (max-width: 600px) {
+  .popup__block{
+    padding: 20px 20px 30px;
+    h2{
+      font-size: 24px !important;
+      line-height: 30px !important;
+    }
+  }
+  .popup__bottom > h2{
+    text-align: center;
+  }
+  .popup__bottom > div{
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  .popup__bottom > div > div{
+    margin-top: 15px;
+  }
+}
 
 
 .custom-control-input {

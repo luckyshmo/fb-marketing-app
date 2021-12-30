@@ -11,7 +11,7 @@
   .footer {
     width: 100%;
     align-self: flex-end;
-    margin-bottom: 32px;
+    padding-bottom: 32px;
   }
 
   .footer-text {

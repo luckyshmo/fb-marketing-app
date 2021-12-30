@@ -61,8 +61,8 @@
       </b-col>
     </b-row>
 
-    <b-row align-h="between">
-      <b-col>
+    <b-row >
+      <b-col class="step__col">
 
         <Step3
           :label_cols="label_cols"
@@ -441,9 +441,6 @@ export default {
 
 aside {
   margin-top: 25px;
-  h2 {
-    margin-left: 4px;
-  }
 }
 
 .custom-control-input{

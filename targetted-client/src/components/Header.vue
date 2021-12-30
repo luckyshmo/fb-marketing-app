@@ -1,10 +1,10 @@
 <template>
   <section class="header">
-    <popup
-      v-if="isInfoPopupVisible"
-      @closePopup="closeInfoPopup">
-      <Questions/>
-    </popup>
+<!--    <popup-->
+<!--      v-if="isInfoPopupVisible"-->
+<!--      @closePopup="closeInfoPopup">-->
+<!--      <Questions/>-->
+<!--    </popup>-->
     <b-row align-h="between">
       <b-col cols="auto">
         <a href="https://targetted.ru/" style="display: block;

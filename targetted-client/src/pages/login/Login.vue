@@ -1,71 +1,72 @@
 <template>
 <div id="content-wrapper">
-  <div id="content">
+  <div id="content" class="step">
 
-    <h1 class="app-header">
-      Вход
+    <h1 class="app-header login__header">
+      Войти
     </h1>
-    <b-button   class="app-new-submit-button less-padding"
-                  @click="loginFB">
-                Есть аккаунт
-              </b-button>
+<!--    <b-button   class="app-new-submit-button less-padding"-->
+<!--                  @click="loginFB">-->
+<!--                Есть аккаунт-->
+<!--              </b-button>-->
 <b-form
       @submit.prevent="login"
     >
-      <b-form-group
-        id="input-group-main"
-        label="Электронная почта"
+  <div class="login__form_block">
+    <b-form-group
+      id="input-group-main"
+      label="Электронная почта"
+    >
+      <b-form-input
+        v-model="email"
+        class="form-input"
+        :state="$v.email.$dirty ? !$v.email.$error : null"
+        type="email"
+        placeholder="Введите почту"
+        @click="resetErr()"
+      />
+      <small
+        v-if="$v.email.$dirty && !$v.email.required"
+        class="error-message"
       >
-        <b-form-input
-          v-model="email"
-          class="form-input"
-          :state="$v.email.$dirty ? !$v.email.$error : null"
-          type="email"
-          placeholder="Введите почту"
-          @click="resetErr()"
-        />
-        <small
-          v-if="$v.email.$dirty && !$v.email.required"
-          class="error-message"
-        >
-          Пустое поле email
-        </small>
-        <small
-          v-if="$v.email.$dirty && !$v.email.email"
-          class="error-message"
-        >
-          Некорректный email
-        </small>
-        <small
-          v-if="userNotExist"
-          class="error-message"
-        >
-          Пользователь с такими почтой/паролем не существует
-        </small>
-      </b-form-group>
-
-      <b-form-group
-        label="Пароль"
-        id="input-group-main"
+        Пустое поле email
+      </small>
+      <small
+        v-if="$v.email.$dirty && !$v.email.email"
+        class="error-message"
       >
-        <b-form-input
-          id="pas"
-          v-model="password"
+        Некорректный email
+      </small>
+      <small
+        v-if="userNotExist"
+        class="error-message"
+      >
+        Пользователь с такими почтой/паролем не существует
+      </small>
+    </b-form-group>
 
-          type="password"
-          class="form-input"
-          placeholder="Введите пароль"
-        />
-        <b-form-invalid-feedback
-          id="pas"
-          class="error-message"
-        >
-          Пароль должен быть минимум 8 символов
-        </b-form-invalid-feedback>
-      </b-form-group>
+    <b-form-group
+      label="Пароль"
+      id="input-group-main"
+    >
+      <b-form-input
+        id="pas"
+        v-model="password"
+
+        type="password"
+        class="form-input"
+        placeholder="Введите пароль"
+      />
+      <b-form-invalid-feedback
+        id="pas"
+        class="error-message"
+      >
+        Пароль должен быть минимум 8 символов
+      </b-form-invalid-feedback>
+    </b-form-group>
+  </div>
 
       <b-form-group class="app-new-form-footer">
-        <br class="d-none d-sm-block">
       <b-button
         type="submit"
         class="app-new-submit-button"
@@ -74,7 +75,7 @@
         Войти
       </b-button>
 
-      <p class="app-new-login-sub mt-5">
+      <p class="app-new-login-sub login__form_block_text">
         Или <router-link :to="{name: 'register'}">
           зарегистрируйтесь
         </router-link>
@@ -146,4 +147,28 @@ export default {
 }
 </script>
 <style>
+.login__header{
+  margin-top: 81px !important;
+}
+.login__form_block{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 46px;
+  margin-bottom: -12px;
+}
+.login__form_block_text{
+  margin-top: 40px;
+}
+@media (max-width: 600px) {
+  .login__header{
+    margin-top: 55px !important;
+  }
+  .login__form_block{
+    flex-wrap: wrap;
+    margin-top: 34px;
+  }
+  .login__form_block > #input-group-main:nth-child(2){
+    margin-top: -8px;
+  }
+}
 </style>

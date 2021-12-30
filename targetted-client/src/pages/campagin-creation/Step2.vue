@@ -30,7 +30,7 @@
                               ]"></b-form-radio-group>
         </b-form-group> -->
 
-        <div class="creative-message">
+        <div class="creative-message" @click="showModalPopup()">
            <b-row>
               <b-col cols="10">
                 Советы по самостоятельному созданию креативов
@@ -54,7 +54,7 @@
         </div>
       <h2 class="app-header-bold">{{getStoriesLabel()}}</h2>
 
-      <p class="app-new-info">В одном рекламном <br/>объявлении может быть <br/>до 5 слайдов</p>
+      <p class="app-new-info">В одном рекламном <br/>объявлении может быть до 5 слайдов</p>
 
         <b-form-group :label-cols="label_cols" :state="validateImages()" id="input-group-main"
          class="app-new-creative-uploads"
@@ -97,7 +97,7 @@
           </div>
         </div>
         <h2 class="app-header-bold">{{getPostLabel()}}</h2>
-        <p class="app-new-info">В одном рекламном объявлении <br/> может быть<br/> до 5 слайдов</p>
+        <p class="app-new-info">В одном рекламном объявлении <br/> может быть до 5 слайдов</p>
 
         <b-form-group class="app-new-creative-uploads" :label-cols="label_cols" :state="validateImagesSmall()"
           id="input-group-main" label-for="input-horizontal">
@@ -173,9 +173,9 @@
 </template>
 
 <script>
+
 import store from '@src/store/store'
 import { APP_UI_URL } from '@src/constants'
-
 export default {
   name: 'Step2',
   props: ['label_cols', 'content_cols', 'campaign', 'isEdit'],
@@ -198,6 +198,9 @@ export default {
       //   ImagesSmall: this.ImagesSmall,
       //   Images: this.Images
       // })
+    },
+    showModalPopup () {
+      this.$modal.show('popup-show')
     },
     getImageByName (name) {
       const uID = this.campaign.UserId
@@ -315,13 +318,14 @@ export default {
   #image-small-block{
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    grid-template-columns: repeat(3, minmax(160px, 180px));
     justify-content: space-between;
     align-items: center;
     grid-gap: 20px;
     &  > div{
       margin-top: 8px;
-      width: 180px;
+      max-width: 180px;
+      width: 100%;
       height: 180px;
     }
   }
@@ -342,14 +346,15 @@ export default {
   #image-block {
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(3,minmax(180px, 1fr));
+      grid-template-columns: repeat(3,minmax(160px, 180px));
       justify-content: space-between;
       align-items: center;
       grid-gap: 20px;
       //overflow-x: scroll;
       //margin-top: -30px;
     & > div{
-      width: 180px;
+      max-width: 180px;
+      width: 100%;
       height: 316px;
       margin-top: 8px;
     }
@@ -404,7 +409,7 @@ export default {
   //}
   @media (max-width: 600px) {
       #image-block {
-        grid-template-columns: repeat(2,minmax(160px, 1fr));
+        grid-template-columns: repeat(2,minmax(120px, 160px));
         & > div{
           max-width: 160px;
           width: 100%;
@@ -422,7 +427,7 @@ export default {
     }
 
     #image-small-block{
-      grid-template-columns: repeat(2, minmax(160px, 1fr));
+      grid-template-columns: repeat(2, minmax(120px, 160px));
       & > div{
         max-width: 160px;
         width: 100%;

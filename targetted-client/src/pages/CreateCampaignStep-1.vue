@@ -60,8 +60,8 @@
         </b-col>
       </b-col>
     </b-row>
-    <b-row align-h="between">
-      <b-col>
+    <b-row >
+      <b-col class="step__col">
         <Step1
           label_cols="12"
           content_cols="12"
@@ -198,6 +198,7 @@ export default {
   margin-right: 3px;
 }
 .steps-process{
+  max-width: 203px !important;
   padding: 0 !important;
 }
 @media (max-width: 1008px) {

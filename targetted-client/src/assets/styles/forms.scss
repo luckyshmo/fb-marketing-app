@@ -15,8 +15,15 @@ h2 {
 }
 
 .step {
-    width: 580px;
-    margin-right: 61px;
+    max-width: 580px;
+    width: 100%;
+}
+.step__col{
+    max-width: 580px;
+    width: 100%;
+    margin-right: 75px;
+    padding: 0;
+    margin-left:  calc(var(--bs-gutter-x) / 2);
 }
 
 .app-new-button-main {
@@ -177,6 +184,7 @@ textarea.form-input {
 #input-group-main{
     margin-bottom: 28px;
     color: $black;
+    width: 100%;
     display: flex;
     flex-direction: column;
     font-style: normal;
@@ -237,7 +245,7 @@ textarea.form-input {
 
     .custom-control-input + label span {
         margin-left: 28px;
-        min-width: 270px;
+        min-width: 260px;
         display: inline-block;
     }
 }
@@ -245,5 +253,10 @@ textarea.form-input {
 @media(max-width: 600px){
     .step {
         width: 100%;
+        margin-right: 0;
+    }
+    .step__col{
+        width: 100%;
+        margin-right: 0;
     }
 }
