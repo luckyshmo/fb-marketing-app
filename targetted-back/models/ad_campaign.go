@@ -41,7 +41,7 @@ type Image struct {
 	Hash    string `json:"hash"`
 	URL     string `json:"url"`
 	Message string `json:"message"`
-	IsStory bool   `json:is_story`
+	IsStory bool   `json:"is_story"`
 }
 
 // Make the Image struct implement the driver.Valuer interface. This method
