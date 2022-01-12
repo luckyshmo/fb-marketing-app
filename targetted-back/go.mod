@@ -3,6 +3,7 @@ module github.com/luckyshmo/fb-marketing-app/targetted-back
 go 1.16
 
 require (
+	github.com/Masterminds/squirrel v1.5.2
 	github.com/banzaicloud/logrus-runtime-formatter v0.0.0-20190729070250-5ae5475bae5e
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/getsentry/sentry-go v0.11.0

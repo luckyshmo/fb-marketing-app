@@ -3,6 +3,7 @@ package pg
 import (
 	"fmt"
 
+	sq "github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
@@ -21,20 +22,15 @@ func NewAdCampaignPg(db *sqlx.DB) *AdCampaignPg {
 func (r *AdCampaignPg) Create(ac models.AdCampaign) (uuid.UUID, error) {
 	var id uuid.UUID
 
-	query := fmt.Sprintf(`INSERT INTO %s 
-		(user_id, fb_page_id, business_address,
-		field, name, objective, creative_status,
-		daily_budget, duration)
-		values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`,
-		adCampaignTable)
+	query := sq.
+		Insert(adCampaignTable).
+		Columns("user_id", "fb_page_id", "business_address", "field", "name", "objective", "creative_status", "daily_budget", "duration").
+		Values(ac.UserId, ac.FbPageId, ac.BusinessAddress, ac.Field, ac.Name, ac.Objective, ac.CreativeStatus, ac.DailyBudget, ac.Duration).
+		Suffix("RETURNING \"id\"").
+		RunWith(r.db).
+		PlaceholderFormat(sq.Dollar)
 
-	row := r.db.QueryRow(query,
-		ac.UserId, ac.FbPageId, ac.BusinessAddress,
-		ac.Field, ac.Name, ac.Objective, ac.CreativeStatus,
-		ac.DailyBudget, ac.Duration,
-	)
-
-	if err := row.Scan(&id); err != nil {
+	if err := query.QueryRow().Scan(&id); err != nil {
 		return uuid.Nil, err
 	}
 
