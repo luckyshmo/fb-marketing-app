@@ -1,8 +1,6 @@
 package pg
 
 import (
-	"fmt"
-
 	sq "github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -38,47 +36,55 @@ func (r *AdCampaignPg) Create(ac models.AdCampaign) (uuid.UUID, error) {
 }
 
 func (r *AdCampaignPg) Delete(id string) error {
-	query := fmt.Sprintf(`DELETE FROM %s WHERE id = '%s'`, adCampaignTable, id)
-	return r.db.QueryRow(query).Err()
+	_, err := sq.
+		Delete(adCampaignTable).
+		Where("id = ?", id).
+		RunWith(r.db).
+		Exec()
+	return err
 }
 
 func (r *AdCampaignPg) Update(ac models.AdCampaign, idStr string) (uuid.UUID, error) {
 	var id uuid.UUID
-	query := fmt.Sprintf(`UPDATE %s set 
-	user_id = '%s', 
-	fb_page_id = '%s', 
-	business_address = '%s',
-	field = '%s',
-	name = '%s',
-	objective = '%s',
-	creative_status = '%s',
-	daily_budget = '%f',
-	duration = '%d'
-	WHERE id = '%s' RETURNING id`,
-		adCampaignTable,
-		ac.UserId, ac.FbPageId, ac.BusinessAddress, ac.Field, ac.Name, ac.Objective,
-		ac.CreativeStatus,
-		ac.DailyBudget, ac.Duration,
-		idStr)
-	row := r.db.QueryRow(query)
-	if err := row.Scan(&id); err != nil {
+	query := sq.
+		Update(adCampaignTable).
+		SetMap(
+			sq.Eq{
+				"user_id":          ac.UserId,
+				"fb_page_id":       ac.FbPageId,
+				"business_address": ac.BusinessAddress,
+				"field":            ac.Field,
+				"name":             ac.Name,
+				"bjective":         ac.Objective,
+				"creative_status":  ac.CreativeStatus,
+				"daily_budget":     ac.DailyBudget,
+				"duration":         ac.Duration,
+			}).
+		Where("id = ?", idStr).
+		Suffix("RETURNING \"id\"").
+		RunWith(r.db)
+
+	if err := query.QueryRow().Scan(&id); err != nil {
 		return uuid.Nil, err
 	}
+
 	return id, nil
 }
 
 func (r *AdCampaignPg) changeStatus(id uuid.UUID, status bool) error {
 	var uuid uuid.UUID
-	query := fmt.Sprintf(`UPDATE %s set 
-	is_started = '%t'
-	WHERE id = '%s' RETURNING id`,
-		adCampaignTable,
-		status,
-		id.String())
-	row := r.db.QueryRow(query)
-	if err := row.Scan(&uuid); err != nil {
+
+	query := sq.
+		Update(adCampaignTable).
+		Set("is_started", status).
+		Where("id = ?", id.String()).
+		Suffix("RETURNING \"id\"").
+		RunWith(r.db)
+
+	if err := query.QueryRow().Scan(&uuid); err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -95,8 +101,17 @@ func (r *AdCampaignPg) GetAll(userId uuid.UUID) ([]models.AdCampaign, error) {
 
 	idString := userId.String()
 
-	query := fmt.Sprintf(`SELECT * FROM %s WHERE user_id = '%s'`, adCampaignTable, idString)
-	err := r.db.Select(&campaignList, query)
+	query, args, err := sq.
+		Select("*").
+		From(adCampaignTable).
+		Where("user_id = ?", idString).
+		ToSql()
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = r.db.Select(&campaignList, query, args)
 	if err != nil {
 		return nil, err
 	}
@@ -109,8 +124,21 @@ func (r *AdCampaignPg) GetByID(campaignID string) (models.AdCampaign, error) {
 
 	idString := campaignID
 
-	query := fmt.Sprintf(`SELECT * FROM %s WHERE id = '%s'`, adCampaignTable, idString)
-	err := r.db.Get(&campaign, query)
+	query, args, err := sq.
+		Select("*").
+		From(adCampaignTable).
+		Where("id = ?", idString).
+		ToSql()
+
+	if err != nil {
+		return campaign, err
+	}
+
+	err = r.db.Select(&campaign, query, args)
+	if err != nil {
+		return campaign, err
+	}
+
 	// if scanCampaign.TimeStarted.Valid {
 	// 	campaign.TimeStarted = scanCampaign.TimeStarted.Time
 	// }

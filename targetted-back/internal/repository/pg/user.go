@@ -1,8 +1,7 @@
 package pg
 
 import (
-	"fmt"
-
+	sq "github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
@@ -18,34 +17,44 @@ func NewUserPG(db *sqlx.DB) *UserPG {
 
 func (r *UserPG) SetBalance(id uuid.UUID, amount float64) error {
 	var uuid uuid.UUID
-	query := fmt.Sprintf(`UPDATE %s set 
-	amount = '%f'
-	WHERE id = '%s' RETURNING id`,
-		usersTable, amount, id)
-	row := r.db.QueryRow(query)
-	if err := row.Scan(&uuid); err != nil {
+
+	query := sq.
+		Update(usersTable).
+		Set("amount", amount).
+		Where("id = ?", id.String()).
+		Suffix("RETURNING \"id\"").
+		RunWith(r.db)
+
+	if err := query.QueryRow().Scan(&uuid); err != nil {
 		return err
 	}
+
 	return nil
 }
 
 func (r *UserPG) AddMoney(userId uuid.UUID, amount float64) error {
+	var userAmount float64
 
-	var user models.User
+	query := sq.
+		Select("amount").
+		From(usersTable).
+		Where("id = ?", userId).
+		RunWith(r.db)
 
-	query := fmt.Sprintf("SELECT amount FROM %s WHERE id = $1", usersTable)
-	err := r.db.Get(&user, query, userId)
-	if err != nil {
+	if err := query.Scan(&userAmount); err != nil {
 		return err
 	}
 
 	var id uuid.UUID
-	query = fmt.Sprintf(`UPDATE %s set 
-	amount = '%f'
-	WHERE id = '%s' RETURNING id`,
-		usersTable, user.Balance+amount, userId)
-	row := r.db.QueryRow(query)
-	if err := row.Scan(&id); err != nil {
+
+	userQuery := sq.
+		Update(usersTable).
+		Set("amount", userAmount+amount).
+		Where("id = ?", userId).
+		Suffix("RETURNING \"id\"").
+		RunWith(r.db)
+
+	if err := userQuery.QueryRow().Scan(&id); err != nil {
 		return err
 	}
 	return nil
@@ -54,17 +63,40 @@ func (r *UserPG) AddMoney(userId uuid.UUID, amount float64) error {
 func (r *UserPG) GetAll() ([]models.User, error) {
 	var userList []models.User
 
-	query := fmt.Sprintf("SELECT name, email, id, phone_number, amount, time_created FROM %s", usersTable)
-	err := r.db.Select(&userList, query)
+	query, args, err := sq.
+		Select("name", "email", "id", "phone_number", "amount", "time_created").
+		From(usersTable).
+		ToSql()
 
-	return userList, err
+	if err != nil {
+		return nil, err
+	}
+
+	err = r.db.Select(&userList, query, args)
+	if err != nil {
+		return nil, err
+	}
+
+	return userList, nil
 }
 
 func (r *UserPG) GetById(userId uuid.UUID) (models.User, error) {
 	var user models.User
 
-	query := fmt.Sprintf("SELECT name, email, amount, time_created FROM %s WHERE id = $1", usersTable) //todo phone_number
-	err := r.db.Get(&user, query, userId)
+	query, args, err := sq.
+		Select("name", "email", "amount", "time_created"). //todo phone_number
+		From(usersTable).
+		Where("id = ?", userId).
+		ToSql()
 
-	return user, err
+	if err != nil {
+		return user, err
+	}
+
+	err = r.db.Get(&user, query, args)
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
 }
