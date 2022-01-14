@@ -10,6 +10,8 @@ import (
 	"github.com/luckyshmo/fb-marketing-app/targetted-back/models"
 )
 
+//go:generate mockgen -source=service.go --destination=./mocks/service.go
+
 type Authorization interface {
 	CreateUser(user models.User) (uuid.UUID, error)
 	GenerateToken(username, password string) (string, error)

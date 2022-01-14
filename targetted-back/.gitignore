@@ -1,3 +1,4 @@
 targetted-*.json
 *.out
 cmd/__debug_bin
+mock*

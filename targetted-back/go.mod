@@ -11,7 +11,7 @@ require (
 	github.com/go-openapi/swag v0.19.15 // indirect
 	github.com/go-playground/validator/v10 v10.3.0 // indirect
 	github.com/golang-migrate/migrate/v4 v4.14.1
-	github.com/google/uuid v1.1.2
+	github.com/google/uuid v1.2.0
 	github.com/jackc/pgx/v4 v4.13.0
 	github.com/jmoiron/sqlx v1.3.1
 	github.com/kelseyhightower/envconfig v1.4.0
