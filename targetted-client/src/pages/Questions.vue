@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <h1 class="app-header">
+  <div class="questions__block">
+    <h2 class="questions__header">
       Остались вопросы?
-    </h1>
+    </h2>
 
     <b-form
       @submit.prevent="sendRequest">
       <b-form-group
         id="input-group-main">
       <p>
-          Оставьте свой номер телефона, если у вас возникли вопросы или предложения :)
+          Оставьте свой номер телефона, если у вас <br/> возникли вопросы или предложения :)
       </p>
         <b-form-input
           v-model="$v.form.phoneNumber.$model"
@@ -35,7 +35,7 @@
       <b-form-group class="app-new-form-footer">
       <b-button
         type="submit"
-        class="app-new-button-main"
+        class="app-new-submit-button"
       >
         Заказать звонок
       </b-button>
@@ -97,5 +97,29 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
+.questions__block{
+  padding: 40px 48px 56px;
+  #input-group-main {
+    margin-bottom: 12px;
+    p {
+      margin-bottom: 12px;
+    }
+  }
+  .app-new-login-sub{
+    margin: 40px 0 0;
+  }
+}
+.questions__header{
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px !important;
+  line-height: 38px !important;
+  margin-bottom: 12px;
+}
+@media (max-width: 470px){
+  .questions__block{
+    padding: 134px 24px 0;
+  }
+}
 </style>

@@ -59,9 +59,8 @@
                         :content-cols="content_cols"
                           style="margin-bottom: 33px !important;"
                     id="input-group-main" label-for="input-horizontal">
-
                 <b-row >
-                    <b-col cols="6" sm="5" md="6" lg="3" xl="3">
+                    <b-col class="step3__input">
                         <b-form-input
                             class="form-input app-new-form-input-small "
                             v-model="$v.campaignData.auditory.age.from.$model"
@@ -81,7 +80,7 @@
                 </small>
                     </b-col>
 
-                    <b-col cols="6" sm="5" md="6" lg="3" xl="3">
+                    <b-col class="step3__input">
                         <b-form-input
                             class="form-input app-new-form-input-small"
                             v-model="$v.campaignData.auditory.age.to.$model"
@@ -134,7 +133,7 @@
                         v-model="$v.campaignData.auditory.interests.$model"
                         rows="3"
                         max-rows="6"
-                        style="min-height: 132px ; margin-top: 15px"
+                        style="min-height: 132px ; margin-top: 12px"
                         placeholder="Пример: девушки с доходом выше среднего, занимаются спортом и следят за своей фигурой"
                         ></b-form-textarea>
                            <small
@@ -146,7 +145,7 @@
            </b-form-group>
 
         <div class="bottom__block">
-          <div style="max-width: 145px; margin-right: 12px">
+          <div style="max-width: 145px; margin-right: 12px" class="step2__button">
             <b-button  type="button"
                        class="app-new-submit-button"
                        @click="sendData">
@@ -254,9 +253,23 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
 .step2__button{
   display: inline-block;
+}
+.step3__input{
+  max-width: 136px !important;
+  width: 100% !important;
+  & > input{
+    max-width: 100%;
+  }
+}
+.step3__input:nth-child(1){
+  padding-right: 0 !important;
+  margin-right: 12px;
+}
+.step3__input:nth-child(2){
+  padding-left: 0 !important;
 }
 @media (max-width: 600px) {
   .app-new-small-text-fit > button{
@@ -264,13 +277,19 @@ export default {
   }
   .step2__button{
     width: 100%;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
   .step3__text{
     margin-top: -4px !important;
   }
-  .bottom__block > div:nth-child(2){
-    margin-top: 12px;
+  .step3__input{
+    max-width: 100% !important;
   }
+  .step3__input:nth-child(1){
+    margin-right: 8px;
+  }
+  /*.bottom__block > div:nth-child(2){*/
+  /*  margin-top: 12px;*/
+  /*}*/
 }
 </style>

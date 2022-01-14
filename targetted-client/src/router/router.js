@@ -5,7 +5,6 @@ import login from '@src/pages/login/Login.vue'
 import questions from '@src/pages/Questions.vue'
 import register from '@src/pages/login/Register.vue'
 import createCampaign from '@src/pages/CreateCampaign.vue'
-import imagesPreview from '@src/pages/CreativesPreview.vue'
 import paymentPage from '@src/pages/Payment.vue'
 import CampaignBalance from '@src/pages/CampaignBalance.vue'
 import adminka from '@src/pages/Adminka.vue'
@@ -81,14 +80,6 @@ const router = new Router({
       path: '/payment',
       name: 'campagin-payment',
       component: paymentPage,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/preview',
-      name: 'images-preview',
-      component: imagesPreview,
       meta: {
         requiresAuth: true
       }

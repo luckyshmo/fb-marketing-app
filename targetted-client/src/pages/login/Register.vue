@@ -6,7 +6,7 @@
     </h1>
 
     <b-form
-      @submit="register"
+      @submit.prevent="register"
     >
         <div class="register__form_top">
           <b-form-group
@@ -118,7 +118,7 @@
         </b-form-group>
       </div>
       <b-form-group class="app-new-form-footer">
-<br class="d-none d-sm-block">
+          <br class="d-none d-sm-block">
         <b-button
           class="app-new-submit-button"
           :class="{'disabled-look': !$v.$anyDirty || $v.$anyError}"
@@ -142,14 +142,16 @@
   </div>
 </template>
 <script>
-import router from '@src/router/router'
-import { instance as axios } from '@src/_services/index'
-import { validationMixin } from 'vuelidate'
-import { required, minLength, email } from 'vuelidate/lib/validators'
-const VUE_APP_API_URL = process.env.VUE_APP_API_URL
+
+//import router from '@src/router/router'
+//import {instance as axios} from '@src/_services/index'
+import {validationMixin} from 'vuelidate'
+import {required, minLength, email} from 'vuelidate/lib/validators'
+
+//const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   mixins: [validationMixin],
-  data () {
+  data() {
     return {
       emailExists: false,
       form: {
@@ -186,15 +188,15 @@ export default {
     }
   },
   methods: {
-    resetErr () {
+    resetErr() {
       this.emailExists = false
     },
-    validateState (name) {
-      const { $dirty, $error } = this.$v.form[name]
+    validateState(name) {
+      const {$dirty, $error} = this.$v.form[name]
       return $dirty ? !$error : null
     },
-    validatePassword (name) {
-      const { $dirty, $error } = this.$v.form[name]
+    validatePassword(name) {
+      const {$dirty, $error} = this.$v.form[name]
       // console.log($dirty, $error, this.form.password === this.form.passwordRepeat)
       if ($dirty ? !$error : null) {
         return this.form.password === this.form.passwordRepeat
@@ -202,39 +204,34 @@ export default {
         return $dirty ? !$error : null
       }
     },
-    register () {
+    register() {
       this.$v.form.$touch()
       if (this.$v.form.$anyError) {
         return
       }
-
-      const data = {
-        name: this.form.name,
-        email: this.form.email,
-        password: this.form.password,
-        phoneNumber: this.form.phoneNumber
-      }
-      console.log('rData', data)
-
-      const url = `${VUE_APP_API_URL}/auth/sign-up`
-      axios.post(url, data)
-        .then(resp => {
-          this.emailExists = false
-          console.log(resp)
-          router.push('login')
-        })
-        .catch(err => {
-          console.log(err.response)
-          if (err.response.data.message === 'pq: duplicate key value violates unique constraint "user_tb_email_key"') {
-            this.emailExists = true
-          }
-        }
-        )
+      // const data = {
+      //   name: this.form.name,
+      //   email: this.form.email,
+      //   password: this.form.password,
+      //   phoneNumber: this.form.phoneNumber
+      // }
+      // const url = `${VUE_APP_API_URL}/auth/sign-up`
+      // axios.post(url, data)
+      //   .then(resp => {
+      //     this.emailExists = false
+      //     router.push('login')
+      //   })
+      //   .catch(err => {
+      //       if (err.response.data.message === 'pq: duplicate key value violates unique constraint "user_tb_email_key"') {
+      //         this.emailExists = true
+      //       }
+      //     }
+      //   )
     }
   }
 }
 </script>
-<style>
+<style lang="scss">
 .register__header{
   margin-top: 80px !important;
 }
@@ -243,6 +240,9 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-top: 46px;
+  & > #input-group-main{
+    max-width: 276px;
+    }
 }
 .register__form_email{
   margin-top: -7px;
@@ -253,6 +253,9 @@ export default {
   justify-content: space-between;
   margin-top: -7px;
   margin-bottom: -35px;
+  & > #input-group-main{
+    max-width: 276px;
+  }
 }
 .register__form_bottom_text{
   font-style: normal;
@@ -275,7 +278,7 @@ export default {
     justify-content: flex-start;
   }
   .register__form_top > #input-group-main{
-    width: 100%;
+    max-width: 100%;
   }
   .register__form_top > #input-group-main:nth-child(2){
     margin-top: -6px;
@@ -294,7 +297,7 @@ export default {
     margin-bottom: 40px !important;
   }
   .register__form_bottom_link{
-    margin-bottom: 77px;
+    margin-bottom: 80px;
   }
 }
 </style>

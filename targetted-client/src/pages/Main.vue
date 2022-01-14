@@ -67,22 +67,23 @@
         Добро<br>пожаловать!
       </h1>
       <p>
-        Для привлечения новых клиентов осталось<br>совсем немного. Создайте свою рекламную кампанию<br>или посмотрите видео-инструкцию, если возникли вопросы :)
+        Для привлечения новых клиентов осталось<br class="display__block">
+        совсем немного.<br class="display__none"> Создайте свою рекламную кампанию<br class="display__block">
+        или посмотрите видео-инструкцию, если возникли вопросы :)
       </p>
     </template>
-    <div class="mt-4">
+    <div class="main__button_block">
       <router-link
         v-if="store.getters.GET_CAMPAIGN_LIST.length < 3"
         :to="{path: '/campaign-step-1'}">
         <b-button
           class="app-new-submit-button">
-          Создать новую
+          Запустить рекламу
         </b-button>
       </router-link>
-      <br class="d-block d-sm-none d-md-none d-lg-none">
       <b-button
         variant="primary"
-        class="main-button-grey ml-0 ml-sm-2 ml-lg-2 ml-md-2 mt-lg-0 mt-md-0 mt-sm-0 mt-2"
+        class="main-button-grey"
         @click="showVideo">
         <b-icon font-scale=".98" class="app-mid-size" icon="play-circle-fill"/>
         Инструкция
@@ -170,6 +171,9 @@ export default {
 
   .main {
     margin: 82px 0 45px;
+    & > p{
+      margin-bottom: 20px;
+    }
   }
 
   .video-pp-wrapper {
@@ -329,6 +333,20 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .display__block{
+    display: block;
+  }
+  .display__none{
+    display: none;
+  }
+  .main__button_block{
+    & > button{
+      margin-left: 12px;
+      & > svg{
+        margin-right: 8px;
+      }
+    }
+  }
 
   @media (min-width: 600px) {
     .campagin-item {
@@ -337,6 +355,28 @@ export default {
   }
 
   @media (max-width: 600px) {
+    .main {
+      margin-top: 55px;
+      & > h1{
+        margin-bottom: 12px;
+      }
+    }
+    .display__block{
+      display: none;
+    }
+    .display__none{
+      display: block;
+    }
+    .main__button_block{
+      & > a{
+        width: 100%;
+        display: block;
+      }
+      & > button{
+        margin-left: 0;
+        margin-top: 12px;
+      }
+    }
     .video-pp-wrapper{
       width: 100%;
       background: $black;

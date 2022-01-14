@@ -60,7 +60,7 @@
         </b-col>
       </b-col>
     </b-row>
-    <b-row >
+    <div >
       <b-col class="step__col">
         <Step1
           label_cols="12"
@@ -97,7 +97,7 @@
           </ul>
         </aside>
       </b-col>
-    </b-row>
+    </div>
   </section>
 </div>
 </template>
@@ -126,17 +126,17 @@ export default {
 
 <style lang="scss">
 @import '@src/assets/styles/vars.scss';
-#app-link-back {
-  // float: left;
-  margin-right: 5px;
-  float:left;
-  line-height:20px;
-  color: #6c757d ;
-
-  &:hover {
-    color:$black;
-  }
-}
+//#app-link-back {
+//  // float: left;
+//  margin-right: 5px;
+//  float:left;
+//  line-height:20px;
+//  color: #767676 ;
+//
+//  &:hover {
+//    color:$black;
+//  }
+//}
 .form-control{
   width: 100% !important;
 }
@@ -171,6 +171,9 @@ export default {
   font-size: 14px;
   line-height: 18px;
   margin: 52px 0 12px !important;
+  .text-muted{
+    color: #767676 !important;
+  }
 }
 
 #icon-div-image{

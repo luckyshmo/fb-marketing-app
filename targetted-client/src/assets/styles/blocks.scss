@@ -8,6 +8,9 @@
     width: 100%;
     background: $light;
     border-radius: 16px;
+    & > div{
+        display: flex;
+    }
 
     &:hover {
         background: #EAEAEA;

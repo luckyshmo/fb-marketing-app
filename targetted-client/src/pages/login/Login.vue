@@ -1,5 +1,6 @@
 <template>
 <div id="content-wrapper">
+
   <div id="content" class="step">
 
     <h1 class="app-header login__header">
@@ -74,13 +75,11 @@
       >
         Войти
       </b-button>
-
       <p class="app-new-login-sub login__form_block_text">
-        Или <router-link :to="{name: 'register'}">
+        Или <span @click="setRegisterPage" style="color: #6C1BD2;">
           зарегистрируйтесь
-        </router-link>
+        </span>
       </p>
-
       </b-form-group>
 
     </b-form>
@@ -97,6 +96,7 @@ import accountService from '@src/_services/account.service'
 
 export default {
   mixins: [validationMixin],
+  props : ['windowInnerWidth'],
   data () {
     return {
       userNotExist: false,
@@ -106,6 +106,14 @@ export default {
     }
   },
   methods: {
+    setRegisterPage () {
+      if (this.windowInnerWidth > 600){
+        this.$router.push('/register')
+      }
+      if (this.windowInnerWidth <= 600){
+        this.$modal.show('modal--register')
+      }
+    },
     loginFB () {
       accountService.login()
     },
@@ -146,7 +154,7 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
 .login__header{
   margin-top: 81px !important;
 }
@@ -155,6 +163,9 @@ export default {
   justify-content: space-between;
   margin-top: 46px;
   margin-bottom: -12px;
+  & > .form-group{
+      max-width: 276px;
+    }
 }
 .login__form_block_text{
   margin-top: 40px;
@@ -166,6 +177,10 @@ export default {
   .login__form_block{
     flex-wrap: wrap;
     margin-top: 34px;
+    width: 100%;
+    & > .form-group{
+      max-width: 100%;
+    }
   }
   .login__form_block > #input-group-main:nth-child(2){
     margin-top: -8px;

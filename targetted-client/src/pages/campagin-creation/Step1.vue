@@ -167,7 +167,7 @@
           style="margin-bottom: 25px !important;"
         >
           <p class="app-new-info" style="margin-top: -7px">
-            Если у вас онлайн бизнес, то укажите регионы или города где оказываете услуги. Если у вас офлайн бизнес, то укажите точный адрес оказания услуг.
+            Если у вас онлайн бизнес, то укажите регионы или города где оказываете <br class="display__none"/> услуги. Если у вас офлайн бизнес, <br class="display__none"/>то укажите точный адрес оказания услуг.
           </p>
           <b-form-input
             class="form-input"
@@ -236,7 +236,7 @@
               </b-button>
             </div>
             <div  class="app-new-small-text-fit" style="max-width: 160px">
-              <p class="text-muted text-pt-desktop" style="margin-top: 3px">Загрузите креативы,<br/> чтобы продолжить</p>
+              <p class="text-muted text-pt-desktop" style="margin-top: 3px">Заполните все данные,<br/> чтобы продолжить</p>
             </div>
           </div>
         </b-form-group>
@@ -453,9 +453,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .step > h1{
-  margin-bottom: 13px;
+  margin-bottom: 12px;
   margin-top: -3px;
 }
   select.form-input.custom-select {
@@ -464,12 +464,15 @@ export default {
       margin-bottom: 12px;
   }
   .bottom__block{
-    margin-bottom: 200px !important;
+    margin-bottom: 80px !important;
     margin-top: -2px !important;
     width: 100%;
     display: flex;
     align-items: start;
     flex-wrap: wrap;
+    .text-muted{
+      color: #767676 !important;
+    }
   }
   @media (max-width: 600px) {
     .mobile-input{

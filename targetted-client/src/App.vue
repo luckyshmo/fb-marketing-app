@@ -238,15 +238,11 @@ p {
 }
 
 .x-button{
-  height: 40px;
-  width: 40px;
+  font-size: 14px;
   color: black;
-  background: #f3f3f3;
-  border-radius: 20px;
-  cursor: pointer;
 }
 
-.x-button:hover {
+.icon-div-image:hover {
   background: #EAEAEA;
 }
 
@@ -259,12 +255,15 @@ p {
     color: black !important;
 
 }
-
+::placeholder{
+  color: #767676 !important;
+}
 .form-select:focus,
 .form-select:hover,
 .form-input:focus,
 .form-input:hover {
   background-color: #EAEAEA !important;
+  box-shadow: none !important;
 }
 
 .form-input.width-1-2 {
@@ -273,7 +272,7 @@ p {
 
 @media (max-width: 600px) {
   .form-input.width-1-2 {
-    max-width: 99%;
+    max-width: 100%;
   }
 }
 

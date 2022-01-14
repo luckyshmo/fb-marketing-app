@@ -82,6 +82,8 @@ h2 {
     font-style: normal;
     font-size: 16px;
     line-height: 24px;
+    margin-top: 8px;
+    display: block;
 }
 
 input.form-input,
@@ -134,7 +136,7 @@ textarea.form-input {
 }
 
 .app-new-action-text {
-    color: $violet;
+    color: $violet !important;
 }
 
 .app-new-info,
@@ -184,17 +186,17 @@ textarea.form-input {
 #input-group-main{
     margin-bottom: 28px;
     color: $black;
-    width: 100%;
     display: flex;
     flex-direction: column;
     font-style: normal;
     font-weight: 400;
     font-size: 1em;
+    width: 100%;
 }
 
 @media (max-width: 600px) {
     #input-group-main{
-        //display:grid;
+
     }
 
     #h1-centered {
@@ -249,7 +251,11 @@ textarea.form-input {
         display: inline-block;
     }
 }
-
+@media(max-width: 1008px){
+    .step__col {
+        margin-right: 0;
+    }
+}
 @media(max-width: 600px){
     .step {
         width: 100%;

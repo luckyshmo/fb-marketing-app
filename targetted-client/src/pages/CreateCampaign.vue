@@ -419,17 +419,17 @@ export default {
 <style lang="scss">
   @import '@src/assets/styles/vars.scss';
 
-  #app-link-back {
-    // float: left;
-    margin-right: 5px;
-    float:left;
-    line-height:20px;
-    color: #6c757d ;
-
-    &:hover {
-      color:$black;
-    }
-  }
+  //#app-link-back {
+  //  // float: left;
+  //  margin-right: 5px;
+  //  float:left;
+  //  line-height:20px;
+  //  color: #6c757d ;
+  //
+  //  &:hover {
+  //    color:$black;
+  //  }
+  //}
 
   .app-new-steps-header {
     font-size: 14px;

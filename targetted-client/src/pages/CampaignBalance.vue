@@ -365,7 +365,6 @@ export default {
         method: 'POST'
       })
         .then(resp => {
-          console.log(resp)
           this.paymentID = resp.data.id
 
           axios({
@@ -469,7 +468,7 @@ export default {
       campaignData.append('Days', this.campaign.Days)
       axios({ url: `${VUE_APP_API_URL}/api/campaign/${this.campaign.Id}`, data: campaignData, method: 'PUT' })
         .then(resp => {
-          console.log(resp)
+
           router.push({ path: '/main' })
         })
         .catch(err => {

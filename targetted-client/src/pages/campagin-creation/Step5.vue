@@ -15,9 +15,9 @@
             <b-form-input id="range-1"
                           v-model="campaginData.budget"
                           type="range"
-                          min="5"
+                          min="500"
                           max="5000"
-                          step="5"
+                          step="100"
                           style="margin-top: 0"
             ></b-form-input>
 
@@ -26,7 +26,7 @@
       <b-col cols="12" sm="6" class="step-5-range">
             <b-form-group
               class="input-group-range"
-              :label="`Продолжительность: ${campaginData.timeLength} д`">
+              :label="`Продолжительность: ${campaginData.timeLength} дней`">
           <!-- <p class="app-label-right">{{campaginData.timeLength}} д</p> -->
               <b-form-input id="range-2"
                             v-model="campaginData.timeLength"
@@ -42,8 +42,8 @@
 
       <section v-if="!isRegistered" style="margin-top: 73px">
         <h3 style="font-weight: bold; font-size: 24px; line-height: 30px;">Зарегистрируйтесь</h3>
-        <p style="margin-bottom: 33px">Осталось только зарегистрироваться, чтобы запустить рекламу.</p>
-            <div class="col-12" style="display: flex ; justify-content: space-between ; flex-wrap: wrap">
+        <p style="margin-bottom: 28px">Осталось только зарегистрироваться, чтобы запустить рекламу.</p>
+            <div class="col-12 step-5_form_top">
               <b-form-group
                 id="input-group-main"
                 label="Номер телефона"
@@ -96,7 +96,6 @@
                <b-form-group
                 id="input-group-main"
                     label="Электронная почта"
-                style="margin-top: -7px"
                >
                     <b-form-input
                     v-model="$v.userData.email.$model"
@@ -117,7 +116,7 @@
                   Некорректный email
                 </small>
            </b-form-group>
-        <div class="col-12 d-flex justify-content-between flex-wrap" style="margin-top: -6px">
+        <div class="col-12 d-flex justify-content-between flex-wrap">
           <b-form-group
             id="input-group-main"
             label="Пароль"
@@ -173,12 +172,13 @@
                          v-if="!isRegistered"
                          :class="{'disabled-look': !$v.$anyDirty || $v.$anyError}"
                         class="app-new-submit-button"
-                  style="max-width: 293px; width: 100%; margin-top: -12px; margin-bottom: 27px"
+                  style="max-width: 293px; width: 100%; margin-bottom: 28px"
                         @click="sendData">
         Зарегистрироваться
       </b-button>
-         <p class="app-new-info bottom__block step-5-text">
-          Нажимая кнопку “Зарегистрироваться” вы соглашаетесь с условиями <a href="#">оферты</a> и <a href="#">политикой конфиденциальности</a>.
+         <p class="app-new-info step-5-text">
+          Нажимая кнопку “Зарегистрироваться” <br class="display__none"/> вы соглашаетесь с условиями <span>оферты</span>
+           <br/> и <span>политикой конфиденциальности</span>.
         </p>
       </section>
 
@@ -246,7 +246,7 @@ export default {
       store, // fixme
       isRegistered: false,
       campaginData: {
-        budget: 100,
+        budget: 500,
         timeLength: 6
       },
       // todo: mv to separate component ?
@@ -314,22 +314,35 @@ export default {
     }
   }
 .width__form{
-  width: 276px;
-
+  max-width: 276px;
 }
+.step-5_form_top{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+  .step-5-text{
+    margin-bottom: 200px !important;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px !important;
+    line-height: 18px !important;
+    & > span{
+      text-decoration: underline;
+    }
+  }
 @media (max-width: 600px) {
+  .step-5_form_top{
+    flex-wrap: wrap;
+  }
   .width__form{
-    width: 100%;
-    margin-top: -3px;
+    max-width: 100%;
   }
   .step-5-range{
     margin-top: 30px !important;
   }
   .step-5-text{
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px !important;
-    line-height: 18px !important;
+    margin-bottom: 80px !important;
   }
 }
 @media (min-width: 550px) {

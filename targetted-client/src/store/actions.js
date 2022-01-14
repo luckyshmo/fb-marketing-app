@@ -18,7 +18,7 @@ function buildFormData (formData, data, parentKey) {
 }
 
 const jsonToFormData = (data, isEdit) => {
-  console.log(data, isEdit)
+
   // todo, from SO
   const campaignData = new FormData()
   buildFormData(campaignData, data)
@@ -58,13 +58,11 @@ const actions = {
         .then(resp => {
           axios.get(`${VUE_APP_API_URL}/api/campaign/`)
             .then(resp => {
-              console.log('user campaigns resp', resp)
               localStorage.setItem('user_campaign', resp.data)
               commit('set_user_campaign', resp.data)
               resolve(resp)
             })
             .catch(err => {
-              console.log(err)
               reject(err)
             })
             // localStorage.setItem('user_campaign', resp.data) //?
@@ -75,7 +73,6 @@ const actions = {
           // TODO remove
           resolve('test')
 
-          console.log(err)
           //  reject(err)
         })
     })
@@ -103,7 +100,6 @@ const actions = {
       const url = `${VUE_APP_API_URL}/api/campaign/`
       axios.get(url)
         .then(resp => {
-          console.log(resp.data)
           localStorage.setItem('user_campaign', resp.data)
           commit('set_user_campaign', resp.data)
           resolve(resp)

@@ -323,26 +323,26 @@ article .btn svg {
   padding: 0 1rem;
 }
 
-.instapost__action .btn svg {
-  fill: #2f363d;
-}
+/*.instapost__action .btn svg {*/
+/*  fill: #2f363d;*/
+/*}*/
 
-.instapost__action .btn-like .like-icon {
-  display: block;
-}
+/*.instapost__action .btn-like .like-icon {*/
+/*  display: block;*/
+/*}*/
 
-.instapost__action .btn-like .dislike-icon {
-  display: none;
-  fill: #ed4956;
-}
+/*.instapost__action .btn-like .dislike-icon {*/
+/*  display: none;*/
+/*  fill: #ed4956;*/
+/*}*/
 
-.instapost__action .btn-like.dislike .like-icon {
-  display: none;
-}
+/*.instapost__action .btn-like.dislike .like-icon {*/
+/*  display: none;*/
+/*}*/
 
-.instapost__action .btn-save {
-  margin-left: auto;
-}
+/*.instapost__action .btn-save {*/
+/*  margin-left: auto;*/
+/*}*/
 
 .instapost__likes {
   color: #5b6977;

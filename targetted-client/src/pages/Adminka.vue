@@ -330,7 +330,6 @@ export default {
     checkIfPageIsOwned (id) {
       axios.get({ url: `${VUE_APP_API_URL}/api/facebook/owned/${id}` })
         .then(resp => {
-          console.log(resp)
           this.$alert('Кампания добавлена в БМ')
         })
         .catch(err => {
@@ -341,7 +340,7 @@ export default {
     makeClaimRequest () {
       axios.post({ url: `${VUE_APP_API_URL}/api/facebook/claim/${this.fbIDforClaim}` })
         .then(resp => {
-          console.log(resp)
+
         })
         .catch(err => {
           console.log(err.response)
@@ -352,7 +351,7 @@ export default {
       axios.delete({ url })
         .then(resp => {
           this.pendingPages = this.pendingPages.filter(ID => ID !== id)
-          console.log(resp)
+
         })
         .catch(err => {
           this.$alert(err.response)
